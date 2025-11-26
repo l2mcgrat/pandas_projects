@@ -30,6 +30,22 @@ Bonus Stock Points are Divided by Round Number
 
 """
 
+def bar_generator(win_loses):
+    
+    keys = list(win_loses.keys())
+    values = list(win_loses.values())
+    
+    bars = plt.bar(keys, values, color="skyblue", edgecolor="black")
+    for bar in bars:
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2, height, str(height), ha='center', va='bottom')
+    plt.bar(keys, values, color="skyblue", edgecolor="black")
+    plt.xlabel("Category")
+    plt.ylabel("Count")
+    plt.title("Bar Chart from Dictionary")
+    plt.xticks(rotation=30)
+    plt.show()
+
 def histogram_generator(character_dict):
     
     values = list(character_dict.values())
@@ -50,6 +66,12 @@ def distribution_generator(character_dict):
     plt.title("Continuous Distribution of Dictionary Values")
     plt.show()
 
+def generator(character_dict, win_loses):
+    
+    bar_generator(win_loses)
+    histogram_generator(character_dict)
+    distribution_generator(character_dict)
+
 def round_1_calculator(Tourney_List, max_percentage):
     
     character_dict = {}
@@ -57,25 +79,46 @@ def round_1_calculator(Tourney_List, max_percentage):
         for key in tourney:
             character_dict[key] = 0
     
+    win_loses = {"Lost Round 1": 0, "Lost Round 2": 0, "Lost Round 3": 0, "Lost Round 4": 0, 
+                 "Lost Round 5": 0, "Won Round 3": 0, "Won Round 4": 0, "Won Tourney": 0}
+    
+    characters_played = set()
+    all_characters = set()
     for tourney in Tourney_List:
         for key, fights in tourney.items():
+            characters_played.add(key)
             for n, fight in enumerate(fights):
+                all_characters.add(fight[0])
                 multiplier = 1 if not bool(fight[1][0]) else (1 - matchup_df[matchup_df["Character"] == key.lower()][fight[0].lower()].iloc[0]/20)
                 if fight[1][0] > 0 and n + 1 <= 3:
                     character_dict[key] += multiplier*(1 + n/10)*(fight[1][0] + (max(0, max_percentage - fight[1][1]))/max_percentage)
+                    match_won = True
                 elif fight[1][0] > 0 and n + 1 > 3:
-                    character_dict[key] += multiplier*(1 + n/10)*(fight[1][0] + (max(0, max_percentage - fight[1][1]))/max_percentage)/n
+                    if (n + 1 == 5): win_loses["Won Tourney"] += 1
+                    match_won = True
+                    character_dict[key] += multiplier*(1 + n/10)*(fight[1][0] + (max(0, max_percentage - fight[1][1]))/max_percentage)/(n + 1)
                 elif fight[1][0] < 0 and n + 1 <= 3:
+                    match_won = False
+                    if (n + 1 == 1): win_loses["Lost Round 1"] += 1
+                    if (n + 1 == 2): win_loses["Lost Round 2"] += 1
+                    if (n + 1 == 3): win_loses["Lost Round 3"] += 1
                     character_dict[key] += multiplier*(1 + n/10)*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))
-                elif fight[1][0] < 0 and n + 1 > 2:
-                    character_dict[key] += multiplier*(1 + n/10)*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))/n
+                elif fight[1][0] < 0 and n + 1 > 3:
+                    match_won = False
+                    if (n + 1 == 4): win_loses["Lost Round 4"] += 1
+                    if (n + 1 == 5): win_loses["Lost Round 5"] += 1
+                    character_dict[key] += multiplier*(1 + n/10)*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))/(n + 1)
                 else:
-                    continue
-    
+                    if n + 1 == 4 and match_won: 
+                        win_loses["Won Round 3"] += 1
+                        match_won = False
+                    if n + 1 == 5 and match_won: 
+                        win_loses["Won Round 4"] += 1             
+                
     for fighter in character_dict:
         character_dict[fighter] = int(character_dict[fighter]*100)/100
     
-    return character_dict 
+    return character_dict, win_loses, characters_played, all_characters 
 
 Tourney_1 = {
         "Mega Man": [["Wii Fit Trainer", [-1, 108]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
@@ -197,22 +240,36 @@ Tourney_17 = {
         } 
 
 Tourney_18 = {
-        "Sonic": [["Joker", [1, 71]], ["Greninja", [3, 105]], ["Toon Link", [1, 15]], ["Pyra & Mythra", [2, 174]], ["Opponent 5", [0, 0]]], 
+        "Sonic": [["Joker", [1, 71]], ["Greninja", [3, 105]], ["Toon Link", [1, 15]], ["Pyra & Mythra", [2, 174]], ["Ryu", [2, 134]]], 
         "Mii Brawler": [["Pyra & Mythra", [-2, 143]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
         "Mario": [["Falco", [-1, 47]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
         "Bayonetta": [["Olimar", [-2, 86]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_19 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "PacMan": [["Pichu", [1, 84]], ["ROB", [-1, 16]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Pokemon Trainer": [["Palutena", [2, 36]], ["Cloud", [-1, 90]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Zelda": [["Inkling", [1, 0]], ["Ken", [2, 68]], ["Wario", [2, 0]], ["Opponent 4", [0, 0]], ["Lucina", [2, 144]]],          
+        "Wolf": [["Greninja", [3, 165]], ["Bowser Jr", [1, 56]], ["Dr Mario", [1, 14]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_20 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Min Min": [["Steve", [1, 12]], ["Diddy Kong", [2, 129]], ["Pyra & Mythra", [2, 53]], ["Lucina", [1, 36]], ["Villager", [1, 54]]], 
+        "Simon": [["Lucina", [-2, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Bowser Jr": [["Banjo & Kazooie", [1, 105]], ["Villager", [-1, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Shulk": [["Zelda", [2, 107]], ["Roy", [2, 54]], ["Link", [-1, 77]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        }
+
+Tourney_21 = {
+        "Richter": [["Palutena", [1, 37]], ["Hero", [-1, 76]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Mii Gunner": [["Wolf", [1, 21]], ["Banjo & Kazooie", [-1, 96]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Piranha Plant": [["Dark Samus", [2, 128]], ["Pichu", [3, 155]], ["Simon", [2, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Young Link": [["Kirby", [1, 37]], ["Roy", [3, 93]], ["Ridley", [2, 24]], ["Opponent 4", [0, 0]], ["Bayonetta", [2, 12]]] 
+        }
+
+Tourney_22 = {
+        "Ridley": [["Ryu", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Pichu": [["Link", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
         "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
         "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
@@ -225,14 +282,14 @@ Tourney_N = {
         }
 
 Tourney_List = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney_6, Tourney_7, Tourney_8, Tourney_9, Tourney_10,
-                Tourney_11, Tourney_12, Tourney_13, Tourney_14, Tourney_15, Tourney_16, Tourney_17, Tourney_18, Tourney_19, Tourney_20, 
-                Tourney_N]
+                Tourney_11, Tourney_12, Tourney_13, Tourney_14, Tourney_15, Tourney_16, Tourney_17, Tourney_18, Tourney_19,
+                Tourney_20, Tourney_21, Tourney_22, Tourney_N]
 
 max_percentage = 200
-character_dict = round_1_calculator(Tourney_List, max_percentage)
+character_dict, win_loses, characters_played, all_characters = round_1_calculator(Tourney_List, max_percentage)
 sorted_dict = dict(sorted(character_dict.items(), key=lambda item: item[1], reverse=False))
 for n, (key, value) in enumerate(sorted_dict.items()):
     print(len(sorted_dict.items()) - n, value, key)
 
-distribution_generator(character_dict)
-histogram_generator(character_dict)
+# call plot generator
+generator(character_dict, win_loses)
