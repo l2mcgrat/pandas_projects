@@ -1,5 +1,6 @@
 # New_Smash_Gods__Discovery_Training
 
+from collections import defaultdict
 import pandas as pd
 matchup_df = pd.read_csv(r"C:\Users\anime\OneDrive\Desktop\coding_projects\pandas_projects\matchup_chart.csv")
 import matplotlib.pyplot as plt
@@ -117,7 +118,7 @@ Bonus Match Points are Divided by Round Number
 
 """
 
-def round_1_calculator(Tourney_List, max_percentage):
+def round_1_calculator(Tourney_List, max_percentage, loss_dict):
     
     example_tourney = {
         "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
@@ -157,6 +158,7 @@ def round_1_calculator(Tourney_List, max_percentage):
                         win_loses["Won Tourney"][1] += character_dict[key]
                         win_loses["Won Tourney"][2].append(key)
                 elif fight[1][0] < 0 and n + 1 <= 3:
+                    loss_dict[fight[0]] += 1
                     match_won = False
                     score = multiplier*(1 + n/10)*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))
                     character_dict[key] += score
@@ -173,6 +175,7 @@ def round_1_calculator(Tourney_List, max_percentage):
                         win_loses["Lost Round 3"][1] += character_dict[key]
                         win_loses["Lost Round 3"][2].append(key)
                 elif fight[1][0] < 0 and n + 1 > 3:
+                    loss_dict[fight[0]] += 1
                     match_won = False
                     score = multiplier*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))/(n + 1)
                     character_dict[key] += score
@@ -198,7 +201,9 @@ def round_1_calculator(Tourney_List, max_percentage):
     for fighter in character_dict:
         character_dict[fighter] = int(character_dict[fighter]*100)/100
     
-    return character_dict, win_loses, characters_played, all_characters 
+    return character_dict, win_loses, characters_played, all_characters, loss_dict
+
+loss_dict = defaultdict(int)
 
 def round_1_generator(character_dict, win_loses, pdf):
     
@@ -380,7 +385,7 @@ Tourney_List = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney_6
 Tourney_List_1 = Tourney_List
 
 max_percentage = 200
-character_dict, win_loses, characters_played, all_characters = round_1_calculator(Tourney_List, max_percentage)
+character_dict, win_loses, characters_played, all_characters, loss_dict = round_1_calculator(Tourney_List, max_percentage, loss_dict)
 sorted_dict = dict(sorted(character_dict.items(), key=lambda item: item[1], reverse=False))
 
 def print_sorted_dict(sorted_dict):
@@ -425,7 +430,7 @@ min_score, max_score = min(round_1_scores), max(round_1_scores)
 for character, score in sorted_dict.items(): 
     character_dict[character] = int(2000*np.sqrt(10*((2.0 + score)**(3/2))/(max_score-min_score)))/2000
 
-renormalized_scores = dict(sorted(character_dict.items(), key=lambda item: item[1], reverse=False))
+renormalized_scores = dict(sorted(character_dict.items(), key=lambda item: item[1], reverse=False)).copy()
 print_sorted_dict(renormalized_scores)
 
 with PdfPages("reports/round_1_to_2_transition.pdf") as pdf:
@@ -471,7 +476,7 @@ Bonus Match Points are Divided by Round Number
 
 """
 
-def round_2_calculator(Tourney_List, max_percentage, character_dict):
+def round_2_calculator(Tourney_List, max_percentage, character_dict, loss_dict):
     
     example_tourney = {
         "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
@@ -506,6 +511,7 @@ def round_2_calculator(Tourney_List, max_percentage, character_dict):
                         win_loses["Won Tourney"][1] += character_dict[key]
                         win_loses["Won Tourney"][2].append(key)
                 elif fight[1][0] < 0 and n + 1 <= 3:
+                    loss_dict[fight[0]] += 1
                     match_won = False
                     score = multiplier*(1 + n*0.25)*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))
                     character_dict[key] += score
@@ -522,6 +528,7 @@ def round_2_calculator(Tourney_List, max_percentage, character_dict):
                         win_loses["Lost Round 3"][1] += character_dict[key]
                         win_loses["Lost Round 3"][2].append(key)
                 elif fight[1][0] < 0 and n + 1 > 3:
+                    loss_dict[fight[0]] += 1
                     match_won = False
                     score = multiplier*(1 + n*0.25)*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))/(n + 1)
                     character_dict[key] += score
@@ -547,7 +554,7 @@ def round_2_calculator(Tourney_List, max_percentage, character_dict):
     for fighter in character_dict:
         character_dict[fighter] = int(character_dict[fighter]*100)/100
     
-    return character_dict, win_loses, characters_played, all_characters 
+    return character_dict, win_loses, characters_played, all_characters, loss_dict 
 
 def round_2_generator(character_dict, win_loses, pdf):
     
@@ -565,9 +572,9 @@ def round_2_generator(character_dict, win_loses, pdf):
     histogram_generator(character_dict, "Score", "Frequency", "Round 2: Score Distribution", pdf)
     distribution_generator(character_dict, "Score", "Density", "Round 2: Score Density Plot", pdf)
 
-#####################
-###### Matches ######
-#####################
+#############################
+###### ROUND 2 Matches ######
+#############################
 
 Tourney_1 = {
         "Simon": [["Greninja", [1, 101]], ["Yoshi", [-1, 58]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
@@ -584,94 +591,94 @@ Tourney_2 = {
         }
 
 Tourney_3 = {
-        "Little Mac": [["Meta Knight", [1, 70]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Mii Brawler": [["Palutena", [2, 100]], ["PacMan", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Mario": [["Chrom", [2, 0]], ["Ice Climbers", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "ROB": [["Richter", [2, 78]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "Little Mac": [["Meta Knight", [1, 70]], ["Mewtwo", [2, 36]], ["Dark Pit", [2, 24]], ["Ganondorf", [2, 78]], ["Opponent 5", [0, 0]]], 
+        "Mii Brawler": [["Palutena", [2, 100]], ["PacMan", [2, 0]], ["Ganondorf", [-1, 96]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Mario": [["Chrom", [2, 0]], ["Ice Climbers", [2, 102]], ["King K Rool", [2, 105]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "ROB": [["Richter", [2, 78]], ["Lucas", [3, 80]], ["Bayonetta", [2, 81]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_4 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "Ken": [["Chrom", [-2, 56]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Pichu": [["Terry", [1, 82]], ["Shulk", [1, 24]], ["Captain Falcon", [-1, 32]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Joker": [["King Dedede", [-1, 96]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Kazuya": [["Kazuya", [-1, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_5 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "Dark Samus": [["Ken", [2, 91]], ["Bowser Jr", [1, 20]], ["Ganondorf", [2, 0]], ["Sephiroth", [2, 93]], ["Opponent 5", [0, 0]]], 
+        "Mega Man": [["Mewtwo", [-1, 36]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Lucario": [["Min Min", [2, 140]], ["Luigi", [3, 167]], ["Ryu", [2, 112]], ["Inkling", [2, 40]], ["Opponent 5", [0, 0]]],          
+        "Olimar": [["Roy", [2, 42]], ["Villager", [2, 69]], ["Inkling", [-1, 130]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_6 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "PacMan": [["Min Min", [1, 3]], ["Yoshi", [2, 211]], ["Roy", [2, 6]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Bowser Jr": [["Kirby", [2, 39]], ["Lucas", [2, 56]], ["Captain Falcon", [2, 77]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Jigglypuff": [["Mr Game & Watch", [1, 21]], ["Joker", [1, 17]], ["Samus", [2, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Daisy": [["Dark Samus", [2, 128]], ["Dark Pit", [2, 122]], ["Pikachu", [1, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_7 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "Marth": [["Richter", [2, 164]], ["Palutena", [2, 78]], ["Meta Knight", [-1, 124]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Rosalina & Luma": [["Kirby", [2, 114]], ["Ridley", [1, 69]], ["Incineroar", [-1, 81]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Richter": [["Daisy", [2, 108]], ["Steve", [1, 0]], ["Diddy Kong", [1, 133]], ["Kazuya", [-1, 81]], ["Opponent 5", [0, 0]]],          
+        "Lucina": [["Hero", [2, 82]], ["Sora", [-1, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_8 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "Peach": [["Wii Fit Trainer", [1, 57]], ["Shulk", [1, 35]], ["Duck Hunt", [1, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Corrin": [["Marth", [2, 67]], ["Sephiroth", [1, 37]], ["Ridley", [2, 34]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Falco": [["Isabelle", [3, 185]], ["Rosalina & Luma", [2, 106]], ["Roy", [2, 47]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Pokemon Trainer": [["Daisy", [2, 136]], ["Dark Pit", [1, 175]], ["Zero Suit Samus", [3, 126]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_9 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "Ryu": [["Mario", [-1, 97]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Villager": [["Piranha Plant", [1, 110]], ["Young Link", [-1, 61]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Wii Fit Trainer": [["Corrin", [1, 46]], ["Ken", [2, 128]], ["Byleth", [2, 109]], ["Opponent 4", [0, 0]], ["Roy", [1, 15]]],          
+        "Sheik": [["Toon Link", [1, 0]], ["Samus", [2, 169]], ["Lucario", [1, 63]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_10 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "Luigi": [["Isabelle", [1, 86]], ["Peach", [1, 58]], ["Pikachu", [2, 27]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Shulk": [["Terry", [1, 0]], ["Duck Hunt", [1, 0]], ["Link", [1, 35]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Robin": [["Meta Knight", [1, 17]], ["Mega Man", [2, 27]], ["Mr Game & Watch", [2, 47]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Kirby": [["Diddy Kong", [3, 114]], ["Ice Climbers", [2, 35]], ["Mario", [1, 71]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_11 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "Zero Suit Samus": [["Shulk", [1, 89]], ["Yoshi", [1, 63]], ["Marth", [1, 73]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Ness": [["Meta Knight", [1, 29]], ["Lucas", [2, 68]], ["Incineroar", [1, 11]], ["Opponent 4", [0, 0]], ["Kazuya", [-2, 163]]], 
+        "Inkling": [["Roy", [1, 71]], ["Samus", [2, 79]], ["Simon", [2, 112]], ["Kazuya", [-1, 73]], ["Opponent 5", [0, 0]]],          
+        "Pyra & Mythra": [["Diddy Kong", [2, 56]], ["Bowser Jr", [1, 26]], ["Kazuya", [-1, 49]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_12 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "Pit": [["Dark Samus", [2, 118]], ["Ness", [2, 172]], ["Isabelle", [2, 61]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Sora": [["ROB", [2, 51]], ["Sheik", [2, 76]], ["King Dedede", [1, 28]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Wolf": [["Mewtwo", [3, 110]], ["Inkling", [2, 126]], ["Joker", [2, 89]], ["Corrin", [2, 104]], ["Opponent 5", [0, 0]]],          
+        "Fox": [["Villager", [1, 111]], ["Corrin", [-2, 92]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_13 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "Mii Swordfighter": [["Meta Knight", [1, 54]], ["Zero Suit Samus", [2, 43]], ["Lucario", [2, 155]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Ganondorf": [["Ness", [2, 59]], ["Mario", [2, 138]], ["King K Rool", [2, 75]], ["Opponent 4", [0, 0]], ["Simon", [3, 137]]], 
+        "Mr Game & Watch": [["King Dedede", [-1, 96]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Roy": [["Sonic", [2, 0]], ["Banjo & Kazooie", [-2, 59]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_14 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "Toon Link": [["King K Rool", [-1, 100]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Cloud": [["Shulk", [2, 8]], ["Ganondorf", [2, 67]], ["Duck Hunt", [1, 128]], ["Mario", [2, 53]], ["Opponent 5", [0, 0]]], 
+        "Hero": [["Incineroar", [2, 91]], ["Simon", [2, 0]], ["Robin", [1, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Dark Pit": [["Ness", [2, 100]], ["Banjo & Kazooie", [2, 120]], ["Snake", [2, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_15 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "Incineroar": [["King Dedede", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Snake": [["King K Rool", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Wario": [["Isabelle", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Greninja": [["Zelda", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_16 = {
@@ -719,7 +726,9 @@ Tourney_21 = {
 Tourney_22 = {
         "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
         "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-   }
+        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        }
 
 Tourney_List = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney_6, Tourney_7, Tourney_8, Tourney_9, Tourney_10,
                 Tourney_11, Tourney_12, Tourney_13, Tourney_14, Tourney_15, Tourney_16, Tourney_17, Tourney_18, Tourney_19,
@@ -728,10 +737,11 @@ Tourney_List = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney_6
 Tourney_List_2 = Tourney_List
 
 max_percentage = 200
-character_dict, win_loses, characters_played, all_characters = round_2_calculator(Tourney_List, max_percentage, character_dict)
+character_dict, win_loses, characters_played, all_characters, loss_dict = round_2_calculator(Tourney_List, max_percentage, character_dict, loss_dict)
 round_2_sorted_dict = dict(sorted(character_dict.items(), key=lambda item: item[1], reverse=False))
 print_sorted_dict(round_2_sorted_dict)
-
+loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], reverse=True)).copy()
+print(loss_dict)
 
 ################
 #### Report ####
@@ -745,35 +755,40 @@ with PdfPages("reports/round_2_results.pdf") as pdf:
 ##################### REPORT GENERATION ###################
 ###########################################################
 
-def round_1_score_distribution_evolution(Tourney_Lists):
+# print(renormalized_scores)
+
+copy_loss_dict = loss_dict.copy()
+
+def round_1_score_distribution_evolution(Tourney_Lists, loss_dict):
     
     with PdfPages("reports/round_1_histogram_evolution.pdf") as pdf:
         for i in range(11):
             Tourney_List = Tourney_Lists[:2*(i+1)]
-            character_dict, win_loses, characters_played, all_characters = round_1_calculator(Tourney_List, max_percentage)
+            character_dict, win_loses, characters_played, all_characters, loss_dict = round_1_calculator(Tourney_List, max_percentage, loss_dict)
             histogram_generator(character_dict, "Score", "Frequency", "Round 1: Score Distribution", pdf)
-                
     
     with PdfPages("reports/round_1_distribution_evolution.pdf") as pdf:
         for i in range(11):
             Tourney_List = Tourney_Lists[:2*(i+1)]
-            character_dict, win_loses, characters_played, all_characters = round_1_calculator(Tourney_List, max_percentage)
+            character_dict, win_loses, characters_played, all_characters, loss_dict = round_1_calculator(Tourney_List, max_percentage, loss_dict)
             distribution_generator(character_dict, "Score", "Frequency", "Round 1: Score Distribution", pdf)
             
-def round_2_score_distribution_evolution(Tourney_Lists, renormalized_scores):
+def round_2_score_distribution_evolution(Tourney_Lists, renormalized_scores, loss_dict):
     
     with PdfPages("reports/round_2_histogram_evolution.pdf") as pdf:
-        for i in range(2):
+        for i in range(7):
             Tourney_List = Tourney_Lists[:2*(i+1)]
-            character_dict, win_loses, characters_played, all_characters = round_2_calculator(Tourney_List, max_percentage, renormalized_scores)
-            histogram_generator(character_dict, "Score", "Frequency", "Round 2: Score Distribution", pdf)
-                
+            character_dict, temp_loss_dict = renormalized_scores.copy(), loss_dict.copy()
+            character_dict, win_loses, characters_played, all_characters, temp_loss_dict = round_2_calculator(Tourney_List, max_percentage, character_dict, temp_loss_dict)
+            histogram_generator(character_dict, "Score", "Frequency", "Round 2: Score Distribution", pdf)     
+            
     character_dict = {}
     with PdfPages("reports/round_2_distribution_evolution.pdf") as pdf:
-        for i in range(2):
+        for i in range(7):
             Tourney_List = Tourney_Lists[:2*(i+1)]
-            character_dict, win_loses, characters_played, all_characters = round_2_calculator(Tourney_List, max_percentage, renormalized_scores)
-            distribution_generator(character_dict, "Score", "Frequency", "Round 2: Score Distribution", pdf)
+            character_dict, temp_loss_dict = renormalized_scores.copy(), loss_dict.copy()
+            character_dict, win_loses, characters_played, all_characters, temp_loss_dict = round_2_calculator(Tourney_List, max_percentage, character_dict, temp_loss_dict)
+            distribution_generator(character_dict, "Score", "Frequency", "Round 2: Score Distribution", pdf)   
             
-round_1_score_distribution_evolution(Tourney_List_1)
-round_2_score_distribution_evolution(Tourney_List_2, renormalized_scores)
+round_1_score_distribution_evolution(Tourney_List_1, copy_loss_dict)
+round_2_score_distribution_evolution(Tourney_List_2, renormalized_scores, copy_loss_dict)
