@@ -1,0 +1,91 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Diddy Kong,Simon,1,0,1,-1,128,0.731,2,0.731
+Snake,Daisy,1,0,1,-1,54,0.309,-1,0.309
+Lucina,Piranha Plant,1,0,1,-1,176,1.0,0,1.0
+Ryu,Pyra & Mythra,1,1,0,2,70,2.6,0,2.6
+Ryu,Kazuya,2,0,1,-2,73,-0.583,-1,2.0170000000000003
+Pichu,Steve,1,0,1,-1,82,0.469,-2,0.469
+Daisy,Sora,1,0,1,-2,24,-0.863,1,-0.863
+Terry,Bowser,1,0,1,-1,156,0.891,0,0.891
+Olimar,Joker,1,1,0,2,68,2.611,1,2.611
+Olimar,Ice Climbers,2,0,1,-2,70,-0.6,1,2.011
+Zero Suit Samus,King Dedede,1,0,1,-1,123,0.703,2,0.703
+Shulk,Meta Knight,1,0,1,-1,95,0.543,2,0.543
+Richter,Daisy,1,1,0,2,12,2.931,0,2.931
+Richter,Isabelle,2,0,1,-2,107,-0.389,0,2.542
+Villager,Link,1,1,0,2,105,2.4,1,2.4
+Villager,Joker,2,1,0,2,136,2.223,1,4.622999999999999
+Villager,Olimar,3,0,1,-1,6,0.034,-2,4.657
+Greninja,Captain Falcon,1,1,0,2,119,2.32,0,2.32
+Greninja,Joker,2,0,1,-1,72,0.411,-1,2.731
+Byleth,Marth,1,1,0,2,0,3.0,0,3.0
+Byleth,Bayonetta,2,1,0,3,106,3.394,2,6.394
+Byleth,Ridley,3,0,1,-1,13,0.074,2,6.468
+Fox,PacMan,1,1,0,1,14,1.92,2,1.92
+Fox,Peach,2,1,0,2,86,2.509,0,4.429
+Fox,Lucario,3,1,0,2,62,2.646,2,7.074999999999999
+Marth,Wii Fit Trainer,1,1,0,1,0,2.0,-1,2.0
+Marth,Olimar,2,1,0,3,97,3.446,0,5.446
+Marth,Bowser,3,0,1,-1,49,0.28,1,5.726
+Palutena,Pyra & Mythra,1,1,0,1,100,1.429,0,1.429
+Palutena,Steve,2,1,0,3,136,3.223,0,4.652
+Palutena,Donkey Kong,3,0,1,-1,81,0.463,1,5.115
+Mii Gunner,Fox,1,1,0,2,0,3.0,-2,3.0
+Mii Gunner,Piranha Plant,2,1,0,3,182,3.0,3,6.0
+Mii Gunner,Sephiroth,3,1,0,1,13,1.926,0,7.926
+Mr Game & Watch,Toon Link,1,1,0,2,148,2.154,0,2.154
+Mr Game & Watch,Sora,2,1,0,1,78,1.554,0,3.708
+Mr Game & Watch,Olimar,3,1,0,2,45,2.743,-1,6.451
+Mr Game & Watch,Greninja,4,1,0,2,4,2.977,1,9.427999999999999
+Mii Brawler,King K Rool,1,1,0,1,38,1.783,3,1.783
+Mii Brawler,Luigi,2,1,0,2,92,2.474,-1,4.257
+Mii Brawler,Lucario,3,1,0,2,32,2.817,2,7.074
+Yoshi,Donkey Kong,1,1,0,1,0,2.0,0,2.0
+Yoshi,Chrom,2,1,0,2,78,2.554,2,4.554
+Yoshi,Incineroar,3,1,0,2,43,2.754,0,7.308
+Yoshi,Olimar,4,1,0,2,125,2.286,-1,9.594
+Pikachu,Marth,1,1,0,2,130,2.257,1,2.257
+Pikachu,Banjo & Kazooie,2,1,0,3,171,3.023,0,5.28
+Pikachu,Wolf,3,1,0,2,52,2.703,-1,7.9830000000000005
+Rosalina & Luma,Mr Game & Watch,1,1,0,1,0,2.0,2,2.0
+Rosalina & Luma,Wii Fit Trainer,2,1,0,2,68,2.611,0,4.611000000000001
+Rosalina & Luma,Corrin,3,1,0,2,115,2.343,0,6.954000000000001
+Rosalina & Luma,Palutena,4,1,0,1,116,1.337,0,8.291
+Toon Link,Bowser,1,1,0,2,113,2.354,0,2.354
+Toon Link,Fox,2,1,0,2,12,2.931,-2,5.285
+Toon Link,Young Link,3,1,0,2,45,2.743,0,8.028
+Sheik,Chrom,1,1,0,2,116,2.337,0,2.337
+Sheik,Bowser,2,1,0,1,120,1.314,0,3.6510000000000002
+Sheik,Pokemon Trainer,3,1,0,1,70,1.6,1,5.251
+Sheik,Meta Knight,4,1,0,2,16,2.909,-1,8.16
+Peach,Mario,1,1,0,1,56,1.68,0,1.68
+Peach,Marth,2,1,0,1,0,2.0,1,3.6799999999999997
+Peach,Min Min,3,1,0,1,99,1.434,-1,5.114
+Peach,Sora,4,1,0,2,26,2.851,1,7.965
+Peach,Donkey Kong,5,1,0,2,62,2.646,-1,10.611
+Meta Knight,Diddy Kong,1,1,0,3,159,3.091,-3,3.091
+Meta Knight,Min Min,2,1,0,2,99,2.434,1,5.525
+Meta Knight,Toon Link,3,1,0,2,58,2.669,-1,8.194
+Meta Knight,Jigglypuff,4,1,0,1,0,2.0,-2,10.194
+Meta Knight,Young Link,5,1,0,2,0,3.0,0,13.194
+Mario,Young Link,1,1,0,3,160,3.086,1,3.086
+Mario,Shulk,2,1,0,2,0,3.0,2,6.086
+Mario,Rosalina & Luma,3,1,0,1,72,1.589,-1,7.675
+Mario,Toon Link,4,1,0,1,62,1.646,1,9.321
+Roy,Ken,1,1,0,3,124,3.291,1,3.291
+Roy,Greninja,2,1,0,3,176,3.0,0,6.291
+Roy,Diddy Kong,3,1,0,2,61,2.651,-1,8.942
+Roy,Byleth,4,1,0,1,0,2.0,0,10.942
+King Dedede,Fox,1,1,0,2,88,2.497,-1,2.497
+King Dedede,Kazuya,2,1,0,2,146,2.166,-1,4.663
+King Dedede,Pokemon Trainer,3,1,0,2,21,2.88,-1,7.542999999999999
+King Dedede,Ice Climbers,5,1,0,3,115,3.343,-1,10.886
+Samus,Rosalina & Luma,1,1,0,2,12,2.931,-2,2.931
+Samus,Pikachu,2,1,0,1,77,1.56,1,4.491
+Samus,Ganondorf,3,1,0,2,93,2.469,1,6.96
+Samus,Link,4,1,0,3,130,3.257,2,10.217
+Samus,Bowser,5,1,0,2,20,2.886,0,13.103
+Pyra & Mythra,Marth,1,1,0,3,110,3.371,0,3.371
+Pyra & Mythra,ROB,2,1,0,3,189,3.0,0,6.371
+Pyra & Mythra,Ice Climbers,3,1,0,2,0,3.0,1,9.371
+Pyra & Mythra,Bowser,4,0,1,-1,99,0.566,2,9.937
