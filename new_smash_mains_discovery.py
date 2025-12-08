@@ -1094,10 +1094,11 @@ Tourney_8 = {
 Tourney_List_3 = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney_6, Tourney_7, Tourney_8]
 
 round_3_scores_dict = dict(sorted(renormalized_round_2_scores.items(), key=lambda x: x[1])[6:38])
+inital_round_3_scores = round_3_scores_dict.copy()
 max_percentage = 175
 round_3_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_3_calculator(Tourney_List_3, max_percentage, round_3_scores_dict, loss_dict)
 round_3_scores_dict = dict(sorted(round_3_scores_dict.items(), key=lambda item: item[1], reverse=False))
-print("Round 3 Scores")
+# print("Round 3 Scores")
 # print_sorted_dict(round_3_scores_dict)
 round_3_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], reverse=True)).copy()
 # print_sorted_dict(round_3_loss_dict)
@@ -1187,7 +1188,7 @@ def records(Tourneys, record_dict, max_percentage=200):
 ##################################################
 
 with PdfPages("reports/round_3_results.pdf") as pdf:
-    round_3_generator(character_dict, win_loses, pdf)
+    round_3_generator(round_3_scores_dict, win_loses, pdf)
 
 bottom_16 = {"Diddy Kong": 80,
              "Snake": 79,
@@ -1631,7 +1632,7 @@ all_round_scores_dict = bottom_6 | round_3_scores_dict | round_4_scores_dict
 all_round_scores_dict = dict(sorted(all_round_scores_dict.items(), key=lambda item: item[1], reverse=False))
 final_ranks = {character: rank + 1 for rank, character in enumerate(all_round_scores_dict)}
 
-with PdfPages("reports/ranking_changes_1.pdf") as pdf:
+with PdfPages("reports/ranking_changes/ranking_changes_1.pdf") as pdf:
     ranking_changes(characters, initial_ranks, final_ranks)
     
 #%%
@@ -1654,6 +1655,9 @@ def round_4_renormalizer(round_3_and_4_scores_dict):
 round_5_character_dict = round_4_renormalizer(round_3_and_4_scores_dict)
 round_5_scores_dict = {character:score for character,score in round_5_character_dict.items() if score <= round_5_character_dict["Pyra & Mythra"]}
 round_6_scores_dict = {character:score for character,score in round_5_character_dict.items() if score > round_5_character_dict["Pyra & Mythra"]}
+
+# for rank changes visual
+inital_round_5_scores = round_5_scores_dict.copy()
 
 #%%
 #######################################################
@@ -1906,8 +1910,8 @@ Tourney_10 = {
     }
 
 Tourney_11 = {
-    "Pyra & Mythra": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Luigi": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]]}
+    "Pyra & Mythra": [["Diddy Kong", [3, 189]], ["Sonic", [2, 80]], ["Peach", [2, 35]], ["Pit", [3, 110]], ["Opponent 5", [0, 0]]], 
+    "Luigi": [["Fox", [2, 16]], ["Dark Pit", [1, 47]], ["Joker", [1, 13]], ["Pichu", [2, 0]], ["Opponent 5", [0, 0]]]}
 
 Tourney_List_5 = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney_6, 
                   Tourney_7, Tourney_8, Tourney_9, Tourney_10, Tourney_11]
@@ -1923,7 +1927,160 @@ round_5_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], rev
 ################### ANALYSIS #####################
 ##################################################
 
-# TBD
+def ranking_changes_2nd_elimination(characters, initial_ranks, final_ranks):
+    
+    # Previous and CUrrent Ranks
+    old_ranks = [rank for character, rank in initial_ranks.items()]
+    new_ranks = [final_ranks[character] for character in initial_ranks]
+    
+    def ordinal(n: int) -> str:
+        # Handle special cases for 11th, 12th, 13th
+        if 10 <= n % 100 <= 20:
+            suffix = "th"
+        else:
+            suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+        return f"{n}{suffix}"
+
+    colors = []
+    fig, ax = plt.subplots(figsize=(15,15))
+
+    for i, char in enumerate(characters):
+        # Left side: old rank + name
+        ax.text(0, old_ranks[i], f"{ordinal(old_ranks[i])} {char}",
+                ha='right', va='center', fontsize=8)
+        
+        # Right side: new rank + name
+        ax.text(1, new_ranks[i], f"{ordinal(new_ranks[i])} {char}",
+                ha='left', va='center', fontsize=8)
+        
+        # Top 32 End Placements
+        if old_ranks[i] < 33 and new_ranks[i] < 33:
+            color = "purple"   # stayed top 10
+        if 65 > old_ranks[i] > 48 and new_ranks[i] < 33:
+            color = "green"     # massive improvement
+        if 49 > old_ranks[i] > 32 and new_ranks[i] < 33:
+            color = "pink"     # jumped into top 10
+        
+        # Top 48 End Placements
+        if old_ranks[i] < 33 and (49 > new_ranks[i] > 32):
+            color = "orange"     # dropped from 32nd to 23rd to bottom 48
+        if (49 > old_ranks[i] > 32) and (49 > new_ranks[i] > 32):
+            color = "gray"     # staying consistent, no improvement
+        if old_ranks[i] > 48 and (49 > new_ranks[i] > 32):
+            color = "yellow"     # improved but still struggling 
+
+        # Top 64 End Placements
+        if old_ranks[i] < 33 and new_ranks[i] > 48:
+            color = "brown"    # worst case scenario
+        if (49 > old_ranks[i] > 32) and (65 > new_ranks[i] > 48):
+            color = "red"    # slipped to bottom elimination spot
+        if (65 > old_ranks[i] > 48) and (65 > new_ranks[i] > 48):
+            color = "black"    # stayed in eliminat
+
+        colors.append(color)
+
+        # Arrow showing movement
+        ax.annotate("",
+                    xy=(1, new_ranks[i]), xycoords='data',
+                    xytext=(0, old_ranks[i]), textcoords='data',
+                    arrowprops=dict(arrowstyle="->", lw=2, color=color))
+
+    # Format axes
+    ax.set_xlim(-0.5, 1.5)
+    ax.set_ylim(22.5, len(characters)+22.5)
+    
+    # Flip so rank 1 is at the top
+    ax.invert_yaxis()
+    
+    ax.axis("off")
+    ax.set_title("Rank Changes", fontsize=14)
+
+    pdf.savefig(fig, bbox_inches="tight")
+    plt.close()                 
+
+# Round 5 Ranking Regions
+rank_86_to_81 = {character: score for character, score in round_2_scores_dict.items() if score < 4.00}
+rank_80_to_65 = {character: score for character, score in round_3_scores_dict.items() if score < 13.50}
+rank_64_to_49 = {character: score for character, score in round_5_scores_dict.items() if score < 17.00}
+rank_48_to_23 = {character: score for character, score in round_5_scores_dict.items() if score > 17.00}
+
+# Round 5 Ranking Changes Chart
+initial_ranks = {character: len(inital_round_5_scores) + 22 - rank for rank, character in enumerate(inital_round_5_scores)}
+final_ranks = {character: len(round_5_scores_dict) + 22 - rank for rank, character in enumerate(round_5_scores_dict)}
+characters = [character for character in inital_round_5_scores]
+
+with PdfPages("reports/ranking_changes/2nd_elimination.pdf") as pdf:
+    ranking_changes_2nd_elimination(characters, initial_ranks, final_ranks)
+
+################################################################
+################### Round 3 Ranking Changes ####################
+################################################################
+
+def ranking_changes_1st_elimination(characters, initial_ranks, final_ranks):
+    
+    # Previous and CUrrent Ranks
+    old_ranks = [rank for character, rank in initial_ranks.items()]
+    new_ranks = [final_ranks[character] for character in initial_ranks]
+    
+    def ordinal(n: int) -> str:
+        # Handle special cases for 11th, 12th, 13th
+        if 10 <= n % 100 <= 20:
+            suffix = "th"
+        else:
+            suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+        return f"{n}{suffix}"
+
+    colors = []
+    fig, ax = plt.subplots(figsize=(15,15))
+
+    for i, char in enumerate(characters):
+        # Left side: old rank + name
+        ax.text(0, old_ranks[i], f"{ordinal(old_ranks[i])} {char}",
+                ha='right', va='center', fontsize=8)
+        
+        # Right side: new rank + name
+        ax.text(1, new_ranks[i], f"{ordinal(new_ranks[i])} {char}",
+                ha='left', va='center', fontsize=8)
+        
+        print(old_ranks[i], new_ranks[i])
+        
+        # Top 32 End Placements
+        if (64 >= old_ranks[i] >= 49) and (64 >= new_ranks[i] >= 49):
+            color = "purple"    # maintained safety
+        if (80 >= old_ranks[i] >= 65) and (64 >= new_ranks[i] >= 49):
+            color = "green"    # upgraded to safety
+        if (64 >= old_ranks[i] >= 49) and (80 >= new_ranks[i] >= 65):
+            color = "red"      # dowgraded to elimination
+        if (80 >= old_ranks[i] >= 65) and (80 >= new_ranks[i] >= 65):
+            color = "black"    # stayed in elimination
+
+        # Arrow showing movement
+        ax.annotate("",
+                    xy=(1, new_ranks[i]), xycoords='data',
+                    xytext=(0, old_ranks[i]), textcoords='data',
+                    arrowprops=dict(arrowstyle="->", lw=2, color=color))
+
+    # Format axes
+    ax.set_xlim(-0.5, 1.5)
+    ax.set_ylim(49.5, len(characters)+80.5)
+    
+    # Flip so rank 1 is at the top
+    ax.invert_yaxis()
+    
+    ax.axis("off")
+    ax.set_title("Rank Changes", fontsize=14)
+
+    pdf.savefig(fig, bbox_inches="tight")
+    plt.close()      
+    
+# Round 3 Ranking Changes Chart
+
+initial_ranks = {character: len(inital_round_3_scores) + 48 - rank for rank, character in enumerate(inital_round_3_scores)}
+final_ranks = {character: len(round_3_scores_dict) + 48 - rank for rank, character in enumerate(round_3_scores_dict)}
+characters = [character for character in inital_round_3_scores]
+
+with PdfPages("reports/ranking_changes/1st_elimination.pdf") as pdf:
+    ranking_changes_1st_elimination(characters, initial_ranks, final_ranks)
 
 #%%
 ##################################################
@@ -1931,24 +2088,24 @@ round_5_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], rev
 ##################################################
 
 with PdfPages("reports/round_5_results.pdf") as pdf:
-    round_4_generator(character_dict, win_loses, pdf)
+    round_5_generator(round_5_scores_dict, win_loses, pdf)
 
-bottom_16 = {"Diddy Kong": 64,
-             "Snake": 63,
-             "Lucina": 62,
-             "Ryu": 61,
-             "Pichu": 60,
-             "Daisy": 59,
-             "Terry": 58,
-             "Olimar": 57,
-             "Zero Suit Samus": 56,
-             "Shulk": 55,
-             "Richter": 54,
-             "Villager": 53,
-             "Greninja": 52,
-             "Byleth": 51,
-             "Fox": 50,
-             "Marth": 49}
+bottom_16 = {"Robin": 64,
+             "Fox": 63,
+             "Palutena": 62,
+             "Jigglypuff": 61,
+             "Wolf": 60,
+             "Mii Brawler": 59,
+             "Peach": 58,
+             "Marth": 57,
+             "Sheik": 56,
+             "Ness": 55,
+             "Mario": 54,
+             "Mii Swordfighter": 53,
+             "Dark Samus": 52,
+             "Lucario": 51,
+             "PacMan": 50,
+             "Wii Fit Trainer": 49}
              
 eliminated_49_to_64 = {character for character in bottom_16}
             
@@ -1974,6 +2131,22 @@ def round_5_score_distribution_evolution(Tourney_Lists, renormalized_scores, los
 round_5_scores = round_5_scores_dict.copy()
 round_5_score_distribution_evolution(Tourney_List_5, round_5_scores, copy_loss_dict)
 
+#%%
+##################################################
+################ REPORT GENERATION ###############
+##################################################
+'''
+def random_sigmoid(rank_64_to_49, round_5_scores_dict):
+    
+    # goal is to have scores range from 64 up at least greater than rank 65
+    
+    for character, score in rank_64_to_49.items():
+        round_5_scores_dict[character] = round(13.5 + (3.5/(1 + np.exp(-(score-13.5)))),2)
+
+    return round_5_scores_dict
+
+round_5_scores_dict = random_sigmoid(rank_64_to_49, round_5_scores_dict)
+'''
 #%%
 #############################
 ########## RECORDS ##########
@@ -2006,7 +2179,6 @@ round_4_records["Score"] = pd.to_numeric(round_4_records["Score"], errors="coerc
 round_4_records["Accumulated_Sum"] = round_4_records.groupby("Character")["Score"].cumsum()
 round_4_records.to_csv("records/round_4_records.csv", index=False)
 
-'''
 # Round 5 Only
 max_percentage = 175
 blank_dict = {character:[] for character in round_5_scores_dict}
@@ -2015,7 +2187,6 @@ round_5_records = records(Tourneys, blank_dict, max_percentage)
 round_5_records["Score"] = pd.to_numeric(round_5_records["Score"], errors="coerce")
 round_5_records["Accumulated_Sum"] = round_5_records.groupby("Character")["Score"].cumsum()
 round_5_records.to_csv("records/round_5_records.csv", index=False)
-'''
 
 # All Rounds
 max_percentage = 200
