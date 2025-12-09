@@ -1659,11 +1659,6 @@ round_6_scores_dict = {character:score for character,score in round_5_character_
 # for rank changes visual
 inital_round_5_scores = round_5_scores_dict.copy()
 
-#%%
-#######################################################
-####################### ROUND 4 #######################
-#######################################################
-
 """
 
 Recalculated Scores; Divided into Quintiles of 16 Characters each from 80th to 1st
@@ -1919,6 +1914,7 @@ Tourney_List_5 = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney
 max_percentage = 150
 round_5_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_5_calculator(Tourney_List_5, max_percentage, round_5_scores_dict, loss_dict)
 round_5_scores_dict = dict(sorted(round_5_scores_dict.items(), key=lambda item: item[1], reverse=False))
+initial_round_5_scores = round_5_scores_dict.copy()
 print_sorted_dict(round_5_scores_dict)
 round_5_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], reverse=True)).copy()
 
@@ -2042,8 +2038,6 @@ def ranking_changes_1st_elimination(characters, initial_ranks, final_ranks):
         ax.text(1, new_ranks[i], f"{ordinal(new_ranks[i])} {char}",
                 ha='left', va='center', fontsize=8)
         
-        print(old_ranks[i], new_ranks[i])
-        
         # Top 32 End Placements
         if (64 >= old_ranks[i] >= 49) and (64 >= new_ranks[i] >= 49):
             color = "purple"    # maintained safety
@@ -2121,7 +2115,7 @@ def round_5_score_distribution_evolution(Tourney_Lists, renormalized_scores, los
             histogram_generator(character_dict, "Score", "Frequency", "Round 5: Rank 23 to 64 Score Distribution", pdf)     
             
     character_dict = {}
-    with PdfPages("reports/round_4_distribution_evolution.pdf") as pdf:
+    with PdfPages("reports/round_5_distribution_evolution.pdf") as pdf:
         for i in range(4):
             Tourney_List = Tourney_Lists[:2*(i+1)]
             character_dict, temp_loss_dict = renormalized_scores.copy(), loss_dict.copy()
@@ -2147,7 +2141,289 @@ def random_sigmoid(rank_64_to_49, round_5_scores_dict):
 
 round_5_scores_dict = random_sigmoid(rank_64_to_49, round_5_scores_dict)
 '''
+
+
 #%%
+######################################################
+######################## ROUND 6 #####################
+######################################################
+
+# for rank changes visual
+inital_round_6_scores = round_6_scores_dict.copy()
+
+"""
+
+Round 6 Grader
+
+IF Stock_Diff > 0
+1pt/Stock_Diff and 0.05pts per 10% below 150%
+Score is Multiplied by (1 + (match_number)*0.5)
+
+ex)
+
+IF Stock_Diff < 0
+0pts for 1 Stock Diff, -1pts for 2 Stock, etc.
+0.05pts per 10% Damage Given up to 175%
+Score is Multiplied by (1 + (match_number)*0.5)
+
+ex) 
+
+Bonus Match Points are Divided by Round Number
+
+"""
+
+def round_6_calculator(Tourney_List, max_percentage, character_dict, loss_dict):
+    
+    example_tourney = {
+        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        }
+    
+    win_loses = {"Lost Round 1": [0, 0, []], "Lost Round 2": [0, 0, []], "Lost Round 3": [0, 0, []], "Lost Round 4": [0, 0, []], 
+                 "Lost Round 5": [0, 0, []], "Won Round 3": [0, 0, []], "Won Round 4": [0, 0, []], "Won Tourney": [0, 0, []]}
+    
+    characters_played = set()
+    all_characters = set()
+    for tourney in Tourney_List:
+        if tourney == example_tourney: 
+            continue
+        for key, fights in tourney.items():
+            characters_played.add(key)
+            for n, fight in enumerate(fights):
+                # print(key, fight[1][0], fights)
+                all_characters.add(fight[0])
+                multiplier = 1 if not bool(fight[1][0]) else (1 - matchup_df[matchup_df["Character"] == key.lower()][fight[0].lower()].iloc[0]/20)
+                if fight[1][0] > 0 and n + 1 <= 3:
+                    match_won = True
+                    score = multiplier*(1 + n/2)*(fight[1][0] + (max(0, max_percentage - fight[1][1]))/max_percentage)
+                    character_dict[key] += score
+                elif fight[1][0] > 0 and n + 1 > 3:
+                    match_won = True
+                    score = multiplier*(1 + n/2)*(fight[1][0] + (max(0, max_percentage - fight[1][1]))/max_percentage)/(n + 1)
+                    character_dict[key] += score
+                    if (n + 1 == 5): 
+                        win_loses["Won Tourney"][0] += 1
+                        win_loses["Won Tourney"][1] += character_dict[key]
+                        win_loses["Won Tourney"][2].append(key)
+                elif fight[1][0] < 0 and n + 1 <= 3:
+                    loss_dict[fight[0]] += 1
+                    match_won = False
+                    score = multiplier*(1 + n/2)*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))
+                    character_dict[key] += score
+                    if (n + 1 == 1): 
+                        win_loses["Lost Round 1"][0] += 1
+                        win_loses["Lost Round 1"][1] += character_dict[key]
+                        win_loses["Lost Round 1"][2].append(key)
+                    if (n + 1 == 2): 
+                        win_loses["Lost Round 2"][0] += 1
+                        win_loses["Lost Round 2"][1] += character_dict[key]
+                        win_loses["Lost Round 2"][2].append(key)
+                    if (n + 1 == 3): 
+                        win_loses["Lost Round 3"][0] += 1
+                        win_loses["Lost Round 3"][1] += character_dict[key]
+                        win_loses["Lost Round 3"][2].append(key)
+                elif fight[1][0] < 0 and n + 1 > 3:
+                    loss_dict[fight[0]] += 1
+                    match_won = False
+                    score = multiplier*(1 + n/2)*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))/(n + 1)
+                    character_dict[key] += score
+                    if (n + 1 == 4): 
+                        win_loses["Lost Round 4"][0] += 1
+                        win_loses["Lost Round 4"][1] += character_dict[key]
+                        win_loses["Lost Round 4"][2].append(key)
+                    if (n + 1 == 5): 
+                        win_loses["Lost Round 5"][0] += 1
+                        win_loses["Lost Round 5"][1] += character_dict[key]
+                        win_loses["Lost Round 5"][2].append(key)
+                else:
+                    if n + 1 == 4 and match_won: 
+                        win_loses["Won Round 3"][0] += 1
+                        win_loses["Won Round 3"][1] += character_dict[key]
+                        win_loses["Won Round 3"][2].append(key)
+                        match_won = False
+                    if n + 1 == 5 and match_won: 
+                        win_loses["Won Round 4"][0] += 1    
+                        win_loses["Won Round 4"][1] += character_dict[key]
+                        win_loses["Won Round 4"][2].append(key)
+                
+    for fighter in character_dict:
+        character_dict[fighter] = int(character_dict[fighter]*100)/100
+    
+    return character_dict, win_loses, characters_played, all_characters, loss_dict 
+
+def round_6_generator(character_dict, win_loses, pdf):
+    
+    # Win Category Data
+    win_loss_totals = {category:total for category, (total, total_score, characters) in win_loses.items()}
+    win_loss_averages = {category:int(200*total_score/(1 if not total else total))/200 for category, (total, total_score, characters) in win_loses.items()}
+    win_loss_characters = {category:characters for category, (total, total_score, characters) in win_loses.items()}
+    
+    # Win Category Plotting and Tables
+    bar_generator(win_loss_totals, "Count", "Category", "Round 6: Rank 1 to 22 - Win/Loss Categories", pdf)
+    bar_generator(win_loss_averages, "Average Score", "Category", "Round 6: Rank 1 to 22 - Score Comparisons", pdf)
+    table_generator(win_loss_characters, "Round 6: Rank 1 to 22 - Character Fighting End Scenario Table", pdf)
+    
+    # Score Distributions
+    histogram_generator(character_dict, "Score", "Frequency", "Round 6: Rank 1 to 22 Score Distribution", pdf)
+    distribution_generator(character_dict, "Score", "Density", "Round 6: Rank 1 to 22 Score Density Plot", pdf)
+    
+###########################
+###### Matches 22-1 #######
+###########################
+
+# 22 14.775 Inkling
+# 21 14.979 Hero
+# 20 15.034 Pit
+# 19 15.412 Captain Falcon
+# 18 15.426 Falco
+# 17 15.486 Min Min
+# 16 15.641 King K Rool
+# 15 15.688 Cloud
+# 14 15.802 Kirby
+# 13 15.809 Sephiroth
+# 12 15.989 Isabelle
+# 11 16.375 Ganondorf
+# 10 16.454 Duck Hunt
+# 9 16.738 Lucas
+# 8 16.876 Dr Mario
+# 7 17.014 Incineroar
+# 6 17.295 Ice Climbers
+# 5 17.38 Ridley
+# 4 17.646 Ike
+# 3 17.866 Link
+# 2 17.95 Chrom
+# 1 18.592 Zelda
+
+
+Tourney_1 = {
+        "Captain Falcon": [["Bayonetta", [2, 0]], ["Marth", [1, 0]], ["Terry", [-1, 60]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Hero": [["Wario", [3, 81]], ["Byleth", [1, 94]], ["Yoshi", [1, 57]], ["Terry", [-1, 109]], ["Opponent 5", [0, 0]]], 
+        "Inkling": [["Simon", [-2, 158]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Pit": [["Olimar", [-1, 50]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        }
+
+Tourney_2 = {
+        "Min Min": [["Steve", [2, 34]], ["Young Link", [2, 100]], ["Duck Hunt", [2, 29]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Cloud": [["Snake", [1, 0]], ["Joker", [2, 0]], ["lucas", [3, 122]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "King K Rool": [["Ness", [2, 0]], ["Diddy Kong", [3, 121]], ["Mr Game & Watch", [2, 85]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Falco": [["Bowser Jr", [1, 82]], ["Ice Climbers", [3, 169]], ["Zelda", [1, 13]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        }
+
+Tourney_3 = {
+        "Ganondorf": [["Dark Samus", [-1, 50]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Kirby": [["Duck Hunt", [2, 102]], ["Pit", [2, 0]], ["Greninja", [3, 88]], ["Inkling", [1, 133]], ["Opponent 5", [0, 0]]], 
+        "Isabelle": [["Incineroar", [1, 90]], ["Villager", [2, 8]], ["Mario", [2, 160]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Sephiroth": [["Richter", [1, 0]], ["Chrom", [2, 63]], ["Sonic", [1, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        }
+
+Tourney_4 = {
+        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        }
+
+Tourney_5 = {
+        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        }
+
+Tourney_6 = {
+        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        }
+
+Tourney_List_6 = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney_6]
+
+max_percentage = 150
+round_6_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_6_calculator(Tourney_List_6, max_percentage, round_6_scores_dict, loss_dict)
+round_6_scores_dict = dict(sorted(round_6_scores_dict.items(), key=lambda item: item[1], reverse=False))
+print_sorted_dict(round_6_scores_dict)
+round_6_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], reverse=True)).copy()
+
+#%%
+##################################################
+################### ANALYSIS #####################
+##################################################
+
+def ranking_changes_2nd_remerger(characters, initial_ranks, final_ranks):
+    
+    # Previous and CUrrent Ranks
+    old_ranks = [rank for character, rank in initial_ranks.items()]
+    new_ranks = [final_ranks[character] for character in initial_ranks]
+    
+    def ordinal(n: int) -> str:
+        # Handle special cases for 11th, 12th, 13th
+        if 10 <= n % 100 <= 20:
+            suffix = "th"
+        else:
+            suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+        return f"{n}{suffix}"
+
+    colors = []
+    fig, ax = plt.subplots(figsize=(15,15))
+
+    for i, char in enumerate(characters):
+        # Left side: old rank + name
+        ax.text(0, old_ranks[i], f"{ordinal(old_ranks[i])} {char}",
+                ha='right', va='center', fontsize=8)
+        
+        # Right side: new rank + name
+        ax.text(1, new_ranks[i], f"{ordinal(new_ranks[i])} {char}",
+                ha='left', va='center', fontsize=8)
+        
+        # Top 32 End Placements
+        if old_ranks[i] < 33 and new_ranks[i] < 33:
+            color = "purple"   # stayed top 10
+        if 65 > old_ranks[i] > 48 and new_ranks[i] < 33:
+            color = "green"     # massive improvement
+        if 49 > old_ranks[i] > 32 and new_ranks[i] < 33:
+            color = "pink"     # jumped into top 10
+        
+        # Top 48 End Placements
+        if old_ranks[i] < 33 and (49 > new_ranks[i] > 32):
+            color = "orange"     # dropped from 32nd to 23rd to bottom 48
+        if (49 > old_ranks[i] > 32) and (49 > new_ranks[i] > 32):
+            color = "gray"     # staying consistent, no improvement
+        if old_ranks[i] > 48 and (49 > new_ranks[i] > 32):
+            color = "yellow"     # improved but still struggling 
+
+        # Top 64 End Placements
+        if old_ranks[i] < 33 and new_ranks[i] > 48:
+            color = "brown"    # worst case scenario
+        if (49 > old_ranks[i] > 32) and (65 > new_ranks[i] > 48):
+            color = "red"    # slipped to bottom elimination spot
+        if (65 > old_ranks[i] > 48) and (65 > new_ranks[i] > 48):
+            color = "black"    # stayed in eliminat
+
+        colors.append(color)
+
+        # Arrow showing movement
+        ax.annotate("",
+                    xy=(1, new_ranks[i]), xycoords='data',
+                    xytext=(0, old_ranks[i]), textcoords='data',
+                    arrowprops=dict(arrowstyle="->", lw=2, color=color))
+
+    # Format axes
+    ax.set_xlim(-0.5, 1.5)
+    ax.set_ylim(22.5, len(characters)+22.5)
+    
+    # Flip so rank 1 is at the top
+    ax.invert_yaxis()
+    
+    ax.axis("off")
+    ax.set_title("Rank Changes", fontsize=14)
+
+    pdf.savefig(fig, bbox_inches="tight")
+    plt.close() 
+    
+#%%   
 #############################
 ########## RECORDS ##########
 #############################
