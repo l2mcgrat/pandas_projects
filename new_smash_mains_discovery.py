@@ -1915,7 +1915,7 @@ max_percentage = 150
 round_5_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_5_calculator(Tourney_List_5, max_percentage, round_5_scores_dict, loss_dict)
 round_5_scores_dict = dict(sorted(round_5_scores_dict.items(), key=lambda item: item[1], reverse=False))
 initial_round_5_scores = round_5_scores_dict.copy()
-print_sorted_dict(round_5_scores_dict)
+# print_sorted_dict(round_5_scores_dict)
 round_5_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], reverse=True)).copy()
 
 #%%
@@ -2319,24 +2319,22 @@ Tourney_3 = {
         }
 
 Tourney_4 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "Duck Hunt": [["Greninja", [1, 59]], ["Pit", [-1, 48]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Incineroar": [["Chrom", [2, 7]], ["Captain Falcon", [-1, 72]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Lucas": [["Diddy Kong", [2, 69]], ["Kazuya", [-2, 16]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Dr Mario": [["Donkey Kong", [3, 121]], ["Pyra & Mythra", [1, 40]], ["PacMan", [3, 164]], ["Marth", [2, 0]], ["Captain Falcon", [-1, 64]]] 
         }
 
 Tourney_5 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "Ridley": [["Corrin", [3, 187]], ["ROB", [3, 186]], ["Zero Suit Samus", [2, 10]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Ike": [["Ryu", [2, 128]], ["Diddy Kong", [2, 60]], ["Little Mac", [1, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Ice Climbers": [["Ken", [2, 56]], ["Simon", [1, 42]], ["Mario", [2, 60]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+        "Link": [["Banjo & Kazooie", [1, 76]], ["Shulk", [2, 52]], ["Jigglypuff", [3, 125]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
         }
 
 Tourney_6 = {
-        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-        "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-        "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        "Chrom": [["Ness", [3, 123]], ["Donkey Kong", [2, 62]], ["Cloud", [2, 0]], ["Wolf", [1, 17]], ["Opponent 5", [0, 0]]], 
+        "Zelda": [["Bayonetta", [2, 0]], ["Little Mac", [2, 48]], ["Ike", [2, 71]], ["Wii Fit Trainer", [2, 117]], ["Opponent 5", [0, 0]]], 
         }
 
 Tourney_List_6 = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney_6]
@@ -2344,7 +2342,7 @@ Tourney_List_6 = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney
 max_percentage = 150
 round_6_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_6_calculator(Tourney_List_6, max_percentage, round_6_scores_dict, loss_dict)
 round_6_scores_dict = dict(sorted(round_6_scores_dict.items(), key=lambda item: item[1], reverse=False))
-print_sorted_dict(round_6_scores_dict)
+# print_sorted_dict(round_6_scores_dict)
 round_6_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], reverse=True)).copy()
 
 #%%
@@ -2352,7 +2350,7 @@ round_6_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], rev
 ################### ANALYSIS #####################
 ##################################################
 
-def ranking_changes_2nd_remerger(characters, initial_ranks, final_ranks):
+def ranking_changes_3rd_remerger(characters, initial_ranks, final_ranks):
     
     # Previous and CUrrent Ranks
     old_ranks = [rank for character, rank in initial_ranks.items()]
@@ -2378,24 +2376,26 @@ def ranking_changes_2nd_remerger(characters, initial_ranks, final_ranks):
         ax.text(1, new_ranks[i], f"{ordinal(new_ranks[i])} {char}",
                 ha='left', va='center', fontsize=8)
         
+        print(old_ranks[i], new_ranks[i])
+            
         # Top 32 End Placements
-        if old_ranks[i] < 33 and new_ranks[i] < 33:
+        if old_ranks[i] < 16 and new_ranks[i] < 16:
             color = "purple"   # stayed top 10
-        if 65 > old_ranks[i] > 48 and new_ranks[i] < 33:
-            color = "green"     # massive improvement
-        if 49 > old_ranks[i] > 32 and new_ranks[i] < 33:
-            color = "pink"     # jumped into top 10
+        if 65 > old_ranks[i] > 32 and new_ranks[i] < 16:
+            color = "pink"     # massive improvement
+        if 33 > old_ranks[i] > 16 and new_ranks[i] < 16:
+            color = "green"     # jumped into top 16
         
         # Top 48 End Placements
-        if old_ranks[i] < 33 and (49 > new_ranks[i] > 32):
-            color = "orange"     # dropped from 32nd to 23rd to bottom 48
-        if (49 > old_ranks[i] > 32) and (49 > new_ranks[i] > 32):
+        if old_ranks[i] < 17 and (49 > new_ranks[i] > 16):
+            color = "orange"     # dropped from Top 32 to Top 48
+        if (49 > old_ranks[i] > 32) and (49 > new_ranks[i] > 16):
             color = "gray"     # staying consistent, no improvement
-        if old_ranks[i] > 48 and (49 > new_ranks[i] > 32):
+        if old_ranks[i] > 48 and (49 > new_ranks[i] > 16):
             color = "yellow"     # improved but still struggling 
 
         # Top 64 End Placements
-        if old_ranks[i] < 33 and new_ranks[i] > 48:
+        if old_ranks[i] < 33 and (65 > new_ranks[i] > 48):
             color = "brown"    # worst case scenario
         if (49 > old_ranks[i] > 32) and (65 > new_ranks[i] > 48):
             color = "red"    # slipped to bottom elimination spot
@@ -2412,7 +2412,7 @@ def ranking_changes_2nd_remerger(characters, initial_ranks, final_ranks):
 
     # Format axes
     ax.set_xlim(-0.5, 1.5)
-    ax.set_ylim(22.5, len(characters)+22.5)
+    ax.set_ylim(0.5, len(characters)+0.5)
     
     # Flip so rank 1 is at the top
     ax.invert_yaxis()
@@ -2422,7 +2422,18 @@ def ranking_changes_2nd_remerger(characters, initial_ranks, final_ranks):
 
     pdf.savefig(fig, bbox_inches="tight")
     plt.close() 
-    
+
+initial_round_5_ranks = {character: len(inital_round_5_scores) + 22 - rank for rank, character in enumerate(inital_round_5_scores)}
+initial_round_6_ranks = {character: len(inital_round_6_scores) - rank for rank, character in enumerate(inital_round_6_scores)}
+initial_ranks = initial_round_5_ranks | initial_round_6_ranks
+combined_scores = round_5_scores_dict | round_6_scores_dict
+combined_scores = dict(sorted(combined_scores.items(), key=lambda item: item[1], reverse=False))
+final_ranks = {character: len(combined_scores) - rank for rank, character in enumerate(combined_scores)}
+characters = [character for character in (inital_round_5_scores | inital_round_6_scores)]
+
+with PdfPages("reports/ranking_changes/3rd_restructuring.pdf") as pdf:
+    ranking_changes_3rd_remerger(characters, initial_ranks, final_ranks)
+
 #%%   
 #############################
 ########## RECORDS ##########
