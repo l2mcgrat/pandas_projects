@@ -10,6 +10,7 @@ Palutena,Peach,4,1,0,2,102,2.49,0,8.780000000000001
 Palutena,Pyra & Mythra,1,1,0,1,100,1.5,0,10.280000000000001
 Palutena,Steve,2,1,0,3,136,3.32,0,13.6
 Palutena,Donkey Kong,3,0,1,-1,81,0.405,1,14.005
+Palutena,Hero,1,0,1,-1,39,0.195,-1,14.2
 Bayonetta,Olimar,1,0,1,-2,86,-0.57,0,-0.57
 Bayonetta,Incineroar,1,1,0,1,99,1.505,1,0.9349999999999999
 Bayonetta,Wolf,2,0,1,-1,38,0.19,-1,1.125
@@ -23,6 +24,15 @@ Samus,Pikachu,2,1,0,1,77,1.615,1,12.69
 Samus,Ganondorf,3,1,0,2,93,2.535,1,15.225000000000001
 Samus,Link,4,1,0,3,130,3.35,2,18.575
 Samus,Bowser,5,1,0,2,20,2.9,0,21.475
+Samus,Jigglypuff,1,1,0,1,60,1.7,0,23.175
+Samus,Richter,2,1,0,2,65,2.675,0,25.85
+Samus,Sephiroth,3,1,0,2,144,2.28,0,28.13
+Samus,Mario,1,1,0,1,163,1.185,0,29.315
+Samus,Bayonetta,2,1,0,3,126,3.37,-2,32.685
+Samus,Ridley,3,1,0,1,20,1.9,2,34.585
+Samus,Mario,1,1,0,1,163,1.185,0,35.77
+Samus,Bayonetta,2,1,0,3,126,3.37,-2,39.14
+Samus,Ridley,3,1,0,1,20,1.9,2,41.04
 Mii Brawler,Pyra & Mythra,1,0,1,-2,143,-0.285,-1,-0.285
 Mii Brawler,Palutena,1,1,0,2,100,2.5,-1,2.215
 Mii Brawler,PacMan,2,1,0,2,0,3.0,-1,5.215
@@ -30,6 +40,7 @@ Mii Brawler,Ganondorf,3,0,1,-1,96,0.48,0,5.695
 Mii Brawler,King K Rool,1,1,0,1,38,1.81,3,7.505
 Mii Brawler,Luigi,2,1,0,2,92,2.54,-1,10.045
 Mii Brawler,Lucario,3,1,0,2,32,2.84,2,12.885
+Mii Brawler,Bowser Jr,1,0,1,-1,74,0.37,2,13.254999999999999
 Meta Knight,Kirby,1,0,1,-2,161,-0.195,2,-0.195
 Meta Knight,Wolf,1,1,0,2,102,2.49,0,2.2950000000000004
 Meta Knight,Yoshi,2,0,1,-1,34,0.17,-1,2.4650000000000003
@@ -38,6 +49,15 @@ Meta Knight,Min Min,2,1,0,2,99,2.505,1,8.175
 Meta Knight,Toon Link,3,1,0,2,58,2.71,-1,10.885
 Meta Knight,Jigglypuff,4,1,0,1,0,2.0,-2,12.885
 Meta Knight,Young Link,5,1,0,2,0,3.0,0,15.885
+Meta Knight,Mario,1,1,0,1,5,1.975,0,17.86
+Meta Knight,Pikachu,2,1,0,2,80,2.6,-1,20.46
+Meta Knight,Byleth,3,1,0,2,76,2.62,1,23.080000000000002
+Meta Knight,Sora,1,1,0,1,112,1.44,1,24.52
+Meta Knight,King K Rool,2,1,0,1,38,1.81,2,26.330000000000002
+Meta Knight,Lucina,3,1,0,2,0,3.0,2,29.330000000000002
+Meta Knight,Sora,1,1,0,1,112,1.44,1,30.77
+Meta Knight,King K Rool,2,1,0,1,38,1.81,2,32.58
+Meta Knight,Lucina,3,1,0,2,0,3.0,2,35.58
 Diddy Kong,Kazuya,1,0,1,-1,19,0.095,-1,0.095
 Diddy Kong,Wario,1,1,0,1,36,1.82,-1,1.915
 Diddy Kong,King K Rool,2,1,0,1,41,1.795,1,3.71
@@ -58,6 +78,16 @@ Little Mac,Ganondorf,4,1,0,2,78,2.61,-1,10.135
 Little Mac,Shulk,1,1,0,2,155,2.225,-2,12.36
 Little Mac,Pichu,2,1,0,1,8,1.96,1,14.32
 Little Mac,Corrin,3,1,0,2,126,2.37,-1,16.69
+Little Mac,Daisy,1,1,0,1,133,1.335,3,18.025
+Little Mac,Palutena,2,1,0,1,15,1.925,-2,19.95
+Little Mac,Pokemon Trainer,3,1,0,1,51,1.745,-1,21.695
+Little Mac,Duck Hunt,4,1,0,2,20,2.9,-2,24.595
+Little Mac,Pikachu,1,1,0,1,73,1.635,-1,26.23
+Little Mac,Joker,2,1,0,2,41,2.795,-1,29.025
+Little Mac,Rosalina & Luma,3,1,0,2,48,2.76,-1,31.785
+Little Mac,Pikachu,1,1,0,1,73,1.635,-1,33.42
+Little Mac,Joker,2,1,0,2,41,2.795,-1,36.214999999999996
+Little Mac,Rosalina & Luma,3,1,0,2,48,2.76,-1,38.975
 Mario,Falco,1,0,1,-1,47,0.235,-1,0.235
 Mario,Chrom,1,1,0,2,0,3.0,0,3.235
 Mario,Ice Climbers,2,1,0,2,102,2.49,-2,5.725
@@ -66,6 +96,7 @@ Mario,Young Link,1,1,0,3,160,3.2,1,11.4
 Mario,Shulk,2,1,0,2,0,3.0,2,14.4
 Mario,Rosalina & Luma,3,1,0,1,72,1.64,-1,16.04
 Mario,Toon Link,4,1,0,1,62,1.69,1,17.73
+Mario,Sephiroth,1,0,1,-2,95,-0.525,0,17.205000000000002
 ROB,Pit,1,0,1,-1,54,0.27,1,0.27
 ROB,Richter,1,1,0,2,78,2.61,-2,2.88
 ROB,Lucas,2,1,0,3,80,3.6,2,6.48
@@ -74,6 +105,15 @@ ROB,Dr Mario,1,1,0,1,12,1.94,2,11.015
 ROB,Kazuya,2,1,0,1,0,2.0,0,13.015
 ROB,Pichu,3,1,0,2,110,2.45,1,15.465
 ROB,Toon Link,4,1,0,2,80,2.6,1,18.065
+ROB,PacMan,1,1,0,2,138,2.31,1,20.375
+ROB,Corrin,2,1,0,2,160,2.2,1,22.575
+ROB,Dark Samus,3,1,0,2,150,2.25,-1,24.825
+ROB,Diddy Kong,1,1,0,2,93,2.535,0,27.36
+ROB,Dr Mario,2,1,0,1,161,1.195,2,28.555
+ROB,Marth,3,1,0,2,71,2.645,2,31.200000000000003
+ROB,Diddy Kong,1,1,0,2,93,2.535,0,33.735
+ROB,Dr Mario,2,1,0,1,161,1.195,2,34.93
+ROB,Marth,3,1,0,2,71,2.645,2,37.575
 Ken,Steve,1,0,1,-1,50,0.25,-2,0.25
 Ken,Chrom,1,0,1,-2,56,-0.72,2,-0.47
 Joker,Lucario,1,0,1,-1,63,0.315,0,0.315
@@ -93,6 +133,7 @@ Dark Samus,Sephiroth,4,1,0,2,93,2.535,0,10.4
 Dark Samus,Kazuya,1,1,0,3,180,3.1,0,13.5
 Dark Samus,Wolf,2,1,0,1,10,1.95,0,15.45
 Dark Samus,Lucas,3,1,0,2,112,2.44,1,17.89
+Dark Samus,Dr Mario,1,0,1,-1,59,0.295,2,18.185
 Lucario,Samus,1,0,1,-1,100,0.5,-1,0.5
 Lucario,Min Min,1,1,0,2,140,2.3,-1,2.8
 Lucario,Luigi,2,1,0,3,167,3.165,-1,5.965
@@ -101,6 +142,7 @@ Lucario,Inkling,4,1,0,2,40,2.8,-1,11.205
 Lucario,Ganondorf,1,1,0,2,40,2.8,-1,14.004999999999999
 Lucario,Dark Samus,2,1,0,2,136,2.32,1,16.325
 Lucario,Greninja,3,1,0,1,45,1.775,-2,18.099999999999998
+Lucario,Peach,1,0,1,-1,28,0.14,-1,18.24
 Mega Man,Wii Fit Trainer,1,0,1,-1,108,0.54,0,0.54
 Mega Man,Mewtwo,1,0,1,-1,36,0.18,3,0.72
 Olimar,Bowser,1,1,0,1,97,1.515,1,1.515
@@ -118,6 +160,16 @@ Bowser Jr,Captain Falcon,3,1,0,2,77,2.615,-1,9.615
 Bowser Jr,Peach,1,1,0,2,117,2.415,0,12.030000000000001
 Bowser Jr,Pyra & Mythra,2,1,0,3,146,3.27,-1,15.3
 Bowser Jr,King Dedede,3,1,0,1,141,1.295,0,16.595
+Bowser Jr,Lucina,1,1,0,1,0,2.0,2,18.595
+Bowser Jr,Terry,2,1,0,2,169,2.155,2,20.75
+Bowser Jr,Greninja,3,1,0,3,139,3.305,0,24.055
+Bowser Jr,Yoshi,4,1,0,2,105,2.475,-2,26.53
+Bowser Jr,Marth,1,1,0,1,0,2.0,0,28.53
+Bowser Jr,Olimar,2,1,0,1,120,1.4,-2,29.93
+Bowser Jr,Chrom,3,1,0,3,135,3.325,1,33.255
+Bowser Jr,Marth,1,1,0,1,0,2.0,0,35.255
+Bowser Jr,Olimar,2,1,0,1,120,1.4,-2,36.655
+Bowser Jr,Chrom,3,1,0,3,135,3.325,1,39.980000000000004
 PacMan,Pichu,1,1,0,1,84,1.58,1,1.58
 PacMan,ROB,2,0,1,-1,16,0.08,-1,1.6600000000000001
 PacMan,Min Min,1,1,0,1,3,1.985,0,3.6450000000000005
@@ -126,6 +178,8 @@ PacMan,Roy,3,1,0,2,6,2.97,-1,8.615
 PacMan,Little Mac,1,1,0,2,69,2.655,1,11.27
 PacMan,Piranha Plant,2,1,0,1,79,1.605,1,12.875
 PacMan,Toon Link,3,1,0,1,22,1.89,0,14.765
+PacMan,Wario,1,1,0,1,0,2.0,0,16.765
+PacMan,Ness,2,0,1,-1,38,0.19,1,16.955
 Daisy,Wii Fit Trainer,1,1,0,2,133,2.335,1,2.335
 Daisy,King Dedede,2,0,1,-2,83,-0.585,1,1.75
 Daisy,Dark Samus,1,1,0,2,128,2.36,0,4.109999999999999
@@ -140,6 +194,7 @@ Jigglypuff,Samus,3,1,0,2,0,3.0,0,8.65
 Jigglypuff,Sora,1,1,0,1,83,1.585,-1,10.235
 Jigglypuff,Rosalina & Luma,2,1,0,1,107,1.465,2,11.7
 Jigglypuff,Bowser,3,1,0,1,0,2.0,2,13.7
+Jigglypuff,Banjo & Kazooie,1,0,1,-1,19,0.095,-2,13.795
 Lucina,Cloud,1,1,0,1,104,1.48,1,1.48
 Lucina,Captain Falcon,2,0,1,-1,84,0.42,0,1.9
 Lucina,Hero,1,1,0,2,82,2.59,2,4.49
@@ -154,6 +209,15 @@ Rosalina & Luma,Mr Game & Watch,1,1,0,1,0,2.0,2,8.505
 Rosalina & Luma,Wii Fit Trainer,2,1,0,2,68,2.66,0,11.165000000000001
 Rosalina & Luma,Corrin,3,1,0,2,115,2.425,0,13.59
 Rosalina & Luma,Palutena,4,1,0,1,116,1.42,0,15.01
+Rosalina & Luma,Sonic,1,1,0,2,80,2.6,0,17.61
+Rosalina & Luma,Ike,2,1,0,2,34,2.83,0,20.44
+Rosalina & Luma,Robin,3,1,0,1,131,1.345,-2,21.785
+Rosalina & Luma,Banjo & Kazooie,1,1,0,1,0,2.0,-1,23.785
+Rosalina & Luma,Lucas,2,1,0,1,70,1.65,1,25.435
+Rosalina & Luma,Captain Falcon,3,1,0,2,108,2.46,0,27.895
+Rosalina & Luma,Banjo & Kazooie,1,1,0,1,0,2.0,-1,29.895
+Rosalina & Luma,Lucas,2,1,0,1,70,1.65,1,31.545
+Rosalina & Luma,Captain Falcon,3,1,0,2,108,2.46,0,34.005
 Richter,Palutena,1,1,0,1,37,1.815,-1,1.815
 Richter,Hero,2,0,1,-1,76,0.38,-1,2.195
 Richter,Daisy,1,1,0,2,108,2.46,0,4.654999999999999
@@ -170,6 +234,8 @@ Marth,Meta Knight,3,0,1,-1,124,0.62,1,7.4799999999999995
 Marth,Wii Fit Trainer,1,1,0,1,0,2.0,-1,9.48
 Marth,Olimar,2,1,0,3,97,3.515,0,12.995000000000001
 Marth,Bowser,3,0,1,-1,49,0.245,1,13.24
+Marth,Mewtwo,1,1,0,1,9,1.955,-1,15.195
+Marth,Steve,2,0,1,-1,28,0.14,-2,15.335
 Mii Gunner,Wolf,1,1,0,1,21,1.895,-2,1.895
 Mii Gunner,Banjo & Kazooie,2,0,1,-1,96,0.48,0,2.375
 Mii Gunner,Rosalina & Luma,1,1,0,2,0,3.0,0,5.375
@@ -177,6 +243,16 @@ Mii Gunner,Kazuya,2,0,1,-2,62,-0.69,-2,4.6850000000000005
 Mii Gunner,Fox,1,1,0,2,0,3.0,-2,7.6850000000000005
 Mii Gunner,Piranha Plant,2,1,0,3,182,3.09,3,10.775
 Mii Gunner,Sephiroth,3,1,0,1,13,1.935,0,12.71
+Mii Gunner,Steve,1,1,0,2,110,2.45,-2,15.16
+Mii Gunner,Piranha Plant,2,1,0,2,0,3.0,3,18.16
+Mii Gunner,Bowser Jr,3,1,0,2,67,2.665,-2,20.825
+Mii Gunner,Richter,4,1,0,2,27,2.865,0,23.69
+Mii Gunner,Dr Mario,1,1,0,1,0,2.0,0,25.69
+Mii Gunner,Mario,2,1,0,2,95,2.525,-2,28.215
+Mii Gunner,Ryu,3,1,0,3,108,3.46,-2,31.675
+Mii Gunner,Dr Mario,1,1,0,1,0,2.0,0,33.675
+Mii Gunner,Mario,2,1,0,2,95,2.525,-2,36.2
+Mii Gunner,Ryu,3,1,0,3,108,3.46,-2,39.66
 Corrin,Marth,1,1,0,2,111,2.445,0,2.445
 Corrin,Ness,2,0,1,-1,70,0.35,1,2.795
 Corrin,Marth,1,1,0,2,67,2.665,0,5.46
@@ -192,6 +268,15 @@ Pokemon Trainer,Young Link,1,1,0,2,69,2.655,0,12.74
 Pokemon Trainer,Samus,2,1,0,1,123,1.385,0,14.125
 Pokemon Trainer,Dr Mario,3,1,0,2,97,2.515,0,16.64
 Pokemon Trainer,Corrin,4,1,0,2,83,2.585,1,19.225
+Pokemon Trainer,Zero Suit Samus,1,1,0,3,100,3.5,0,22.725
+Pokemon Trainer,Bayonetta,2,1,0,2,30,2.85,0,25.575
+Pokemon Trainer,Young Link,3,1,0,2,112,2.44,0,28.015
+Pokemon Trainer,Zelda,1,1,0,1,126,1.37,-1,29.384999999999998
+Pokemon Trainer,Dark Pit,2,1,0,3,196,3.02,-1,32.405
+Pokemon Trainer,King K Rool,3,1,0,1,0,2.0,1,34.405
+Pokemon Trainer,Zelda,1,1,0,1,126,1.37,-1,35.775
+Pokemon Trainer,Dark Pit,2,1,0,3,196,3.02,-1,38.795
+Pokemon Trainer,King K Rool,3,1,0,1,0,2.0,1,40.795
 Peach,Mega Man,1,1,0,1,13,1.935,-1,1.935
 Peach,Palutena,2,1,0,1,0,2.0,0,3.935
 Peach,ROB,3,0,1,-1,6,0.03,-1,3.965
@@ -203,6 +288,7 @@ Peach,Marth,2,1,0,1,0,2.0,1,13.225
 Peach,Min Min,3,1,0,1,99,1.505,-1,14.73
 Peach,Sora,4,1,0,2,26,2.87,1,17.6
 Peach,Donkey Kong,5,1,0,2,62,2.69,-1,20.29
+Peach,Toon Link,1,0,1,-1,0,0.0,-1,20.29
 Falco,Sheik,1,1,0,1,109,1.455,2,1.455
 Falco,Mario,2,1,0,1,143,1.285,1,2.74
 Falco,King K Rool,3,1,0,1,31,1.845,2,4.585
@@ -212,6 +298,15 @@ Falco,Roy,3,1,0,2,47,2.765,-2,12.895
 Falco,Lucina,1,1,0,1,32,1.84,0,14.735000000000001
 Falco,Incineroar,2,1,0,3,144,3.28,0,18.015
 Falco,Bayonetta,3,1,0,2,108,2.46,0,20.475
+Falco,Bowser Jr,1,1,0,1,82,1.59,1,22.065
+Falco,Ice Climbers,2,1,0,3,169,3.155,-2,25.22
+Falco,Zelda,3,1,0,1,13,1.935,1,27.155
+Falco,Meta Knight,1,1,0,2,42,2.79,0,29.945
+Falco,Dark Samus,2,1,0,2,124,2.38,-1,32.325
+Falco,Mega Man,3,1,0,2,70,2.65,1,34.975
+Falco,Meta Knight,1,1,0,2,42,2.79,0,37.765
+Falco,Dark Samus,2,1,0,2,124,2.38,-1,40.145
+Falco,Mega Man,3,1,0,2,70,2.65,1,42.795
 Wii Fit Trainer,Lucas,1,1,0,1,107,1.465,0,1.465
 Wii Fit Trainer,Wario,2,1,0,1,107,1.465,-1,2.93
 Wii Fit Trainer,Donkey Kong,3,1,0,1,98,1.51,1,4.44
@@ -222,6 +317,18 @@ Wii Fit Trainer,Roy,5,1,0,1,15,1.925,1,12.950000000000001
 Wii Fit Trainer,Dark Pit,1,1,0,1,7,1.965,0,14.915000000000001
 Wii Fit Trainer,Richter,2,1,0,2,17,2.915,-1,17.830000000000002
 Wii Fit Trainer,Simon,3,1,0,2,137,2.315,1,20.145
+Wii Fit Trainer,Banjo & Kazooie,1,1,0,1,138,1.31,0,21.455000000000002
+Wii Fit Trainer,Roy,2,0,1,-1,83,0.415,1,21.87
+Wii Fit Trainer,Kirby,1,1,0,2,87,2.565,0,24.435000000000002
+Wii Fit Trainer,PacMan,2,1,0,1,123,1.385,1,25.82
+Wii Fit Trainer,Dark Samus,3,1,0,2,108,2.46,1,28.28
+Wii Fit Trainer,Captain Falcon,4,1,0,1,49,1.755,-1,30.035
+Wii Fit Trainer,Lucario,5,0,1,-1,124,0.62,1,30.655
+Wii Fit Trainer,Kirby,1,1,0,2,87,2.565,0,33.22
+Wii Fit Trainer,PacMan,2,1,0,1,123,1.385,1,34.605
+Wii Fit Trainer,Dark Samus,3,1,0,2,108,2.46,1,37.065
+Wii Fit Trainer,Captain Falcon,4,1,0,1,49,1.755,-1,38.82
+Wii Fit Trainer,Lucario,5,0,1,-1,124,0.62,1,39.44
 Ryu,Mario,1,1,0,1,151,1.245,-1,1.245
 Ryu,Little Mac,2,1,0,2,86,2.57,-1,3.815
 Ryu,Marth,3,0,1,-1,106,0.53,0,4.345
@@ -238,6 +345,7 @@ Sheik,Chrom,1,1,0,2,116,2.42,0,12.97
 Sheik,Bowser,2,1,0,1,120,1.4,0,14.370000000000001
 Sheik,Pokemon Trainer,3,1,0,1,70,1.65,1,16.02
 Sheik,Meta Knight,4,1,0,2,16,2.92,-1,18.94
+Sheik,Ice Climbers,1,0,1,-1,100,0.5,-2,19.44
 Villager,Lucas,1,1,0,1,83,1.585,1,1.585
 Villager,Mario,2,1,0,2,87,2.565,-2,4.15
 Villager,Sora,3,0,1,-1,96,0.48,0,4.63
@@ -255,6 +363,10 @@ Kirby,Mario,3,1,0,1,71,1.645,-2,12.950000000000001
 Kirby,Meta Knight,1,1,0,1,15,1.925,-2,14.875
 Kirby,Cloud,2,1,0,2,16,2.92,-1,17.795
 Kirby,Peach,3,1,0,2,60,2.7,0,20.495
+Kirby,Duck Hunt,1,1,0,2,102,2.49,0,22.985
+Kirby,Pit,2,1,0,2,0,3.0,0,25.985
+Kirby,Greninja,3,1,0,3,88,3.56,-1,29.545
+Kirby,Inkling,4,1,0,1,133,1.335,0,30.880000000000003
 Shulk,Zelda,1,1,0,2,107,2.465,0,2.465
 Shulk,Roy,2,1,0,2,54,2.73,0,5.195
 Shulk,Link,3,0,1,-1,77,0.385,1,5.58
@@ -272,6 +384,16 @@ Luigi,Pikachu,3,1,0,2,27,2.865,2,13.415000000000001
 Luigi,Falco,1,1,0,2,7,2.965,0,16.380000000000003
 Luigi,Hero,2,1,0,2,50,2.75,-1,19.130000000000003
 Luigi,Jigglypuff,3,1,0,2,98,2.51,2,21.64
+Luigi,Fox,1,1,0,2,16,2.92,2,24.560000000000002
+Luigi,Dark Pit,2,1,0,1,47,1.765,1,26.325
+Luigi,Joker,3,1,0,1,13,1.935,-1,28.26
+Luigi,Pichu,4,1,0,2,0,3.0,1,31.26
+Luigi,Diddy Kong,1,1,0,3,166,3.17,0,34.43
+Luigi,Byleth,2,1,0,1,72,1.64,2,36.07
+Luigi,Ness,3,1,0,1,0,2.0,-1,38.07
+Luigi,Diddy Kong,1,1,0,3,166,3.17,0,41.24
+Luigi,Byleth,2,1,0,1,72,1.64,2,42.88
+Luigi,Ness,3,1,0,1,0,2.0,-1,44.88
 Robin,Olimar,1,1,0,1,0,2.0,-3,2.0
 Robin,Pikachu,2,1,0,1,110,1.45,1,3.45
 Robin,Luigi,3,1,0,1,48,1.76,-2,5.21
@@ -279,6 +401,8 @@ Robin,Meta Knight,1,1,0,1,17,1.915,-2,7.125
 Robin,Mega Man,2,1,0,2,27,2.865,-2,9.99
 Robin,Mr Game & Watch,3,1,0,2,47,2.765,-2,12.755
 Robin,Byleth,1,0,1,-1,5,0.025,-3,12.780000000000001
+Robin,Zelda,1,1,0,1,0,2.0,0,14.780000000000001
+Robin,Marth,2,0,1,-2,90,-0.55,1,14.23
 Zero Suit Samus,Byleth,1,1,0,2,123,2.385,0,2.385
 Zero Suit Samus,Peach,2,1,0,1,45,1.775,-1,4.16
 Zero Suit Samus,Lucas,3,1,0,1,27,1.865,2,6.0249999999999995
@@ -298,6 +422,10 @@ Pyra & Mythra,Marth,1,1,0,3,110,3.45,0,18.28
 Pyra & Mythra,ROB,2,1,0,3,189,3.055,0,21.335
 Pyra & Mythra,Ice Climbers,3,1,0,2,0,3.0,1,24.335
 Pyra & Mythra,Bowser,4,0,1,-1,99,0.495,2,24.830000000000002
+Pyra & Mythra,Diddy Kong,1,1,0,3,189,3.055,-1,27.885
+Pyra & Mythra,Sonic,2,1,0,2,80,2.6,0,30.485
+Pyra & Mythra,Peach,3,1,0,2,35,2.825,1,33.31
+Pyra & Mythra,Pit,4,1,0,3,110,3.45,-1,36.760000000000005
 Inkling,Rosalina & Luma,1,1,0,2,116,2.42,-2,2.42
 Inkling,Young Link,2,1,0,1,0,2.0,0,4.42
 Inkling,Richter,3,1,0,1,111,1.445,-1,5.865
@@ -308,6 +436,7 @@ Inkling,Kazuya,4,0,1,-1,73,0.365,-1,12.92
 Inkling,Lucas,1,1,0,2,43,2.785,3,15.705
 Inkling,Kirby,2,1,0,1,72,1.64,0,17.345
 Inkling,Young Link,3,1,0,3,155,3.225,0,20.57
+Inkling,Simon,1,0,1,-2,158,-0.21,1,20.36
 Ness,Sonic,1,1,0,1,100,1.5,0,1.5
 Ness,Bayonetta,2,1,0,2,18,2.91,0,4.41
 Ness,Mewtwo,3,1,0,1,0,2.0,0,6.41
@@ -318,6 +447,7 @@ Ness,Kazuya,5,0,1,-2,163,-0.185,-1,12.685
 Ness,Ganondorf,1,1,0,1,0,2.0,0,14.685
 Ness,Chrom,2,1,0,1,129,1.355,-1,16.04
 Ness,Luigi,3,1,0,3,156,3.22,1,19.26
+Ness,Yoshi,1,0,1,-2,90,-0.55,0,18.71
 Sora,Wii Fit Trainer,1,1,0,2,47,2.765,1,2.765
 Sora,Pit,2,1,0,2,81,2.595,1,5.36
 Sora,Banjo & Kazooie,3,1,0,1,71,1.645,2,7.005000000000001
@@ -327,6 +457,16 @@ Sora,King Dedede,3,1,0,1,28,1.86,3,14.23
 Sora,Link,1,1,0,2,13,2.935,2,17.165
 Sora,Yoshi,2,1,0,1,13,1.935,0,19.1
 Sora,Duck Hunt,3,1,0,1,34,1.83,0,20.93
+Sora,Chrom,1,1,0,1,31,1.845,2,22.775000000000002
+Sora,Pichu,2,1,0,1,60,1.7,2,24.475
+Sora,Ryu,3,1,0,2,65,2.675,-1,27.150000000000002
+Sora,Incineroar,4,1,0,2,103,2.485,0,29.635
+Sora,Corrin,1,1,0,2,59,2.705,-2,32.34
+Sora,Cloud,2,1,0,2,0,3.0,-2,35.34
+Sora,Sheik,3,1,0,2,8,2.96,-1,38.3
+Sora,Corrin,1,1,0,2,59,2.705,-2,41.005
+Sora,Cloud,2,1,0,2,0,3.0,-2,44.005
+Sora,Sheik,3,1,0,2,8,2.96,-1,46.965
 Fox,Jigglypuff,1,1,0,2,52,2.74,0,2.74
 Fox,Sheik,2,1,0,1,6,1.97,1,4.71
 Fox,Pikachu,3,1,0,1,13,1.935,0,6.6450000000000005
@@ -335,6 +475,7 @@ Fox,Corrin,2,0,1,-2,92,-0.54,1,7.550000000000001
 Fox,PacMan,1,1,0,1,14,1.93,2,9.48
 Fox,Peach,2,1,0,2,86,2.57,0,12.05
 Fox,Lucario,3,1,0,2,62,2.69,2,14.74
+Fox,Dark Samus,1,0,1,-1,18,0.09,0,14.83
 Wolf,Greninja,1,1,0,3,165,3.175,0,3.175
 Wolf,Bowser Jr,2,1,0,1,56,1.72,-1,4.895
 Wolf,Dr Mario,3,1,0,1,14,1.93,2,6.824999999999999
@@ -343,6 +484,8 @@ Wolf,Inkling,2,1,0,2,126,2.37,1,12.645
 Wolf,Joker,3,1,0,2,89,2.555,-1,15.2
 Wolf,Corrin,4,1,0,2,104,2.48,0,17.68
 Wolf,ROB,1,0,1,-1,108,0.54,-1,18.22
+Wolf,Shulk,1,1,0,2,144,2.28,0,20.5
+Wolf,King Dedede,2,0,1,-1,121,0.605,2,21.105
 Pit,King K Rool,1,1,0,1,0,2.0,0,2.0
 Pit,Chrom,2,1,0,1,0,2.0,2,4.0
 Pit,Pikachu,3,1,0,2,144,2.28,-2,6.279999999999999
@@ -353,6 +496,9 @@ Pit,Isabelle,3,1,0,2,61,2.695,0,15.004999999999999
 Pit,Greninja,1,1,0,2,98,2.51,0,17.515
 Pit,Joker,2,1,0,2,60,2.7,-2,20.215
 Pit,Ridley,3,1,0,1,0,2.0,0,22.215
+Pit,Olimar,1,0,1,-1,50,0.25,0,22.465
+Pit,Sora,1,0,1,-1,82,0.41,-1,22.875
+Pit,Sora,1,0,1,-1,82,0.41,-1,23.285
 Mii Swordfighter,Mega Man,1,1,0,1,17,1.915,-2,1.915
 Mii Swordfighter,Samus,2,1,0,1,0,2.0,0,3.915
 Mii Swordfighter,Richter,3,1,0,2,96,2.52,0,6.4350000000000005
@@ -363,6 +509,7 @@ Mii Swordfighter,Lucario,3,1,0,2,155,2.225,-1,13.55
 Mii Swordfighter,Mega Man,1,1,0,1,91,1.545,-2,15.095
 Mii Swordfighter,Ness,2,1,0,1,0,2.0,-1,17.095
 Mii Swordfighter,Bowser Jr,3,1,0,1,59,1.705,-1,18.8
+Mii Swordfighter,Sora,1,0,1,-1,56,0.28,0,19.080000000000002
 Mr Game & Watch,Wii Fit Trainer,1,1,0,1,15,1.925,2,1.925
 Mr Game & Watch,Richter,2,1,0,1,38,1.81,0,3.7350000000000003
 Mr Game & Watch,Meta Knight,3,1,0,2,117,2.415,-1,6.15
@@ -373,6 +520,14 @@ Mr Game & Watch,Toon Link,1,1,0,2,148,2.26,0,13.635
 Mr Game & Watch,Sora,2,1,0,1,78,1.61,0,15.245000000000001
 Mr Game & Watch,Olimar,3,1,0,2,45,2.775,-1,18.02
 Mr Game & Watch,Greninja,4,1,0,2,4,2.98,1,21.0
+Mr Game & Watch,Pokemon Trainer,1,1,0,1,51,1.745,2,22.745
+Mr Game & Watch,Corrin,2,1,0,1,23,1.885,0,24.63
+Mr Game & Watch,Falco,3,1,0,1,124,1.38,0,26.01
+Mr Game & Watch,Wolf,4,1,0,1,123,1.385,-1,27.395
+Mr Game & Watch,Ken,1,1,0,2,45,2.775,2,30.17
+Mr Game & Watch,Incineroar,2,0,1,-1,98,0.49,1,30.66
+Mr Game & Watch,Ken,1,1,0,2,45,2.775,2,33.435
+Mr Game & Watch,Incineroar,2,0,1,-1,98,0.49,1,33.925
 Roy,Ryu,1,1,0,2,46,2.77,2,2.77
 Roy,Ike,2,1,0,2,116,2.42,2,5.1899999999999995
 Roy,Duck Hunt,3,1,0,2,92,2.54,1,7.73
@@ -382,6 +537,15 @@ Roy,Ken,1,1,0,3,124,3.38,1,13.405
 Roy,Greninja,2,1,0,3,176,3.12,0,16.525
 Roy,Diddy Kong,3,1,0,2,61,2.695,-1,19.22
 Roy,Byleth,4,1,0,1,0,2.0,0,21.22
+Roy,Pokemon Trainer,1,1,0,1,55,1.725,0,22.945
+Roy,Mario,2,1,0,2,138,2.31,0,25.255
+Roy,Bowser,3,1,0,2,72,2.64,3,27.895
+Roy,Ike,1,1,0,1,63,1.685,2,29.58
+Roy,Palutena,2,1,0,3,89,3.555,0,33.135
+Roy,Richter,3,1,0,2,0,3.0,0,36.135
+Roy,Ike,1,1,0,1,63,1.685,2,37.82
+Roy,Palutena,2,1,0,3,89,3.555,0,41.375
+Roy,Richter,3,1,0,2,0,3.0,0,44.375
 Ganondorf,Dark Samus,1,1,0,2,72,2.64,1,2.64
 Ganondorf,King Dedede,2,1,0,1,84,1.58,1,4.220000000000001
 Ganondorf,Corrin,3,1,0,2,90,2.55,-1,6.77
@@ -393,6 +557,13 @@ Ganondorf,Simon,5,1,0,3,137,3.315,-2,19.725
 Ganondorf,Donkey Kong,1,1,0,2,88,2.56,-2,22.285
 Ganondorf,Toon Link,2,1,0,2,115,2.425,-1,24.71
 Ganondorf,Dark Samus,3,1,0,2,27,2.865,1,27.575
+Ganondorf,Dark Samus,1,0,1,-1,50,0.25,1,27.825
+Ganondorf,Chrom,1,1,0,2,66,2.67,-2,30.495
+Ganondorf,Yoshi,2,1,0,1,110,1.45,-1,31.945
+Ganondorf,Captain Falcon,3,0,1,-1,84,0.42,2,32.365
+Ganondorf,Chrom,1,1,0,2,66,2.67,-2,35.035
+Ganondorf,Yoshi,2,1,0,1,110,1.45,-1,36.485
+Ganondorf,Captain Falcon,3,0,1,-1,84,0.42,2,36.905
 Toon Link,Steve,1,1,0,1,0,2.0,-2,2.0
 Toon Link,Piranha Plant,2,1,0,2,89,2.555,1,4.555
 Toon Link,Zero Suit Samus,3,1,0,2,104,2.48,0,7.035
@@ -400,6 +571,11 @@ Toon Link,King K Rool,1,0,1,-1,100,0.5,0,7.535
 Toon Link,Bowser,1,1,0,2,113,2.435,0,9.97
 Toon Link,Fox,2,1,0,2,12,2.94,-2,12.91
 Toon Link,Young Link,3,1,0,2,45,2.775,0,15.685
+Toon Link,Fox,1,1,0,2,122,2.39,-2,18.075
+Toon Link,Duck Hunt,2,1,0,2,56,2.72,0,20.795
+Toon Link,Wii Fit Trainer,3,1,0,2,32,2.84,0,23.635
+Toon Link,Mewtwo,4,1,0,1,55,1.725,1,25.36
+Toon Link,Roy,5,1,0,1,39,1.805,-2,27.165
 Dark Pit,Chrom,1,1,0,3,142,3.29,0,3.29
 Dark Pit,Young Link,2,1,0,2,77,2.615,0,5.905
 Dark Pit,King Dedede,3,1,0,1,110,1.45,0,7.355
@@ -408,6 +584,15 @@ Dark Pit,Banjo & Kazooie,2,1,0,2,120,2.4,0,12.255
 Dark Pit,Snake,3,1,0,2,0,3.0,-1,15.255
 Dark Pit,Pikachu,1,1,0,1,44,1.78,0,17.035
 Dark Pit,Incineroar,2,0,1,-2,90,-0.55,0,16.485
+Dark Pit,Simon,1,1,0,3,86,3.57,0,20.055
+Dark Pit,Sephiroth,2,1,0,2,79,2.605,0,22.66
+Dark Pit,Chrom,3,1,0,2,75,2.625,0,25.285
+Dark Pit,Isabelle,1,1,0,3,159,3.205,0,28.490000000000002
+Dark Pit,Palutena,2,1,0,3,124,3.38,0,31.87
+Dark Pit,PacMan,3,1,0,1,91,1.545,-2,33.415
+Dark Pit,Isabelle,1,1,0,3,159,3.205,0,36.62
+Dark Pit,Palutena,2,1,0,3,124,3.38,0,40.0
+Dark Pit,PacMan,3,1,0,1,91,1.545,-2,41.545
 Cloud,Pit,1,1,0,2,117,2.415,1,2.415
 Cloud,Duck Hunt,2,1,0,3,141,3.295,2,5.71
 Cloud,Min Min,3,1,0,1,7,1.965,0,7.675
@@ -419,6 +604,9 @@ Cloud,Kirby,1,1,0,1,0,2.0,1,19.395
 Cloud,Wii Fit Trainer,2,1,0,2,81,2.595,1,21.99
 Cloud,Terry,3,1,0,2,53,2.735,1,24.725
 Cloud,King K Rool,4,1,0,1,0,2.0,1,26.725
+Cloud,Snake,1,1,0,1,0,2.0,-1,28.725
+Cloud,Joker,2,1,0,2,0,3.0,-2,31.725
+Cloud,lucas,3,1,0,3,122,3.39,2,35.115
 Hero,Pit,1,1,0,2,89,2.555,-1,2.555
 Hero,Ganondorf,2,1,0,1,73,1.635,-1,4.19
 Hero,Mewtwo,3,1,0,2,0,3.0,1,7.19
@@ -428,6 +616,16 @@ Hero,Robin,3,1,0,1,0,2.0,0,14.735
 Hero,Dr Mario,1,1,0,1,60,1.7,0,16.435
 Hero,Pichu,2,1,0,2,75,2.625,0,19.060000000000002
 Hero,Yoshi,3,1,0,2,80,2.6,-1,21.66
+Hero,Wario,1,1,0,3,81,3.595,0,25.255000000000003
+Hero,Byleth,2,1,0,1,94,1.53,1,26.785
+Hero,Yoshi,3,1,0,1,57,1.715,-1,28.5
+Hero,Terry,4,0,1,-1,109,0.545,-3,29.045
+Hero,Steve,1,1,0,1,28,1.86,0,30.905
+Hero,Banjo & Kazooie,2,1,0,2,171,2.145,1,33.050000000000004
+Hero,Toon Link,3,1,0,3,105,3.475,1,36.525
+Hero,Steve,1,1,0,1,28,1.86,0,38.385
+Hero,Banjo & Kazooie,2,1,0,2,171,2.145,1,40.53
+Hero,Toon Link,3,1,0,3,105,3.475,1,44.005
 Wario,Ridley,1,1,0,2,66,2.67,1,2.67
 Wario,Richter,2,1,0,2,154,2.23,-2,4.9
 Wario,Duck Hunt,3,1,0,2,193,2.035,0,6.9350000000000005
@@ -446,6 +644,10 @@ Incineroar,Ike,4,1,0,2,70,2.65,0,18.015
 Incineroar,Min Min,1,1,0,2,25,2.875,-2,20.89
 Incineroar,Bayonetta,2,1,0,1,0,2.0,-1,22.89
 Incineroar,Pyra & Mythra,3,1,0,2,0,3.0,1,25.89
+Incineroar,Chrom,1,1,0,2,7,2.965,1,28.855
+Incineroar,Captain Falcon,2,0,1,-1,72,0.36,-2,29.215
+Incineroar,Shulk,1,0,1,-1,40,0.2,-1,29.415
+Incineroar,Shulk,1,0,1,-1,40,0.2,-1,29.615
 Snake,Dark Pit,1,1,0,3,155,3.225,-1,3.225
 Snake,Incineroar,2,1,0,1,16,1.92,0,5.145
 Snake,Fox,3,1,0,1,89,1.555,0,6.7
@@ -460,6 +662,16 @@ Yoshi,Donkey Kong,1,1,0,1,0,2.0,0,10.405000000000001
 Yoshi,Chrom,2,1,0,2,78,2.61,2,13.015
 Yoshi,Incineroar,3,1,0,2,43,2.785,0,15.8
 Yoshi,Olimar,4,1,0,2,125,2.375,-1,18.175
+Yoshi,King Dedede,1,1,0,1,64,1.68,0,19.855
+Yoshi,Villager,2,1,0,2,112,2.44,1,22.295
+Yoshi,Donkey Kong,3,1,0,2,60,2.7,0,24.995
+Yoshi,Piranha Plant,4,0,1,-2,74,-0.63,1,24.365
+Yoshi,Ness,1,1,0,2,11,2.945,0,27.31
+Yoshi,Mario,2,1,0,2,129,2.355,-1,29.665
+Yoshi,Peach,3,1,0,2,0,3.0,1,32.665
+Yoshi,Ness,1,1,0,2,11,2.945,0,35.61
+Yoshi,Mario,2,1,0,2,129,2.355,-1,37.965
+Yoshi,Peach,3,1,0,2,0,3.0,1,40.965
 Greninja,Pichu,1,1,0,2,36,2.82,1,2.82
 Greninja,Isabelle,2,1,0,1,56,1.72,1,4.54
 Greninja,Pyra & Mythra,3,1,0,2,63,2.685,-2,7.225
@@ -479,6 +691,9 @@ King K Rool,Piranha Plant,4,1,0,2,126,2.37,0,16.575
 King K Rool,Diddy Kong,1,1,0,1,45,1.775,-1,18.35
 King K Rool,Greninja,2,1,0,1,0,2.0,-1,20.35
 King K Rool,Mr Game & Watch,3,1,0,2,33,2.835,-3,23.185
+King K Rool,Ness,1,1,0,2,0,3.0,-1,26.185
+King K Rool,Diddy Kong,2,1,0,3,121,3.395,-1,29.58
+King K Rool,Mr Game & Watch,3,1,0,2,85,2.575,-3,32.155
 King Dedede,Cloud,1,1,0,3,103,3.485,-2,3.485
 King Dedede,Villager,2,1,0,1,30,1.85,-3,5.335
 King Dedede,Mewtwo,3,1,0,1,37,1.815,1,7.15
@@ -488,6 +703,15 @@ King Dedede,Fox,1,1,0,2,88,2.56,-1,13.129999999999999
 King Dedede,Kazuya,2,1,0,2,146,2.27,-1,15.4
 King Dedede,Pokemon Trainer,3,1,0,2,21,2.895,-1,18.295
 King Dedede,Ice Climbers,5,1,0,3,115,3.425,-1,21.72
+King Dedede,Donkey Kong,1,1,0,1,107,1.465,0,23.185
+King Dedede,Steve,2,1,0,1,0,2.0,-1,25.185
+King Dedede,Byleth,3,1,0,2,55,2.725,-1,27.91
+King Dedede,Jigglypuff,1,1,0,3,137,3.315,0,31.225
+King Dedede,Bowser,2,1,0,2,111,2.445,2,33.67
+King Dedede,Pokemon Trainer,3,1,0,2,60,2.7,-1,36.37
+King Dedede,Jigglypuff,1,1,0,3,137,3.315,0,39.685
+King Dedede,Bowser,2,1,0,2,111,2.445,2,42.13
+King Dedede,Pokemon Trainer,3,1,0,2,60,2.7,-1,44.83
 Chrom,Ridley,1,1,0,2,134,2.33,0,2.33
 Chrom,Sora,2,1,0,1,0,2.0,-2,4.33
 Chrom,Isabelle,3,1,0,2,36,2.82,0,7.15
@@ -499,6 +723,10 @@ Chrom,Kirby,4,1,0,2,82,2.59,-2,18.61
 Chrom,Robin,1,1,0,2,118,2.41,-1,21.02
 Chrom,Link,2,1,0,2,0,3.0,2,24.02
 Chrom,Mewtwo,3,1,0,3,125,3.375,-2,27.395
+Chrom,Ness,1,1,0,3,123,3.385,1,30.78
+Chrom,Donkey Kong,2,1,0,2,62,2.69,-2,33.47
+Chrom,Cloud,3,1,0,2,0,3.0,-1,36.47
+Chrom,Wolf,4,1,0,1,17,1.915,-2,38.385
 Sonic,Joker,1,1,0,1,71,1.645,1,1.645
 Sonic,Greninja,2,1,0,3,105,3.475,1,5.12
 Sonic,Toon Link,3,1,0,1,15,1.925,2,7.045
@@ -511,6 +739,10 @@ Sonic,Dark Pit,4,1,0,2,78,2.61,0,21.395
 Sonic,Samus,1,1,0,1,0,2.0,-1,23.395
 Sonic,Lucario,2,1,0,1,33,1.835,0,25.23
 Sonic,Hero,3,1,0,1,101,1.495,2,26.725
+Sonic,King K Rool,1,1,0,2,90,2.55,3,29.275
+Sonic,Dark Pit,2,1,0,2,80,2.6,0,31.875
+Sonic,Mario,3,1,0,3,146,3.27,0,35.145
+Sonic,Young Link,4,1,0,1,44,1.78,0,36.925
 Ike,Peach,1,1,0,1,62,1.69,-1,1.69
 Ike,Sonic,2,1,0,2,102,2.49,-1,4.18
 Ike,Ridley,3,1,0,2,111,2.445,-1,6.625
@@ -522,6 +754,9 @@ Ike,Hero,4,1,0,1,55,1.725,0,18.98
 Ike,Pokemon Trainer,1,1,0,2,32,2.84,-2,21.82
 Ike,Greninja,2,1,0,3,131,3.345,-1,25.165
 Ike,Villager,3,1,0,2,107,2.465,0,27.63
+Ike,Ryu,1,1,0,2,128,2.36,0,29.99
+Ike,Diddy Kong,2,1,0,2,60,2.7,-2,32.69
+Ike,Little Mac,3,1,0,1,0,2.0,1,34.69
 Mewtwo,Young Link,1,1,0,2,114,2.43,-1,2.43
 Mewtwo,Ice Climbers,2,1,0,1,55,1.725,-3,4.155
 Mewtwo,Little Mac,3,1,0,2,46,2.77,-2,6.925000000000001
@@ -531,6 +766,15 @@ Mewtwo,Dark Pit,3,0,1,-1,127,0.635,0,12.225
 Mewtwo,Samus,1,1,0,2,114,2.43,-1,14.655000000000001
 Mewtwo,Falco,2,1,0,2,46,2.77,-2,17.425
 Mewtwo,Bowser Jr,3,1,0,1,100,1.5,2,18.925
+Mewtwo,Link,1,1,0,2,129,2.355,-1,21.28
+Mewtwo,Hero,2,1,0,2,67,2.665,-1,23.945
+Mewtwo,Sonic,3,1,0,2,143,2.285,-2,26.23
+Mewtwo,Piranha Plant,1,1,0,1,10,1.95,2,28.18
+Mewtwo,Palutena,2,1,0,2,26,2.87,-2,31.05
+Mewtwo,Ryu,3,1,0,2,0,3.0,1,34.05
+Mewtwo,Piranha Plant,1,1,0,1,10,1.95,2,36.0
+Mewtwo,Palutena,2,1,0,2,26,2.87,-2,38.870000000000005
+Mewtwo,Ryu,3,1,0,2,0,3.0,1,41.870000000000005
 Pikachu,Zero Suit Samus,1,1,0,3,94,3.53,0,3.53
 Pikachu,Bowser Jr,2,1,0,2,80,2.6,0,6.13
 Pikachu,Little Mac,3,1,0,1,47,1.765,1,7.895
@@ -538,6 +782,16 @@ Pikachu,King Dedede,1,0,1,-1,100,0.5,2,8.395
 Pikachu,Marth,1,1,0,2,130,2.35,1,10.745000000000001
 Pikachu,Banjo & Kazooie,2,1,0,3,171,3.145,0,13.89
 Pikachu,Wolf,3,1,0,2,52,2.74,-1,16.63
+Pikachu,Snake,1,1,0,1,112,1.44,-1,18.07
+Pikachu,Pyra & Mythra,2,1,0,2,11,2.945,-1,21.015
+Pikachu,Bowser,3,1,0,1,0,2.0,1,23.015
+Pikachu,Piranha Plant,5,1,0,1,83,1.585,1,24.6
+Pikachu,Pikachu,1,1,0,1,81,1.595,0,26.195
+Pikachu,Corrin,2,1,0,1,0,2.0,1,28.195
+Pikachu,Greninja,3,1,0,1,20,1.9,0,30.095
+Pikachu,Pikachu,1,1,0,1,81,1.595,0,31.69
+Pikachu,Corrin,2,1,0,1,0,2.0,1,33.69
+Pikachu,Greninja,3,1,0,1,20,1.9,0,35.59
 Link,Bayonetta,1,1,0,2,0,3.0,-2,3.0
 Link,Kirby,2,1,0,1,55,1.725,-2,4.725
 Link,Jigglypuff,3,1,0,2,111,2.445,-1,7.17
@@ -547,6 +801,9 @@ Link,Sonic,3,1,0,3,206,3.0,-1,15.695
 Link,Duck Hunt,1,1,0,3,104,3.48,0,19.175
 Link,Marth,2,1,0,3,155,3.225,0,22.4
 Link,Wario,3,1,0,2,90,2.55,-3,24.95
+Link,Banjo & Kazooie,1,1,0,1,76,1.62,1,26.57
+Link,Shulk,2,1,0,2,52,2.74,-1,29.31
+Link,Jigglypuff,3,1,0,3,125,3.375,-1,32.685
 Min Min,Steve,1,1,0,1,12,1.94,0,1.94
 Min Min,Diddy Kong,2,1,0,2,129,2.355,-2,4.295
 Min Min,Pyra & Mythra,3,1,0,2,53,2.735,1,7.029999999999999
@@ -560,6 +817,9 @@ Min Min,Robin,1,1,0,1,47,1.765,0,19.63
 Min Min,Yoshi,2,1,0,2,62,2.69,-1,22.32
 Min Min,Bowser,3,1,0,2,101,2.495,1,24.815
 Min Min,Olimar,4,1,0,3,109,3.455,-1,28.27
+Min Min,Steve,1,1,0,2,34,2.83,0,31.1
+Min Min,Young Link,2,1,0,2,100,2.5,0,33.6
+Min Min,Duck Hunt,3,1,0,2,29,2.855,0,36.455
 Ice Climbers,Captain Falcon,1,1,0,2,90,2.55,1,2.55
 Ice Climbers,Yoshi,2,1,0,2,114,2.43,0,4.98
 Ice Climbers,Kazuya,3,1,0,2,0,3.0,0,7.98
@@ -569,6 +829,9 @@ Ice Climbers,Sheik,3,1,0,1,30,1.85,2,16.455
 Ice Climbers,Diddy Kong,1,1,0,2,81,2.595,0,19.05
 Ice Climbers,Greninja,2,1,0,3,88,3.56,-2,22.61
 Ice Climbers,Mario,3,1,0,2,20,2.9,2,25.51
+Ice Climbers,Ken,1,1,0,2,56,2.72,2,28.23
+Ice Climbers,Simon,2,1,0,1,42,1.79,-2,30.02
+Ice Climbers,Mario,3,1,0,2,60,2.7,2,32.72
 Byleth,Lucas,1,1,0,2,67,2.665,0,2.665
 Byleth,Wii Fit Trainer,2,1,0,2,60,2.7,0,5.365
 Byleth,ROB,3,1,0,1,5,1.975,-2,7.34
@@ -578,6 +841,14 @@ Byleth,Bowser,2,0,1,-1,24,0.12,1,11.92
 Byleth,Marth,1,1,0,2,0,3.0,0,14.92
 Byleth,Bayonetta,2,1,0,3,106,3.47,2,18.39
 Byleth,Ridley,3,0,1,-1,13,0.065,2,18.455000000000002
+Byleth,Greninja,1,1,0,2,122,2.39,-2,20.845
+Byleth,Zelda,2,1,0,1,57,1.715,2,22.560000000000002
+Byleth,Inkling,3,1,0,2,117,2.415,-1,24.975
+Byleth,Yoshi,4,1,0,1,11,1.945,-1,26.92
+Byleth,Ryu,1,1,0,2,0,3.0,1,29.92
+Byleth,Mario,2,0,1,-1,23,0.115,0,30.035
+Byleth,Ryu,1,1,0,2,0,3.0,1,33.035000000000004
+Byleth,Mario,2,0,1,-1,23,0.115,0,33.15
 Captain Falcon,Bayonetta,1,1,0,2,0,3.0,-1,3.0
 Captain Falcon,Roy,2,1,0,2,79,2.605,-1,5.605
 Captain Falcon,Marth,3,1,0,2,119,2.405,1,8.01
@@ -587,6 +858,11 @@ Captain Falcon,Olimar,3,1,0,2,0,3.0,-1,15.735
 Captain Falcon,Ice Climbers,1,1,0,2,13,2.935,-1,18.67
 Captain Falcon,Snake,2,1,0,2,29,2.855,-1,21.525
 Captain Falcon,Piranha Plant,3,1,0,1,137,1.315,0,22.84
+Captain Falcon,Bayonetta,1,1,0,2,0,3.0,-1,25.84
+Captain Falcon,Marth,2,1,0,1,0,2.0,1,27.84
+Captain Falcon,Terry,3,0,1,-1,60,0.3,0,28.14
+Captain Falcon,Lucas,1,0,1,-2,148,-0.26,-1,27.88
+Captain Falcon,Lucas,1,0,1,-2,148,-0.26,-1,27.62
 Young Link,Kirby,1,1,0,1,37,1.815,3,1.815
 Young Link,Roy,2,1,0,3,93,3.535,0,5.35
 Young Link,Ridley,3,1,0,2,24,2.88,3,8.23
@@ -595,6 +871,18 @@ Young Link,Richter,1,1,0,1,74,1.63,0,12.8
 Young Link,Wolf,2,1,0,2,68,2.66,-1,15.46
 Young Link,Bayonetta,3,1,0,3,189,3.055,-1,18.515
 Young Link,Dr Mario,1,0,1,-1,27,0.135,0,18.65
+Young Link,Isabelle,1,1,0,2,85,2.575,3,21.225
+Young Link,Little Mac,2,1,0,3,150,3.25,1,24.475
+Young Link,Dr Mario,3,1,0,2,20,2.9,0,27.375
+Young Link,Marth,5,1,0,1,31,1.845,0,29.22
+Young Link,Min Min,1,1,0,2,83,2.585,0,31.805
+Young Link,Pit,2,1,0,2,0,3.0,1,34.805
+Young Link,Dr Mario,3,1,0,1,0,2.0,0,36.805
+Young Link,Lucas,4,1,0,1,44,1.78,0,38.585
+Young Link,Min Min,1,1,0,2,83,2.585,0,41.17
+Young Link,Pit,2,1,0,2,0,3.0,1,44.17
+Young Link,Dr Mario,3,1,0,1,0,2.0,0,46.17
+Young Link,Lucas,4,1,0,1,44,1.78,0,47.95
 Isabelle,Bowser,1,1,0,2,73,2.635,0,2.635
 Isabelle,Ken,2,1,0,2,80,2.6,-2,5.234999999999999
 Isabelle,Mewtwo,3,1,0,1,0,2.0,-1,7.234999999999999
@@ -605,6 +893,9 @@ Isabelle,Pyra & Mythra,3,1,0,1,32,1.84,-3,16.29
 Isabelle,Olimar,1,1,0,2,3,2.985,-2,19.275
 Isabelle,Ice Climbers,2,1,0,2,17,2.915,0,22.189999999999998
 Isabelle,Duck Hunt,3,1,0,2,130,2.35,-1,24.54
+Isabelle,Incineroar,1,1,0,1,90,1.55,-3,26.09
+Isabelle,Villager,2,1,0,2,8,2.96,0,29.05
+Isabelle,Mario,3,1,0,2,160,2.2,-3,31.25
 Dr Mario,Kirby,1,1,0,1,93,1.535,0,1.535
 Dr Mario,Ridley,2,1,0,2,71,2.645,0,4.18
 Dr Mario,Rosalina & Luma,3,1,0,2,27,2.865,-2,7.045
@@ -616,6 +907,11 @@ Dr Mario,Shulk,1,1,0,3,109,3.455,0,20.89
 Dr Mario,Link,2,1,0,2,162,2.19,1,23.080000000000002
 Dr Mario,Wolf,3,1,0,2,92,2.54,-2,25.62
 Dr Mario,Ike,5,1,0,2,108,2.46,-2,28.080000000000002
+Dr Mario,Donkey Kong,1,1,0,3,121,3.395,-1,31.475
+Dr Mario,Pyra & Mythra,2,1,0,1,40,1.8,-2,33.275
+Dr Mario,PacMan,3,1,0,3,164,3.18,1,36.455
+Dr Mario,Marth,4,1,0,2,0,3.0,0,39.455
+Dr Mario,Captain Falcon,5,0,1,-1,64,0.32,-1,39.775
 Duck Hunt,Robin,1,1,0,2,101,2.495,-1,2.495
 Duck Hunt,Mewtwo,2,1,0,2,68,2.66,-1,5.155
 Duck Hunt,Palutena,3,1,0,2,94,2.53,-2,7.6850000000000005
@@ -626,6 +922,12 @@ Duck Hunt,Lucas,4,0,1,-1,55,0.275,-1,14.565
 Duck Hunt,PacMan,1,1,0,2,27,2.865,0,17.43
 Duck Hunt,Greninja,2,1,0,2,39,2.805,1,20.235
 Duck Hunt,Marth,3,1,0,2,28,2.86,-1,23.095
+Duck Hunt,Greninja,1,1,0,1,59,1.705,1,24.8
+Duck Hunt,Pit,2,0,1,-1,48,0.24,0,25.04
+Duck Hunt,Mario,1,1,0,1,15,1.925,-1,26.965
+Duck Hunt,Hero,2,0,1,-1,63,0.315,-2,27.28
+Duck Hunt,Mario,1,1,0,1,15,1.925,-1,29.205000000000002
+Duck Hunt,Hero,2,0,1,-1,63,0.315,-2,29.52
 Bowser,Kirby,1,1,0,2,73,2.635,-1,2.635
 Bowser,Simon,2,1,0,3,149,3.255,-1,5.89
 Bowser,Pichu,3,1,0,1,0,2.0,-2,7.89
@@ -636,6 +938,11 @@ Bowser,Lucas,5,1,0,3,110,3.45,0,19.48
 Bowser,Ganondorf,1,1,0,1,41,1.795,1,21.275
 Bowser,Olimar,2,1,0,2,125,2.375,-1,23.65
 Bowser,Richter,3,1,0,1,131,1.345,1,24.995
+Bowser,Pikachu,1,1,0,2,32,2.84,-1,27.835
+Bowser,Cloud,2,1,0,2,87,2.565,0,30.4
+Bowser,Jigglypuff,3,1,0,2,78,2.61,-2,33.01
+Bowser,Mr Game & Watch,4,1,0,3,175,3.125,-2,36.135
+Bowser,Sheik,5,1,0,2,61,2.695,0,38.83
 Terry,Ryu,1,1,0,2,129,2.355,-2,2.355
 Terry,Mr Game & Watch,2,1,0,2,105,2.475,0,4.83
 Terry,Sheik,3,1,0,2,84,2.58,-1,7.41
@@ -652,6 +959,16 @@ Piranha Plant,Ike,2,1,0,2,109,2.455,0,14.36
 Piranha Plant,Captain Falcon,3,1,0,1,98,1.51,0,15.87
 Piranha Plant,Chrom,1,1,0,2,8,2.96,1,18.83
 Piranha Plant,King K Rool,2,0,1,-2,145,-0.275,0,18.555
+Piranha Plant,Mr Game & Watch,1,1,0,3,178,3.11,-2,21.665
+Piranha Plant,King K Rool,2,1,0,1,23,1.885,0,23.55
+Piranha Plant,Sora,3,1,0,2,29,2.855,-2,26.405
+Piranha Plant,Duck Hunt,4,1,0,2,29,2.855,-2,29.26
+Piranha Plant,Mewtwo,1,1,0,2,83,2.585,-2,31.845
+Piranha Plant,Richter,2,1,0,2,80,2.6,0,34.445
+Piranha Plant,Luigi,3,1,0,3,159,3.205,-1,37.65
+Piranha Plant,Mewtwo,1,1,0,2,83,2.585,-2,40.235
+Piranha Plant,Richter,2,1,0,2,80,2.6,0,42.835
+Piranha Plant,Luigi,3,1,0,3,159,3.205,-1,46.04
 Zelda,Inkling,1,1,0,1,0,2.0,-2,2.0
 Zelda,Ken,2,1,0,2,68,2.66,-2,4.66
 Zelda,Wario,3,1,0,2,0,3.0,-1,7.66
@@ -663,6 +980,10 @@ Zelda,Cloud,1,1,0,2,87,2.565,-2,20.44
 Zelda,Duck Hunt,2,1,0,2,52,2.74,-1,23.18
 Zelda,Richter,3,1,0,3,126,3.37,-2,26.55
 Zelda,Palutena,5,1,0,3,159,3.205,-1,29.755
+Zelda,Bayonetta,1,1,0,2,0,3.0,-2,32.755
+Zelda,Little Mac,2,1,0,2,48,2.76,0,35.515
+Zelda,Ike,3,1,0,2,71,2.645,0,38.16
+Zelda,Wii Fit Trainer,4,1,0,2,117,2.415,-1,40.575
 Donkey Kong,Richter,1,1,0,2,70,2.65,0,2.65
 Donkey Kong,Ken,2,1,0,2,137,2.315,-1,4.965
 Donkey Kong,Ryu,3,1,0,3,122,3.39,1,8.355
@@ -673,6 +994,15 @@ Donkey Kong,Dr Mario,3,0,1,-1,26,0.13,1,16.045
 Donkey Kong,Link,1,1,0,1,0,2.0,1,18.045
 Donkey Kong,Simon,2,1,0,1,56,1.72,0,19.765
 Donkey Kong,Pikachu,3,1,0,2,15,2.925,-1,22.689999999999998
+Donkey Kong,Ice Climbers,1,1,0,2,97,2.515,-2,25.205
+Donkey Kong,Wario,2,1,0,1,107,1.465,0,26.669999999999998
+Donkey Kong,Simon,3,1,0,1,0,2.0,0,28.67
+Donkey Kong,Duck Hunt,1,1,0,2,148,2.26,-1,30.93
+Donkey Kong,Banjo & Kazooie,2,1,0,1,39,1.805,0,32.735
+Donkey Kong,Mewtwo,3,1,0,3,111,3.445,2,36.18
+Donkey Kong,Duck Hunt,1,1,0,2,148,2.26,-1,38.44
+Donkey Kong,Banjo & Kazooie,2,1,0,1,39,1.805,0,40.245
+Donkey Kong,Mewtwo,3,1,0,3,111,3.445,2,43.69
 Ridley,Ryu,1,1,0,2,38,2.81,0,2.81
 Ridley,Ken,2,1,0,2,114,2.43,-3,5.24
 Ridley,Ganondorf,3,1,0,2,111,2.445,1,7.6850000000000005
@@ -685,6 +1015,9 @@ Ridley,Dr Mario,5,0,1,-2,176,-0.12,0,21.005
 Ridley,Wolf,1,1,0,1,0,2.0,0,23.005
 Ridley,Sora,2,1,0,2,0,3.0,-2,26.005
 Ridley,Mr Game & Watch,3,1,0,2,75,2.625,-3,28.63
+Ridley,Corrin,1,1,0,3,187,3.065,1,31.695
+Ridley,ROB,2,1,0,3,186,3.07,-3,34.765
+Ridley,Zero Suit Samus,3,1,0,2,10,2.95,0,37.715
 Sephiroth,Greninja,1,1,0,2,36,2.82,-1,2.82
 Sephiroth,ROB,2,1,0,3,97,3.515,-2,6.335
 Sephiroth,Samus,3,1,0,1,0,2.0,0,8.335
@@ -696,6 +1029,15 @@ Sephiroth,Dr Mario,4,0,1,-1,75,0.375,3,19.7
 Sephiroth,Mewtwo,1,1,0,2,5,2.975,1,22.675
 Sephiroth,Isabelle,2,1,0,2,33,2.835,2,25.51
 Sephiroth,Min Min,3,1,0,1,51,1.745,0,27.255
+Sephiroth,Richter,1,1,0,1,0,2.0,2,29.255
+Sephiroth,Chrom,2,1,0,2,63,2.685,2,31.94
+Sephiroth,Sonic,3,1,0,1,0,2.0,1,33.94
+Sephiroth,Pichu,1,1,0,2,68,2.66,0,36.6
+Sephiroth,Olimar,2,1,0,3,146,3.27,0,39.87
+Sephiroth,Donkey Kong,3,1,0,2,32,2.84,0,42.71
+Sephiroth,Pichu,1,1,0,2,68,2.66,0,45.37
+Sephiroth,Olimar,2,1,0,3,146,3.27,0,48.64
+Sephiroth,Donkey Kong,3,1,0,2,32,2.84,0,51.480000000000004
 Banjo & Kazooie,Captain Falcon,1,1,0,3,107,3.465,0,3.465
 Banjo & Kazooie,Peach,2,1,0,2,35,2.825,1,6.29
 Banjo & Kazooie,Sonic,3,1,0,2,99,2.505,-1,8.795
@@ -707,6 +1049,16 @@ Banjo & Kazooie,Ryu,4,1,0,2,0,3.0,0,20.75
 Banjo & Kazooie,Marth,1,1,0,2,116,2.42,3,23.17
 Banjo & Kazooie,Wario,2,1,0,1,93,1.535,-3,24.705
 Banjo & Kazooie,Richter,3,1,0,1,12,1.94,-1,26.645
+Banjo & Kazooie,Olimar,1,1,0,1,2,1.99,-2,28.634999999999998
+Banjo & Kazooie,Ridley,2,0,1,-1,116,0.58,2,29.215
+Banjo & Kazooie,Link,1,1,0,2,33,2.835,-1,32.05
+Banjo & Kazooie,Min Min,2,1,0,3,70,3.65,-1,35.7
+Banjo & Kazooie,Wario,3,1,0,1,46,1.77,-3,37.47
+Banjo & Kazooie,Lucario,4,0,1,-1,39,0.195,0,37.665
+Banjo & Kazooie,Link,1,1,0,2,33,2.835,-1,40.5
+Banjo & Kazooie,Min Min,2,1,0,3,70,3.65,-1,44.15
+Banjo & Kazooie,Wario,3,1,0,1,46,1.77,-3,45.92
+Banjo & Kazooie,Lucario,4,0,1,-1,39,0.195,0,46.115
 Lucas,Yoshi,1,1,0,2,146,2.27,-2,2.27
 Lucas,Simon,2,1,0,3,87,3.565,-2,5.835
 Lucas,Terry,3,1,0,2,57,2.715,-1,8.55
@@ -718,3 +1070,15 @@ Lucas,Dark Pit,4,1,0,2,53,2.735,0,21.439999999999998
 Lucas,Joker,1,1,0,1,33,1.835,1,23.275
 Lucas,Ryu,2,1,0,2,0,3.0,-1,26.275
 Lucas,Roy,3,1,0,2,80,2.6,-2,28.875
+Lucas,Diddy Kong,1,1,0,2,69,2.655,-2,31.53
+Lucas,Kazuya,2,0,1,-2,16,-0.92,1,30.61
+Lucas,Mr Game & Watch,1,1,0,1,25,1.875,-2,32.485
+Lucas,Ike,2,1,0,2,89,2.555,-1,35.04
+Lucas,Ganondorf,3,1,0,1,73,1.635,0,36.675
+Lucas,Wario,4,1,0,1,117,1.415,0,38.089999999999996
+Lucas,Piranha Plant,5,0,1,-1,107,0.535,1,38.625
+Lucas,Mr Game & Watch,1,1,0,1,25,1.875,-2,40.5
+Lucas,Ike,2,1,0,2,89,2.555,-1,43.055
+Lucas,Ganondorf,3,1,0,1,73,1.635,0,44.69
+Lucas,Wario,4,1,0,1,117,1.415,0,46.105
+Lucas,Piranha Plant,5,0,1,-1,107,0.535,1,46.64

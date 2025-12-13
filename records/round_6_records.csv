@@ -1,0 +1,64 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Inkling,Simon,1,0,1,-2,158,-0.097,1,-0.097
+Pit,Olimar,1,0,1,-1,50,0.286,0,0.286
+Ganondorf,Dark Samus,1,0,1,-1,50,0.286,1,0.286
+Lucas,Diddy Kong,1,1,0,2,69,2.606,-2,2.606
+Lucas,Kazuya,2,0,1,-2,16,-0.909,1,1.6969999999999998
+Duck Hunt,Greninja,1,1,0,1,59,1.663,1,1.663
+Duck Hunt,Pit,2,0,1,-1,48,0.274,0,1.937
+Incineroar,Chrom,1,1,0,2,7,2.96,1,2.96
+Incineroar,Captain Falcon,2,0,1,-1,72,0.411,-2,3.371
+Captain Falcon,Bayonetta,1,1,0,2,0,3.0,-1,3.0
+Captain Falcon,Marth,2,1,0,1,0,2.0,1,5.0
+Captain Falcon,Terry,3,0,1,-1,60,0.343,0,5.343
+Hero,Wario,1,1,0,3,81,3.537,0,3.537
+Hero,Byleth,2,1,0,1,94,1.463,1,5.0
+Hero,Yoshi,3,1,0,1,57,1.674,-1,6.6739999999999995
+Hero,Terry,4,0,1,-1,109,0.623,-3,7.297
+Sephiroth,Richter,1,1,0,1,0,2.0,2,2.0
+Sephiroth,Chrom,2,1,0,2,63,2.64,2,4.640000000000001
+Sephiroth,Sonic,3,1,0,1,0,2.0,1,6.640000000000001
+Falco,Bowser Jr,1,1,0,1,82,1.531,1,1.531
+Falco,Ice Climbers,2,1,0,3,169,3.034,-2,4.5649999999999995
+Falco,Zelda,3,1,0,1,13,1.926,1,6.491
+Isabelle,Incineroar,1,1,0,1,90,1.486,-3,1.486
+Isabelle,Villager,2,1,0,2,8,2.954,0,4.44
+Isabelle,Mario,3,1,0,2,160,2.086,-3,6.526
+Ice Climbers,Ken,1,1,0,2,56,2.68,2,2.68
+Ice Climbers,Simon,2,1,0,1,42,1.76,-2,4.44
+Ice Climbers,Mario,3,1,0,2,60,2.657,2,7.097
+Min Min,Steve,1,1,0,2,34,2.806,0,2.806
+Min Min,Young Link,2,1,0,2,100,2.429,0,5.234999999999999
+Min Min,Duck Hunt,3,1,0,2,29,2.834,0,8.068999999999999
+Ike,Ryu,1,1,0,2,128,2.269,0,2.269
+Ike,Diddy Kong,2,1,0,2,60,2.657,-2,4.926
+Ike,Little Mac,3,1,0,1,0,2.0,1,6.926
+Cloud,Snake,1,1,0,1,0,2.0,-1,2.0
+Cloud,Joker,2,1,0,2,0,3.0,-2,5.0
+Cloud,lucas,3,1,0,3,122,3.303,2,8.303
+King K Rool,Ness,1,1,0,2,0,3.0,-1,3.0
+King K Rool,Diddy Kong,2,1,0,3,121,3.309,-1,6.309
+King K Rool,Mr Game & Watch,3,1,0,2,85,2.514,-3,8.823
+Link,Banjo & Kazooie,1,1,0,1,76,1.566,1,1.566
+Link,Shulk,2,1,0,2,52,2.703,-1,4.269
+Link,Jigglypuff,3,1,0,3,125,3.286,-1,7.555
+Kirby,Duck Hunt,1,1,0,2,102,2.417,0,2.417
+Kirby,Pit,2,1,0,2,0,3.0,0,5.417
+Kirby,Greninja,3,1,0,3,88,3.497,-1,8.914
+Kirby,Inkling,4,1,0,1,133,1.24,0,10.154
+Dr Mario,Donkey Kong,1,1,0,3,121,3.309,-1,3.309
+Dr Mario,Pyra & Mythra,2,1,0,1,40,1.771,-2,5.08
+Dr Mario,PacMan,3,1,0,3,164,3.063,1,8.143
+Dr Mario,Marth,4,1,0,2,0,3.0,0,11.143
+Dr Mario,Captain Falcon,5,0,1,-1,64,0.366,-1,11.509
+Ridley,Corrin,1,1,0,3,187,3.0,1,3.0
+Ridley,ROB,2,1,0,3,186,3.0,-3,6.0
+Ridley,Zero Suit Samus,3,1,0,2,10,2.943,0,8.943
+Zelda,Bayonetta,1,1,0,2,0,3.0,-2,3.0
+Zelda,Little Mac,2,1,0,2,48,2.726,0,5.726
+Zelda,Ike,3,1,0,2,71,2.594,0,8.32
+Zelda,Wii Fit Trainer,4,1,0,2,117,2.331,-1,10.651
+Chrom,Ness,1,1,0,3,123,3.297,1,3.297
+Chrom,Donkey Kong,2,1,0,2,62,2.646,-2,5.943
+Chrom,Cloud,3,1,0,2,0,3.0,-1,8.943
+Chrom,Wolf,4,1,0,1,17,1.903,-2,10.846

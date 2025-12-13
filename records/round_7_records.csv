@@ -1,0 +1,94 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Pit,Sora,1,0,1,-1,82,0.41,-1,0.41
+Incineroar,Shulk,1,0,1,-1,40,0.2,-1,0.2
+Captain Falcon,Lucas,1,0,1,-2,148,-0.26,-1,-0.26
+Duck Hunt,Mario,1,1,0,1,15,1.925,-1,1.925
+Duck Hunt,Hero,2,0,1,-1,63,0.315,-2,2.24
+Mr Game & Watch,Ken,1,1,0,2,45,2.775,2,2.775
+Mr Game & Watch,Incineroar,2,0,1,-1,98,0.49,1,3.2649999999999997
+Byleth,Ryu,1,1,0,2,0,3.0,1,3.0
+Byleth,Mario,2,0,1,-1,23,0.115,0,3.115
+Ganondorf,Chrom,1,1,0,2,66,2.67,-2,2.67
+Ganondorf,Yoshi,2,1,0,1,110,1.45,-1,4.12
+Ganondorf,Captain Falcon,3,0,1,-1,84,0.42,2,4.54
+Pikachu,Pikachu,1,1,0,1,81,1.595,0,1.595
+Pikachu,Corrin,2,1,0,1,0,2.0,1,3.5949999999999998
+Pikachu,Greninja,3,1,0,1,20,1.9,0,5.495
+Wii Fit Trainer,Kirby,1,1,0,2,87,2.565,0,2.565
+Wii Fit Trainer,PacMan,2,1,0,1,123,1.385,1,3.95
+Wii Fit Trainer,Dark Samus,3,1,0,2,108,2.46,1,6.41
+Wii Fit Trainer,Captain Falcon,4,1,0,1,49,1.755,-1,8.165
+Wii Fit Trainer,Lucario,5,0,1,-1,124,0.62,1,8.785
+Rosalina & Luma,Banjo & Kazooie,1,1,0,1,0,2.0,-1,2.0
+Rosalina & Luma,Lucas,2,1,0,1,70,1.65,1,3.65
+Rosalina & Luma,Captain Falcon,3,1,0,2,108,2.46,0,6.109999999999999
+Lucas,Mr Game & Watch,1,1,0,1,25,1.875,-2,1.875
+Lucas,Ike,2,1,0,2,89,2.555,-1,4.43
+Lucas,Ganondorf,3,1,0,1,73,1.635,0,6.065
+Lucas,Wario,4,1,0,1,117,1.415,0,7.48
+Lucas,Piranha Plant,5,0,1,-1,107,0.535,1,8.015
+ROB,Diddy Kong,1,1,0,2,93,2.535,0,2.535
+ROB,Dr Mario,2,1,0,1,161,1.195,2,3.7300000000000004
+ROB,Marth,3,1,0,2,71,2.645,2,6.375
+Meta Knight,Sora,1,1,0,1,112,1.44,1,1.44
+Meta Knight,King K Rool,2,1,0,1,38,1.81,2,3.25
+Meta Knight,Lucina,3,1,0,2,0,3.0,2,6.25
+Samus,Mario,1,1,0,1,163,1.185,0,1.185
+Samus,Bayonetta,2,1,0,3,126,3.37,-2,4.555
+Samus,Ridley,3,1,0,1,20,1.9,2,6.455
+Luigi,Diddy Kong,1,1,0,3,166,3.17,0,3.17
+Luigi,Byleth,2,1,0,1,72,1.64,2,4.81
+Luigi,Ness,3,1,0,1,0,2.0,-1,6.81
+Pokemon Trainer,Zelda,1,1,0,1,126,1.37,-1,1.37
+Pokemon Trainer,Dark Pit,2,1,0,3,196,3.02,-1,4.390000000000001
+Pokemon Trainer,King K Rool,3,1,0,1,0,2.0,1,6.390000000000001
+Donkey Kong,Duck Hunt,1,1,0,2,148,2.26,-1,2.26
+Donkey Kong,Banjo & Kazooie,2,1,0,1,39,1.805,0,4.0649999999999995
+Donkey Kong,Mewtwo,3,1,0,3,111,3.445,2,7.51
+Banjo & Kazooie,Link,1,1,0,2,33,2.835,-1,2.835
+Banjo & Kazooie,Min Min,2,1,0,3,70,3.65,-1,6.484999999999999
+Banjo & Kazooie,Wario,3,1,0,1,46,1.77,-3,8.254999999999999
+Banjo & Kazooie,Lucario,4,0,1,-1,39,0.195,0,8.45
+Dark Pit,Isabelle,1,1,0,3,159,3.205,0,3.205
+Dark Pit,Palutena,2,1,0,3,124,3.38,0,6.585
+Dark Pit,PacMan,3,1,0,1,91,1.545,-2,8.129999999999999
+Bowser Jr,Marth,1,1,0,1,0,2.0,0,2.0
+Bowser Jr,Olimar,2,1,0,1,120,1.4,-2,3.4
+Bowser Jr,Chrom,3,1,0,3,135,3.325,1,6.725
+Young Link,Min Min,1,1,0,2,83,2.585,0,2.585
+Young Link,Pit,2,1,0,2,0,3.0,1,5.585
+Young Link,Dr Mario,3,1,0,1,0,2.0,0,7.585
+Young Link,Lucas,4,1,0,1,44,1.78,0,9.365
+Hero,Steve,1,1,0,1,28,1.86,0,1.86
+Hero,Banjo & Kazooie,2,1,0,2,171,2.145,1,4.005
+Hero,Toon Link,3,1,0,3,105,3.475,1,7.48
+Little Mac,Pikachu,1,1,0,1,73,1.635,-1,1.635
+Little Mac,Joker,2,1,0,2,41,2.795,-1,4.43
+Little Mac,Rosalina & Luma,3,1,0,2,48,2.76,-1,7.1899999999999995
+Yoshi,Ness,1,1,0,2,11,2.945,0,2.945
+Yoshi,Mario,2,1,0,2,129,2.355,-1,5.3
+Yoshi,Peach,3,1,0,2,0,3.0,1,8.3
+Falco,Meta Knight,1,1,0,2,42,2.79,0,2.79
+Falco,Dark Samus,2,1,0,2,124,2.38,-1,5.17
+Falco,Mega Man,3,1,0,2,70,2.65,1,7.82
+Mewtwo,Piranha Plant,1,1,0,1,10,1.95,2,1.95
+Mewtwo,Palutena,2,1,0,2,26,2.87,-2,4.82
+Mewtwo,Ryu,3,1,0,2,0,3.0,1,7.82
+King Dedede,Jigglypuff,1,1,0,3,137,3.315,0,3.315
+King Dedede,Bowser,2,1,0,2,111,2.445,2,5.76
+King Dedede,Pokemon Trainer,3,1,0,2,60,2.7,-1,8.46
+Roy,Ike,1,1,0,1,63,1.685,2,1.685
+Roy,Palutena,2,1,0,3,89,3.555,0,5.24
+Roy,Richter,3,1,0,2,0,3.0,0,8.24
+Sephiroth,Pichu,1,1,0,2,68,2.66,0,2.66
+Sephiroth,Olimar,2,1,0,3,146,3.27,0,5.93
+Sephiroth,Donkey Kong,3,1,0,2,32,2.84,0,8.77
+Piranha Plant,Mewtwo,1,1,0,2,83,2.585,-2,2.585
+Piranha Plant,Richter,2,1,0,2,80,2.6,0,5.1850000000000005
+Piranha Plant,Luigi,3,1,0,3,159,3.205,-1,8.39
+Mii Gunner,Dr Mario,1,1,0,1,0,2.0,0,2.0
+Mii Gunner,Mario,2,1,0,2,95,2.525,-2,4.525
+Mii Gunner,Ryu,3,1,0,3,108,3.46,-2,7.984999999999999
+Sora,Corrin,1,1,0,2,59,2.705,-2,2.705
+Sora,Cloud,2,1,0,2,0,3.0,-2,5.705
+Sora,Sheik,3,1,0,2,8,2.96,-1,8.665
