@@ -437,6 +437,8 @@ Inkling,Lucas,1,1,0,2,43,2.785,3,15.705
 Inkling,Kirby,2,1,0,1,72,1.64,0,17.345
 Inkling,Young Link,3,1,0,3,155,3.225,0,20.57
 Inkling,Simon,1,0,1,-2,158,-0.21,1,20.36
+Inkling,Meta Knight,1,0,1,-1,53,0.265,0,20.625
+Inkling,Meta Knight,1,0,1,-1,53,0.265,0,20.89
 Ness,Sonic,1,1,0,1,100,1.5,0,1.5
 Ness,Bayonetta,2,1,0,2,18,2.91,0,4.41
 Ness,Mewtwo,3,1,0,1,0,2.0,0,6.41
@@ -497,8 +499,6 @@ Pit,Greninja,1,1,0,2,98,2.51,0,17.515
 Pit,Joker,2,1,0,2,60,2.7,-2,20.215
 Pit,Ridley,3,1,0,1,0,2.0,0,22.215
 Pit,Olimar,1,0,1,-1,50,0.25,0,22.465
-Pit,Sora,1,0,1,-1,82,0.41,-1,22.875
-Pit,Sora,1,0,1,-1,82,0.41,-1,23.285
 Mii Swordfighter,Mega Man,1,1,0,1,17,1.915,-2,1.915
 Mii Swordfighter,Samus,2,1,0,1,0,2.0,0,3.915
 Mii Swordfighter,Richter,3,1,0,2,96,2.52,0,6.4350000000000005
