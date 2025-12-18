@@ -3449,10 +3449,10 @@ Tourney_4 = {
     }
 
 Tourney_5 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-    "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Little Mac": [["Meta Knight", [2, 55]], ["Shulk", [1, 5]], ["Mega Man", [2, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Bowser Jr": [["Byleth", [2, 65]], ["Piranha Plant", [2, 45]], ["Olimar", [2, 129]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Hero": [["Joker", [2, 13]], ["Ganondorf", [2, 54]], ["Falco", [2, 21]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+    "Young Link": [["Daisy", [3, 56]], ["Min Min", [3, 138]], ["Wii Fit Trainer", [3, 115]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
     }
 
 Tourney_6 = {
