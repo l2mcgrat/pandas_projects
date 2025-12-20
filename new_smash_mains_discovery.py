@@ -3456,24 +3456,24 @@ Tourney_5 = {
     }
 
 Tourney_6 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-    "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Falco": [["Cloud", [2, 101]], ["Meta Knight", [2, 39]], ["Chrom", [2, 20]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Bowser": [["Ice Climbers", [2, 10]], ["Link", [3, 80]], ["Simon", [2, 39]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Yoshi": [["Sephiroth", [3, 106]], ["Donkey Kong", [1, 45]], ["Snake", [2, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+    "Mewtwo": [["Kirby", [3, 85]], ["Sonic", [3, 4]], ["Pyra & Mythra", [2, 10]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
     }
 
 Tourney_7 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-    "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Roy": [["Fox", [1, 54]], ["Sora", [2, 52]], ["Dark Pit", [2, 40]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "King K Rool": [["Snake", [2, 76]], ["Joker", [2, 0]], ["Hero", [1, 55]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Sephiroth": [["Sephiroth", [3, 6]], ["Toon Link", [2, 13]], ["Jigglypuff", [1, 81]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+    "King Dedede": [["Ness", [3, 8]], ["Cloud", [2, 126]], ["Villager", [1, 76]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
     }
 
 Tourney_8 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character C": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
-    "Character D": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Piranha Plant": [["Snake", [3, 37]], ["Sephiroth", [1, 117]], ["Kazuya", [2, 101]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Mii Gunner": [["ROB", [3, 135]], ["Diddy Kong", [3, 75]], ["Rosalina & Luma", [3, 24]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Pyra & Mythra": [["Zelda", [3, 85]], ["Toon Link", [2, 13]], ["Isabelle", [1, 79]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]],          
+    "Ice Climbers": [["Ike", [3, 79]], ["Pit", [3, 135]], ["Pichu", [3, 79]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
     }
 
 Tourney_9 = {
