@@ -48,9 +48,9 @@ def wordle_word_limiter(df_5_letter_words, green_letter_list, grey_letter_list, 
 # Cheating Tools (example input)
 # ------------------------------------------------------------
 
-green_letter_list = ["", "", "", "R", ""]
-grey_letters = "LEANCUO"
-yellow_letter_list = ["H", "H", "", "", ""]
+green_letter_list = ["", "", "I", "", "E"]
+grey_letters = "LARNPC"
+yellow_letter_list = ["", "", "", "", ""]
 
 # Build list of all yellow letters
 all_yellow_letters = "".join(yellow_letter_list)
