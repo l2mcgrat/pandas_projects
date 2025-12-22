@@ -3779,11 +3779,11 @@ def round_11_calculator(Tourney_List, max_percentage, character_dict, loss_dict)
             for n, fight in enumerate(fights):
                 all_characters.add(fight[0])
                 multiplier = 1 if not bool(fight[1][0]) else (1 - matchup_df[matchup_df["Character"] == key.lower()][fight[0].lower()].iloc[0]/20)
-                if fight[1][0] > 0 and n + 1 <= 3:
+                if fight[1][0] > 0 and n + 1 <= 4:
                     match_won = True
                     score = multiplier*(1.5 + n/2)*(fight[1][0] + (max(0, max_percentage - fight[1][1]))/max_percentage)
                     character_dict[key] += score
-                elif fight[1][0] > 0 and n + 1 > 3:
+                elif fight[1][0] > 0 and n + 1 > 4:
                     match_won = True
                     score = multiplier*(1.5 + n/2)*(fight[1][0] + (max(0, max_percentage - fight[1][1]))/max_percentage)/(n + 1)
                     character_dict[key] += score
@@ -3791,7 +3791,7 @@ def round_11_calculator(Tourney_List, max_percentage, character_dict, loss_dict)
                         win_loses["Won Tourney"][0] += 1
                         win_loses["Won Tourney"][1] += character_dict[key]
                         win_loses["Won Tourney"][2].append(key)
-                elif fight[1][0] < 0 and n + 1 <= 3:
+                elif fight[1][0] < 0 and n + 1 <= 4:
                     loss_dict[fight[0]] += 1
                     match_won = False
                     score = multiplier*(1.5 + n/2)*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))
@@ -3808,26 +3808,20 @@ def round_11_calculator(Tourney_List, max_percentage, character_dict, loss_dict)
                         win_loses["Lost Round 3"][0] += 1
                         win_loses["Lost Round 3"][1] += character_dict[key]
                         win_loses["Lost Round 3"][2].append(key)
-                elif fight[1][0] < 0 and n + 1 > 3:
-                    loss_dict[fight[0]] += 1
-                    match_won = False
-                    score = multiplier*(1.5 + n/2)*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))/(n + 1)
-                    character_dict[key] += score
                     if (n + 1 == 4): 
                         win_loses["Lost Round 4"][0] += 1
                         win_loses["Lost Round 4"][1] += character_dict[key]
                         win_loses["Lost Round 4"][2].append(key)
+                elif fight[1][0] < 0 and n + 1 > 4:
+                    loss_dict[fight[0]] += 1
+                    score = multiplier*(1.5 + n/2)*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))/(n + 1)
+                    character_dict[key] += score
                     if (n + 1 == 5): 
                         win_loses["Lost Round 5"][0] += 1
                         win_loses["Lost Round 5"][1] += character_dict[key]
                         win_loses["Lost Round 5"][2].append(key)
                 else:
-                    if n + 1 == 4 and match_won: 
-                        win_loses["Won Round 3"][0] += 1
-                        win_loses["Won Round 3"][1] += character_dict[key]
-                        win_loses["Won Round 3"][2].append(key)
-                        match_won = False
-                    if n + 1 == 5 and match_won: 
+                    if n + 1 == 5: 
                         win_loses["Won Round 4"][0] += 1    
                         win_loses["Won Round 4"][1] += character_dict[key]
                         win_loses["Won Round 4"][2].append(key)
@@ -3857,36 +3851,53 @@ def round_11_generator(character_dict, win_loses, pdf):
 ###### Matches 24-7 #######
 ###########################
 
-
+# 24 16.49 Bowser Jr
+# 23 16.53 Yoshi
+# 22 16.6 Dr Mario
+# 21 16.74 Little Mac
+# 20 16.75 Falco
+# 19 16.77 King Dedede
+# 18 16.84 Sephiroth
+# 17 17.06 Hero
+# 16 17.07 Piranha Plant
+# 15 17.39 Sora
+# 14 17.45 Banjo & Kazooie
+# 13 18.03 Bowser
+# 12 18.14 Young Link
+# 11 18.25 Ridley
+# 10 18.38 Cloud
+# 9 18.79 Ice Climbers
+# 8 18.79 Min Min
+# 7 18.91 Mewtwo
 
 Tourney_1 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Bowser Jr": [["Little Mac", [2, 0]], ["Cloud", [2, 67]], ["Jigglypuff", [3, 50]], ["Pokemon Trainer", [2, 0]], ["Opponent 5", [0, 0]]], 
+    "Yoshi": [["Pikachu", [2, 85]], ["Corrin", [2, 40]], ["Dark Pit", [2, 25]], ["Donkey Kong", [1, 0]], ["Opponent 5", [0, 0]]] 
     }
     
 Tourney_2 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Dr Mario": [["King Dedede", [1, 0]], ["Pikachu", [2, 21]], ["Zelda", [3, 120]], ["PacMan", [3, 136]], ["Mr Game & Watch", [3, 105]]], 
+    "Little Mac": [["Bayonetta", [3, 135]], ["Steve", [-1, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
     }
 
 Tourney_3 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Falco": [["Lucas", [2, 154]], ["PacMan", [1, 54]], ["Banjo & Kazooie", [2, 0]], ["Pyra & Mythra", [-2, 0]], ["Opponent 5", [0, 0]]], 
+    "King Dedede": [["Lucario", [2, 79]], ["Ridley", [2, 51]], ["Ice Climbers", [2, 121]], ["Byleth", [3, 153]], ["Pyra & Mythra", [1, 75]]] 
     }
 
 Tourney_4 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Sephiroth": [["Young Link", [4, 161]], ["Byleth", [-2, 63]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Hero": [["Marth", [1, 120]], ["Piranha Plant", [2, 90]], ["Link", [2, 85]], ["Toon Link", [2, 88]], ["Cloud", [-1, 95]]] 
     }
 
 Tourney_5 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Piranha Plant": [["Jigglypuff", [1, 54]], ["Hero", [2, 171]], ["Dark Pit", [1, 57]], ["Greninja", [2, 65]], ["Simon", [2, 97]]], 
+    "Sora": [["Palutena", [2, 56]], ["King K Rool", [-1, 56]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
     }
 
 Tourney_6 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Banjo & Kazooie": [["Mega Man", [2, 20]], ["Wii Fit Trainer", [2, 0]], ["Luigi", [2, 23]], ["Cloud", [3, 7]], ["Steve", [2, 49]]], 
+    "Bowser": [["Terry", [-1, 100]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
     }
 
 Tourney_7 = {
@@ -3907,7 +3918,7 @@ Tourney_9 = {
 Tourney_List_11 = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney_6, Tourney_7, Tourney_8, Tourney_9]
 
 max_percentage = 200
-round_11_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_10_calculator(Tourney_List_11, max_percentage, round_11_scores_dict, loss_dict)
+round_11_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_11_calculator(Tourney_List_11, max_percentage, round_11_scores_dict, loss_dict)
 round_11_scores_dict = dict(sorted(round_11_scores_dict.items(), key=lambda item: item[1], reverse=False))
 print("\nRound 11\n")
 print_sorted_dict(round_11_scores_dict)
