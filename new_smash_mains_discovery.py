@@ -3901,18 +3901,18 @@ Tourney_6 = {
     }
 
 Tourney_7 = {
-    "Young Link": [["Fox", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Ridley": [["Pit", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Young Link": [["Fox", [1, 18]], ["Incineroar", [1, 103]], ["Dark Samus", [3, 86]], ["Bowser Jr", [2, 116]], ["Opponent 5", [0, 0]]], 
+    "Ridley": [["Pit", [1, 132]], ["Pikachu", [1, 13]], ["Bowser", [2, 102]], ["Pokemon Trainer", [1, 63]], ["Opponent 5", [0, 0]]] 
     }
 
 Tourney_8 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Cloud": [["Lucario", [3, 38]], ["Dark Pit", [2, 111]], ["Inkling", [-1, 13]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Ice Climbers": [["Lucina", [2, 24]], ["Ken", [2, 92]], ["Ganondorf", [2, 61]], ["Kirby", [1, 36]], ["Inkling", [2, 22]]] 
     }
 
 Tourney_9 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Min Min": [["Isabelle", [3, 0]], ["Inkling", [1, 70]], ["Captain Falcon", [1, 78]], ["King K Rool", [1, 81]], ["Opponent 5", [0, 0]]], 
+    "Mewtwo": [["Jigglypuff", [2, 42]], ["Kazuya", [3, 111]], ["Pikachu", [1, 66]], ["Mario", [2, 122]], ["Opponent 5", [0, 0]]] 
     }
 
 Tourney_List_11 = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney_6, Tourney_7, Tourney_8, Tourney_9]
