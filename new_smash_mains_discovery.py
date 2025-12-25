@@ -4228,16 +4228,16 @@ def round_13_generator(character_dict, win_loses, pdf):
     win_loss_characters = {category:characters for category, (total, total_score, characters) in win_loses.items()}
     
     # Win Category Plotting and Tables
-    bar_generator(win_loss_totals, "Count", "Category", "Round 13: Rank 15 to 5 - Win/Loss Categories", pdf)
-    bar_generator(win_loss_averages, "Average Score", "Category", "Round 13: Rank 15 to 5 - Score Comparisons", pdf)
-    table_generator(win_loss_characters, "Round 13: Rank 15 to 5 - Character Fighting End Scenario Table", pdf)
+    bar_generator(win_loss_totals, "Count", "Category", "Round 13: Rank 16 to 5 - Win/Loss Categories", pdf)
+    bar_generator(win_loss_averages, "Average Score", "Category", "Round 13: Rank 16 to 5 - Score Comparisons", pdf)
+    table_generator(win_loss_characters, "Round 13: Rank 16 to 5 - Character Fighting End Scenario Table", pdf)
     
     # Score Distributions
-    histogram_generator(character_dict, "Score", "Frequency", "Round 13: Rank 15 to 5 Score Distribution", pdf)
-    distribution_generator(character_dict, "Score", "Density", "Round 13: Rank 15 to 5 Score Density Plot", pdf)
+    histogram_generator(character_dict, "Score", "Frequency", "Round 13: Rank 16 to 5 Score Distribution", pdf)
+    distribution_generator(character_dict, "Score", "Density", "Round 13: Rank 16 to 5 Score Density Plot", pdf)
     
 ############################
-###### Matches 15-5 ########
+###### Matches 16-5 ########
 ############################
 
 # Bonus 
@@ -4262,28 +4262,28 @@ Tourney_1 = {
     }
 
 Tourney_2 = {
-    "Ike": [["Dark Pit", [3, 57]], ["Lucina", [3, 119]], ["Min Min", [3, 72]], ["Zelda", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Yoshi": [["Pikachu", [2, 31]], ["Peach", [3, 94]], ["Samus", [2, 45]], ["Mewtwo", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Ike": [["Dark Pit", [3, 57]], ["Lucina", [3, 119]], ["Min Min", [3, 72]], ["Zelda", [1, 78]], ["Opponent 5", [0, 0]]], 
+    "Yoshi": [["Pikachu", [2, 31]], ["Peach", [3, 94]], ["Samus", [2, 45]], ["Mewtwo", [2, 67]], ["Opponent 5", [0, 0]]] 
     }
 
 Tourney_3 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Young Link": [["Roy", [2, 30]], ["Sora", [2, 82]], ["Kirby", [1, 0]], ["Wario", [3, 78]], ["Opponent 5", [0, 0]]], 
+    "Piranha Plant": [["Duck Hunt", [3, 83]], ["Isabelle", [3, 174]], ["Diddy Kong", [2, 48]], ["Marth", [3, 37]], ["Opponent 5", [0, 0]]] 
     }
 
 Tourney_4 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Ice Climbers": [["Zero Suit Samus", [2, 0]], ["Ryu", [2, 2]], ["Toon Link", [2, 37]], ["Zelda", [2, 116]], ["Sora", [2, 53]]], 
+    "Mewtwo": [["Bowser", [3, 94]], ["Dark Samus", [2, 18]], ["Byleth", [-2, 74]], ["Sora", [0, 0]], ["Opponent 5", [0, 0]]] 
     }
 
 Tourney_5 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "King Dedede": [["Olimar", [2, 63]], ["Simon", [1, 32]], ["Incineroar", [2, 0]], ["Pikachu", [2, 23]], ["Opponent 5", [0, 0]]], 
+    "Dr Mario": [["Chrom", [1, 100]], ["Daisy", [3, 153]], ["Palutena", [3, 0]], ["Ganondorf", [1, 0]], ["Opponent 5", [0, 0]]] 
     }
 
 Tourney_6 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Hero": [["Wolf", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Bowser Jr": [["Ridley", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
     }
     
 Tourney_List_13 = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney_6]
