@@ -3923,8 +3923,8 @@ Tourney_List_11 = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourne
 max_percentage = 200
 round_11_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_11_calculator(Tourney_List_11, max_percentage, round_11_scores_dict, loss_dict)
 round_11_scores_dict = dict(sorted(round_11_scores_dict.items(), key=lambda item: item[1], reverse=False))
-print("\nRound 11\n")
-print_sorted_dict(round_11_scores_dict)
+# print("\nRound 11\n")
+# print_sorted_dict(round_11_scores_dict)
 round_11_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], reverse=True)).copy()
 
 with PdfPages("reports/round_11_results.pdf") as pdf:
@@ -4079,8 +4079,8 @@ Tourney_List_12 = [Tourney_1, Tourney_2, Tourney_3]
 max_percentage = 200
 round_12_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_12_calculator(Tourney_List_12, max_percentage, round_12_scores_dict, loss_dict)
 round_12_scores_dict = dict(sorted(round_12_scores_dict.items(), key=lambda item: item[1], reverse=False))
-print("\nRound 12\n")
-print_sorted_dict(round_12_scores_dict)
+# print("\nRound 12\n")
+# print_sorted_dict(round_12_scores_dict)
 round_12_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], reverse=True)).copy()
 
 with PdfPages("reports/round_12_results.pdf") as pdf:
@@ -4282,8 +4282,8 @@ Tourney_5 = {
     }
 
 Tourney_6 = {
-    "Hero": [["Wolf", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Bowser Jr": [["Ridley", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Hero": [["Wolf", [1, 140]], ["Samus", [3, 45]], ["Ken", [2, 72]], ["Palutena", [3, 96]], ["Mr Game & Watch", [3, 144]]], 
+    "Bowser Jr": [["Ridley", [-1, 63]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
     }
     
 Tourney_List_13 = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney_6]
@@ -4291,12 +4291,331 @@ Tourney_List_13 = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourne
 max_percentage = 200
 round_13_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_13_calculator(Tourney_List_13, max_percentage, round_13_scores_dict, loss_dict)
 round_13_scores_dict = dict(sorted(round_13_scores_dict.items(), key=lambda item: item[1], reverse=False))
-print("\nRound 13\n")
-print_sorted_dict(round_13_scores_dict)
+# print("\nRound 13\n")
+# print_sorted_dict(round_13_scores_dict)
 round_13_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], reverse=True)).copy()
 
 with PdfPages("reports/round_13_results.pdf") as pdf:
     round_13_generator(round_13_scores_dict, win_loses, pdf)
+
+#%%
+######################################################
+######################## ROUND 14 ####################
+######################################################
+
+"""
+
+Refactored Scores: N^(5/11) * ln N
+
+4 Stock Matches Going Forward - And an Unmultiplied Bonus Point if you 4 Stock Someone
+
+Round 13/14 Grader
+
+IF Stock_Diff > 0
+1pt/Stock_Diff and 0.05pts per 10% below 150%
+Score is Multiplied by (1 + (match_number)*0.5)
+
+ex)
+
+IF Stock_Diff < 0
+0pts for 1 Stock Diff, -1pts for 2 Stock, etc.
+0.05pts per 10% Damage Given up to 150%
+Score is Multiplied by (1 + (match_number)*0.5)
+
+ex) 
+
+Bonus Match Points are Divided by Round Number
+
+"""
+
+def round_14_calculator(Tourney_List, max_percentage, character_dict, loss_dict):
+    
+    example_tourney = {
+        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        }
+    
+    win_loses = {"Lost Round 1": [0, 0, []], "Lost Round 2": [0, 0, []], "Lost Round 3": [0, 0, []], "Lost Round 4": [0, 0, []], 
+                 "Lost Round 5": [0, 0, []], "Won Round 3": [0, 0, []], "Won Round 4": [0, 0, []], "Won Tourney": [0, 0, []]}
+    
+    characters_played = set()
+    all_characters = set()
+    for tourney in Tourney_List:
+        if tourney == example_tourney: 
+            continue
+        for key, fights in tourney.items():
+            characters_played.add(key)
+            for n, fight in enumerate(fights):
+                all_characters.add(fight[0])
+                multiplier = 1 if not bool(fight[1][0]) else (1 - matchup_df[matchup_df["Character"] == key.lower()][fight[0].lower()].iloc[0]/20)
+                if fight[1][0] > 0 and n + 1 <= 4:
+                    match_won = True
+                    score = multiplier*(1.5 + n/2)*(fight[1][0] + (max(0, max_percentage - fight[1][1]))/max_percentage)
+                    character_dict[key] += score
+                elif fight[1][0] > 0 and n + 1 > 4:
+                    match_won = True
+                    score = multiplier*(1.5 + n/2)*(fight[1][0] + (max(0, max_percentage - fight[1][1]))/max_percentage)/(n + 1)
+                    character_dict[key] += score
+                    if (n + 1 == 5): 
+                        win_loses["Won Tourney"][0] += 1
+                        win_loses["Won Tourney"][1] += character_dict[key]
+                        win_loses["Won Tourney"][2].append(key)
+                elif fight[1][0] < 0 and n + 1 <= 4:
+                    loss_dict[fight[0]] += 1
+                    match_won = False
+                    score = multiplier*(1.5 + n/2)*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))
+                    character_dict[key] += score
+                    if (n + 1 == 1): 
+                        win_loses["Lost Round 1"][0] += 1
+                        win_loses["Lost Round 1"][1] += character_dict[key]
+                        win_loses["Lost Round 1"][2].append(key)
+                    if (n + 1 == 2): 
+                        win_loses["Lost Round 2"][0] += 1
+                        win_loses["Lost Round 2"][1] += character_dict[key]
+                        win_loses["Lost Round 2"][2].append(key)
+                    if (n + 1 == 3): 
+                        win_loses["Lost Round 3"][0] += 1
+                        win_loses["Lost Round 3"][1] += character_dict[key]
+                        win_loses["Lost Round 3"][2].append(key)
+                    if (n + 1 == 4): 
+                        win_loses["Lost Round 4"][0] += 1
+                        win_loses["Lost Round 4"][1] += character_dict[key]
+                        win_loses["Lost Round 4"][2].append(key)
+                elif fight[1][0] < 0 and n + 1 > 4:
+                    loss_dict[fight[0]] += 1
+                    score = multiplier*(1.5 + n/2)*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))/(n + 1)
+                    character_dict[key] += score
+                    if (n + 1 == 5): 
+                        win_loses["Lost Round 5"][0] += 1
+                        win_loses["Lost Round 5"][1] += character_dict[key]
+                        win_loses["Lost Round 5"][2].append(key)
+                else:
+                    if n + 1 == 5: 
+                        win_loses["Won Round 4"][0] += 1    
+                        win_loses["Won Round 4"][1] += character_dict[key]
+                        win_loses["Won Round 4"][2].append(key)
+                
+    for fighter in character_dict:
+        character_dict[fighter] = int(character_dict[fighter]*100)/100
+    
+    return character_dict, win_loses, characters_played, all_characters, loss_dict 
+
+def round_14_generator(character_dict, win_loses, pdf):
+    
+    # Win Category Data
+    win_loss_totals = {category:total for category, (total, total_score, characters) in win_loses.items()}
+    win_loss_averages = {category:int(200*total_score/(1 if not total else total))/200 for category, (total, total_score, characters) in win_loses.items()}
+    win_loss_characters = {category:characters for category, (total, total_score, characters) in win_loses.items()}
+    
+    # Win Category Plotting and Tables
+    bar_generator(win_loss_totals, "Count", "Category", "Round 14: Rank 4 to 1 - Win/Loss Categories", pdf)
+    bar_generator(win_loss_averages, "Average Score", "Category", "Round 14: Rank 6 to 1 - Score Comparisons", pdf)
+    table_generator(win_loss_characters, "Round 14: Rank 4 to 1 - Character Fighting End Scenario Table", pdf)
+    
+    # Score Distributions
+    histogram_generator(character_dict, "Score", "Frequency", "Round 14: Rank 4 to 1 Score Distribution", pdf)
+    distribution_generator(character_dict, "Score", "Density", "Round 14: Rank 4 to 1 Score Density Plot", pdf)
+
+###########################
+###### Matches 4-1 ########
+###########################
+
+# 4 22.506 Link
+# 3 22.64 Chrom
+# 2 23.031 Banjo & Kazooie
+# 1 24.228 Zelda
+
+Tourney_1 = {
+    "Link": [["Donkey Kong", [3, 96]], ["Isabelle", [3, 115]], ["Zero Suit Samus", [2, 77]], ["Jigglypuff", [4, 101]], ["Opponent 5", [0, 0]]], 
+    "Chrom": [["Bayonetta", [2, 6]], ["Little Mac", [2, 73]], ["Wii Fit Trainer", [2, 7]], ["Dr Mario", [3, 62  ]], ["Opponent 5", [0, 0]]] 
+    }
+
+Tourney_2 = {
+    "Banjo & Kazooie": [["Roy", [2, 83]], ["Snake", [1, 69]], ["Lucario", [3, 79]], ["ROB", [-1, 142]], ["Opponent 5", [0, 0]]], 
+    "Zelda": [["Dark Samus", [2, 153]], ["Sora", [2, 31]], ["Villager", [1, 14]], ["King K Rool", [3, 143]], ["ROB", [1, 0]]] 
+    }
+    
+Tourney_List_14 = [Tourney_1, Tourney_2]
+
+max_percentage = 200
+round_14_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_14_calculator(Tourney_List_14, max_percentage, round_14_scores_dict, loss_dict)
+round_14_scores_dict = dict(sorted(round_14_scores_dict.items(), key=lambda item: item[1], reverse=False))
+# print("\nRound 14\n")
+# print_sorted_dict(round_14_scores_dict)
+round_14_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], reverse=True)).copy()
+
+with PdfPages("reports/round_14_results.pdf") as pdf:
+    round_14_generator(round_14_scores_dict, win_loses, pdf)
+
+#%%
+######################################################
+######################## ROUND 15 ####################
+######################################################
+
+round_15_and_16_scores_dict = round_13_scores_dict | round_14_scores_dict
+round_15_and_16_scores_dict['Banjo & Kazooie'] = 41.56
+
+round_15_and_16_scores_dict = dict(sorted(round_15_and_16_scores_dict.items(), key=lambda item: item[1], reverse=False))
+round_15_and_16_scores_dict = {character:score for character, score in round_15_and_16_scores_dict.items() if score > round_15_and_16_scores_dict["Kirby"]}
+
+round_15_and_16_scores_dict['Banjo & Kazooie'] = 41.56
+
+def round_15_and_16_renormalizer(round_15_and_16_scores_dict):
+    
+    for character in round_15_and_16_scores_dict:
+        round_15_and_16_scores_dict[character] = round(((round_15_and_16_scores_dict[character])**(5/11))*np.log(round_15_and_16_scores_dict[character]), 3)
+        
+    return round_15_and_16_scores_dict
+
+round_15_and_16_characters_dict = round_15_and_16_renormalizer(round_15_and_16_scores_dict)
+round_15_scores_dict = {character:score for character,score in round_15_and_16_characters_dict.items() if score <= round_15_and_16_characters_dict["Ice Climbers"]}
+round_15_scores_dict = dict(sorted(round_15_scores_dict.items(), key=lambda item: item[1], reverse=False))
+round_16_scores_dict = {character:score for character,score in round_15_and_16_characters_dict.items() if score > round_15_and_16_characters_dict["Ice Climbers"]}
+
+"""
+
+Refactored Scores: N^(5/11) * ln N
+
+4 Stock Matches Going Forward - And an Unmultiplied Bonus Point if you 4 Stock Someone
+
+Round 11/12 Grader
+
+IF Stock_Diff > 0
+1pt/Stock_Diff and 0.05pts per 10% below 150%
+Score is Multiplied by (1 + (match_number)*0.5)
+
+ex)
+
+IF Stock_Diff < 0
+0pts for 1 Stock Diff, -1pts for 2 Stock, etc.
+0.05pts per 10% Damage Given up to 150%
+Score is Multiplied by (1 + (match_number)*0.5)
+
+ex) 
+
+Bonus Match Points are Divided by Round Number
+
+"""
+
+def round_15_calculator(Tourney_List, max_percentage, character_dict, loss_dict):
+    
+    example_tourney = {
+        "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+        "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+        }
+    
+    win_loses = {"Lost Round 1": [0, 0, []], "Lost Round 2": [0, 0, []], "Lost Round 3": [0, 0, []], "Lost Round 4": [0, 0, []], 
+                 "Lost Round 5": [0, 0, []], "Won Round 3": [0, 0, []], "Won Round 4": [0, 0, []], "Won Tourney": [0, 0, []]}
+    
+    characters_played = set()
+    all_characters = set()
+    for tourney in Tourney_List:
+        if tourney == example_tourney: 
+            continue
+        for key, fights in tourney.items():
+            characters_played.add(key)
+            for n, fight in enumerate(fights):
+                all_characters.add(fight[0])
+                multiplier = 1 if not bool(fight[1][0]) else (1 - matchup_df[matchup_df["Character"] == key.lower()][fight[0].lower()].iloc[0]/20)
+                if fight[1][0] > 0 and n + 1 <= 4:
+                    match_won = True
+                    score = multiplier*(1.5 + n/2)*(fight[1][0] + (max(0, max_percentage - fight[1][1]))/max_percentage)
+                    character_dict[key] += score
+                elif fight[1][0] > 0 and n + 1 > 4:
+                    match_won = True
+                    score = multiplier*(1.5 + n/2)*(fight[1][0] + (max(0, max_percentage - fight[1][1]))/max_percentage)/(n + 1)
+                    character_dict[key] += score
+                    if (n + 1 == 5): 
+                        win_loses["Won Tourney"][0] += 1
+                        win_loses["Won Tourney"][1] += character_dict[key]
+                        win_loses["Won Tourney"][2].append(key)
+                elif fight[1][0] < 0 and n + 1 <= 4:
+                    loss_dict[fight[0]] += 1
+                    match_won = False
+                    score = multiplier*(1.5 + n/2)*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))
+                    character_dict[key] += score
+                    if (n + 1 == 1): 
+                        win_loses["Lost Round 1"][0] += 1
+                        win_loses["Lost Round 1"][1] += character_dict[key]
+                        win_loses["Lost Round 1"][2].append(key)
+                    if (n + 1 == 2): 
+                        win_loses["Lost Round 2"][0] += 1
+                        win_loses["Lost Round 2"][1] += character_dict[key]
+                        win_loses["Lost Round 2"][2].append(key)
+                    if (n + 1 == 3): 
+                        win_loses["Lost Round 3"][0] += 1
+                        win_loses["Lost Round 3"][1] += character_dict[key]
+                        win_loses["Lost Round 3"][2].append(key)
+                    if (n + 1 == 4): 
+                        win_loses["Lost Round 4"][0] += 1
+                        win_loses["Lost Round 4"][1] += character_dict[key]
+                        win_loses["Lost Round 4"][2].append(key)
+                elif fight[1][0] < 0 and n + 1 > 4:
+                    loss_dict[fight[0]] += 1
+                    score = multiplier*(1.5 + n/2)*(1 + fight[1][0] + min(1, fight[1][1]/max_percentage))/(n + 1)
+                    character_dict[key] += score
+                    if (n + 1 == 5): 
+                        win_loses["Lost Round 5"][0] += 1
+                        win_loses["Lost Round 5"][1] += character_dict[key]
+                        win_loses["Lost Round 5"][2].append(key)
+                else:
+                    if n + 1 == 5: 
+                        win_loses["Won Round 4"][0] += 1    
+                        win_loses["Won Round 4"][1] += character_dict[key]
+                        win_loses["Won Round 4"][2].append(key)
+                
+    for fighter in character_dict:
+        character_dict[fighter] = int(character_dict[fighter]*100)/100
+    
+    return character_dict, win_loses, characters_played, all_characters, loss_dict 
+
+def round_15_generator(character_dict, win_loses, pdf):
+    
+    # Win Category Data
+    win_loss_totals = {category:total for category, (total, total_score, characters) in win_loses.items()}
+    win_loss_averages = {category:int(200*total_score/(1 if not total else total))/200 for category, (total, total_score, characters) in win_loses.items()}
+    win_loss_characters = {category:characters for category, (total, total_score, characters) in win_loses.items()}
+    
+    # Win Category Plotting and Tables
+    bar_generator(win_loss_totals, "Count", "Category", "Round 15: Rank 10 to 5 - Win/Loss Categories", pdf)
+    bar_generator(win_loss_averages, "Average Score", "Category", "Round 15: Rank 10 to 5 - Score Comparisons", pdf)
+    table_generator(win_loss_characters, "Round 15: Rank 10 to 5 - Character Fighting End Scenario Table", pdf)
+    
+    # Score Distributions
+    histogram_generator(character_dict, "Score", "Frequency", "Round 15: Rank 10 to 5 Score Distribution", pdf)
+    distribution_generator(character_dict, "Score", "Density", "Round 15: Rank 10 to 5 Score Density Plot", pdf)
+
+###########################
+##### Matches 10-5 ########
+###########################
+
+Tourney_1 = {
+    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    }
+
+Tourney_2 = {
+    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    }
+    
+Tourney_3 = {
+    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    }
+
+Tourney_List_15 = [Tourney_1, Tourney_2, Tourney_3]
+
+max_percentage = 200
+round_15_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_15_calculator(Tourney_List_15, max_percentage, round_15_scores_dict, loss_dict)
+round_15_scores_dict = dict(sorted(round_15_scores_dict.items(), key=lambda item: item[1], reverse=False))
+print("\nRound 15\n")
+print_sorted_dict(round_15_scores_dict)
+round_15_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], reverse=True)).copy()
+
+with PdfPages("reports/round_15_results.pdf") as pdf:
+    round_15_generator(round_15_scores_dict, win_loses, pdf)
+
 
 #%%   
 #############################
