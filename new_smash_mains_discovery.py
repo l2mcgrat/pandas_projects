@@ -4717,9 +4717,27 @@ max_percentage = 200
 blank_dict = {character:[] for character in round_12_scores_dict}
 Tourneys = [Tourney_List_12]
 round_12_records = records(Tourneys, blank_dict, max_percentage)
-round_12_records["Score"] = pd.to_numeric(round_11_records["Score"], errors="coerce")
+round_12_records["Score"] = pd.to_numeric(round_12_records["Score"], errors="coerce")
 round_12_records["Accumulated_Sum"] = round_12_records.groupby("Character")["Score"].cumsum()
 round_12_records.to_csv("records/round_12_records.csv", index=False)
+
+# Round 13 Only
+max_percentage = 200
+blank_dict = {character:[] for character in round_13_scores_dict}
+Tourneys = [Tourney_List_13]
+round_13_records = records(Tourneys, blank_dict, max_percentage)
+round_13_records["Score"] = pd.to_numeric(round_13_records["Score"], errors="coerce")
+round_13_records["Accumulated_Sum"] = round_13_records.groupby("Character")["Score"].cumsum()
+round_13_records.to_csv("records/round_13_records.csv", index=False)
+
+# Round 14 Only
+max_percentage = 200
+blank_dict = {character:[] for character in round_14_scores_dict}
+Tourneys = [Tourney_List_14]
+round_14_records = records(Tourneys, blank_dict, max_percentage)
+round_14_records["Score"] = pd.to_numeric(round_14_records["Score"], errors="coerce")
+round_14_records["Accumulated_Sum"] = round_14_records.groupby("Character")["Score"].cumsum()
+round_14_records.to_csv("records/round_14_records.csv", index=False)
 
 # All Rounds
 max_percentage = 200

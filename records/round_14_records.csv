@@ -1,0 +1,18 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Banjo & Kazooie,Roy,1,1,0,2,83,2.585,1,2.585
+Banjo & Kazooie,Snake,2,1,0,1,69,1.655,0,4.24
+Banjo & Kazooie,Lucario,3,1,0,3,79,3.605,0,7.845
+Banjo & Kazooie,ROB,4,0,1,-1,142,0.71,-1,8.555
+Zelda,Dark Samus,1,1,0,2,153,2.235,-1,2.235
+Zelda,Sora,2,1,0,2,31,2.845,-1,5.08
+Zelda,Villager,3,1,0,1,14,1.93,0,7.01
+Zelda,King K Rool,4,1,0,3,143,3.285,1,10.295
+Zelda,ROB,5,1,0,1,0,2.0,-2,12.295
+Chrom,Bayonetta,1,1,0,2,6,2.97,-3,2.97
+Chrom,Little Mac,2,1,0,2,73,2.635,-1,5.605
+Chrom,Wii Fit Trainer,3,1,0,2,7,2.965,1,8.57
+Chrom,Dr Mario,4,1,0,3,62,3.69,1,12.26
+Link,Donkey Kong,1,1,0,3,96,3.52,-1,3.52
+Link,Isabelle,2,1,0,3,115,3.425,0,6.945
+Link,Zero Suit Samus,3,1,0,2,77,2.615,0,9.56
+Link,Jigglypuff,4,1,0,4,101,4.495,-1,14.055

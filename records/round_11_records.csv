@@ -1,0 +1,69 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Bowser,Terry,1,0,1,-1,100,0.5,0,0.5
+Sephiroth,Young Link,1,1,0,4,161,4.195,0,4.195
+Sephiroth,Byleth,2,0,1,-2,63,-0.685,-2,3.5100000000000002
+Little Mac,Bayonetta,1,1,0,3,135,3.325,-1,3.325
+Little Mac,Steve,2,0,1,-1,0,0.0,-2,3.325
+Sora,Palutena,1,1,0,2,56,2.72,0,2.72
+Sora,King K Rool,2,0,1,-1,56,0.28,-1,3.0
+Falco,Lucas,1,1,0,2,154,2.23,0,2.23
+Falco,PacMan,2,1,0,1,54,1.73,1,3.96
+Falco,Banjo & Kazooie,3,1,0,2,0,3.0,2,6.96
+Falco,Pyra & Mythra,4,0,1,-2,0,-1.0,-1,5.96
+Cloud,Lucario,1,1,0,3,38,3.81,2,3.81
+Cloud,Dark Pit,2,1,0,2,111,2.445,-1,6.255
+Cloud,Inkling,3,0,1,-1,13,0.065,1,6.32
+Ridley,Pit,1,1,0,1,132,1.34,0,1.34
+Ridley,Pikachu,2,1,0,1,13,1.935,1,3.2750000000000004
+Ridley,Bowser,3,1,0,2,102,2.49,-1,5.765000000000001
+Ridley,Pokemon Trainer,4,1,0,1,63,1.685,1,7.450000000000001
+Min Min,Isabelle,1,1,0,3,0,4.0,2,4.0
+Min Min,Inkling,2,1,0,1,70,1.65,0,5.65
+Min Min,Captain Falcon,3,1,0,1,78,1.61,0,7.26
+Min Min,King K Rool,4,1,0,1,81,1.595,0,8.855
+Hero,Marth,1,1,0,1,120,1.4,-2,1.4
+Hero,Piranha Plant,2,1,0,2,90,2.55,1,3.9499999999999997
+Hero,Link,3,1,0,2,85,2.575,1,6.525
+Hero,Toon Link,4,1,0,2,88,2.56,1,9.085
+Hero,Cloud,5,0,1,-1,95,0.475,-1,9.56
+Yoshi,Pikachu,1,1,0,2,85,2.575,1,2.575
+Yoshi,Corrin,2,1,0,2,40,2.8,1,5.375
+Yoshi,Dark Pit,3,1,0,2,25,2.875,0,8.25
+Yoshi,Donkey Kong,4,1,0,1,0,2.0,0,10.25
+Young Link,Fox,1,1,0,1,18,1.91,-1,1.91
+Young Link,Incineroar,2,1,0,1,103,1.485,-1,3.395
+Young Link,Dark Samus,3,1,0,3,86,3.57,1,6.965
+Young Link,Bowser Jr,4,1,0,2,116,2.42,2,9.385
+Piranha Plant,Jigglypuff,1,1,0,1,54,1.73,-2,1.73
+Piranha Plant,Hero,2,1,0,2,171,2.145,-1,3.875
+Piranha Plant,Dark Pit,3,1,0,1,57,1.715,0,5.59
+Piranha Plant,Greninja,4,1,0,2,65,2.675,-2,8.265
+Piranha Plant,Simon,5,1,0,2,97,2.515,0,10.78
+Ice Climbers,Lucina,1,1,0,2,24,2.88,2,2.88
+Ice Climbers,Ken,2,1,0,2,92,2.54,2,5.42
+Ice Climbers,Ganondorf,3,1,0,2,61,2.695,2,8.115
+Ice Climbers,Kirby,4,1,0,1,36,1.82,2,9.935
+Ice Climbers,Inkling,5,1,0,2,22,2.89,1,12.825
+Mewtwo,Jigglypuff,1,1,0,2,42,2.79,-2,2.79
+Mewtwo,Kazuya,2,1,0,3,111,3.445,-3,6.234999999999999
+Mewtwo,Pikachu,3,1,0,1,66,1.67,-1,7.904999999999999
+Mewtwo,Mario,4,1,0,2,122,2.39,0,10.295
+King Dedede,Lucario,1,1,0,2,79,2.605,0,2.605
+King Dedede,Ridley,2,1,0,2,51,2.745,2,5.35
+King Dedede,Ice Climbers,3,1,0,2,121,2.395,-1,7.745
+King Dedede,Byleth,4,1,0,3,153,3.235,-1,10.98
+King Dedede,Pyra & Mythra,5,1,0,1,75,1.625,-3,12.605
+Dr Mario,King Dedede,1,1,0,1,0,2.0,-2,2.0
+Dr Mario,Pikachu,2,1,0,2,21,2.895,2,4.895
+Dr Mario,Zelda,3,1,0,3,120,3.4,1,8.295
+Dr Mario,PacMan,4,1,0,3,136,3.32,1,11.615
+Dr Mario,Mr Game & Watch,5,1,0,3,105,3.475,-1,15.09
+Bowser Jr,Little Mac,1,1,0,2,0,3.0,0,3.0
+Bowser Jr,Cloud,2,1,0,2,67,2.665,-3,5.665
+Bowser Jr,Jigglypuff,3,1,0,3,50,3.75,0,9.415
+Bowser Jr,Pokemon Trainer,4,1,0,2,0,3.0,0,12.415
+Banjo & Kazooie,Mega Man,1,1,0,2,20,2.9,-3,2.9
+Banjo & Kazooie,Wii Fit Trainer,2,1,0,2,0,3.0,0,5.9
+Banjo & Kazooie,Luigi,3,1,0,2,23,2.885,-2,8.785
+Banjo & Kazooie,Cloud,4,1,0,3,7,3.965,1,12.75
+Banjo & Kazooie,Steve,5,1,0,2,49,2.755,0,15.504999999999999

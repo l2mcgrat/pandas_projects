@@ -1,0 +1,47 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Bowser Jr,Ridley,1,0,1,-1,63,0.315,3,0.315
+Mewtwo,Bowser,1,1,0,3,94,3.53,1,3.53
+Mewtwo,Dark Samus,2,1,0,2,18,2.91,1,6.4399999999999995
+Mewtwo,Byleth,3,0,1,-2,74,-0.63,0,5.81
+Mii Gunner,Marth,1,1,0,3,54,3.73,0,3.73
+Mii Gunner,Pyra & Mythra,2,1,0,2,0,3.0,2,6.73
+Mii Gunner,Donkey Kong,3,1,0,2,0,3.0,3,9.73
+Mii Gunner,Wario,4,1,0,2,0,3.0,0,12.73
+Hero,Wolf,1,1,0,1,140,1.3,-1,1.3
+Hero,Samus,2,1,0,3,45,3.775,1,5.075
+Hero,Ken,3,1,0,2,72,2.64,1,7.715
+Hero,Palutena,4,1,0,3,96,3.52,1,11.235
+Hero,Mr Game & Watch,5,1,0,3,144,3.28,2,14.515
+Ike,Dark Pit,1,1,0,3,57,3.715,0,3.715
+Ike,Lucina,2,1,0,3,119,3.405,0,7.119999999999999
+Ike,Min Min,3,1,0,3,72,3.64,-2,10.76
+Ike,Zelda,4,1,0,1,78,1.61,0,12.37
+Kirby,Palutena,1,1,0,2,10,2.95,0,2.95
+Kirby,Rosalina & Luma,2,1,0,4,109,4.455,1,7.405
+Kirby,Kazuya,3,1,0,2,25,2.875,-1,10.280000000000001
+Kirby,PacMan,4,1,0,2,16,2.92,-2,13.2
+Young Link,Roy,1,1,0,2,30,2.85,0,2.85
+Young Link,Sora,2,1,0,2,82,2.59,1,5.4399999999999995
+Young Link,Kirby,3,1,0,1,0,2.0,3,7.4399999999999995
+Young Link,Wario,4,1,0,3,78,3.61,0,11.05
+Yoshi,Pikachu,1,1,0,2,31,2.845,1,2.845
+Yoshi,Peach,2,1,0,3,94,3.53,1,6.375
+Yoshi,Samus,3,1,0,2,45,2.775,-1,9.15
+Yoshi,Mewtwo,4,1,0,2,67,2.665,3,11.815
+King Dedede,Olimar,1,1,0,2,63,2.685,-2,2.685
+King Dedede,Simon,2,1,0,1,32,1.84,-2,4.525
+King Dedede,Incineroar,3,1,0,2,0,3.0,3,7.525
+King Dedede,Pikachu,4,1,0,2,23,2.885,-2,10.41
+Dr Mario,Chrom,1,1,0,1,100,1.5,-1,1.5
+Dr Mario,Daisy,2,1,0,3,153,3.235,2,4.734999999999999
+Dr Mario,Palutena,3,1,0,3,0,4.0,-1,8.735
+Dr Mario,Ganondorf,4,1,0,1,0,2.0,0,10.735
+Ice Climbers,Zero Suit Samus,1,1,0,2,0,3.0,0,3.0
+Ice Climbers,Ryu,2,1,0,2,2,2.99,0,5.99
+Ice Climbers,Toon Link,3,1,0,2,37,2.815,-2,8.805
+Ice Climbers,Zelda,4,1,0,2,116,2.42,-1,11.225
+Ice Climbers,Sora,5,1,0,2,53,2.735,0,13.96
+Piranha Plant,Duck Hunt,1,1,0,3,83,3.585,-2,3.585
+Piranha Plant,Isabelle,2,1,0,3,174,3.13,-2,6.715
+Piranha Plant,Diddy Kong,3,1,0,2,48,2.76,0,9.475
+Piranha Plant,Marth,4,1,0,3,37,3.815,3,13.29
