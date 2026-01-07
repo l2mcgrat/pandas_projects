@@ -1,0 +1,9 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Young Link,Ike,1,1,0,1,25,1.875,2,1.875
+Young Link,Shulk,2,1,0,2,0,3.0,0,4.875
+Young Link,ROB,3,1,0,3,105,3.475,-1,8.35
+Young Link,Chrom,4,1,0,2,44,2.78,1,11.129999999999999
+Banjo & Kazooie,Joker,1,1,0,4,199,4.005,-2,4.005
+Banjo & Kazooie,Ice Climbers,2,1,0,3,66,3.67,1,7.675
+Banjo & Kazooie,Pit,3,1,0,2,4,2.98,-1,10.655
+Banjo & Kazooie,Piranha Plant,4,1,0,3,118,3.41,1,14.065

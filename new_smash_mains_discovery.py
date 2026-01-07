@@ -4482,14 +4482,14 @@ Round 11/12 Grader
 
 IF Stock_Diff > 0
 1pt/Stock_Diff and 0.05pts per 10% below 150%
-Score is Multiplied by (1 + (match_number)*0.5)
+Score is Multiplied by (1.5 + (match_number)/1.7)
 
 ex)
 
 IF Stock_Diff < 0
 0pts for 1 Stock Diff, -1pts for 2 Stock, etc.
 0.05pts per 10% Damage Given up to 150%
-Score is Multiplied by (1 + (match_number)*0.5)
+Score is Multiplied by (1.5 + (match_number)/1.7)
 
 ex) 
 
@@ -4519,12 +4519,12 @@ def round_15_calculator(Tourney_List, max_percentage, character_dict, loss_dict)
                 multiplier = 1 if not bool(fight[1][0]) else (1 - matchup_df[matchup_df["Character"] == key.lower()][fight[0].lower()].iloc[0]/20)
                 if fight[1][0] > 0 and n + 1 <= 4:
                     match_won = True
-                    score = multiplier*(1.5 + n/2)*(fight[1][0] + (max(0, max_percentage - fight[1][1]))/max_percentage)
-                    character_dict[key] += score
+                    score = multiplier*(1.5 + n/1.7)*(fight[1][0] + (max(0, max_percentage - fight[1][1]))/max_percentage)
+                    character_dict[key] += score + (1 if fight[1][0] == 4 else 0)
                 elif fight[1][0] > 0 and n + 1 > 4:
                     match_won = True
-                    score = multiplier*(1.5 + n/2)*(fight[1][0] + (max(0, max_percentage - fight[1][1]))/max_percentage)/(n + 1)
-                    character_dict[key] += score
+                    score = multiplier*(1.5 + n/1.7)*(fight[1][0] + (max(0, max_percentage - fight[1][1]))/max_percentage)/(n + 1)
+                    character_dict[key] += score + (1 if fight[1][0] == 4 else 0)
                     if (n + 1 == 5): 
                         win_loses["Won Tourney"][0] += 1
                         win_loses["Won Tourney"][1] += character_dict[key]
@@ -4589,9 +4589,16 @@ def round_15_generator(character_dict, win_loses, pdf):
 ##### Matches 10-5 ########
 ###########################
 
+# 10 20.28 Banjo & Kazooie
+# 09 21.04 Young Link
+# 08 21.16 Yoshi
+# 07 21.58 King Dedede
+# 06 21.89 Dr Mario
+# 05 22.33 Ice Climbers
+
 Tourney_1 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Banjo & Kazooie": [["Joker", [4, 199]], ["Ice Climbers", [3, 66]], ["Pit", [2, 4]], ["Piranha Plant", [3, 118]], ["Opponent 5", [0, 0]]], 
+    "Young Link": [["Ike", [1, 25]], ["Shulk", [2, 0]], ["ROB", [3, 105]], ["Chrom", [2, 44]], ["Opponent 5", [0, 0]]] 
     }
 
 Tourney_2 = {
