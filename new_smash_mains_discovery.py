@@ -1,14 +1,16 @@
 # New_Smash_Gods__Discovery_Training
 
-import statistics
+import statistics, os
 from collections import defaultdict
 import pandas as pd
-matchup_df = pd.read_csv(r"C:\Users\anime\OneDrive\Desktop\coding_projects\pandas_projects\matchup_chart.csv")
+matchup_df = pd.read_csv(r"C:\Users\ve037081\Liam\pandas_projects\matchup_chart.csv")
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import seaborn as sns
 import numpy as np
 import math
+
+filepath = r"C:\Users\ve037081\Liam\pandas_projects"
 
 def helper(num):   
 
@@ -1643,7 +1645,8 @@ all_round_scores_dict = bottom_6 | round_3_scores_dict | round_4_scores_dict
 all_round_scores_dict = dict(sorted(all_round_scores_dict.items(), key=lambda item: item[1], reverse=False))
 final_ranks = {character: rank + 1 for rank, character in enumerate(all_round_scores_dict)}
 
-with PdfPages("reports/ranking_changes/ranking_changes_1.pdf") as pdf:
+filename = os.path.join(filepath, "0th_Round_Elimination.pdf")
+with PdfPages(filename) as pdf:
     ranking_changes(characters, initial_ranks, final_ranks)
     
 #%%
@@ -2016,7 +2019,9 @@ initial_ranks = {character: len(inital_round_5_scores) + 22 - rank for rank, cha
 final_ranks = {character: len(round_5_scores_dict) + 22 - rank for rank, character in enumerate(round_5_scores_dict)}
 characters = [character for character in inital_round_5_scores]
 
-with PdfPages("reports/ranking_changes/2nd_elimination.pdf") as pdf:
+filename = os.path.join(filepath, "reports", "ranking_changes", "2nd_elimination.pdf")
+
+with PdfPages(filename) as pdf:
     ranking_changes_2nd_elimination(characters, initial_ranks, final_ranks)
 
 ################################################################
@@ -2084,7 +2089,9 @@ initial_ranks = {character: len(inital_round_3_scores) + 48 - rank for rank, cha
 final_ranks = {character: len(round_3_scores_dict) + 48 - rank for rank, character in enumerate(round_3_scores_dict)}
 characters = [character for character in inital_round_3_scores]
 
-with PdfPages("reports/ranking_changes/1st_elimination.pdf") as pdf:
+filename = os.path.join(filepath, "reports", "ranking_changes", "1st_elimination.pdf")
+
+with PdfPages(filename) as pdf:
     ranking_changes_1st_elimination(characters, initial_ranks, final_ranks)
 
 #%%
@@ -2338,13 +2345,14 @@ round_6_scores_dict = dict(sorted(round_6_scores_dict.items(), key=lambda item: 
 # print_sorted_dict(round_6_scores_dict)
 round_6_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], reverse=True)).copy()
 
-
 #%%
 ##################################################
 ################ REPORT GENERATION ###############
 ##################################################
 
-with PdfPages("reports/round_6_results.pdf") as pdf:
+filename = os.path.join(filepath, "reports", "round_6_results.pdf")
+
+with PdfPages(filename) as pdf:
     round_6_generator(round_6_scores_dict, win_loses, pdf)
             
 copy_loss_dict = loss_dict.copy()
@@ -2453,7 +2461,9 @@ combined_scores = dict(sorted(combined_scores.items(), key=lambda item: item[1],
 final_ranks = {character: len(combined_scores) - rank for rank, character in enumerate(combined_scores)}
 characters = [character for character in (inital_round_5_scores | inital_round_6_scores)]
 
-with PdfPages("reports/ranking_changes/3rd_restructuring.pdf") as pdf:
+filename = os.path.join(filepath, "reports", "ranking_changes", "3rd_restructuring.pdf")
+
+with PdfPages(filename) as pdf:
     ranking_changes_3rd_remerger(characters, initial_ranks, final_ranks)
 
 #%%
@@ -2708,7 +2718,9 @@ round_7_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], rev
 ################ REPORT GENERATION ###############
 ##################################################
 
-with PdfPages("reports/round_7_results.pdf") as pdf:
+filename = os.path.join(filepath, "reports", "round_7_results.pdf")
+
+with PdfPages(filename) as pdf:
     round_7_generator(round_7_scores_dict, win_loses, pdf)
 
 bottom_16 = {"Inkling": 48,
@@ -3035,7 +3047,9 @@ final_ranks = {character: len(combined_scores) - rank for rank, character in enu
 
 characters = [character for character in (inital_round_7_scores | inital_round_8_scores)]
 
-with PdfPages("reports/ranking_changes/4th_restructuring.pdf") as pdf:
+filename = os.path.join(filepath, "reports", "ranking_changes", "4th_restructuring.pdf")
+
+with PdfPages(filename) as pdf:
     ranking_changes_4th_remerger(characters, initial_ranks, final_ranks)
 
 #%%
@@ -3194,11 +3208,12 @@ def round_9_generator(character_dict, win_loses, pdf):
     histogram_generator(character_dict, "Score", "Frequency", "Round 9: Rank 32 to 9 Score Distribution", pdf)
     distribution_generator(character_dict, "Score", "Density", "Round 9: Rank 32 to 9 Score Density Plot", pdf)
     
+#%%
 ############################
 ####### Zombies 42-33 ######
 ############################
-    
-round_8_total_records = pd.read_csv(r"C:\Users\anime\OneDrive\Desktop\coding_projects\pandas_projects\records\all_records.csv")
+
+round_8_total_records = pd.read_csv(os.path.join(filepath, "records", "round_8_records.csv"))
 
 accumulated_score_dict = round_8_total_records.groupby('Character')['Accumulated_Sum'].max().to_dict()
 for character in round_9_and_10_characters_dict: del accumulated_score_dict[character]
@@ -3495,7 +3510,9 @@ round_9_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], rev
 ################ REPORT GENERATION ###############
 ##################################################
 
-with PdfPages("reports/round_9_results.pdf") as pdf:
+filename = os.path.join(filepath, "reports", "round_9_results.pdf")
+
+with PdfPages(filename) as pdf:
     round_9_generator(round_9_scores_dict, win_loses, pdf)
 
 bottom_18 = {"Donkey Kong": 42,
@@ -4602,8 +4619,8 @@ Tourney_1 = {
     }
 
 Tourney_2 = {
-    "Yoshi": [["Daisy", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "King Dedede": [["Link", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Yoshi": [["Zero Suit Samus", [2, 77]], ["Joker", [2, 88]], ["Byleth", [1, 82]], ["Wario", [2, 129]], ["Opponent 5", [0, 0]]], 
+    "King Dedede": [["Young Link", [1, 74]], ["Little Mac", [3, 0]], ["Greninja", [3, 85]], ["Lucina", [3, 119]], ["Opponent 5", [0, 0]]] 
     }
     
 Tourney_3 = {
