@@ -1,16 +1,18 @@
 # New_Smash_Gods__Discovery_Training
 
 import statistics, os
+
+filepath = r"C:\Users\ve037081\Liam\pandas_projects"
+filepath = r"C:\Users\anime\OneDrive\Desktop\coding_projects\pandas_projects"
+
 from collections import defaultdict
 import pandas as pd
-matchup_df = pd.read_csv(r"C:\Users\ve037081\Liam\pandas_projects\matchup_chart.csv")
+matchup_df = pd.read_csv(os.path.join(filepath, "matchup_chart.csv"))
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import seaborn as sns
 import numpy as np
 import math
-
-filepath = r"C:\Users\ve037081\Liam\pandas_projects"
 
 def helper(num):   
 
@@ -3213,7 +3215,7 @@ def round_9_generator(character_dict, win_loses, pdf):
 ####### Zombies 42-33 ######
 ############################
 
-round_8_total_records = pd.read_csv(os.path.join(filepath, "records", "round_8_records.csv"))
+round_8_total_records = pd.read_csv(os.path.join(filepath, "records", "all_records_to_8.csv"))
 
 accumulated_score_dict = round_8_total_records.groupby('Character')['Accumulated_Sum'].max().to_dict()
 for character in round_9_and_10_characters_dict: del accumulated_score_dict[character]
@@ -4624,8 +4626,8 @@ Tourney_2 = {
     }
     
 Tourney_3 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
-    "Character B": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
+    "Dr Mario": [["Dark Pit", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Ice Climbers": [["Ice Climbers", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]] 
     }
 
 Tourney_List_15 = [Tourney_1, Tourney_2, Tourney_3]
@@ -4772,12 +4774,12 @@ round_15_records["Score"] = pd.to_numeric(round_15_records["Score"], errors="coe
 round_15_records["Accumulated_Sum"] = round_15_records.groupby("Character")["Score"].cumsum()
 round_15_records.to_csv("records/round_15_records.csv", index=False)
 
-# All Rounds
+# All Rounds to 8
 max_percentage = 200
 blank_dict = {character:[] for character in round_1_scores_dict}
 Tourneys = [Tourney_List_1, Tourney_List_2, Tourney_List_3, Tourney_List_4, 
-            Tourney_List_5, Tourney_List_6, Tourney_List_7, Tourney_List_7]
+            Tourney_List_5, Tourney_List_6, Tourney_List_7, Tourney_List_8]
 round_all_records = records(Tourneys, blank_dict, max_percentage)
 round_all_records["Score"] = pd.to_numeric(round_all_records["Score"], errors="coerce")
 round_all_records["Accumulated_Sum"] = round_all_records.groupby("Character")["Score"].cumsum()
-round_all_records.to_csv("records/all_records.csv", index=False)
+round_all_records.to_csv("records/all_records_to_8.csv", index=False)
