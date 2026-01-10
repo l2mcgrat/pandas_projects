@@ -3,6 +3,10 @@ Yoshi,Zero Suit Samus,1,1,0,2,77,2.615,1,2.615
 Yoshi,Joker,2,1,0,2,88,2.56,0,5.175000000000001
 Yoshi,Byleth,3,1,0,1,82,1.59,1,6.765000000000001
 Yoshi,Wario,4,1,0,2,129,2.355,0,9.120000000000001
+Ice Climbers,Ice Climbers,1,1,0,3,29,3.855,0,3.855
+Ice Climbers,Snake,2,1,0,3,89,3.555,-3,7.41
+Ice Climbers,Banjo & Kazooie,3,1,0,1,135,1.325,-1,8.735
+Ice Climbers,Richter,4,1,0,2,89,2.555,2,11.29
 Young Link,Ike,1,1,0,1,25,1.875,2,1.875
 Young Link,Shulk,2,1,0,2,0,3.0,0,4.875
 Young Link,ROB,3,1,0,3,105,3.475,-1,8.35
@@ -15,3 +19,7 @@ King Dedede,Young Link,1,1,0,1,74,1.63,-2,1.63
 King Dedede,Little Mac,2,1,0,3,0,4.0,2,5.63
 King Dedede,Greninja,3,1,0,3,85,3.575,0,9.205
 King Dedede,Lucina,4,1,0,3,119,3.405,-3,12.61
+Dr Mario,Dark Pit,1,1,0,3,43,3.785,0,3.785
+Dr Mario,Fox,2,1,0,3,119,3.405,0,7.1899999999999995
+Dr Mario,Bayonetta,3,1,0,4,180,4.1,-2,11.29
+Dr Mario,Rosalina & Luma,4,1,0,3,109,3.455,-2,14.745
