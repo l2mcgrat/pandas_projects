@@ -1,0 +1,17 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Zelda,Wario,1,1,0,3,131,3.345,-1,3.345
+Zelda,Sephiroth,2,1,0,3,128,3.36,-2,6.705
+Zelda,Mario,3,1,0,2,0,3.0,0,9.705
+Zelda,Cloud,4,1,0,1,96,1.52,-2,11.225
+Banjo & Kazooie,Marth,1,1,0,3,73,3.635,3,3.635
+Banjo & Kazooie,Bowser Jr,2,1,0,1,21,1.895,0,5.529999999999999
+Banjo & Kazooie,Hero,3,1,0,3,83,3.585,-1,9.115
+Banjo & Kazooie,Sephiroth,4,1,0,2,119,2.405,0,11.52
+King Dedede,Olimar,1,1,0,3,94,3.53,-2,3.53
+King Dedede,Lucario,2,1,0,3,119,3.405,0,6.935
+King Dedede,Villager,3,1,0,1,19,1.905,-3,8.84
+King Dedede,Donkey Kong,4,1,0,2,114,2.43,0,11.27
+Piranha Plant,Palutena,1,1,0,2,84,2.58,-2,2.58
+Piranha Plant,Donkey Kong,2,1,0,3,0,4.0,0,6.58
+Piranha Plant,Falco,3,1,0,2,0,3.0,-1,9.58
+Piranha Plant,Captain Falcon,4,1,0,3,113,3.435,0,13.015

@@ -1,0 +1,16 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Zelda,Little Mac,1,1,0,3,61,3.695,0,3.695
+Zelda,Lucas,2,1,0,4,101,4.495,0,8.19
+Zelda,Hero,3,0,1,-1,67,0.335,0,8.525
+Piranha Plant,Inkling,1,1,0,1,38,1.81,1,1.81
+Piranha Plant,Bowser,2,1,0,3,164,3.18,-1,4.99
+Piranha Plant,Greninja,3,1,0,2,0,3.0,-2,7.99
+Piranha Plant,Captain Falcon,4,0,1,-1,77,0.385,0,8.375
+Chrom,Zelda,1,1,0,3,60,3.7,0,3.7
+Chrom,Wolf,2,1,0,2,87,2.565,-2,6.265000000000001
+Chrom,Simon,3,1,0,3,63,3.685,0,9.95
+Chrom,Lucario,4,1,0,3,23,3.885,1,13.835
+Link,Sonic,1,1,0,3,63,3.685,-1,3.685
+Link,Diddy Kong,2,1,0,3,55,3.725,0,7.41
+Link,Ike,3,1,0,4,181,4.095,0,11.504999999999999
+Link,Ganondorf,4,1,0,3,84,3.58,2,15.085
