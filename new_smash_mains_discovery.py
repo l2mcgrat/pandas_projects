@@ -5902,7 +5902,7 @@ Tourney_2 = {
    }
 
 Tourney_3 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Link": [["Lucas", [2, 82]], ["King Dedede", [2, 12]], ["Ryu", [4, 103]], ["Terry", [3, 102]], ["Bayonetta", [3, 57]]], 
    }
 
 Tourney_4 = {
