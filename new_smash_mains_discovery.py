@@ -5917,7 +5917,7 @@ Tourney_5 = {
    }
 
 Tourney_6 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "King Dedede": [["Piranha Plant", [1, 72]], ["Dark Samus", [2, 199]], ["Fox", [2, 144]], ["Ryu", [2, 29]], ["Min Min", [3, 128]]], 
    }
 
 Tourney_List_23 = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney_6]
