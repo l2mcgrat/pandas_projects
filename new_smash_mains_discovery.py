@@ -5909,11 +5909,11 @@ Tourney_3 = {
    }
 
 Tourney_4 = {
-    "King Dedede": [["Isabelle", [1, 50]], ["Palutena", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "King Dedede": [["Isabelle", [1, 50]], ["Palutena", [2, 104]], ["Wario", [2, 156]], ["Fox", [2, 18]], ["Bowser Jr", [3, 70]]], 
    }
 
 Tourney_5 = {
-    "Character A": [["Opponent 1", [0, 0]], ["Opponent 2", [0, 0]], ["Opponent 3", [0, 0]], ["Opponent 4", [0, 0]], ["Opponent 5", [0, 0]]], 
+    "Link": [["Steve", [2, 67]], ["Marth", [2, 0]], ["Ken", [3, 8]], ["Palutena", [2, 115]], ["Banjo & Kazooie", [1, 117]]], 
    }
 
 Tourney_6 = {
