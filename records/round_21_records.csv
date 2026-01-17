@@ -1,0 +1,16 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Link,Inkling,1,1,0,3,3,3.985,-1,3.985
+Link,Ryu,2,1,0,1,130,1.35,-2,5.335
+Link,Duck Hunt,3,1,0,3,17,3.915,0,9.25
+Link,Piranha Plant,4,1,0,1,32,1.84,1,11.09
+Link,Sephiroth,5,1,0,3,199,3.005,-1,14.094999999999999
+Dr Mario,Dark Samus,1,1,0,3,69,3.655,2,3.655
+Dr Mario,Ridley,2,1,0,3,142,3.29,0,6.945
+Dr Mario,Sheik,3,1,0,1,11,1.945,-2,8.89
+Dr Mario,Marth,4,1,0,2,0,3.0,0,11.89
+Dr Mario,Falco,5,1,0,3,153,3.235,0,15.125
+King Dedede,Captain Falcon,1,1,0,4,128,4.36,0,4.36
+King Dedede,Inkling,2,1,0,3,97,3.515,-1,7.875
+King Dedede,Simon,3,1,0,3,157,3.215,-2,11.09
+King Dedede,Roy,4,1,0,3,9,3.955,1,15.045
+King Dedede,Ike,5,1,0,3,86,3.57,1,18.615000000000002

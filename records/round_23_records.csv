@@ -1,0 +1,16 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+King Dedede,Terry,1,1,0,2,105,2.475,1,2.475
+King Dedede,Pokemon Trainer,2,1,0,2,183,2.085,-1,4.5600000000000005
+King Dedede,Sora,3,1,0,1,0,2.0,-3,6.5600000000000005
+King Dedede,Dark Pit,4,1,0,4,199,4.005,0,10.565
+King Dedede,Hero,5,1,0,3,16,3.92,-1,14.485
+Link,Byleth,1,1,0,2,23,2.885,-2,2.885
+Link,Diddy Kong,2,1,0,3,89,3.555,0,6.4399999999999995
+Link,PacMan,3,1,0,3,30,3.85,-1,10.29
+Link,Pit,4,1,0,4,150,4.25,0,14.54
+Link,Pyra & Mythra,5,1,0,3,77,3.615,-1,18.155
+Link,Lucas,1,1,0,2,82,2.59,1,20.745
+Link,King Dedede,2,1,0,2,12,2.94,0,23.685
+Link,Ryu,3,1,0,4,103,4.485,-2,28.17
+Link,Terry,4,1,0,3,102,3.49,-2,31.66
+Link,Bayonetta,5,1,0,3,57,3.715,-2,35.375

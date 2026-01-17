@@ -1,0 +1,6 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Link,Young Link,1,1,0,4,142,4.29,1,4.29
+Link,Meta Knight,2,1,0,2,0,3.0,-1,7.29
+Link,Rosalina & Luma,3,1,0,3,99,3.505,-1,10.795
+Link,Sheik,4,1,0,3,79,3.605,-1,14.4
+Link,Robin,5,1,0,2,20,2.9,0,17.3
