@@ -10,6 +10,13 @@ computer_id = hex(uuid.getnode())
 
 filepath = r"C:\Users\anime\OneDrive\Desktop\coding_projects\pandas_projects" if computer_id == "0xe40d36558678" else r"C:\Users\ve037081\Liam\pandas_projects"
 
+# Ensure output folders exist (script mixes absolute + relative output paths)
+os.makedirs(os.path.join(filepath, "reports", "ranking_changes"), exist_ok=True)
+os.makedirs(os.path.join(filepath, "records"), exist_ok=True)
+os.makedirs("reports", exist_ok=True)
+os.makedirs(os.path.join("reports", "ranking_changes"), exist_ok=True)
+os.makedirs("records", exist_ok=True)
+
 from collections import defaultdict
 import pandas as pd
 matchup_df = pd.read_csv(os.path.join(filepath, "matchup_chart.csv"))
@@ -489,6 +496,9 @@ character_dict = round_1_renormalizer(character_dict)
 
 renormalized_scores = dict(sorted(character_dict.items(), key=lambda item: item[1], reverse=False)).copy()
 # print_sorted_dict(renormalized_scores)
+
+# for rank changes visual (Round 2 starts from these renormalized scores)
+inital_round_2_scores = renormalized_scores.copy()
 
 with PdfPages("reports/round_1_to_2_transition.pdf") as pdf:
 
@@ -1405,6 +1415,9 @@ for character in eliminated_16: del round_4_scores_dict[character]
 round_4_scores_dict = dict(sorted(renormalized_round_2_scores.items(), key=lambda x: x[1])[38:])
 # print_sorted_dict(round_4_scores_dict)
 
+# for rank changes visual
+inital_round_4_scores = round_4_scores_dict.copy()
+
 # Bottom 16 of (1st to 48th) the Top 48 will be Face (49th to 64th) the Bottom 64 for Bottom 16 Spots in Top 48
 # Character List:
 #
@@ -1643,6 +1656,114 @@ def ranking_changes(characters, initial_ranks, final_ranks):
 
     pdf.savefig(fig, bbox_inches="tight")
     plt.close()                 
+
+
+def _ranks_best_from_scores(scores_dict):
+    """Return ranks where 1 is best (highest score).
+
+    Works regardless of input dict ordering.
+    """
+    ordered = sorted(scores_dict.items(), key=lambda item: item[1])  # worst -> best
+    n = len(ordered)
+    return {character: n - i for i, (character, _score) in enumerate(ordered)}
+
+
+def ranking_changes_colored(pdf, characters, initial_ranks, final_ranks, advance_cutoff=None, eliminated_characters=None, title="Rank Changes"):
+    """Arrow plot of rank changes with color categories.
+
+    - advance_cutoff: top-K (ranks 1..K) considered advanced.
+    - eliminated_characters: set of characters considered eliminated (colored red).
+    - "advanced after being behind" is computed as: initial_rank > advance_cutoff and final_rank <= advance_cutoff.
+
+    pdf: PdfPages handle to write the figure into.
+    """
+
+    def ordinal(n: int) -> str:
+        if 10 <= n % 100 <= 20:
+            suffix = "th"
+        else:
+            suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+        return f"{n}{suffix}"
+
+    eliminated_characters = set(eliminated_characters or [])
+    if advance_cutoff is None and eliminated_characters:
+        advance_cutoff = max(0, len(characters) - len(eliminated_characters))
+
+    old_ranks = [initial_ranks[character] for character in characters]
+    new_ranks = [final_ranks[character] for character in characters]
+
+    fig_height = max(15, 0.25 * len(characters))
+    fig, ax = plt.subplots(figsize=(15, fig_height))
+
+    for i, character in enumerate(characters):
+        old_rank = old_ranks[i]
+        new_rank = new_ranks[i]
+
+        is_eliminated = character in eliminated_characters
+        is_advanced = (advance_cutoff is not None) and (new_rank <= advance_cutoff)
+        was_behind = (advance_cutoff is not None) and (old_rank > advance_cutoff)
+        comeback = bool(is_advanced and was_behind)
+
+        if is_eliminated:
+            color = "red"
+        elif comeback:
+            color = "green"
+        elif is_advanced:
+            color = "purple"
+        elif (advance_cutoff is not None) and (old_rank <= advance_cutoff) and (new_rank > advance_cutoff):
+            color = "orange"
+        else:
+            color = "gray"
+
+        ax.text(0, old_rank, f"{ordinal(old_rank)} {character}", ha="right", va="center", fontsize=8)
+        ax.text(1, new_rank, f"{ordinal(new_rank)} {character}", ha="left", va="center", fontsize=8)
+        ax.annotate(
+            "",
+            xy=(1, new_rank),
+            xycoords="data",
+            xytext=(0, old_rank),
+            textcoords="data",
+            arrowprops=dict(arrowstyle="->", lw=2, color=color),
+        )
+
+    ax.set_xlim(-0.5, 1.5)
+    ax.set_ylim(0.5, len(characters) + 0.5)
+    ax.invert_yaxis()
+    ax.axis("off")
+    ax.set_title(title, fontsize=14)
+
+    pdf.savefig(fig, bbox_inches="tight")
+    plt.close()
+
+
+def generate_round_ranking_changes_pdf(round_number, initial_scores, final_scores, advance_cutoff=None, eliminated_characters=None, title=None):
+    """Create a per-round ranking-change PDF in reports/ranking_changes.
+
+    initial_scores/final_scores are score dicts (not ranks). Ranks are computed with 1=best.
+    """
+    common_characters = [c for c in initial_scores.keys() if c in final_scores]
+    if not common_characters:
+        return
+
+    initial_subset = {c: initial_scores[c] for c in common_characters}
+    final_subset = {c: final_scores[c] for c in common_characters}
+
+    initial_ranks = _ranks_best_from_scores(initial_subset)
+    final_ranks = _ranks_best_from_scores(final_subset)
+
+    filename = os.path.join(filepath, "reports", "ranking_changes", f"round_{round_number}_ranking_changes.pdf")
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+    with PdfPages(filename) as pdf:
+        ranking_changes_colored(
+            pdf,
+            common_characters,
+            initial_ranks,
+            final_ranks,
+            advance_cutoff=advance_cutoff,
+            eliminated_characters=eliminated_characters,
+            title=title or f"Round {round_number} Rank Changes",
+        )
 
 round_2_scores_dict = dict(sorted(round_2_scores_dict.items(), key=lambda item: item[1], reverse=False))
 characters = [character for character in round_2_scores_dict]
@@ -2748,6 +2869,68 @@ bottom_16 = {"Inkling": 48,
              "Pokemon Trainer": 33}
              
 eliminated_33_to_48 = {character for character in bottom_16}
+
+#############################
+#### Rounds 1-7 Rank Changes
+#############################
+
+# Round 1 has no meaningful pre-round ranks; instead, show the Round 1 -> Round 2 renormalization effect.
+generate_round_ranking_changes_pdf(
+    1,
+    round_1_scores_dict,
+    renormalized_scores,
+    title="Round 1 → Round 2: Renormalization Rank Changes",
+)
+
+generate_round_ranking_changes_pdf(
+    2,
+    inital_round_2_scores,
+    round_2_scores_dict,
+    advance_cutoff=80,
+    eliminated_characters=eliminated_6,
+    title="Round 2: Rank 86 to 1 Rank Changes",
+)
+
+generate_round_ranking_changes_pdf(
+    3,
+    inital_round_3_scores,
+    round_3_scores_dict,
+    advance_cutoff=16,
+    eliminated_characters=eliminated_16,
+    title="Round 3: Rank 80 to 49 Rank Changes",
+)
+
+generate_round_ranking_changes_pdf(
+    4,
+    inital_round_4_scores,
+    round_4_scores_dict,
+    title="Round 4: Rank 48 to 1 Rank Changes",
+)
+
+generate_round_ranking_changes_pdf(
+    5,
+    inital_round_5_scores,
+    round_5_scores_dict,
+    advance_cutoff=26,
+    eliminated_characters=eliminated_49_to_64,
+    title="Round 5: Rank 64 to 23 Rank Changes",
+)
+
+generate_round_ranking_changes_pdf(
+    6,
+    inital_round_6_scores,
+    round_6_scores_dict,
+    title="Round 6: Rank 22 to 1 Rank Changes",
+)
+
+generate_round_ranking_changes_pdf(
+    7,
+    inital_round_7_scores,
+    round_7_scores_dict,
+    advance_cutoff=16,
+    eliminated_characters=eliminated_33_to_48,
+    title="Round 7: Rank 48 to 17 Rank Changes",
+)
             
 copy_loss_dict = loss_dict.copy()
 
@@ -2963,6 +3146,23 @@ round_8_scores_dict = dict(sorted(round_8_scores_dict.items(), key=lambda item: 
 # print("\nRound 8\n")
 # print_sorted_dict(round_8_scores_dict)
 round_8_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], reverse=True)).copy()
+
+##################################################
+################ REPORT GENERATION ###############
+##################################################
+
+filename = os.path.join(filepath, "reports", "round_8_results.pdf")
+
+with PdfPages(filename) as pdf:
+    round_8_generator(round_8_scores_dict, win_loses, pdf)
+
+generate_round_ranking_changes_pdf(
+    8,
+    inital_round_8_scores,
+    round_8_scores_dict,
+    advance_cutoff=16,
+    title="Round 8: Rank 16 to 1 Rank Changes",
+)
 
 #%%
 ##################################################
@@ -3565,6 +3765,15 @@ def round_9_score_distribution_evolution(Tourney_Lists, renormalized_scores, los
 round_9_scores = round_9_scores_dict.copy()
 round_9_score_distribution_evolution(Tourney_List_9, round_9_scores, copy_loss_dict)
 
+# Round 9 Ranking Changes Chart
+generate_round_ranking_changes_pdf(
+    9,
+    inital_round_9_scores,
+    round_9_scores_dict,
+    advance_cutoff=16,
+    title="Round 9: Rank 42 to 9 Rank Changes",
+)
+
 #%%
 ######################################################
 ######################## ROUND 10 ####################
@@ -3737,6 +3946,15 @@ round_10_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], re
 with PdfPages("reports/round_10_results.pdf") as pdf:
     round_10_generator(round_10_scores_dict, win_loses, pdf)
 
+# Round 10 Ranking Changes Chart
+generate_round_ranking_changes_pdf(
+    10,
+    inital_round_10_scores,
+    round_10_scores_dict,
+    advance_cutoff=8,
+    title="Round 10: Rank 8 to 1 Rank Changes",
+)
+
 #%%
 ######################################################
 ######################## ROUND 11 ####################
@@ -3760,6 +3978,9 @@ round_12_scores_dict = {character:score for character,score in round_11_and_12_c
 
 # for rank changes visual
 inital_round_11_scores = round_11_scores_dict.copy()
+
+# for rank changes visual
+inital_round_12_scores = round_12_scores_dict.copy()
 
 """
 
@@ -3954,6 +4175,15 @@ round_11_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], re
 with PdfPages("reports/round_11_results.pdf") as pdf:
     round_11_generator(round_11_scores_dict, win_loses, pdf)
 
+# Round 11 Ranking Changes Chart
+generate_round_ranking_changes_pdf(
+    11,
+    inital_round_11_scores,
+    round_11_scores_dict,
+    advance_cutoff=10,
+    title="Round 11: Rank 24 to 7 Rank Changes",
+)
+
 #%%
 ######################################################
 ######################## ROUND 12 ####################
@@ -4109,6 +4339,14 @@ round_12_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], re
 
 with PdfPages("reports/round_12_results.pdf") as pdf:
     round_12_generator(round_12_scores_dict, win_loses, pdf)
+
+generate_round_ranking_changes_pdf(
+    12,
+    inital_round_12_scores,
+    round_12_scores_dict,
+    advance_cutoff=6,
+    title="Round 12: Rank 6 to 1 Rank Changes",
+)
 
 #%%
 ######################################################
@@ -4268,6 +4506,9 @@ def round_13_generator(character_dict, win_loses, pdf):
 
 round_13_scores_dict['Hero'] = 11.000
 
+# for rank changes visual
+inital_round_13_scores = round_13_scores_dict.copy()
+
 # 15 11.484 Kirby
 # 14 11.816 Mii Gunner
 # 13 12.32 Ike
@@ -4321,6 +4562,14 @@ round_13_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], re
 
 with PdfPages("reports/round_13_results.pdf") as pdf:
     round_13_generator(round_13_scores_dict, win_loses, pdf)
+
+generate_round_ranking_changes_pdf(
+    13,
+    inital_round_13_scores,
+    round_13_scores_dict,
+    advance_cutoff=6,
+    title="Round 13: Rank 16 to 5 Rank Changes",
+)
 
 #%%
 ######################################################
@@ -4461,6 +4710,9 @@ Tourney_2 = {
     
 Tourney_List_14 = [Tourney_1, Tourney_2]
 
+# for rank changes visual
+inital_round_14_scores = round_14_scores_dict.copy()
+
 max_percentage = 200
 round_14_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_14_calculator(Tourney_List_14, max_percentage, round_14_scores_dict, loss_dict)
 round_14_scores_dict = dict(sorted(round_14_scores_dict.items(), key=lambda item: item[1], reverse=False))
@@ -4470,6 +4722,14 @@ round_14_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], re
 
 with PdfPages("reports/round_14_results.pdf") as pdf:
     round_14_generator(round_14_scores_dict, win_loses, pdf)
+
+generate_round_ranking_changes_pdf(
+    14,
+    inital_round_14_scores,
+    round_14_scores_dict,
+    advance_cutoff=4,
+    title="Round 14: Rank 4 to 1 Rank Changes",
+)
 
 #%%
 ######################################################
@@ -4637,6 +4897,9 @@ Tourney_3 = {
 
 Tourney_List_15 = [Tourney_1, Tourney_2, Tourney_3]
 
+# for rank changes visual
+inital_round_15_scores = round_15_scores_dict.copy()
+
 max_percentage = 200
 round_15_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_15_calculator(Tourney_List_15, max_percentage, round_15_scores_dict, loss_dict)
 round_15_scores_dict = dict(sorted(round_15_scores_dict.items(), key=lambda item: item[1], reverse=False))
@@ -4646,6 +4909,14 @@ round_15_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], re
 
 with PdfPages("reports/round_15_results.pdf") as pdf:
     round_15_generator(round_15_scores_dict, win_loses, pdf)
+
+generate_round_ranking_changes_pdf(
+    15,
+    inital_round_15_scores,
+    round_15_scores_dict,
+    advance_cutoff=3,
+    title="Round 15: Rank 10 to 5 Rank Changes",
+)
 
 #%%
 ######################################################
@@ -4786,6 +5057,9 @@ Tourney_2 = {
 
 Tourney_List_16 = [Tourney_1, Tourney_2]
 
+# for rank changes visual
+inital_round_16_scores = round_16_scores_dict.copy()
+
 max_percentage = 200
 round_16_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_16_calculator(Tourney_List_16, max_percentage, round_16_scores_dict, loss_dict)
 round_16_scores_dict = dict(sorted(round_16_scores_dict.items(), key=lambda item: item[1], reverse=False))
@@ -4795,6 +5069,14 @@ round_16_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], re
 
 with PdfPages("reports/round_16_results.pdf") as pdf:
     round_16_generator(round_16_scores_dict, win_loses, pdf)
+
+generate_round_ranking_changes_pdf(
+    16,
+    inital_round_16_scores,
+    round_16_scores_dict,
+    advance_cutoff=4,
+    title="Round 16: Rank 4 to 1 Rank Changes",
+)
 
 #%%
 ######################################################
@@ -4957,6 +5239,9 @@ Tourney_2 = {
 
 Tourney_List_17 = [Tourney_1, Tourney_2]
 
+# for rank changes visual
+inital_round_17_scores = round_17_scores_dict.copy()
+
 max_percentage = 200
 round_17_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_17_calculator(Tourney_List_17, max_percentage, round_17_scores_dict, loss_dict)
 round_17_scores_dict = dict(sorted(round_17_scores_dict.items(), key=lambda item: item[1], reverse=False))
@@ -4966,6 +5251,14 @@ round_17_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], re
 
 with PdfPages("reports/round_17_results.pdf") as pdf:
     round_17_generator(round_17_scores_dict, win_loses, pdf)
+
+generate_round_ranking_changes_pdf(
+    17,
+    inital_round_17_scores,
+    round_17_scores_dict,
+    advance_cutoff=2,
+    title="Round 17: Rank 7 to 4 Rank Changes",
+)
 
 #%%
 ######################################################
@@ -5106,6 +5399,9 @@ Tourney_3 = {
 
 Tourney_List_18 = [Tourney_1, Tourney_2, Tourney_3]
 
+# for rank changes visual
+inital_round_18_scores = round_18_scores_dict.copy()
+
 max_percentage = 200
 round_18_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_18_calculator(Tourney_List_18, max_percentage, round_18_scores_dict, loss_dict)
 round_18_scores_dict = dict(sorted(round_18_scores_dict.items(), key=lambda item: item[1], reverse=False))
@@ -5115,6 +5411,14 @@ round_18_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], re
 
 with PdfPages("reports/round_18_results.pdf") as pdf:
     round_18_generator(round_18_scores_dict, win_loses, pdf)
+
+generate_round_ranking_changes_pdf(
+    18,
+    inital_round_18_scores,
+    round_18_scores_dict,
+    advance_cutoff=3,
+    title="Round 18: Rank 3 to 1 Rank Changes",
+)
 
 #%%
 ######################################################
@@ -5272,6 +5576,9 @@ Tourney_2 = {
 
 Tourney_List_19 = [Tourney_1, Tourney_2]
 
+# for rank changes visual
+inital_round_19_scores = round_19_scores_dict.copy()
+
 max_percentage = 200
 round_19_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_19_calculator(Tourney_List_19, max_percentage, round_19_scores_dict, loss_dict)
 round_19_scores_dict = dict(sorted(round_19_scores_dict.items(), key=lambda item: item[1], reverse=False))
@@ -5281,6 +5588,14 @@ round_19_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], re
 
 with PdfPages("reports/round_19_results.pdf") as pdf:
     round_19_generator(round_19_scores_dict, win_loses, pdf)
+
+generate_round_ranking_changes_pdf(
+    19,
+    inital_round_19_scores,
+    round_19_scores_dict,
+    advance_cutoff=2,
+    title="Round 19: Rank 5 to 2 Rank Changes",
+)
 
 #%%
 ######################################################
@@ -5411,6 +5726,9 @@ Tourney_1 = {
     
 Tourney_List_20 = [Tourney_1]
 
+# for rank changes visual
+inital_round_20_scores = round_20_scores_dict.copy()
+
 max_percentage = 200
 round_20_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_20_calculator(Tourney_List_20, max_percentage, round_20_scores_dict, loss_dict)
 round_20_scores_dict = dict(sorted(round_20_scores_dict.items(), key=lambda item: item[1], reverse=False))
@@ -5420,6 +5738,14 @@ round_20_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], re
 
 with PdfPages("reports/round_20_results.pdf") as pdf:
     round_20_generator(round_20_scores_dict, win_loses, pdf)
+
+generate_round_ranking_changes_pdf(
+    20,
+    inital_round_20_scores,
+    round_20_scores_dict,
+    advance_cutoff=1,
+    title="Round 20: Rank 1 Rank Changes",
+)
 
 #%%
 ######################################################
@@ -5581,6 +5907,9 @@ Tourney_3 = {
 
 Tourney_List_21 = [Tourney_1, Tourney_2, Tourney_3]
 
+# for rank changes visual
+inital_round_21_scores = round_21_scores_dict.copy()
+
 max_percentage = 200
 round_21_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_21_calculator(Tourney_List_21, max_percentage, round_21_scores_dict, loss_dict)
 round_21_scores_dict = dict(sorted(round_21_scores_dict.items(), key=lambda item: item[1], reverse=False))
@@ -5590,6 +5919,14 @@ round_21_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], re
 
 with PdfPages("reports/round_21_results.pdf") as pdf:
     round_21_generator(round_21_scores_dict, win_loses, pdf)
+
+generate_round_ranking_changes_pdf(
+    21,
+    inital_round_21_scores,
+    round_21_scores_dict,
+    advance_cutoff=1,
+    title="Round 21: Top 3 Rank Changes",
+)
 
 #%%
 ######################################################
@@ -5736,6 +6073,9 @@ Tourney_2 = {
 
 Tourney_List_22 = [Tourney_1, Tourney_2]
 
+# for rank changes visual
+inital_round_22_scores = round_22_scores_dict.copy()
+
 max_percentage = 200
 round_22_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_22_calculator(Tourney_List_22, max_percentage, round_22_scores_dict, loss_dict)
 round_22_scores_dict = dict(sorted(round_22_scores_dict.items(), key=lambda item: item[1], reverse=False))
@@ -5745,6 +6085,17 @@ round_22_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], re
 
 with PdfPages("reports/round_22_results.pdf") as pdf:
     round_22_generator(round_22_scores_dict, win_loses, pdf)
+
+round_22_winner = max(round_22_scores_dict, key=round_22_scores_dict.get)
+round_22_eliminated = set(round_22_scores_dict) - {round_22_winner}
+generate_round_ranking_changes_pdf(
+    22,
+    inital_round_22_scores,
+    round_22_scores_dict,
+    advance_cutoff=1,
+    eliminated_characters=round_22_eliminated,
+    title="Round 22: 2nd Last Elimination Rank Changes",
+)
 
 #%%
 ######################################################
@@ -5922,6 +6273,9 @@ Tourney_6 = {
 
 Tourney_List_23 = [Tourney_1, Tourney_2, Tourney_3, Tourney_4, Tourney_5, Tourney_6]
 
+# for rank changes visual
+inital_round_23_scores = round_23_scores_dict.copy()
+
 max_percentage = 200
 round_23_scores_dict, win_loses, characters_played, all_characters, loss_dict = round_23_calculator(Tourney_List_23, max_percentage, round_23_scores_dict, loss_dict)
 round_23_scores_dict = dict(sorted(round_23_scores_dict.items(), key=lambda item: item[1], reverse=False))
@@ -5931,6 +6285,17 @@ round_23_loss_dict = dict(sorted(loss_dict.items(), key=lambda item: item[1], re
 
 with PdfPages("reports/round_23_results.pdf") as pdf:
     round_23_generator(round_23_scores_dict, win_loses, pdf)
+
+round_23_winner = max(round_23_scores_dict, key=round_23_scores_dict.get)
+round_23_eliminated = set(round_23_scores_dict) - {round_23_winner}
+generate_round_ranking_changes_pdf(
+    23,
+    inital_round_23_scores,
+    round_23_scores_dict,
+    advance_cutoff=1,
+    eliminated_characters=round_23_eliminated,
+    title="Round 23: Final 2 Rank Changes",
+)
 
 #%%   
 #############################
@@ -6144,3 +6509,140 @@ round_all_records = records(Tourneys, blank_dict, max_percentage)
 round_all_records["Score"] = pd.to_numeric(round_all_records["Score"], errors="coerce")
 round_all_records["Accumulated_Sum"] = round_all_records.groupby("Character")["Score"].cumsum()
 round_all_records.to_csv("records/all_records_to_8.csv", index=False)
+
+
+#############################
+#### OVERALL RANKING PROFILE
+#############################
+
+def generate_overall_ranking_profile(round_scores_by_round, output_pdf_path, output_csv_path=None, max_rows_per_page=35):
+    """Generate an overall ranking profile for all characters.
+
+    Ranks are computed per-round within that round's participant set (rank 1 = best).
+    Characters missing from a round are treated as NaN for that round.
+    """
+
+    rounds = sorted(round_scores_by_round.keys())
+    all_characters = sorted({c for scores in round_scores_by_round.values() for c in scores.keys()})
+
+    ranks_by_round = {r: _ranks_best_from_scores(round_scores_by_round[r]) for r in rounds}
+
+    rows = []
+    for character in all_characters:
+        present_rounds = [r for r in rounds if character in ranks_by_round[r]]
+        if not present_rounds:
+            continue
+
+        per_round_ranks = [ranks_by_round[r][character] for r in present_rounds]
+        last_round = max(present_rounds)
+        last_rank = ranks_by_round[last_round][character]
+
+        ranks_series = pd.Series(per_round_ranks, dtype="float")
+        rows.append(
+            {
+                "Character": character,
+                "Appearances": int(len(present_rounds)),
+                "LastRound": int(last_round),
+                "LastRank": int(last_rank),
+                "BestRank": int(ranks_series.min()),
+                "WorstRank": int(ranks_series.max()),
+                "MeanRank": float(ranks_series.mean()),
+                "StdRank": float(ranks_series.std(ddof=0) if len(ranks_series) > 1 else 0.0),
+            }
+        )
+
+    profile_df = pd.DataFrame(rows)
+    if profile_df.empty:
+        return
+
+    profile_df = profile_df.sort_values(["LastRound", "LastRank", "BestRank"], ascending=[False, True, True])
+
+    if output_csv_path:
+        os.makedirs(os.path.dirname(output_csv_path), exist_ok=True)
+        profile_df.to_csv(output_csv_path, index=False)
+
+    os.makedirs(os.path.dirname(output_pdf_path), exist_ok=True)
+    with PdfPages(output_pdf_path) as pdf:
+        # Summary page
+        fig, ax = plt.subplots(figsize=(11, 8.5))
+        ax.axis("off")
+
+        winner = None
+        try:
+            winner = round_23_winner
+        except Exception:
+            pass
+
+        last_round_counts = profile_df["LastRound"].value_counts().sort_index()
+        summary_lines = [
+            "Overall Ranking Profile",
+            f"Total characters: {len(profile_df)}",
+            f"Champion: {winner}" if winner else "Champion: (unknown)",
+            "",
+            "Last-round reached (count):",
+        ]
+        summary_lines += [f"  Round {r}: {int(cnt)}" for r, cnt in last_round_counts.items()]
+        ax.text(0.01, 0.99, "\n".join(summary_lines), va="top", ha="left", fontsize=12)
+        pdf.savefig(fig, bbox_inches="tight")
+        plt.close(fig)
+
+        # Table pages
+        columns = ["Character", "Appearances", "LastRound", "LastRank", "BestRank", "WorstRank", "MeanRank", "StdRank"]
+        formatted = profile_df.copy()
+        formatted["MeanRank"] = formatted["MeanRank"].map(lambda x: f"{x:.2f}")
+        formatted["StdRank"] = formatted["StdRank"].map(lambda x: f"{x:.2f}")
+
+        for start in range(0, len(formatted), max_rows_per_page):
+            chunk = formatted.iloc[start : start + max_rows_per_page][columns]
+            fig_height = 1.0 + 0.28 * len(chunk)
+            fig, ax = plt.subplots(figsize=(11, max(8.5, fig_height)))
+            ax.axis("off")
+            table = ax.table(
+                cellText=chunk.values,
+                colLabels=chunk.columns,
+                cellLoc="center",
+                loc="center",
+            )
+            table.auto_set_font_size(False)
+            table.set_fontsize(8)
+            table.scale(1.0, 1.2)
+            ax.set_title(
+                f"Overall Ranking Profile (rows {start + 1}–{min(start + max_rows_per_page, len(formatted))} of {len(formatted)})",
+                fontsize=12,
+                pad=12,
+            )
+            pdf.savefig(fig, bbox_inches="tight")
+            plt.close(fig)
+
+
+overall_round_scores = {
+    1: round_1_scores_dict,
+    2: round_2_scores_dict,
+    3: round_3_scores_dict,
+    4: round_4_scores_dict,
+    5: round_5_scores_dict,
+    6: round_6_scores_dict,
+    7: round_7_scores_dict,
+    8: round_8_scores_dict,
+    9: round_9_scores_dict,
+    10: round_10_scores_dict,
+    11: round_11_scores_dict,
+    12: round_12_scores_dict,
+    13: round_13_scores_dict,
+    14: round_14_scores_dict,
+    15: round_15_scores_dict,
+    16: round_16_scores_dict,
+    17: round_17_scores_dict,
+    18: round_18_scores_dict,
+    19: round_19_scores_dict,
+    20: round_20_scores_dict,
+    21: round_21_scores_dict,
+    22: round_22_scores_dict,
+    23: round_23_scores_dict,
+}
+
+generate_overall_ranking_profile(
+    overall_round_scores,
+    output_pdf_path=os.path.join(filepath, "reports", "overall_ranking_profile.pdf"),
+    output_csv_path=os.path.join(filepath, "records", "overall_ranking_profile.csv"),
+)
