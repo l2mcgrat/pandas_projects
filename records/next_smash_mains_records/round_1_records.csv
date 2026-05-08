@@ -1,0 +1,12 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Dr Mario,Pokemon Trainer,1,1,0,3,102,3.49,1.0,3.49
+Dr Mario,Cloud,2,1,0,2,57,3.136,1.05,6.626
+Dr Mario,Sonic,3,1,0,3,136,4.582,1.15,11.207
+King Dedede,Olimar,1,1,0,2,116,2.662,1.1,2.662
+King Dedede,Yoshi,2,1,0,1,0,2.2,1.0,4.862
+King Dedede,Wolf,3,1,0,2,106,3.26,1.1,8.122
+Link,Pyra & Mythra,1,0,1,-1,83,0.436,1.05,0.436
+Piranha Plant,Kazuya,1,1,0,2,0,3.45,1.15,3.45
+Piranha Plant,Ness,2,1,0,2,0,3.63,1.1,7.08
+Piranha Plant,Shulk,3,1,0,1,53,2.186,1.05,9.266
+Piranha Plant,Pyra & Mythra,4,1,0,3,141,0.865,1.05,10.131

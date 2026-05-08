@@ -1,128 +1,306 @@
-# New_Smash_Gods__Discovery_Training (Object-Oriented, Records-Backed)
+# New_Smash_Gods__Discovery_Training (Object-Oriented Rewrite)
 
 from __future__ import annotations
 
 import warnings
 warnings.filterwarnings("ignore")
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
-import re
+from collections import defaultdict
+from typing import Callable
 
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import pandas as pd
 import seaborn as sns
 
-
 ROOT = Path(__file__).resolve().parent
-
 REPORTS_ROOT_DIR = ROOT / "reports"
 RECORDS_ROOT_DIR = ROOT / "records"
 
-RANKING_CHANGES_DIR = REPORTS_ROOT_DIR / "new_smash_mains_ranking_changes"
-REPORTS_DIR = REPORTS_ROOT_DIR / "new_smash_mains_reports"
-RECORDS_DIR = RECORDS_ROOT_DIR / "new_smash_mains_records"
+RANKING_CHANGES_DIR = REPORTS_ROOT_DIR / "next_smash_mains_ranking_changes"
+REPORTS_DIR = REPORTS_ROOT_DIR / "next_smash_mains_reports"
+RECORDS_DIR = RECORDS_ROOT_DIR / "next_smash_mains_records"
 
 REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 RANKING_CHANGES_DIR.mkdir(parents=True, exist_ok=True)
 RECORDS_DIR.mkdir(parents=True, exist_ok=True)
 
+MATCHUP_PATH = ROOT / "matchup_chart.csv"
+MATCHUP_DF = pd.read_csv(MATCHUP_PATH) if MATCHUP_PATH.exists() else pd.DataFrame()
+
+def bar_generator(value_map: dict, x_axis: str, y_axis: str, title: str, pdf: PdfPages) -> None:
+    keys = list(value_map.keys())
+    values = list(value_map.values())
+    plt.figure(figsize=(11, 6))
+    bars = plt.bar(keys, values, color="skyblue", edgecolor="black")
+    for bar in bars:
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width() / 2, height, f"{height:.2f}", ha="center", va="bottom")
+    plt.xlabel(x_axis)
+    plt.ylabel(y_axis)
+    plt.title(title)
+    plt.xticks(rotation=45, ha="right")
+    plt.tight_layout()
+    pdf.savefig()
+    plt.close()
+
+def histogram_generator(character_dict: dict[str, float], x_axis: str, y_axis: str, title: str, pdf: PdfPages) -> None:
+    values = list(character_dict.values())
+    if not values:
+        return
+    plt.figure(figsize=(11, 6))
+    plt.hist(values, bins=24, edgecolor="black", color="#9ecae1")
+    plt.xlabel(x_axis)
+    plt.ylabel(y_axis)
+    plt.title(title)
+    plt.tight_layout()
+    pdf.savefig()
+    plt.close()
+
+def distribution_generator(character_dict: dict[str, float], x_axis: str, y_axis: str, title: str, pdf: PdfPages) -> None:
+    values = list(character_dict.values())
+    if len(values) < 2:
+        return
+    plt.figure(figsize=(11, 6))
+    sns.kdeplot(values, fill=True, color="skyblue", linewidth=2)
+    plt.xlabel(x_axis)
+    plt.ylabel(y_axis)
+    plt.title(title)
+    plt.tight_layout()
+    pdf.savefig()
+    plt.close()
+
+def table_generator(category_to_characters: dict[str, list[str]], title: str, pdf: PdfPages) -> None:
+    table_data = []
+    for category, chars in category_to_characters.items():
+        chunks = [", ".join(chars[i:i + 8]) for i in range(0, len(chars), 8)] or [""]
+        category_col = "\n".join([category] + [""] * (len(chunks) - 1))
+        table_data.append([category_col, "\n".join(chunks)])
+    fig, ax = plt.subplots(figsize=(11, 8))
+    ax.axis("off")
+    table = ax.table(cellText=table_data, colLabels=["Category", "Characters"], cellLoc="left", loc="center")
+    table.auto_set_font_size(False)
+    table.set_fontsize(9)
+    table.scale(1, 1.5)
+    ax.set_title(title)
+    plt.tight_layout()
+    pdf.savefig(fig)
+    plt.close(fig)
 
 @dataclass
-class RoundSnapshot:
+class MatchResult:
+    character: str
+    opponent: str
+    match_number: int
+    stock_diff: int
+    percentage: float
+
+    @property
+    def won(self) -> bool:
+        return self.stock_diff > 0
+
+    @property
+    def lost(self) -> bool:
+        return self.stock_diff < 0
+
+    @property
+    def is_placeholder(self) -> bool:
+        return self.opponent.lower().startswith("opponent") and self.stock_diff == 0
+
+@dataclass
+class RoundScoringRule:
+    round_number: int
+    max_percentage: float
+    early_round_limit: int = 3
+    early_multiplier_fn: Callable[[int], float] = lambda _m: 1.0
+    use_matchup_multiplier: bool = True
+    late_match_division: bool = True
+
+    def stage_multiplier(self, match_number: int) -> float:
+        return self.early_multiplier_fn(match_number) if match_number <= self.early_round_limit else 1.0
+
+@dataclass
+class RoundSummary:
     round_number: int
     scores: dict[str, float]
+    win_loses: dict[str, list]
+    characters_played: set[str]
+    all_characters: set[str]
+    losses_received: dict[str, int]
 
+@dataclass
+class Round:
+    round_number: int
+    matches_by_character: dict[str, list[MatchResult]]
+    scoring_rule: RoundScoringRule
+    matchup_df: pd.DataFrame = field(default_factory=pd.DataFrame)
 
-class RecordsRoundLoader:
-    """Loads historical per-round scores from existing CSV outputs.
+    @classmethod
+    def from_dataframe(cls, round_number: int, df: pd.DataFrame, scoring_rule: RoundScoringRule, matchup_df: pd.DataFrame) -> "Round":
+        matches_by_character: dict[str, list[MatchResult]] = defaultdict(list)
+        required_cols = {"Character", "Opponent", "Round", "Stock Diff", "Percentage"}
+        missing = required_cols - set(df.columns)
+        if missing:
+            raise ValueError(f"Round {round_number}: missing required columns: {sorted(missing)}")
+        for row in df.itertuples(index=False):
+            match = MatchResult(
+                character=str(getattr(row, "Character")),
+                opponent=str(getattr(row, "Opponent")),
+                match_number=int(getattr(row, "Round")),
+                stock_diff=int(getattr(row, "Stock_Diff") if hasattr(row, "Stock_Diff") else getattr(row, "_5")),
+                percentage=float(getattr(row, "Percentage")),
+            )
+            matches_by_character[match.character].append(match)
+        for character in matches_by_character:
+            matches_by_character[character].sort(key=lambda m: m.match_number)
+        return cls(round_number=round_number, matches_by_character=dict(matches_by_character), scoring_rule=scoring_rule, matchup_df=matchup_df)
 
-    This keeps previously-determined scores as source-of-truth while
-    allowing the script structure to stay object-oriented.
-    """
+    def _matchup_multiplier(self, character: str, opponent: str, stock_diff: int) -> float:
+        if stock_diff == 0 or self.matchup_df.empty or not self.scoring_rule.use_matchup_multiplier:
+            return 1.0
+        character_key = character.lower()
+        opponent_key = opponent.lower()
+        if "Character" not in self.matchup_df.columns or opponent_key not in self.matchup_df.columns:
+            return 1.0
+        row = self.matchup_df[self.matchup_df["Character"].astype(str).str.lower() == character_key]
+        if row.empty:
+            return 1.0
+        try:
+            matchup_value = float(row[opponent_key].iloc[0])
+            return 1 - matchup_value / 20
+        except Exception:
+            return 1.0
 
-    def __init__(self, records_dir: Path):
-        self.records_dir = records_dir
-
-    @staticmethod
-    def _to_score_map(df: pd.DataFrame) -> dict[str, float]:
-        if "Character" not in df.columns:
-            return {}
-
-        if "Accumulated_Sum" in df.columns:
-            score_series = df.groupby("Character", as_index=True)["Accumulated_Sum"].max()
-        elif "Score" in df.columns:
-            score_series = df.groupby("Character", as_index=True)["Score"].sum()
+    def _score_match(self, match: MatchResult) -> float:
+        cap = self.scoring_rule.max_percentage
+        if match.won:
+            base_score = match.stock_diff + max(0.0, cap - match.percentage) / cap
+        elif match.lost:
+            base_score = 1 + match.stock_diff + min(1.0, match.percentage / cap)
         else:
-            return {}
+            return 0.0
+        score = base_score
+        score *= self.scoring_rule.stage_multiplier(match.match_number)
+        score *= self._matchup_multiplier(match.character, match.opponent, match.stock_diff)
+        if self.scoring_rule.late_match_division and match.match_number > self.scoring_rule.early_round_limit:
+            score /= match.match_number
+        return score
 
-        return {k: float(v) for k, v in score_series.to_dict().items()}
+    def calculate_with_records(self, previous_scores: dict[str, float], loss_counter: dict[str, int]) -> tuple[RoundSummary, pd.DataFrame]:
+        scores = dict(previous_scores)
+        win_loses = {
+            "Lost Round 1": [0, 0.0, []],
+            "Lost Round 2": [0, 0.0, []],
+            "Lost Round 3": [0, 0.0, []],
+            "Lost Round 4": [0, 0.0, []],
+            "Lost Round 5": [0, 0.0, []],
+            "Won Round 3": [0, 0.0, []],
+            "Won Round 4": [0, 0.0, []],
+            "Won Tourney": [0, 0.0, []],
+        }
+        characters_played = set()
+        all_characters = set()
+        record_rows: list[dict[str, object]] = []
+        for character, matches in self.matches_by_character.items():
+            characters_played.add(character)
+            running_score = scores.get(character, 0.0)
+            previous_match_won = False
+            for match in matches:
+                all_characters.add(match.opponent)
+                if match.is_placeholder:
+                    if match.match_number == 4 and previous_match_won:
+                        win_loses["Won Round 3"][0] += 1
+                        win_loses["Won Round 3"][1] += running_score
+                        win_loses["Won Round 3"][2].append(character)
+                    if match.match_number == 5 and previous_match_won:
+                        win_loses["Won Round 4"][0] += 1
+                        win_loses["Won Round 4"][1] += running_score
+                        win_loses["Won Round 4"][2].append(character)
+                    previous_match_won = False
+                    continue
+                match_score = self._score_match(match)
+                running_score += match_score
+                previous_match_won = match.won
+                matchup_multiplier = self._matchup_multiplier(match.character, match.opponent, match.stock_diff)
+                record_rows.append(
+                    {
+                        "Character": character,
+                        "Opponent": match.opponent,
+                        "Round": match.match_number,
+                        "Win": int(match.won),
+                        "Loss": int(match.lost),
+                        "Stock Diff": match.stock_diff,
+                        "Percentage": match.percentage,
+                        "Score": round(match_score, 3),
+                        "Matchup": round(matchup_multiplier, 3),
+                        "Accumulated_Sum": round(running_score, 3),
+                    }
+                )
+                if match.lost:
+                    loss_counter[match.opponent] += 1
+                    key = f"Lost Round {match.match_number}"
+                    if key in win_loses:
+                        win_loses[key][0] += 1
+                        win_loses[key][1] += running_score
+                        win_loses[key][2].append(character)
+                if match.won and match.match_number == 5:
+                    win_loses["Won Tourney"][0] += 1
+                    win_loses["Won Tourney"][1] += running_score
+                    win_loses["Won Tourney"][2].append(character)
+            scores[character] = round(running_score, 3)
+        summary = RoundSummary(
+            round_number=self.round_number,
+            scores=scores,
+            win_loses=win_loses,
+            characters_played=characters_played,
+            all_characters=all_characters,
+            losses_received=dict(loss_counter),
+        )
+        records_df = pd.DataFrame(
+            record_rows,
+            columns=["Character", "Opponent", "Round", "Win", "Loss", "Stock Diff", "Percentage", "Score", "Matchup", "Accumulated_Sum"],
+        )
+        return summary, records_df
 
-    def _load_round_2_from_combined(self) -> dict[int, dict[str, float]]:
-        combined_path = self.records_dir / "rounds_1_and_2_records.csv"
-        if not combined_path.exists():
-            return {}
-
-        df = pd.read_csv(combined_path)
-        return {2: self._to_score_map(df)}
-
-    def _load_rounds_3_to_8_summary(self) -> dict[int, dict[str, float]]:
-        summary_path = self.records_dir / "all_records_to_8.csv"
-        if not summary_path.exists():
-            return {}
-
-        df = pd.read_csv(summary_path)
-        needed_cols = {"Round", "Character", "Score"}
-        if not needed_cols.issubset(df.columns):
-            return {}
-
-        round_maps: dict[int, dict[str, float]] = {}
-        for round_number, round_df in df.groupby("Round"):
-            round_maps[int(round_number)] = {
-                row["Character"]: float(row["Score"]) for _, row in round_df.iterrows()
-            }
-
-        return round_maps
-
-    def _load_round_file_maps(self) -> dict[int, dict[str, float]]:
-        round_maps: dict[int, dict[str, float]] = {}
-        pattern = re.compile(r"^round_(\d+)_records\.csv$")
-
-        for path in self.records_dir.glob("round_*_records.csv"):
-            match = pattern.match(path.name)
-            if not match:
-                continue
-
-            round_number = int(match.group(1))
-            df = pd.read_csv(path)
-            round_maps[round_number] = self._to_score_map(df)
-
-        return round_maps
-
-    def load_round_snapshots(self) -> list[RoundSnapshot]:
-        round_maps = {}
-
-        round_maps.update(self._load_round_file_maps())
-        round_maps.update(self._load_round_2_from_combined())
-        round_maps.update(self._load_rounds_3_to_8_summary())
-
-        snapshots = [RoundSnapshot(round_number=r, scores=s) for r, s in sorted(round_maps.items()) if s]
-        return snapshots
+    def calculate(self, previous_scores: dict[str, float], loss_counter: dict[str, int]) -> RoundSummary:
+        summary, _records_df = self.calculate_with_records(previous_scores, loss_counter)
+        return summary
 
 
-class TournamentReportBuilder:
-    def __init__(self, reports_dir: Path, ranking_changes_dir: Path, records_dir: Path):
+class TournamentManager:
+    def __init__(self, records_dir: Path, reports_dir: Path, ranking_changes_dir: Path, matchup_df: pd.DataFrame):
+        self.records_dir = records_dir
         self.reports_dir = reports_dir
         self.ranking_changes_dir = ranking_changes_dir
-        self.records_dir = records_dir
-
+        self.matchup_df = matchup_df
         self.elimination_rounds = {3, 5, 8, 10, 12, 14, 16, 18, 20, 22}
+        self.rules = self._build_round_rules()
+
+    @staticmethod
+    def _build_round_rules() -> dict[int, RoundScoringRule]:
+        rules: dict[int, RoundScoringRule] = {}
+        rules[1] = RoundScoringRule(round_number=1, max_percentage=200, early_multiplier_fn=lambda m: 1 + (m - 1) / 10)
+        rules[2] = RoundScoringRule(round_number=2, max_percentage=150, early_multiplier_fn=lambda m: 1 + (m - 1) * 0.25)
+        for r in range(3, 51):
+            rules[r] = RoundScoringRule(round_number=r, max_percentage=175, early_multiplier_fn=lambda _m: 1.0)
+        return rules
+
+    def _round_files(self) -> list[tuple[int, Path]]:
+        files = []
+        for f in self.records_dir.glob("round_*_records.csv"):
+            try:
+                number = int(f.stem.split("_")[1])
+                files.append((number, f))
+            except Exception:
+                continue
+        return sorted(files, key=lambda x: x[0])
 
     @staticmethod
     def _score_to_ranks(scores: dict[str, float]) -> dict[str, int]:
         ordered = sorted(scores.items(), key=lambda kv: kv[1], reverse=True)
-        return {character: idx + 1 for idx, (character, _) in enumerate(ordered)}
+        return {character: i + 1 for i, (character, _) in enumerate(ordered)}
 
     @staticmethod
     def _rank_group(rank: int) -> str:
@@ -132,210 +310,163 @@ class TournamentReportBuilder:
             return "Top 64"
         return "Bottom 65+"
 
-    def _plot_round_report(self, snapshot: RoundSnapshot) -> None:
-        score_map = snapshot.scores
-        if not score_map:
-            return
-
-        scores = list(score_map.values())
-        top = dict(sorted(score_map.items(), key=lambda kv: kv[1], reverse=True)[:20])
-        median_score = float(pd.Series(scores).median())
-        mean_score = float(pd.Series(scores).mean())
-
-        out_path = self.reports_dir / f"round_{snapshot.round_number}_results.pdf"
-        with PdfPages(out_path) as pdf:
-            plt.figure(figsize=(12, 6))
-            plt.bar(list(top.keys()), list(top.values()), color="skyblue", edgecolor="black")
-            plt.xticks(rotation=45, ha="right")
-            plt.ylabel("Score")
-            plt.title(f"Round {snapshot.round_number}: Top 20 Scores")
-            plt.tight_layout()
-            pdf.savefig()
-            plt.close()
-
-            plt.figure(figsize=(11, 6))
-            plt.hist(scores, bins=20, edgecolor="black", color="#9ecae1")
-            plt.title(f"Round {snapshot.round_number}: Score Distribution")
-            plt.xlabel("Score")
-            plt.ylabel("Frequency")
-            plt.tight_layout()
-            pdf.savefig()
-            plt.close()
-
-            if len(scores) >= 2:
-                plt.figure(figsize=(11, 6))
-                sns.kdeplot(scores, fill=True, color="skyblue", linewidth=2)
-                plt.title(f"Round {snapshot.round_number}: Score Density")
-                plt.xlabel("Score")
-                plt.ylabel("Density")
-                plt.tight_layout()
-                pdf.savefig()
-                plt.close()
-
-            summary_table = pd.DataFrame(
-                {
-                    "Metric": ["Character Count", "Mean Score", "Median Score", "Min Score", "Max Score"],
-                    "Value": [len(scores), round(mean_score, 3), round(median_score, 3), round(min(scores), 3), round(max(scores), 3)],
-                }
-            )
-            fig, ax = plt.subplots(figsize=(8, 3))
-            ax.axis("off")
-            table = ax.table(cellText=summary_table.values, colLabels=summary_table.columns, loc="center")
-            table.auto_set_font_size(False)
-            table.set_fontsize(10)
-            table.scale(1.2, 1.5)
-            ax.set_title(f"Round {snapshot.round_number}: Summary")
-            plt.tight_layout()
-            pdf.savefig(fig)
-            plt.close(fig)
-
-    def _plot_ranking_changes(self, previous: RoundSnapshot, current: RoundSnapshot) -> None:
-        prev_ranks = self._score_to_ranks(previous.scores)
-        curr_ranks = self._score_to_ranks(current.scores)
-
-        common = sorted(set(prev_ranks) & set(curr_ranks), key=lambda c: prev_ranks[c])
-        if not common:
-            return
-
-        eliminated = set(prev_ranks) - set(curr_ranks)
-        fig, ax = plt.subplots(figsize=(14, 10))
-
-        for character in common:
-            r0 = prev_ranks[character]
-            r1 = curr_ranks[character]
-            delta = r0 - r1
-
-            g0 = self._rank_group(r0)
-            g1 = self._rank_group(r1)
-
-            if character in eliminated:
-                color = "#d62728" if current.round_number in self.elimination_rounds else "#ff7f0e"
-            elif g0 != g1:
-                color = "#2ca02c" if r1 < r0 else "#9467bd"
+    def _ranking_changes_colored(self, initial_scores: dict[str, float], final_scores: dict[str, float], round_number: int, eliminated_characters: set[str]) -> None:
+        initial_ranks = self._score_to_ranks(initial_scores)
+        final_ranks = self._score_to_ranks(final_scores)
+        all_chars = sorted(set(initial_ranks) | set(final_ranks))
+        changes = []
+        for c in all_chars:
+            if c not in initial_ranks or c not in final_ranks:
+                continue
+            i_rank = initial_ranks[c]
+            f_rank = final_ranks[c]
+            delta = i_rank - f_rank
+            i_group = self._rank_group(i_rank)
+            f_group = self._rank_group(f_rank)
+            if c in eliminated_characters:
+                color = "#d62728" if round_number in self.elimination_rounds else "#ff7f0e"
+            elif f_group != i_group:
+                color = "#2ca02c" if f_rank < i_rank else "#9467bd"
             else:
                 color = "#1f77b4" if delta > 0 else ("#7f7f7f" if delta == 0 else "#8c564b")
-
-            ax.plot([0, 1], [r0, r1], marker="o", color=color, alpha=0.8, linewidth=1.8)
+            changes.append((c, i_rank, f_rank, delta, color))
+        if not changes:
+            return
+        changes.sort(key=lambda x: x[1])
+        fig, ax = plt.subplots(figsize=(14, 10))
+        for c, i_rank, f_rank, delta, color in changes:
+            ax.plot([0, 1], [i_rank, f_rank], marker="o", color=color, alpha=0.75, linewidth=1.8)
             if abs(delta) >= 10:
-                ax.text(1.02, r1, character, fontsize=7, va="center")
-
+                ax.text(1.02, f_rank, c, fontsize=7, va="center")
         ax.set_xticks([0, 1])
-        ax.set_xticklabels([f"Round {previous.round_number}", f"Round {current.round_number}"])
+        ax.set_xticklabels(["Previous Round", f"Round {round_number}"])
         ax.invert_yaxis()
         ax.set_ylabel("Rank")
-        ax.set_title(f"Ranking Changes: Round {previous.round_number} → Round {current.round_number}")
+        ax.set_title(f"Round {round_number}: Ranking Changes")
         ax.grid(axis="y", alpha=0.2)
         plt.tight_layout()
-
-        out_path = self.ranking_changes_dir / f"round_{current.round_number}_ranking_changes.pdf"
-        with PdfPages(out_path) as pdf:
+        filename = self.ranking_changes_dir / f"round_{round_number}_ranking_changes.pdf"
+        with PdfPages(filename) as pdf:
             pdf.savefig(fig)
         plt.close(fig)
 
-    def _write_records(self, snapshots: list[RoundSnapshot]) -> None:
-        rows = []
-        for snapshot in snapshots:
-            ranks = self._score_to_ranks(snapshot.scores)
-            for character, score in snapshot.scores.items():
-                rows.append(
-                    {
-                        "Round": snapshot.round_number,
-                        "Character": character,
-                        "Score": score,
-                        "Rank": ranks[character],
-                    }
-                )
+    @staticmethod
+    def _round_report(summary: RoundSummary, output_pdf: Path) -> None:
+        win_loss_totals = {k: v[0] for k, v in summary.win_loses.items()}
+        win_loss_averages = {k: round(v[1] / (v[0] if v[0] else 1), 3) for k, v in summary.win_loses.items()}
+        win_loss_characters = {k: v[2] for k, v in summary.win_loses.items()}
+        with PdfPages(output_pdf) as pdf:
+            bar_generator(win_loss_totals, "Category", "Count", f"Round {summary.round_number}: Win/Loss Totals", pdf)
+            bar_generator(win_loss_averages, "Category", "Average Score", f"Round {summary.round_number}: Win/Loss Average Scores", pdf)
+            table_generator(win_loss_characters, f"Round {summary.round_number}: End-Scenario Characters", pdf)
+            histogram_generator(summary.scores, "Score", "Frequency", f"Round {summary.round_number}: Score Distribution", pdf)
+            distribution_generator(summary.scores, "Score", "Density", f"Round {summary.round_number}: Score Density", pdf)
 
-        all_rounds_df = pd.DataFrame(rows).sort_values(["Round", "Rank"])
-        all_rounds_df.to_csv(self.records_dir / "all_records.csv", index=False)
-
-        rounds_to_8_df = all_rounds_df[all_rounds_df["Round"] <= 8].copy()
-        rounds_to_8_df.to_csv(self.records_dir / "all_records_to_8.csv", index=False)
-
-        combined_scores: dict[str, float] = {}
-        for snapshot in snapshots:
-            for character, score in snapshot.scores.items():
-                combined_scores[character] = combined_scores.get(character, 0.0) + float(score)
-
-        overall_ranks = self._score_to_ranks(combined_scores)
-        overall_df = pd.DataFrame(
-            [
-                {"Character": c, "Score": s, "Rank": overall_ranks[c]}
-                for c, s in sorted(combined_scores.items(), key=lambda kv: kv[1], reverse=True)
-            ]
+    def bootstrap_round_from_matches(
+        self,
+        round_number: int,
+        matches_by_character: dict[str, list[MatchResult]],
+        previous_scores: dict[str, float] | None = None,
+    ) -> RoundSummary:
+        rule = self.rules.get(round_number, RoundScoringRule(round_number=round_number, max_percentage=175))
+        round_engine = Round(
+            round_number=round_number,
+            matches_by_character=matches_by_character,
+            scoring_rule=rule,
+            matchup_df=self.matchup_df,
         )
-        overall_df.to_csv(self.records_dir / "overall_ranking_profile.csv", index=False)
+        summary, records_df = round_engine.calculate_with_records(previous_scores or {}, defaultdict(int))
+        records_path = self.records_dir / f"round_{round_number}_records.csv"
+        records_df.to_csv(records_path, index=False)
+        return summary
 
-        for snapshot in snapshots:
-            ranks = self._score_to_ranks(snapshot.scores)
-            round_df = pd.DataFrame(
-                [
-                    {"Character": c, "Score": s, "Rank": ranks[c]}
-                    for c, s in sorted(snapshot.scores.items(), key=lambda kv: kv[1], reverse=True)
-                ]
-            )
-            round_df.to_csv(self.records_dir / f"round_{snapshot.round_number}_ranking_snapshot.csv", index=False)
+    def run(self, start_round: int | None = None, end_round: int | None = None) -> None:
+        files = self._round_files()
+        if not files:
+            raise FileNotFoundError("No files matched records/round_*_records.csv")
+        if start_round is not None:
+            files = [x for x in files if x[0] >= start_round]
+        if end_round is not None:
+            files = [x for x in files if x[0] <= end_round]
+        cumulative_scores: dict[str, float] = {}
+        round_history: dict[int, dict[str, float]] = {}
+        loss_counter: dict[str, int] = defaultdict(int)
+        for round_number, csv_path in files:
+            df = pd.read_csv(csv_path)
+            rule = self.rules.get(round_number, RoundScoringRule(round_number=round_number, max_percentage=175))
+            round_engine = Round.from_dataframe(round_number, df, rule, self.matchup_df)
+            summary = round_engine.calculate(cumulative_scores, loss_counter)
+            previous_scores = dict(cumulative_scores)
+            cumulative_scores = summary.scores
+            round_history[round_number] = dict(cumulative_scores)
+            report_path = self.reports_dir / f"round_{round_number}_results.pdf"
+            self._round_report(summary, report_path)
+            if previous_scores:
+                eliminated = set(previous_scores) - set(cumulative_scores)
+                self._ranking_changes_colored(previous_scores, cumulative_scores, round_number, eliminated)
+        if not round_history:
+            return
+        with PdfPages(self.reports_dir / "all_rounds_histogram_evolution.pdf") as pdf:
+            for rn in sorted(round_history):
+                histogram_generator(round_history[rn], "Score", "Frequency", f"Round {rn}: Score Distribution", pdf)
+        with PdfPages(self.reports_dir / "all_rounds_distribution_evolution.pdf") as pdf:
+            for rn in sorted(round_history):
+                distribution_generator(round_history[rn], "Score", "Density", f"Round {rn}: Score Density", pdf)
+        final_round = max(round_history)
+        final_scores = round_history[final_round]
+        final_ranks = self._score_to_ranks(final_scores)
+        final_df = pd.DataFrame([{"Character": c, "Score": s, "Rank": final_ranks[c]} for c, s in final_scores.items()]).sort_values("Rank")
+        final_df.to_csv(self.records_dir / "overall_ranking_profile.csv", index=False)
 
-    def _write_evolution_reports(self, snapshots: list[RoundSnapshot]) -> None:
-        hist_path = self.reports_dir / "all_rounds_histogram_evolution.pdf"
-        kde_path = self.reports_dir / "all_rounds_distribution_evolution.pdf"
+#######################################################
+####################### ROUND 1 #######################
+#######################################################
 
-        with PdfPages(hist_path) as pdf:
-            for snapshot in snapshots:
-                values = list(snapshot.scores.values())
-                if not values:
-                    continue
-                plt.figure(figsize=(11, 6))
-                plt.hist(values, bins=20, edgecolor="black", color="#9ecae1")
-                plt.title(f"Round {snapshot.round_number}: Score Distribution")
-                plt.xlabel("Score")
-                plt.ylabel("Frequency")
-                plt.tight_layout()
-                pdf.savefig()
-                plt.close()
+ROUND_1_RULE = RoundScoringRule(
+    round_number=1,
+    max_percentage=200,
+    early_round_limit=3,
+    early_multiplier_fn=lambda m: 1 + (m - 1) / 10,
+    use_matchup_multiplier=True,
+    late_match_division=True,
+)
 
-        with PdfPages(kde_path) as pdf:
-            for snapshot in snapshots:
-                values = list(snapshot.scores.values())
-                if len(values) < 2:
-                    continue
-                plt.figure(figsize=(11, 6))
-                sns.kdeplot(values, fill=True, color="skyblue", linewidth=2)
-                plt.title(f"Round {snapshot.round_number}: Score Density")
-                plt.xlabel("Score")
-                plt.ylabel("Density")
-                plt.tight_layout()
-                pdf.savefig()
-                plt.close()
-
-    def build(self, snapshots: list[RoundSnapshot]) -> None:
-        if not snapshots:
-            raise ValueError("No round snapshots were found to regenerate outputs.")
-
-        snapshots = sorted(snapshots, key=lambda s: s.round_number)
-
-        for snapshot in snapshots:
-            self._plot_round_report(snapshot)
-
-        for previous, current in zip(snapshots, snapshots[1:]):
-            self._plot_ranking_changes(previous, current)
-
-        self._write_evolution_reports(snapshots)
-        self._write_records(snapshots)
-
+ROUND_1_MATCHES: dict[str, list[MatchResult]] = {
+    "Dr Mario": [
+        MatchResult("Dr Mario", "Pokemon Trainer", 1, 3, 102),
+        MatchResult("Dr Mario", "Cloud", 2, 2, 57),
+        MatchResult("Dr Mario", "Sonic", 3, 3, 136),
+    ],
+    "King Dedede": [
+        MatchResult("King Dedede", "Olimar", 1, 2, 116),
+        MatchResult("King Dedede", "Yoshi", 2, 1, 0),
+        MatchResult("King Dedede", "Wolf", 3, 2, 106),
+    ],
+    "Link": [
+        MatchResult("Link", "Pyra & Mythra", 1, -1, 83),
+    ],
+    "Piranha Plant": [
+        MatchResult("Piranha Plant", "Kazuya", 1, 2, 0),
+        MatchResult("Piranha Plant", "Ness", 2, 2, 0),
+        MatchResult("Piranha Plant", "Shulk", 3, 1, 53),
+        MatchResult("Piranha Plant", "Pyra & Mythra", 4, 3, 141),
+    ],
+}
 
 def main() -> None:
-    loader = RecordsRoundLoader(RECORDS_DIR)
-    snapshots = loader.load_round_snapshots()
-
-    builder = TournamentReportBuilder(
+    manager = TournamentManager(
+        records_dir=RECORDS_DIR,
         reports_dir=REPORTS_DIR,
         ranking_changes_dir=RANKING_CHANGES_DIR,
-        records_dir=RECORDS_DIR,
+        matchup_df=MATCHUP_DF,
     )
-    builder.build(snapshots)
-    print(f"Regenerated outputs for {len(snapshots)} rounds from {RECORDS_DIR}.")
-
+    round_1_records_path = RECORDS_DIR / "round_1_records.csv"
+    if not round_1_records_path.exists() and ROUND_1_MATCHES:
+        summary = manager.bootstrap_round_from_matches(1, ROUND_1_MATCHES)
+        print("Bootstrapped Round 1 from in-file match data.")
+        print(summary.scores)
+    manager.run()
+    print("Tournament rerun complete.")
 
 if __name__ == "__main__":
     main()
@@ -6846,11 +6977,5 @@ overall_round_scores = {
     22: round_22_scores_dict,
     23: round_23_scores_dict,
 }
-
-generate_overall_ranking_profile(
-    overall_round_scores,
-    output_pdf_path=os.path.join(filepath, "reports", "overall_ranking_profile.pdf"),
-    output_csv_path=os.path.join(filepath, "records", "overall_ranking_profile.csv"),
-)
 
 '''
