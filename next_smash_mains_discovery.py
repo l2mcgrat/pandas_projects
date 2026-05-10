@@ -554,25 +554,105 @@ ROUND_1_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Bowser", "Samus", 3, 3, 194),
     ],
     "Roy": [ # 25th Previously
-        MatchResult("Roy", "Greninja", 1, 0, 0),
-        MatchResult("Roy", "Pit", 2, 0, 0),
-        MatchResult("Roy", "Zelda", 3, 0, 0),
+        MatchResult("Roy", "Richter", 1, 2, 78),
+        MatchResult("Roy", "Lucas", 2, 1, 0),
+        MatchResult("Roy", "Wii Fit Trainer", 3, 3, 44),
     ],
     "King K Rool": [ # 26th Previously
-        MatchResult("King K Rool", "Greninja", 1, 0, 0),
-        MatchResult("King K Rool", "Pit", 2, 0, 0),
-        MatchResult("King K Rool", "Zelda", 3, 0, 0),
+        MatchResult("King K Rool", "King K Rool", 1, 2, 35),
+        MatchResult("King K Rool", "Fox", 2, 1, 129),
+        MatchResult("King K Rool", "Toon Link", 3, 3, 211),
+        MatchResult("King K Rool", "Greninja", 4, 3, 101),
     ],
     "Pyra & Mythra": [ # 27th Previously
-        MatchResult("Pyra & Mythra", "Greninja", 1, 0, 0),
-        MatchResult("Pyra & Mythra", "Pit", 2, 0, 0),
-        MatchResult("Pyra & Mythra", "Zelda", 3, 0, 0),
+        MatchResult("Pyra & Mythra", "King Dedede", 1, -1, 62),
     ],
     "Isabelle": [ # 28th Previously
-        MatchResult("Isabelle", "Greninja", 1, 0, 0),
-        MatchResult("Isabelle", "Pit", 2, 0, 0),
-        MatchResult("Isabelle", "Zelda", 3, 0, 0),
+        MatchResult("Isabelle", "Falco", 1, 2, 164),
+        MatchResult("Isabelle", "Kazuya", 2, 1, 71),
+        MatchResult("Isabelle", "Pikachu", 3, 1, 0),
     ],
+    "Dark Pit": [ # 29th Previously
+        MatchResult("Dark Pit", "Link", 1, 2, 58),
+        MatchResult("Dark Pit", "Inkling", 2, -1, 87),
+    ],
+    "Sonic": [ # 30th Previously
+        MatchResult("Sonic", "Joker", 1, 1, 95),
+        MatchResult("Sonic", "Shulk", 2, 1, 93),
+        MatchResult("Sonic", "Piranha Plant", 3, -1, 29),
+    ],
+    "Toon Link": [ # 31st Previously
+        MatchResult("Toon Link", "Pac Man", 1, 2, 47),
+        MatchResult("Toon Link", "Mr Game & Watch", 2, 3, 104),
+        MatchResult("Toon Link", "Isabelle", 3, 1, 0),
+        MatchResult("Toon Link", "Piranha Plant", 4, 2, 122),
+    ],
+    "Donkey Kong": [ # 32nd Previously
+        MatchResult("Donkey Kong", "Ken", 1, 3, 243),
+        MatchResult("Donkey Kong", "Simon", 2, 1, 0),
+        MatchResult("Donkey Kong", "Ganondorf", 3, 2, 116),
+        MatchResult("Donkey Kong", "Kirby", 4, 2, 53),
+    ],
+    "Pokemon Trainer": [ # 33rd Previously
+        MatchResult("Pokemon Trainer", "Wii Fit Trainer", 1, 1, 0),
+        MatchResult("Pokemon Trainer", "Dark Samus", 2, 3, 129),
+        MatchResult("Pokemon Trainer", "Byleth", 3, -1, 86),
+    ],
+    "Luigi": [ # 34th Previously
+        MatchResult("Luigi", "Sheik", 1, 1, 0),
+        MatchResult("Luigi", "Cloud", 2, 2, 131),
+        MatchResult("Luigi", "Inkling", 3, 1, 51),
+        MatchResult("Luigi", "Byleth", 4, 1, 6),
+        MatchResult("Luigi", "Sora", 5, 2, 45),
+    ],
+    "Samus": [ # 35th Previously
+        MatchResult("Samus", "Sora", 1, -1, 71),
+    ],
+    "Meta Knight": [ # 36th Previously
+        MatchResult("Meta Knight", "Diddy Kong", 1, 1, 130),
+        MatchResult("Meta Knight", "Fox", 2, 1, 48),
+        MatchResult("Meta Knight", "Roy", 3, 1, 38),
+        MatchResult("Meta Knight", "Sora", 4, -1, 71),
+    ],
+    "ROB": [ # 37th Previously
+        MatchResult("ROB", "Olimar", 1, 1, 16),
+        MatchResult("ROB", "Mega Man", 2, -1, 71),
+        ],
+    "Lucas": [ # 38th Previously
+        MatchResult("Lucas", "Rosalina & Luma", 1, 2, 7),
+        MatchResult("Lucas", "Banjo & Kazooie", 2, 2, 92),
+        MatchResult("Lucas", "Wario", 3, 2, 82),
+        MatchResult("Lucas", "Bowser Jr", 4, 2, 121),
+        ],
+    "Rosalina & Luma": [ # 39th Previously
+        MatchResult("Rosalina & Luma", "Pyra & Mythra", 1, -1, 63),
+        ],
+    "Wii Fit Trainer": [ # 40th Previously
+        MatchResult("Wii Fit Trainer", "Kirby", 1, 1, 86),
+        MatchResult("Wii Fit Trainer", "Hero", 2, 3, 82),
+        MatchResult("Wii Fit Trainer", "Daisy", 3, 2, 31),
+        MatchResult("Wii Fit Trainer", "Richter", 4, 1, 42),
+        ],
+    "Pikachu": [ # 41st Previously
+        MatchResult("Pikachu", "Jigglypuff", 1, 2, 149),
+        MatchResult("Pikachu", "Inkling", 2, 0, 0),
+        MatchResult("Pikachu", "Wario", 3, 0, 0),
+        ],
+    "Ganondorf": [ # 42nd Previously
+        MatchResult("Ganondorf", "Ganondorf", 1, 0, 0),
+        MatchResult("Ganondorf", "Banjo & Kazooie", 2, 0, 0),
+        MatchResult("Ganondorf", "Wario", 3, 0, 0),
+        ],
+    "Byleth": [ # 43rd Previously
+        MatchResult("Byleth", "Pokemon Trainer", 1, 0, 0),
+        MatchResult("Byleth", "Banjo & Kazooie", 2, 0, 0),
+        MatchResult("Byleth", "Wario", 3, 0, 0),
+        ],
+    "Mr Game & Watch": [ # 44th Previously
+        MatchResult("Mr Game & Watch", "Bowser", 1, 1, 33),
+        MatchResult("Mr Game & Watch", "Bayonetta", 2, 0, 0),
+        MatchResult("Mr Game & Watch", "Wario", 3, 0, 0),
+        ],
 }
 
 def main() -> None:

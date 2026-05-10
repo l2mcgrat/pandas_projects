@@ -71,3 +71,51 @@ Sephiroth,Zelda,3,1,0,2,115,2.619,0.9,9.679
 Bowser,King Dedede,1,1,0,2,81,2.854,1.1,2.854
 Bowser,King K Rool,2,1,0,2,44,2.752,0.9,5.607
 Bowser,Samus,3,1,0,3,194,3.636,1.0,9.243
+Roy,Richter,1,1,0,2,78,2.61,1.0,2.61
+Roy,Lucas,2,1,0,1,0,1.98,0.9,4.59
+Roy,Wii Fit Trainer,3,1,0,3,44,4.763,1.05,9.353
+King K Rool,King K Rool,1,1,0,2,35,2.825,1.0,2.825
+King K Rool,Fox,2,1,0,1,129,1.714,1.15,4.539
+King K Rool,Toon Link,3,1,0,3,211,3.6,1.0,8.139
+King K Rool,Greninja,4,1,0,3,101,0.917,1.05,9.057
+Pyra & Mythra,King Dedede,1,0,1,-1,62,0.264,0.85,0.264
+Isabelle,Falco,1,1,0,2,164,2.289,1.05,2.289
+Isabelle,Kazuya,2,1,0,1,71,1.9,1.05,4.189
+Isabelle,Pikachu,3,1,0,1,0,2.28,0.95,6.469
+Dark Pit,Link,1,1,0,2,58,2.71,1.0,2.71
+Dark Pit,Inkling,2,0,1,-1,87,0.479,1.0,3.188
+Sonic,Joker,1,1,0,1,95,1.449,0.95,1.449
+Sonic,Shulk,2,1,0,1,93,1.604,0.95,3.053
+Sonic,Piranha Plant,3,0,1,-1,29,0.148,0.85,3.201
+Toon Link,Pac Man,1,1,0,2,47,2.765,1.0,2.765
+Toon Link,Mr Game & Watch,2,1,0,3,104,3.828,1.0,6.593
+Toon Link,Isabelle,3,1,0,1,0,2.4,1.0,8.993
+Toon Link,Piranha Plant,4,1,0,2,122,0.568,0.95,9.561
+Donkey Kong,Ken,1,1,0,3,243,3.15,1.05,3.15
+Donkey Kong,Simon,2,1,0,1,0,2.2,1.0,5.35
+Donkey Kong,Ganondorf,3,1,0,2,116,2.614,0.9,7.964
+Donkey Kong,Kirby,4,1,0,2,53,0.684,1.0,8.647
+Pokemon Trainer,Wii Fit Trainer,1,1,0,1,0,2.2,1.1,2.2
+Pokemon Trainer,Dark Samus,2,1,0,3,129,3.691,1.0,5.891
+Pokemon Trainer,Byleth,3,0,1,-1,86,0.568,1.1,6.458
+Luigi,Sheik,1,1,0,1,0,1.9,0.95,1.9
+Luigi,Cloud,2,1,0,2,131,2.579,1.0,4.479
+Luigi,Inkling,3,1,0,1,51,1.885,0.9,6.364
+Luigi,Byleth,4,1,0,1,6,0.443,0.9,6.807
+Luigi,Sora,5,1,0,2,45,0.499,0.9,7.307
+Samus,Sora,1,0,1,-1,71,0.355,1.0,0.355
+Meta Knight,Diddy Kong,1,1,0,1,130,1.552,1.15,1.552
+Meta Knight,Fox,2,1,0,1,48,2.226,1.15,3.779
+Meta Knight,Roy,3,1,0,1,38,2.281,1.05,6.059
+Meta Knight,Sora,4,0,1,-1,71,0.084,0.95,6.144
+ROB,Olimar,1,1,0,1,16,2.016,1.05,2.016
+ROB,Mega Man,2,0,1,-1,71,0.391,1.0,2.406
+Lucas,Rosalina & Luma,1,1,0,2,7,3.113,1.05,3.113
+Lucas,Banjo & Kazooie,2,1,0,2,92,2.794,1.0,5.907
+Lucas,Wario,3,1,0,2,82,3.108,1.0,9.015
+Lucas,Bowser Jr,4,1,0,2,121,0.539,0.9,9.554
+Rosalina & Luma,Pyra & Mythra,1,0,1,-1,63,0.331,1.05,0.331
+Wii Fit Trainer,Kirby,1,1,0,1,86,1.57,1.0,1.57
+Wii Fit Trainer,Hero,2,1,0,3,82,3.949,1.0,5.519
+Wii Fit Trainer,Daisy,3,1,0,2,31,3.243,0.95,8.762
+Wii Fit Trainer,Richter,4,1,0,1,42,0.47,1.05,9.232
