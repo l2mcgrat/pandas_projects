@@ -635,23 +635,43 @@ ROUND_1_MATCHES: dict[str, list[MatchResult]] = {
         ],
     "Pikachu": [ # 41st Previously
         MatchResult("Pikachu", "Jigglypuff", 1, 2, 149),
-        MatchResult("Pikachu", "Inkling", 2, 0, 0),
-        MatchResult("Pikachu", "Wario", 3, 0, 0),
+        MatchResult("Pikachu", "Inkling", 2, 2, 44),
+        MatchResult("Pikachu", "Daisy", 3, 2, 117),
         ],
     "Ganondorf": [ # 42nd Previously
-        MatchResult("Ganondorf", "Ganondorf", 1, 0, 0),
-        MatchResult("Ganondorf", "Banjo & Kazooie", 2, 0, 0),
-        MatchResult("Ganondorf", "Wario", 3, 0, 0),
+        MatchResult("Ganondorf", "Ganondorf", 1, 3, 128),
+        MatchResult("Ganondorf", "Greninja", 2, 2, 17),
+        MatchResult("Ganondorf", "Duck Hunt", 3, 2, 77),
+        MatchResult("Ganondorf", "Ness", 4, 2, 6),
         ],
     "Byleth": [ # 43rd Previously
-        MatchResult("Byleth", "Pokemon Trainer", 1, 0, 0),
-        MatchResult("Byleth", "Banjo & Kazooie", 2, 0, 0),
-        MatchResult("Byleth", "Wario", 3, 0, 0),
+        MatchResult("Byleth", "Pokemon Trainer", 1, 1, 0),
+        MatchResult("Byleth", "Ness", 2, -2, 98),
         ],
     "Mr Game & Watch": [ # 44th Previously
         MatchResult("Mr Game & Watch", "Bowser", 1, 1, 33),
-        MatchResult("Mr Game & Watch", "Bayonetta", 2, 0, 0),
-        MatchResult("Mr Game & Watch", "Wario", 3, 0, 0),
+        MatchResult("Mr Game & Watch", "Bayonetta", 2, 3, 85),
+        MatchResult("Mr Game & Watch", "Wii Fit Trainer", 3, 1, 37),
+        ],
+    "Duck Hunt": [ # 45th Previously
+        MatchResult("Duck Hunt", "Samus", 1, 1, 92),
+        MatchResult("Duck Hunt", "Sephiroth", 2, 2, 74),
+        MatchResult("Duck Hunt", "Roy", 3, 2, 52),
+        ],
+    "Captain Falcon": [ # 46th Previously
+        MatchResult("Captain Falcon", "Olimar", 1, 1, 18),
+        MatchResult("Captain Falcon", "Mega Man", 2, 2, 0),
+        MatchResult("Captain Falcon", "Wario", 3, 2, 76),
+        ],
+    "Incineroar": [ # 47th Previously
+        MatchResult("Incineroar", "Inkling", 1, 2, 0),
+        MatchResult("Incineroar", "Luigi", 2, 2, 66),
+        MatchResult("Incineroar", "Ryu", 3, 2, 23),
+        ],
+    "Inkling": [ # 48th Previously
+        MatchResult("Inkling", "Lucas", 1, 1, 31),
+        MatchResult("Inkling", "Greninja", 2, 1, 29),
+        MatchResult("Inkling", "King Dedede", 3, 1, 26),
         ],
 }
 
