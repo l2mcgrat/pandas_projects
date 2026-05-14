@@ -673,6 +673,45 @@ ROUND_1_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Inkling", "Greninja", 2, 1, 29),
         MatchResult("Inkling", "King Dedede", 3, 1, 26),
         ],
+    "PacMan": [ # 49th Previously
+        MatchResult("Pac Man", "Ken", 1, 1, 27),
+        MatchResult("Pac Man", "King K Rool", 2, 2, 40),
+        MatchResult("Pac Man", "Jigglypuff", 3, 2, 9),
+        ],
+    "Lucario": [ # 50th Previously
+        MatchResult("Lucario", "Marth", 1, 2, 99),
+        MatchResult("Lucario", "Snake", 2, 2, 163),
+        MatchResult("Lucario", "Bowser Jr", 3, 3, 122),
+        ],
+    "Dark Samus": [ # 51st Previously
+        MatchResult("Dark Samus", "Richter", 1, 2, 0),
+        MatchResult("Dark Samus", "Mr Game & Watch", 2, 2, 22),
+        MatchResult("Dark Samus", "Daisy", 3, 2, 73),
+        ],
+    "Mii Swordfighter": [ # 52nd Previously
+        MatchResult("Mii Swordfighter", "Ice Climbers", 1, 3, 115),
+        MatchResult("Mii Swordfighter", "Luigi", 2, 3, 165),
+        MatchResult("Mii Swordfighter", "Sonic", 3, 2, 28),
+        ],
+    "Mario": [ # 52nd Previously
+        MatchResult("Mario", "Pokemon Trainer", 1, 3, 152),
+        MatchResult("Mario", "Simon", 2, 1, 10),
+        MatchResult("Mario", "Richter", 3, 1, 69),
+        ],
+    "Ness": [ # 52nd Previously
+        MatchResult("Ness", "Corrin", 1, 1, 0),
+        MatchResult("Ness", "Dr Mario", 2, 3, 65),
+        MatchResult("Ness", "Shulk", 3, 1, 133),
+        MatchResult("Ness", "ROB", 4, 2, 109),
+        ],
+    "Sheik": [ # 52nd Previously
+        MatchResult("Sheik", "Olimar", 1, 1, 129),
+        MatchResult("Sheik", "Pyra & Mythra", 2, 2, 99),
+        MatchResult("Sheik", "Sonic", 3, 1, 84),
+        ],
+    "Marth": [ # 52nd Previously
+        MatchResult("Marth", "Hero", 1, -1, 7),
+        ],
 }
 
 def main() -> None:
