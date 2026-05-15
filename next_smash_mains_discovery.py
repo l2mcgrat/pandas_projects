@@ -693,24 +693,83 @@ ROUND_1_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Mii Swordfighter", "Luigi", 2, 3, 165),
         MatchResult("Mii Swordfighter", "Sonic", 3, 2, 28),
         ],
-    "Mario": [ # 52nd Previously
+    "Mario": [ # 53rd Previously
         MatchResult("Mario", "Pokemon Trainer", 1, 3, 152),
         MatchResult("Mario", "Simon", 2, 1, 10),
         MatchResult("Mario", "Richter", 3, 1, 69),
         ],
-    "Ness": [ # 52nd Previously
+    "Ness": [ # 54th Previously
         MatchResult("Ness", "Corrin", 1, 1, 0),
         MatchResult("Ness", "Dr Mario", 2, 3, 65),
         MatchResult("Ness", "Shulk", 3, 1, 133),
         MatchResult("Ness", "ROB", 4, 2, 109),
         ],
-    "Sheik": [ # 52nd Previously
+    "Sheik": [ # 55th Previously
         MatchResult("Sheik", "Olimar", 1, 1, 129),
         MatchResult("Sheik", "Pyra & Mythra", 2, 2, 99),
         MatchResult("Sheik", "Sonic", 3, 1, 84),
         ],
-    "Marth": [ # 52nd Previously
+    "Marth": [ # 56th Previously
         MatchResult("Marth", "Hero", 1, -1, 7),
+        ],
+    "Peach": [ # 57th Previously
+        MatchResult("Peach", "Ness", 1, 3, 84),
+        MatchResult("Peach", "Link", 2, 1, 93),
+        MatchResult("Peach", "Joker", 3, 2, 60),
+        ],
+    "Mii Brawler": [ # 58th Previously
+        MatchResult("Mii Brawler", "Sheik", 1, 2, 129),
+        MatchResult("Mii Brawler", "Ike", 2, 1, 0),
+        MatchResult("Mii Brawler", "Lucina", 3, 3, 20),
+        ],
+    "Wolf": [ # 59th Previously
+        MatchResult("Wolf", "Snake", 1, 2, 64),
+        MatchResult("Wolf", "Dark Pit", 2, 2, 100),
+        MatchResult("Wolf", "Mewtwo", 3, 2, 88),
+        ],
+    "Jigglypuff": [ # 60th Previously
+        MatchResult("Jigglypuff", "Mega Man", 1, 2, 59),
+        MatchResult("Jigglypuff", "Kazuya", 2, 1, 37),
+        MatchResult("Jigglypuff", "Piranha Plant", 3, 1, 0),
+        ],
+    "Palutena": [ # 61st Previously
+        MatchResult("Palutena", "Donkey Kong", 1, -1, 76),
+        ],
+    "Fox": [ # 62nd Previously
+        MatchResult("Fox", "Isabelle", 1, 1, 49),
+        MatchResult("Fox", "Jigglypuff", 2, 1, 0),
+        MatchResult("Fox", "Ice Climbers", 3, 1, 26),
+        ],
+    "Robin": [ # 63rd Previously
+        MatchResult("Robin", "Ridley", 1, 1, 12),
+        MatchResult("Robin", "Mr Game & Watch", 2, 2, 85),
+        MatchResult("Robin", "Bayonetta", 3, 3, 157),
+        ],
+    "Greninja": [ # 64th Previously
+        MatchResult("Greninja", "Banjo & Kazooie", 1, 1, 10),
+        MatchResult("Greninja", "Pichu", 2, 1, 27),
+        MatchResult("Greninja", "Snake", 3, 2, 123),
+        MatchResult("Greninja", "Pyra & Mythra", 4, 3, 158),
+        ],
+    "Villager": [ # 65th Previously
+        MatchResult("Villager", "Kirby", 1, 0, 0),
+        MatchResult("Villager", "Mr Game & Watch", 2, 0, 0),
+        MatchResult("Villager", "Bayonetta", 3, 0, 0),
+        ],
+    "Richter": [ # 66th Previously
+        MatchResult("Richter", "Captain Falcon", 1, 0, 0),
+        MatchResult("Richter", "Mr Game & Watch", 2, 0, 0),
+        MatchResult("Richter", "Bayonetta", 3, 0, 0),
+        ],
+    "Shulk": [ # 67th Previously
+        MatchResult("Shulk", "Wii Fit Trainer", 1, 0, 0),
+        MatchResult("Shulk", "Mr Game & Watch", 2, 0, 0),
+        MatchResult("Shulk", "Bayonetta", 3, 0, 0),
+        ],
+    "Zero Suit Samus": [ # 68th Previously
+        MatchResult("Zero Suit Samus", "Peach", 1, 0, 0),
+        MatchResult("Zero Suit Samus", "Mr Game & Watch", 2, 0, 0),
+        MatchResult("Zero Suit Samus", "Bayonetta", 3, 0, 0),
         ],
 }
 
