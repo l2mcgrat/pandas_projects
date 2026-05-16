@@ -752,24 +752,100 @@ ROUND_1_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Greninja", "Pyra & Mythra", 4, 3, 158),
         ],
     "Villager": [ # 65th Previously
-        MatchResult("Villager", "Kirby", 1, 0, 0),
-        MatchResult("Villager", "Mr Game & Watch", 2, 0, 0),
-        MatchResult("Villager", "Bayonetta", 3, 0, 0),
+        MatchResult("Villager", "Kirby", 1, 2, 57),
+        MatchResult("Villager", "Robin", 2, 1, 78),
+        MatchResult("Villager", "Young Link", 3, 2, 186),
+        MatchResult("Villager", "Ice Climbers", 4, 1, 0),
         ],
     "Richter": [ # 66th Previously
-        MatchResult("Richter", "Captain Falcon", 1, 0, 0),
-        MatchResult("Richter", "Mr Game & Watch", 2, 0, 0),
-        MatchResult("Richter", "Bayonetta", 3, 0, 0),
+        MatchResult("Richter", "Captain Falcon", 1, 3, 168),
+        MatchResult("Richter", "Terry", 2, -1, 2),
         ],
     "Shulk": [ # 67th Previously
-        MatchResult("Shulk", "Wii Fit Trainer", 1, 0, 0),
-        MatchResult("Shulk", "Mr Game & Watch", 2, 0, 0),
-        MatchResult("Shulk", "Bayonetta", 3, 0, 0),
+        MatchResult("Shulk", "Wii Fit Trainer", 1, 2, 87),
+        MatchResult("Shulk", "Dark Samus", 2, 2, 10),
+        MatchResult("Shulk", "Sheik", 3, 2, 110),
         ],
     "Zero Suit Samus": [ # 68th Previously
-        MatchResult("Zero Suit Samus", "Peach", 1, 0, 0),
-        MatchResult("Zero Suit Samus", "Mr Game & Watch", 2, 0, 0),
-        MatchResult("Zero Suit Samus", "Bayonetta", 3, 0, 0),
+        MatchResult("Zero Suit Samus", "Peach", 1, 2, 70),
+        MatchResult("Zero Suit Samus", "Fox", 2, 1, 101),
+        MatchResult("Zero Suit Samus", "Dark Pit", 3, 1, 71),
+        ],
+    "Olimar": [ # 69th Previously
+        MatchResult("Olimar", "Pokemon Trainer", 1, 2, 105),
+        MatchResult("Olimar", "Peach", 2, 2, 95),
+        MatchResult("Olimar", "Lucas", 3, 3, 9),
+        ],
+    "Terry": [ # 70th Previously
+        MatchResult("Terry", "Dark Samus", 1, 3, 135),
+        MatchResult("Terry", "Lucina", 2, 2, 116),
+        MatchResult("Terry", "Zelda", 3, 2, 111),
+        ],
+    "Daisy": [ # 71st Previously
+        MatchResult("Daisy", "Duck Hunt", 1, 1, 0),
+        MatchResult("Daisy", "Young Link", 2, 1, 82),
+        MatchResult("Daisy", "Pit", 3, 2, 44),
+        ],
+    "Pichu": [ # 72nd Previously
+        MatchResult("Pichu", "Kazuya", 1, 1, 84),
+        MatchResult("Pichu", "Bowser", 2, 1, 79),
+        MatchResult("Pichu", "Simon", 3, 2, 66),
+        ],
+    "Ryu": [ # 73rd Previously
+        MatchResult("Ryu", "Byleth", 1, 3, 128),
+        MatchResult("Ryu", "Sheik", 2, 2, 22),
+        MatchResult("Ryu", "Sora", 3, 1, 123),
+        MatchResult("Ryu", "Kazuya", 5, -1, 102),
+        ],
+    "Lucina": [ # 74th Previously
+        MatchResult("Lucina", "ROB", 1, 2, 23),
+        MatchResult("Lucina", "Kazuya", 2, -1, 0),
+        ],
+    "Snake": [ # 75th Previously
+        MatchResult("Snake", "King K Rool", 1, 1, 15),
+        MatchResult("Snake", "Jigglypuff", 2, 2, 38),
+        MatchResult("Snake", "Dark Pit", 3, 1, 6),
+        ],
+    "Diddy Kong": [ # 76th Previously
+        MatchResult("Diddy Kong", "Bayonetta", 1, 2, 107),
+        MatchResult("Diddy Kong", "Rosalina & Luma", 2, 2, 33),
+        MatchResult("Diddy Kong", "Inkling", 3, -1, 38),
+        ],
+    "Pit": [ # 77th Previously
+        MatchResult("Pit", "Yoshi", 1, 1, 17),
+        MatchResult("Pit", "Sonic", 2, 3, 108),
+        MatchResult("Pit", "Greninja", 3, 2, 81),
+        ],
+    "Corrin": [ # 78th Previously
+        MatchResult("Corrin", "Little Mac", 1, 1, 8),
+        MatchResult("Corrin", "Ness", 2, 3, 96),
+        MatchResult("Corrin", "Shulk", 3, 2, 152),
+        MatchResult("Corrin", "Fox", 4, 2, 17),
+        ],
+    "Steve": [ # 79th Previously
+        MatchResult("Steve", "Cloud", 1, 2, 133),
+        MatchResult("Steve", "Link", 2, -1, 98),
+        ],
+    "Wario": [ # 80th Previously
+        MatchResult("Wario", "Wolf", 1, 1, 19),
+        MatchResult("Wario", "Wii Fit Trainer", 2, 1, 28),
+        MatchResult("Wario", "Rosalina & Luma", 3, 2, 113),
+        ],
+    "Bayonetta": [ # 81st Previously
+        MatchResult("Bayonetta", "Samus", 1, 1, 172),
+        MatchResult("Bayonetta", "Wario", 2, -1, 0),
+        ],
+    "Simon": [ # 82nd Previously
+        MatchResult("Simon", "Fox", 1, 1, 7),
+        MatchResult("Simon", "Mega Man", 2, 2, 92),
+        MatchResult("Simon", "Donkey Kong", 3, 2, 143),
+        MatchResult("Simon", "Villager", 4, 2, 88),
+        ],
+    "Joker": [ # 83rd Previously
+        MatchResult("Joker", "Young Link", 1, 3, 210),
+        MatchResult("Joker", "Mario", 2, 2, 77),
+        MatchResult("Joker", "Sora", 3, 1, 198),
+        MatchResult("Joker", "Wario", 4, 1, 14),
         ],
 }
 
