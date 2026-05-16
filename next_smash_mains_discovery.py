@@ -74,19 +74,34 @@ def distribution_generator(character_dict: dict[str, float], x_axis: str, y_axis
 
 def table_generator(category_to_characters: dict[str, list[str]], title: str, pdf: PdfPages) -> None:
     table_data = []
+    row_heights: list[float] = []
     for category, chars in category_to_characters.items():
-        chunks = [", ".join(chars[i:i + 8]) for i in range(0, len(chars), 8)] or [""]
+        chunks = [", ".join(chars[i:i + 5]) for i in range(0, len(chars), 5)] or [""]
         category_col = "\n".join([category] + [""] * (len(chunks) - 1))
         table_data.append([category_col, "\n".join(chunks)])
-    fig, ax = plt.subplots(figsize=(11, 8))
+        row_heights.append(max(0.06, 0.04 * len(chunks)))
+    fig_height = max(10, 1.6 + sum(0.75 * h for h in row_heights) * 10)
+    fig, ax = plt.subplots(figsize=(16, fig_height))
     ax.axis("off")
-    table = ax.table(cellText=table_data, colLabels=["Category", "Characters"], cellLoc="left", loc="center")
+    table = ax.table(
+        cellText=table_data,
+        colLabels=["Category", "Characters"],
+        cellLoc="center",
+        colWidths=[0.14, 0.86],
+        loc="upper center",
+    )
     table.auto_set_font_size(False)
     table.set_fontsize(9)
-    table.scale(1, 1.5)
+    table.scale(1, 1.35)
+    header_height = 0.06
+    for col in range(2):
+        table[(0, col)].set_height(header_height)
+    for row_index, row_height in enumerate(row_heights, start=1):
+        for col in range(2):
+            table[(row_index, col)].set_height(row_height)
     ax.set_title(title)
-    plt.tight_layout()
-    pdf.savefig(fig)
+    plt.tight_layout(rect=[0.01, 0.01, 0.99, 0.97])
+    pdf.savefig(fig, bbox_inches="tight")
     plt.close(fig)
 
 @dataclass
@@ -120,7 +135,6 @@ class RoundScoringRule:
 
     def stage_multiplier(self, match_number: int) -> float:
         return self.early_multiplier_fn(match_number) if match_number <= self.early_round_limit else 1.0
-
 @dataclass
 class RoundSummary:
     round_number: int
@@ -206,23 +220,14 @@ class Round:
         for character, matches in self.matches_by_character.items():
             characters_played.add(character)
             running_score = scores.get(character, 0.0)
-            previous_match_won = False
+            last_real_match: MatchResult | None = None
             for match in matches:
                 all_characters.add(match.opponent)
                 if match.is_placeholder:
-                    if match.match_number == 4 and previous_match_won:
-                        win_loses["Won Round 3"][0] += 1
-                        win_loses["Won Round 3"][1] += running_score
-                        win_loses["Won Round 3"][2].append(character)
-                    if match.match_number == 5 and previous_match_won:
-                        win_loses["Won Round 4"][0] += 1
-                        win_loses["Won Round 4"][1] += running_score
-                        win_loses["Won Round 4"][2].append(character)
-                    previous_match_won = False
                     continue
+                last_real_match = match
                 match_score = self._score_match(match)
                 running_score += match_score
-                previous_match_won = match.won
                 matchup_multiplier = self._matchup_multiplier(match.character, match.opponent, match.stock_diff)
                 record_rows.append(
                     {
@@ -240,15 +245,19 @@ class Round:
                 )
                 if match.lost:
                     loss_counter[match.opponent] += 1
-                    key = f"Lost Round {match.match_number}"
-                    if key in win_loses:
-                        win_loses[key][0] += 1
-                        win_loses[key][1] += running_score
-                        win_loses[key][2].append(character)
-                if match.won and match.match_number == 5:
-                    win_loses["Won Tourney"][0] += 1
-                    win_loses["Won Tourney"][1] += running_score
-                    win_loses["Won Tourney"][2].append(character)
+            if last_real_match is not None:
+                if last_real_match.lost:
+                    result_key = f"Lost Round {last_real_match.match_number}"
+                elif last_real_match.match_number >= 5:
+                    result_key = "Won Tourney"
+                elif last_real_match.match_number == 4:
+                    result_key = "Won Round 4"
+                else:
+                    result_key = "Won Round 3"
+                if result_key in win_loses:
+                    win_loses[result_key][0] += 1
+                    win_loses[result_key][1] += running_score
+                    win_loses[result_key][2].append(character)
             scores[character] = round(running_score, 3)
         summary = RoundSummary(
             round_number=self.round_number,
@@ -281,8 +290,8 @@ class TournamentManager:
     @staticmethod
     def _build_round_rules() -> dict[int, RoundScoringRule]:
         rules: dict[int, RoundScoringRule] = {}
-        rules[1] = RoundScoringRule(round_number=1, max_percentage=200, early_multiplier_fn=lambda m: 1 + (m - 1) / 10)
-        rules[2] = RoundScoringRule(round_number=2, max_percentage=200, early_multiplier_fn=lambda m: 1 + (m - 1) / 10)
+        rules[1] = ROUND_1_RULE
+        rules[2] = ROUND_2_RULE
         for r in range(3, 51):
             rules[r] = RoundScoringRule(round_number=r, max_percentage=175, early_multiplier_fn=lambda _m: 1.0)
         return rules
@@ -350,6 +359,63 @@ class TournamentManager:
             pdf.savefig(fig)
         plt.close(fig)
 
+    def _ranking_changes_black_arrows(self, seed_order: list[str], final_scores: dict[str, float], round_number: int = 1) -> None:
+        """Generate Round 1 ranking changes with black arrows only (no color coding).
+        
+        seed_order: List of character names in seed/bracket order (1st seed, 2nd seed, etc.)
+        final_scores: Dictionary of character names to their final round scores.
+        """
+        def ordinal(n: int) -> str:
+            if 10 <= n % 100 <= 20:
+                suffix = "th"
+            else:
+                suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+            return f"{n}{suffix}"
+        
+        seed_ranks = {character: i + 1 for i, character in enumerate(seed_order)}
+        final_ranks = self._score_to_ranks(final_scores)
+        
+        all_chars = sorted(set(seed_ranks) | set(final_ranks))
+        changes = []
+        for c in all_chars:
+            if c not in seed_ranks or c not in final_ranks:
+                continue
+            i_rank = seed_ranks[c]
+            f_rank = final_ranks[c]
+            delta = i_rank - f_rank
+            changes.append((c, i_rank, f_rank, delta))
+        
+        if not changes:
+            return
+        
+        changes.sort(key=lambda x: x[1])
+        fig_height = max(15, 0.25 * len(changes))
+        fig, ax = plt.subplots(figsize=(15, fig_height))
+        
+        for c, i_rank, f_rank, delta in changes:
+            ax.text(0, i_rank, f"{ordinal(i_rank)} {c}", ha="right", va="center", fontsize=8)
+            ax.text(1, f_rank, f"{ordinal(f_rank)} {c}", ha="left", va="center", fontsize=8)
+            ax.annotate(
+                "",
+                xy=(1, f_rank),
+                xycoords="data",
+                xytext=(0, i_rank),
+                textcoords="data",
+                arrowprops=dict(arrowstyle="->", lw=2, color="black"),
+            )
+        
+        ax.set_xlim(-0.5, 1.5)
+        ax.set_ylim(0.5, len(changes) + 0.5)
+        ax.invert_yaxis()
+        ax.axis("off")
+        ax.set_title(f"Round {round_number}: Rank 86 to 1 Rank Changes", fontsize=14)
+        
+        plt.tight_layout()
+        filename = self.ranking_changes_dir / f"round_{round_number}_ranking_changes.pdf"
+        with PdfPages(filename) as pdf:
+            pdf.savefig(fig, bbox_inches="tight")
+        plt.close(fig)
+
     @staticmethod
     def _round_report(summary: RoundSummary, output_pdf: Path) -> None:
         win_loss_totals = {k: v[0] for k, v in summary.win_loses.items()}
@@ -401,7 +467,10 @@ class TournamentManager:
             round_history[round_number] = dict(cumulative_scores)
             report_path = self.reports_dir / f"round_{round_number}_results.pdf"
             self._round_report(summary, report_path)
-            if previous_scores:
+            if round_number == 2 and previous_scores:
+                seed_order = [character for character, _score in sorted(previous_scores.items(), key=lambda item: item[1], reverse=True)]
+                self._ranking_changes_black_arrows(seed_order, cumulative_scores, round_number=round_number)
+            elif previous_scores:
                 eliminated = set(previous_scores) - set(cumulative_scores)
                 self._ranking_changes_colored(previous_scores, cumulative_scores, round_number, eliminated)
         if not round_history:
@@ -847,6 +916,50 @@ ROUND_1_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Joker", "Sora", 3, 1, 198),
         MatchResult("Joker", "Wario", 4, 1, 14),
         ],
+    "Mega Man": [ # 84th Previously
+        MatchResult("Mega Man", "Kirby", 1, -1, 99),
+        ],
+    "Kazuya": [ # 85th Previously
+        MatchResult("Kazuya", "Marth", 1, 3, 125),
+        MatchResult("Kazuya", "Bowser", 2, -1, 146),
+        ],
+    "Ken": [ # 86th Previously
+        MatchResult("Ken", "Falco", 1, 2, 92),
+        MatchResult("Ken", "Daisy", 2, 2, 91),
+        MatchResult("Ken", "King Dedede", 3, -1, 94),
+        ]
+}
+
+ROUND_2_RULE = RoundScoringRule(
+    round_number=2,
+    max_percentage=150,
+    early_round_limit=3,
+    early_multiplier_fn=lambda m: 1 + (m - 1) / 4,
+    use_matchup_multiplier=True,
+    late_match_division=True,
+)
+
+ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
+    "Dr Mario": [ # 1st Previously
+        MatchResult("Dr Mario", "Pokemon Trainer", 1, 0, 0),
+        MatchResult("Dr Mario", "Cloud", 2, 0, 0),
+        MatchResult("Dr Mario", "Sonic", 3, 3, 0),
+    ],
+    "Mii Swordfighter": [ # 2nd Previously
+        MatchResult("Mii Swordfighter", "Pokemon Trainer", 1, 0, 0),
+        MatchResult("Mii Swordfighter", "Cloud", 2, 0, 0),
+        MatchResult("Mii Swordfighter", "Sonic", 3, 1, 0),
+    ],
+    "Ganondorf": [ # 3rd Previously
+        MatchResult("Ganondorf", "Pokemon Trainer", 1, 0, 0),
+        MatchResult("Ganondorf", "Cloud", 2, 0, 0),
+        MatchResult("Ganondorf", "Sonic", 3, 0, 0),
+    ],
+    "Min Min": [ # 4th Previously
+        MatchResult("Min Min", "Pokemon Trainer", 1, 0, 0),
+        MatchResult("Min Min", "Cloud", 2, 0, 0),
+        MatchResult("Min Min", "Sonic", 3, 2, 0),
+    ],
 }
 
 def main() -> None:
@@ -856,13 +969,24 @@ def main() -> None:
         ranking_changes_dir=RANKING_CHANGES_DIR,
         matchup_df=MATCHUP_DF,
     )
+    round_1_summary: RoundSummary | None = None
     if ROUND_1_MATCHES:
-        summary = manager.bootstrap_round_from_matches(1, ROUND_1_MATCHES)
-        print("Rebuilt Round 1 from in-file match data.")
-        print(summary.scores)
+        seed_order = list(ROUND_1_MATCHES.keys())
+        round_1_summary = manager.bootstrap_round_from_matches(1, ROUND_1_MATCHES)
+        #print("Rebuilt Round 1 from in-file match data.")
+        #print(round_1_summary.scores)
+        manager._ranking_changes_black_arrows(seed_order, round_1_summary.scores, round_number=1)
+    if ROUND_2_MATCHES and round_1_summary is not None:
+        seed_order = [character for character, _score in sorted(round_1_summary.scores.items(), key=lambda item: item[1], reverse=True)]
+        summary = manager.bootstrap_round_from_matches(2, ROUND_2_MATCHES, previous_scores=round_1_summary.scores)
+        ordered_summary = {character: summary.scores[character] for character in seed_order if character in summary.scores}
+        print("Rebuilt Round 2 from in-file match data.")
+        print(ordered_summary)
+        manager._ranking_changes_black_arrows(seed_order, summary.scores, round_number=2)
+    
     final_scores = manager.run()
-    print("Tournament rerun complete.")
-    print(final_scores)
+    #print("Tournament rerun complete.")
+    #print(final_scores)
 
 if __name__ == "__main__":
     main()

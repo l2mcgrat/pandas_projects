@@ -1,0 +1,13 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Dr Mario,Pokemon Trainer,1,0,0,0,0,0.0,1.0,11.207
+Dr Mario,Cloud,2,0,0,0,0,0.0,1.0,11.207
+Dr Mario,Sonic,3,1,0,3,0,6.9,1.15,18.107
+Mii Swordfighter,Pokemon Trainer,1,0,0,0,0,0.0,1.0,10.864
+Mii Swordfighter,Cloud,2,0,0,0,0,0.0,1.0,10.864
+Mii Swordfighter,Sonic,3,1,0,1,0,3.15,1.05,14.014
+Ganondorf,Pokemon Trainer,1,0,0,0,0,0.0,1.0,10.604
+Ganondorf,Cloud,2,0,0,0,0,0.0,1.0,10.604
+Ganondorf,Sonic,3,0,0,0,0,0.0,1.0,10.604
+Min Min,Pokemon Trainer,1,0,0,0,0,0.0,1.0,10.506
+Min Min,Cloud,2,0,0,0,0,0.0,1.0,10.506
+Min Min,Sonic,3,1,0,2,0,4.725,1.05,15.231
