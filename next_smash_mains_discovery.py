@@ -941,24 +941,24 @@ ROUND_2_RULE = RoundScoringRule(
 
 ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
     "Dr Mario": [ # 1st Previously
-        MatchResult("Dr Mario", "Pokemon Trainer", 1, 0, 0),
-        MatchResult("Dr Mario", "Cloud", 2, 0, 0),
-        MatchResult("Dr Mario", "Sonic", 3, 3, 0),
+        MatchResult("Dr Mario", "Dark Pit", 1, 2, 163),
+        MatchResult("Dr Mario", "King K Rool", 2, 2, 22),
+        MatchResult("Dr Mario", "Bowser", 3, 1, 0),
     ],
     "Mii Swordfighter": [ # 2nd Previously
-        MatchResult("Mii Swordfighter", "Pokemon Trainer", 1, 0, 0),
-        MatchResult("Mii Swordfighter", "Cloud", 2, 0, 0),
-        MatchResult("Mii Swordfighter", "Sonic", 3, 1, 0),
+        MatchResult("Mii Swordfighter", "Greninja", 1, 1, 82),
+        MatchResult("Mii Swordfighter", "Mega Man", 2, 2, 74),
+        MatchResult("Mii Swordfighter", "Lucario", 3, 1, 37),
     ],
     "Ganondorf": [ # 3rd Previously
-        MatchResult("Ganondorf", "Pokemon Trainer", 1, 0, 0),
-        MatchResult("Ganondorf", "Cloud", 2, 0, 0),
-        MatchResult("Ganondorf", "Sonic", 3, 0, 0),
+        MatchResult("Ganondorf", "Sephiroth", 1, 1, 145),
+        MatchResult("Ganondorf", "PacMan", 2, 1, 0),
+        MatchResult("Ganondorf", "Samus", 3, 1, 70),
     ],
     "Min Min": [ # 4th Previously
-        MatchResult("Min Min", "Pokemon Trainer", 1, 0, 0),
-        MatchResult("Min Min", "Cloud", 2, 0, 0),
-        MatchResult("Min Min", "Sonic", 3, 2, 0),
+        MatchResult("Min Min", "Ken", 1, 2, 0),
+        MatchResult("Min Min", "Ness", 2, 2, 10),
+        MatchResult("Min Min", "Bayonetta", 3, 3, 108),
     ],
 }
 

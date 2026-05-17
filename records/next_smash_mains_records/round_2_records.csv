@@ -1,13 +1,13 @@
 Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
-Dr Mario,Pokemon Trainer,1,0,0,0,0,0.0,1.0,11.207
-Dr Mario,Cloud,2,0,0,0,0,0.0,1.0,11.207
-Dr Mario,Sonic,3,1,0,3,0,6.9,1.15,18.107
-Mii Swordfighter,Pokemon Trainer,1,0,0,0,0,0.0,1.0,10.864
-Mii Swordfighter,Cloud,2,0,0,0,0,0.0,1.0,10.864
-Mii Swordfighter,Sonic,3,1,0,1,0,3.15,1.05,14.014
-Ganondorf,Pokemon Trainer,1,0,0,0,0,0.0,1.0,10.604
-Ganondorf,Cloud,2,0,0,0,0,0.0,1.0,10.604
-Ganondorf,Sonic,3,0,0,0,0,0.0,1.0,10.604
-Min Min,Pokemon Trainer,1,0,0,0,0,0.0,1.0,10.506
-Min Min,Cloud,2,0,0,0,0,0.0,1.0,10.506
-Min Min,Sonic,3,1,0,2,0,4.725,1.05,15.231
+Dr Mario,Dark Pit,1,1,0,2,163,2.0,1.0,13.207
+Dr Mario,King K Rool,2,1,0,2,22,3.567,1.0,16.774
+Dr Mario,Bowser,3,1,0,1,0,3.0,1.0,19.774
+Mii Swordfighter,Greninja,1,1,0,1,82,1.526,1.05,12.39
+Mii Swordfighter,Mega Man,2,1,0,2,74,3.447,1.1,15.837
+Mii Swordfighter,Lucario,3,1,0,1,37,2.761,1.05,18.598
+Ganondorf,Sephiroth,1,1,0,1,145,1.085,1.05,11.689
+Ganondorf,PacMan,2,1,0,1,0,2.5,1.0,14.189
+Ganondorf,Samus,3,1,0,1,70,2.415,1.05,16.604
+Min Min,Ken,1,1,0,2,0,2.85,0.95,13.356
+Min Min,Ness,2,1,0,2,10,3.3,0.9,16.656
+Min Min,Bayonetta,3,1,0,3,108,5.166,1.05,21.822
