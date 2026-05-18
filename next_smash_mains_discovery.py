@@ -960,6 +960,66 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Min Min", "Ness", 2, 2, 10),
         MatchResult("Min Min", "Bayonetta", 3, 3, 108),
     ],
+    "Piranha Plant": [ # 5th Previously
+        MatchResult("Piranha Plant", "Pokemon Trainer", 1, 2, 156),
+        MatchResult("Piranha Plant", "Jigglypuff", 2, 2, 0),
+        MatchResult("Piranha Plant", "Captain Falcon", 3, 2, 103),
+    ],
+    "Chrom": [ # 6th Previously
+        MatchResult("Chrom", "Mr Game & Watch", 1, 1, 59),
+        MatchResult("Chrom", "Wii Fit Trainer", 2, 2, 72),
+        MatchResult("Chrom", "Sephiroth", 3, 2, 25),
+    ],
+    "Incineroar": [ # 7th Previously
+        MatchResult("Incineroar", "Falco", 1, 2, 112),
+        MatchResult("Incineroar", "Wario", 2, 2, 132),
+        MatchResult("Incineroar", "Palutena", 3, 2, 67),
+    ],
+    "Zelda": [ # 8th Previously
+        MatchResult("Zelda", "Pichu", 1, 2, 0),
+        MatchResult("Zelda", "King Dedede", 2, 3, 102),
+        MatchResult("Zelda", "Kazuya", 3, 3, 47),
+    ],
+    "Sephiroth": [ # 9th Previously
+        MatchResult("Sephiroth", "Pyra & Mythra", 1, 2, 76),
+        MatchResult("Sephiroth", "Lucario", 2, 2, 27),
+        MatchResult("Sephiroth", "Dark Pit", 3, 2, 27),
+    ],
+    "Ice Climbers": [ # 10th Previously
+        MatchResult("Ice Climbers", "Sheik", 1, 2, 12),
+        MatchResult("Ice Climbers", "Bowser", 2, 1, 92),
+        MatchResult("Ice Climbers", "Roy", 3, 1, 5),
+    ],
+    "Toon Link": [ # 11th Previously
+        MatchResult("Toon Link", "Pichu", 1, 2, 48),
+        MatchResult("Toon Link", "Banjo & Kazooie", 2, 1, 15),
+        MatchResult("Toon Link", "Steve", 3, 1, 52),
+    ],
+    "Lucas": [ # 12th Previously
+        MatchResult("Lucas", "Pit", 1, 2, 3),
+        MatchResult("Lucas", "Ike", 2, 3, 129),
+        MatchResult("Lucas", "PacMan", 3, 2, 14),
+    ],
+    "Mii Gunner": [ # 13th Previously
+        MatchResult("Mii Gunner", "Shulk", 1, 0, 0),
+        MatchResult("Mii Gunner", "Ike", 2, 0, 0),
+        MatchResult("Mii Gunner", "PacMan", 3, 0, 0),
+    ],
+    "Roy": [ # 14th Previously
+        MatchResult("Roy", "Zero Suit Samus", 1, 0, 0),
+        MatchResult("Roy", "Ike", 2, 0, 0),
+        MatchResult("Roy", "PacMan", 3, 0, 0),
+    ],
+    "Lucario": [ # 15th Previously
+        MatchResult("Lucario", "Byleth", 1, 0, 0),
+        MatchResult("Lucario", "Ike", 2, 0, 0),
+        MatchResult("Lucario", "PacMan", 3, 0, 0),
+    ],
+    "Dark Samus": [ # 16th Previously
+        MatchResult("Dark Samus", "ROB", 1, 0, 0),
+        MatchResult("Dark Samus", "Ike", 2, 0, 0),
+        MatchResult("Dark Samus", "PacMan", 3, 0, 0),
+    ],
 }
 
 def main() -> None:
