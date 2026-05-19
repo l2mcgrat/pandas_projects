@@ -1001,24 +1001,43 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Lucas", "PacMan", 3, 2, 14),
     ],
     "Mii Gunner": [ # 13th Previously
-        MatchResult("Mii Gunner", "Shulk", 1, 0, 0),
-        MatchResult("Mii Gunner", "Ike", 2, 0, 0),
-        MatchResult("Mii Gunner", "PacMan", 3, 0, 0),
+        MatchResult("Mii Gunner", "Shulk", 1, 3, 149),
+        MatchResult("Mii Gunner", "Zelda", 2, 2, 0),
+        MatchResult("Mii Gunner", "Duck Hunt", 3, 3, 155),
     ],
     "Roy": [ # 14th Previously
-        MatchResult("Roy", "Zero Suit Samus", 1, 0, 0),
-        MatchResult("Roy", "Ike", 2, 0, 0),
-        MatchResult("Roy", "PacMan", 3, 0, 0),
+        MatchResult("Roy", "Zero Suit Samus", 1, 3, 100),
+        MatchResult("Roy", "Luigi", 2, 2, 59),
+        MatchResult("Roy", "Captain Falcon", 3, 3, 121),
+        MatchResult("Roy", "Samus", 4, 1, 35),
     ],
     "Lucario": [ # 15th Previously
-        MatchResult("Lucario", "Byleth", 1, 0, 0),
-        MatchResult("Lucario", "Ike", 2, 0, 0),
-        MatchResult("Lucario", "PacMan", 3, 0, 0),
+        MatchResult("Lucario", "Byleth", 1, -1, 0),
     ],
     "Dark Samus": [ # 16th Previously
-        MatchResult("Dark Samus", "ROB", 1, 0, 0),
-        MatchResult("Dark Samus", "Ike", 2, 0, 0),
-        MatchResult("Dark Samus", "PacMan", 3, 0, 0),
+        MatchResult("Dark Samus", "ROB", 1, 2, 85),
+        MatchResult("Dark Samus", "Steve", 2, 2, 73),
+        MatchResult("Dark Samus", "Richter", 3, 3, 85),
+    ],
+    "Olimar": [ # 17th Previously
+        MatchResult("Olimar", "Yoshi", 1, 0, 0),
+        MatchResult("Olimar", "Luigi", 2, 0, 0),
+        MatchResult("Olimar", "Captain Falcon", 3, 0, 0),
+    ],
+    "Bowser": [ # 18th Previously
+        MatchResult("Bowser", "ROB", 1, 0, 0),
+        MatchResult("Bowser", "Luigi", 2, 0, 0),
+        MatchResult("Bowser", "Captain Falcon", 3, 0, 0),
+    ],
+    "Wii Fit Trainer": [ # 19th Previously
+        MatchResult("Wii Fit Trainer", "Toon Link", 1, 0, 0),
+        MatchResult("Wii Fit Trainer", "Luigi", 2, 0, 0),
+        MatchResult("Wii Fit Trainer", "Captain Falcon", 3, 0, 0),
+    ],
+    "King K Rool": [ # 20th Previously
+        MatchResult("King K Rool", "Dark Samus", 1, 0, 0),
+        MatchResult("King K Rool", "Luigi", 2, 0, 0),
+        MatchResult("King K Rool", "Captain Falcon", 3, 0, 0),
     ],
 }
 
