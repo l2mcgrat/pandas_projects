@@ -1042,23 +1042,25 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
     ],
     "Young Link": [ # 21st Previously
         MatchResult("Young Link", "Sephiroth", 1, 1, 0),
-        MatchResult("Young Link", "Sheik", 2, 0, 0),
-        MatchResult("Young Link", "Link", 3, 0, 0),
+        MatchResult("Young Link", "Diddy Kong", 2, 3, 86),
+        MatchResult("Young Link", "Villager", 3, -1, 6),
     ],
     "Terry": [ # 22nd Previously
-        MatchResult("Terry", "Dark Pit", 1, 0, 0),
-        MatchResult("Terry", "Sheik", 2, 0, 0),
-        MatchResult("Terry", "Link", 3, 0, 0),
+        MatchResult("Terry", "Dark Pit", 1, 1, 73),
+        MatchResult("Terry", "Palutena", 2, 1, 0),
+        MatchResult("Terry", "Duck Hunt", 3, 1, 0),
     ],
     "Robin": [ # 23rd Previously
-        MatchResult("Robin", "Corrin", 1, 0, 0),
-        MatchResult("Robin", "Sheik", 2, 0, 0),
-        MatchResult("Robin", "Link", 3, 0, 0),
+        MatchResult("Robin", "Corrin", 1, 1, 61),
+        MatchResult("Robin", "Incineroar", 2, 2, 10),
+        MatchResult("Robin", "Shulk", 3, 1, 0),
+        MatchResult("Robin", "Villager", 5, 2, 25),
     ],
     "Corrin": [ # 24th Previously
         MatchResult("Corrin", "Lucina", 1, 2, 94),
-        MatchResult("Corrin", "Zero Suit Samus", 2, 0, 0),
-        MatchResult("Corrin", "Link", 3, 0, 0),
+        MatchResult("Corrin", "Zero Suit Samus", 2, 2, 57),
+        MatchResult("Corrin", "Bayonetta", 3, 3, 131),
+        MatchResult("Corrin", "Villager", 4, -1, 63),
     ],
 }
 
