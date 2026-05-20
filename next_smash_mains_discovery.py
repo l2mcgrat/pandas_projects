@@ -1020,24 +1020,45 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Dark Samus", "Richter", 3, 3, 85),
     ],
     "Olimar": [ # 17th Previously
-        MatchResult("Olimar", "Yoshi", 1, 0, 0),
-        MatchResult("Olimar", "Luigi", 2, 0, 0),
-        MatchResult("Olimar", "Captain Falcon", 3, 0, 0),
+        MatchResult("Olimar", "Yoshi", 1, 2, 98),
+        MatchResult("Olimar", "Pit", 2, 2, 12),
+        MatchResult("Olimar", "PacMan", 3, 1, 32),
     ],
     "Bowser": [ # 18th Previously
-        MatchResult("Bowser", "ROB", 1, 0, 0),
-        MatchResult("Bowser", "Luigi", 2, 0, 0),
-        MatchResult("Bowser", "Captain Falcon", 3, 0, 0),
+        MatchResult("Bowser", "ROB", 1, 3, 167),
+        MatchResult("Bowser", "Sheik", 2, 2, 45),
+        MatchResult("Bowser", "Link", 3, 1, 89),
+        MatchResult("Bowser", "King Dedede", 4, 2, 8),
     ],
     "Wii Fit Trainer": [ # 19th Previously
-        MatchResult("Wii Fit Trainer", "Toon Link", 1, 0, 0),
-        MatchResult("Wii Fit Trainer", "Luigi", 2, 0, 0),
-        MatchResult("Wii Fit Trainer", "Captain Falcon", 3, 0, 0),
+        MatchResult("Wii Fit Trainer", "Toon Link", 1, 2, 36),
+        MatchResult("Wii Fit Trainer", "Pyra & Mythra", 2, 1, 142),
+        MatchResult("Wii Fit Trainer", "King Dedede", 3, -1, 85),
     ],
     "King K Rool": [ # 20th Previously
-        MatchResult("King K Rool", "Dark Samus", 1, 0, 0),
-        MatchResult("King K Rool", "Luigi", 2, 0, 0),
-        MatchResult("King K Rool", "Captain Falcon", 3, 0, 0),
+        MatchResult("King K Rool", "Dark Samus", 1, 1, 0),
+        MatchResult("King K Rool", "Kirby", 2, 2, 30),
+        MatchResult("King K Rool", "Chrom", 3, 2, 23),
+    ],
+    "Young Link": [ # 21st Previously
+        MatchResult("Young Link", "Sephiroth", 1, 1, 0),
+        MatchResult("Young Link", "Sheik", 2, 0, 0),
+        MatchResult("Young Link", "Link", 3, 0, 0),
+    ],
+    "Terry": [ # 22nd Previously
+        MatchResult("Terry", "Dark Pit", 1, 0, 0),
+        MatchResult("Terry", "Sheik", 2, 0, 0),
+        MatchResult("Terry", "Link", 3, 0, 0),
+    ],
+    "Robin": [ # 23rd Previously
+        MatchResult("Robin", "Corrin", 1, 0, 0),
+        MatchResult("Robin", "Sheik", 2, 0, 0),
+        MatchResult("Robin", "Link", 3, 0, 0),
+    ],
+    "Corrin": [ # 24th Previously
+        MatchResult("Corrin", "Lucina", 1, 2, 94),
+        MatchResult("Corrin", "Zero Suit Samus", 2, 0, 0),
+        MatchResult("Corrin", "Link", 3, 0, 0),
     ],
 }
 
