@@ -1062,6 +1062,104 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Corrin", "Bayonetta", 3, 3, 131),
         MatchResult("Corrin", "Villager", 4, -1, 63),
     ],
+    "Pit": [ # 25th Previously
+        MatchResult("Pit", "Marth", 1, 2, 38),
+        MatchResult("Pit", "Daisy", 2, 3, 148),
+        MatchResult("Pit", "King Dedede", 3, -1, 101),
+    ],
+    "Mii Brawler": [ # 26th Previously
+        MatchResult("Mii Brawler", "Terry", 1, -1, 102),
+    ],
+    "Donkey Kong": [ # 27th Previously
+        MatchResult("Donkey Kong", "Luigi", 1, 2, 94),
+        MatchResult("Donkey Kong", "Jigglypuff", 2, 2, 0),
+        MatchResult("Donkey Kong", "Roy", 3, 2, 50),
+        MatchResult("Donkey Kong", "King Dedede", 4, -1, 66),
+    ],
+    "Captain Falcon": [ # 28th Previously
+        MatchResult("Captain Falcon", "Ike", 1, 1, 47),
+        MatchResult("Captain Falcon", "Steve", 2, -1, 118),
+    ],
+    "Shulk": [ # 29th Previously
+        MatchResult("Shulk", "Wii Fit Trainer", 1, 3, 125),
+        MatchResult("Shulk", "Jigglypuff", 2, 2, 0),
+        MatchResult("Shulk", "Daisy", 3, 2, 122),
+    ],
+    "Ryu": [ # 30th Previously
+        MatchResult("Ryu", "Diddy Kong", 1, 1, 149),
+        MatchResult("Ryu", "Joker", 2, 1, 22),
+        MatchResult("Ryu", "Snake", 3, -1, 146),
+    ],
+    "Hero": [ # 31st Previously
+        MatchResult("Hero", "Ike", 1, 2, 58),
+        MatchResult("Hero", "Pikachu", 2, 1, 104),
+        MatchResult("Hero", "Chrom", 3, 2, 57),
+        MatchResult("Hero", "Snake", 4, 2, 98),
+    ],
+    "Peach": [ # 32nd Previously
+        MatchResult("Peach", "Min Min", 1, 1, 57),
+        MatchResult("Peach", "Incineroar", 2, 2, 54),
+        MatchResult("Peach", "Lucina", 3, 1, 44),
+    ],
+    "Kirby": [ # 33rd Previously
+        MatchResult("Kirby", "Mr Game & Watch", 1, 3, 129),
+        MatchResult("Kirby", "Bowser Jr", 2, 2, 45),
+        MatchResult("Kirby", "Captain Falcon", 3, -1, 146),
+    ],
+    "Yoshi": [ # 34th Previously
+        MatchResult("Yoshi", "Hero", 1, 2, 67),
+        MatchResult("Yoshi", "Olimar", 2, 1, 0),
+        MatchResult("Yoshi", "Robin", 3, 2, 119),
+    ],
+    "Wolf": [ # 35th Previously
+        MatchResult("Wolf", "Falco", 1, 2, 83),
+        MatchResult("Wolf", "Kazuya", 2, 1, 112),
+        MatchResult("Wolf", "Dark Pit", 3, 2, 41),
+    ],
+    "Sora": [ # 36th Previously
+        MatchResult("Sora", "Palutena", 1, 1, 12),
+        MatchResult("Sora", "Sephiroth", 2, 2, 15),
+        MatchResult("Sora", "Joker", 3, 2, 130),
+        MatchResult("Sora", "Captain Falcon", 4, 3, 106),
+    ],
+    "King Dedede": [ # 37th Previously
+        MatchResult("King Dedede", "Joker", 1, 2, 143),
+        MatchResult("King Dedede", "Pokemon Trainer", 2, 1, 0),
+        MatchResult("King Dedede", "Marth", 3, 3, 123),
+        MatchResult("King Dedede", "Sephiroth", 4, 2, 90),
+    ],
+    "Simon": [ # 38th Previously
+        MatchResult("Simon", "Toon Link", 1, 2, 47),
+        MatchResult("Simon", "Robin", 2, 1, 40),
+        MatchResult("Simon", "Sephiroth", 3, -1, 118),
+    ],
+    "Duck Hunt": [ # 39th Previously
+        MatchResult("Duck Hunt", "Meta Knight", 1, 2, 62),
+        MatchResult("Duck Hunt", "Rosalina & Luma", 2, 2, 48),
+        MatchResult("Duck Hunt", "Diddy Kong", 3, 2, 100),
+        MatchResult("Duck Hunt", "Incineroar", 4, 1, 15),
+    ],
+    "Ness": [ # 40th Previously
+        MatchResult("Ness", "Incineroar", 1, -1, 93),
+    ],
+    "Greninja": [ # 41st Previously
+        MatchResult("Greninja", "Simon", 1, 2, 15),
+        MatchResult("Greninja", "Bowser", 2, 0, 0),
+        MatchResult("Greninja", "Marth", 3, 0, 0),
+    ],
+    "Cloud": [ # 42nd Previously
+        MatchResult("Cloud", "Lucas", 1, 0, 0),
+        MatchResult("Cloud", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Cloud", "Marth", 3, 0, 0),
+    ],
+    "PacMan": [ # 43rd Previously
+        MatchResult("PacMan", "Mario", 1, 1, 6),
+        MatchResult("PacMan", "Olimar", 2, 0, 0),
+        MatchResult("PacMan", "Marth", 3, 0, 0),
+    ],
+    "Pikachu": [ # 44th Previously
+        MatchResult("Pikachu", "Ike", 1, -1, 29),
+    ],
 }
 
 def main() -> None:
