@@ -1144,18 +1144,19 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
     ],
     "Greninja": [ # 41st Previously
         MatchResult("Greninja", "Simon", 1, 2, 15),
-        MatchResult("Greninja", "Bowser", 2, 0, 0),
-        MatchResult("Greninja", "Marth", 3, 0, 0),
+        MatchResult("Greninja", "Bowser", 2, 1, 60),
+        MatchResult("Greninja", "Ridley", 3, 1, 15),
     ],
     "Cloud": [ # 42nd Previously
-        MatchResult("Cloud", "Lucas", 1, 0, 0),
-        MatchResult("Cloud", "Pokemon Trainer", 2, 0, 0),
-        MatchResult("Cloud", "Marth", 3, 0, 0),
+        MatchResult("Cloud", "Lucas", 1, 2, 0),
+        MatchResult("Cloud", "Dark Pit", 2, 1, 60),
+        MatchResult("Cloud", "Pikachu", 3, 2, 115),
     ],
     "PacMan": [ # 43rd Previously
         MatchResult("PacMan", "Mario", 1, 1, 6),
-        MatchResult("PacMan", "Olimar", 2, 0, 0),
-        MatchResult("PacMan", "Marth", 3, 0, 0),
+        MatchResult("PacMan", "Olimar", 2, 2, 66),
+        MatchResult("PacMan", "Shulk", 3, 2, 102),
+        MatchResult("PacMan", "Pichu", 4, 2, 204),
     ],
     "Pikachu": [ # 44th Previously
         MatchResult("Pikachu", "Ike", 1, -1, 29),
