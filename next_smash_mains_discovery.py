@@ -1161,6 +1161,47 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
     "Pikachu": [ # 44th Previously
         MatchResult("Pikachu", "Ike", 1, -1, 29),
     ],
+    "Banjo & Kazooie": [ # 45th Previously
+        MatchResult("Banjo & Kazooie", "Rosalina & Luma", 1, 2, 101),
+        MatchResult("Banjo & Kazooie", "Mega Man", 2, 2, 4),
+        MatchResult("Banjo & Kazooie", "Little Mac", 3, 2, 18),
+        MatchResult("Banjo & Kazooie", "Marth", 4, 1, 39),
+    ],
+    "Villager": [ # 46th Previously
+        MatchResult("Villager", "Pit", 1, 1, 74),
+        MatchResult("Villager", "Hero", 2, -2, 101),
+        MatchResult("Villager", "Marth", 3, 0, 0),
+    ],
+    "Mr Game & Watch": [ # 47th Previously
+        MatchResult("Mr Game & Watch", "Toon Link", 1, 2, 78),
+        MatchResult("Mr Game & Watch", "Steve", 2, 1, 125),
+        MatchResult("Mr Game & Watch", "Min Min", 3, 3, 159),
+    ],
+    "Joker": [ # 48th Previously
+        MatchResult("Joker", "Ryu", 1, 2, 124),
+        MatchResult("Joker", "Meta Knight", 2, 3, 185),
+        MatchResult("Joker", "Ice Climbers", 3, 2, 135),
+    ],
+    "Luigi": [ # 49th Previously
+        MatchResult("Luigi", "Pichu", 1, 0, 0),
+        MatchResult("Luigi", "Mega Man", 2, 0, 0),
+        MatchResult("Luigi", "Little Mac", 3, 0, 0),
+    ],
+    "Mario": [ # 50th Previously
+        MatchResult("Mario", "Young Link", 1, 0, 0),
+        MatchResult("Mario", "Mega Man", 2, 0, 0),
+        MatchResult("Mario", "Little Mac", 3, 0, 0),
+    ],
+    "Snake": [ # 51st Previously
+        MatchResult("Snake", "Sora", 1, 0, 0),
+        MatchResult("Snake", "Mega Man", 2, 0, 0),
+        MatchResult("Snake", "Little Mac", 3, 0, 0),
+    ],
+    "Jigglypuff": [ # 52nd Previously
+        MatchResult("Jigglypuff", "Ike", 1, 0, 0),
+        MatchResult("Jigglypuff", "Mega Man", 2, 0, 0),
+        MatchResult("Jigglypuff", "Little Mac", 3, 0, 0),
+    ],
 }
 
 def main() -> None:
