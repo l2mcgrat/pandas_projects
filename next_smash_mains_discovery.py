@@ -1183,24 +1183,24 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Joker", "Ice Climbers", 3, 2, 135),
     ],
     "Luigi": [ # 49th Previously
-        MatchResult("Luigi", "Pichu", 1, 0, 0),
-        MatchResult("Luigi", "Mega Man", 2, 0, 0),
-        MatchResult("Luigi", "Little Mac", 3, 0, 0),
+        MatchResult("Luigi", "Pichu", 1, 1, 46),
+        MatchResult("Luigi", "Mega Man", 2, 1, 13),
+        MatchResult("Luigi", "Zelda", 3, 1, 67),
+        MatchResult("Luigi", "Sora", 4, -1, 100),
     ],
     "Mario": [ # 50th Previously
-        MatchResult("Mario", "Young Link", 1, 0, 0),
-        MatchResult("Mario", "Mega Man", 2, 0, 0),
-        MatchResult("Mario", "Little Mac", 3, 0, 0),
+        MatchResult("Mario", "Young Link", 1, 2, 104),
+        MatchResult("Mario", "Ryu", 2, 2, 170),
+        MatchResult("Mario", "Pyra & Mythra", 3, 2, 102),
     ],
     "Snake": [ # 51st Previously
-        MatchResult("Snake", "Sora", 1, 0, 0),
-        MatchResult("Snake", "Mega Man", 2, 0, 0),
-        MatchResult("Snake", "Little Mac", 3, 0, 0),
+        MatchResult("Snake", "Sora", 1, -1, 192),
     ],
     "Jigglypuff": [ # 52nd Previously
-        MatchResult("Jigglypuff", "Ike", 1, 0, 0),
-        MatchResult("Jigglypuff", "Mega Man", 2, 0, 0),
-        MatchResult("Jigglypuff", "Little Mac", 3, 0, 0),
+        MatchResult("Jigglypuff", "Ike", 1, 2, 0),
+        MatchResult("Jigglypuff", "Ridley", 2, 2, 0),
+        MatchResult("Jigglypuff", "Lucina", 3, 1, 13),
+        MatchResult("Jigglypuff", "Sora", 5, 1, 2),
     ],
 }
 
