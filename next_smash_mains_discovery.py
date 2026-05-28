@@ -1202,6 +1202,23 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Jigglypuff", "Lucina", 3, 1, 13),
         MatchResult("Jigglypuff", "Sora", 5, 1, 2),
     ],
+    "Daisy": [ # 53rd Previously
+        MatchResult("Daisy", "Steve", 1, -2, 104),
+    ],
+    "Pichu": [ # 54th Previously
+        MatchResult("Pichu", "Lucina", 1, -2, 74),
+    ],
+    "Wario": [ # 55th Previously
+        MatchResult("Wario", "Samus", 1, 2, 148),
+        MatchResult("Wario", "Terry", 2, -1, 66),
+    ],
+    "Ike": [ # 56th Previously
+        MatchResult("Ike", "Pikachu", 1, 2, 27),
+        MatchResult("Ike", "Bayonetta", 2, 3, 108),
+        MatchResult("Ike", "Piranha Plant", 3, 1, 98),
+        MatchResult("Ike", "Lucina", 4, 3, 144),
+        MatchResult("Ike", "Sheik", 5, 2, 90),
+    ],
 }
 
 def main() -> None:
