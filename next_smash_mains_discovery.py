@@ -1219,6 +1219,26 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Ike", "Lucina", 4, 3, 144),
         MatchResult("Ike", "Sheik", 5, 2, 90),
     ],
+    "Isabelle": [ # 57th Previously
+        MatchResult("Isabelle", "Bowser", 1, 2, 52),
+        MatchResult("Isabelle", "Hero", 2, -1, 125),
+    ],
+    "Pokemon Trainer": [ # 58th Previously
+        MatchResult("Pokemon Trainer", "Banjo & Kazooie", 1, 1, 12),
+        MatchResult("Pokemon Trainer", "Wii Fit Trainer", 2, 2, 114),
+        MatchResult("Pokemon Trainer", "Corrin", 3, 1, 54),
+    ],
+    "Zero Suit Samus": [ # 59th Previously
+        MatchResult("Zero Suit Samus", "Bowser Jr", 1, 1, 41),
+        MatchResult("Zero Suit Samus", "Ken", 2, 1, 60),
+        MatchResult("Zero Suit Samus", "Cloud", 3, 1, 48),
+    ],
+    "Bowser Jr": [ # 60th Previously
+        MatchResult("Bowser Jr", "ROB", 1, 3, 203),
+        MatchResult("Bowser Jr", "Diddy Kong", 2, 3, 140),
+        MatchResult("Bowser Jr", "Joker", 3, 2, 39),
+        MatchResult("Bowser Jr", "Hero", 4, 2, 62),
+    ],
 }
 
 def main() -> None:
