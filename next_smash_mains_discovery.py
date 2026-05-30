@@ -1239,6 +1239,43 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Bowser Jr", "Joker", 3, 2, 39),
         MatchResult("Bowser Jr", "Hero", 4, 2, 62),
     ],
+    "Fox": [ # 61st Previously
+        MatchResult("Fox", "Captain Falcon", 1, 1, 110),
+        MatchResult("Fox", "Mr Game & Watch", 2, -2, 106),
+    ],
+    "Sheik": [ # 62nd Previously
+        MatchResult("Sheik", "Banjo & Kazooie", 1, 2, 91),
+        MatchResult("Sheik", "Luigi", 2, 1, 29),
+        MatchResult("Sheik", "Pokemon Trainer", 3, 1, 0),
+        MatchResult("Sheik", "Ganondorf", 4, -1, 115),
+    ],
+    "Meta Knight": [ # 63rd Previously
+        MatchResult("Meta Knight", "Daisy", 1, 2, 116),
+        MatchResult("Meta Knight", "Mega Man", 2, -1, 129),
+    ],
+    "Little Mac": [ # 64th Previously
+        MatchResult("Little Mac", "Mewtwo", 1, -2, 37),
+    ],
+    "Inkling": [ # 65th Previously
+        MatchResult("Inkling", "Kirby", 1, 0, 0),
+        MatchResult("Inkling", "Luigi", 2, 0, 0),
+        MatchResult("Inkling", "Pokemon Trainer", 3, 0, 0),
+    ],
+    "Ken": [ # 66th Previously
+        MatchResult("Ken", "ROB", 1, 0, 0),
+        MatchResult("Ken", "Luigi", 2, 0, 0),
+        MatchResult("Ken", "Pokemon Trainer", 3, 0, 0),
+    ],
+    "Diddy Kong": [ # 67th Previously
+        MatchResult("Diddy Kong", "Ridley", 1, 0, 0),
+        MatchResult("Diddy Kong", "Luigi", 2, 0, 0),
+        MatchResult("Diddy Kong", "Pokemon Trainer", 3, 0, 0),
+    ],
+    "Ridley": [ # 68th Previously
+        MatchResult("Ridley", "Bowser Jr", 1, 0, 0),
+        MatchResult("Ridley", "Luigi", 2, 0, 0),
+        MatchResult("Ridley", "Pokemon Trainer", 3, 0, 0),
+    ],
 }
 
 def main() -> None:

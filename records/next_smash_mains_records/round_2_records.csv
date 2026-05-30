@@ -178,3 +178,13 @@ Bowser Jr,ROB,1,1,0,3,203,3.3,1.1,9.693
 Bowser Jr,Diddy Kong,2,1,0,3,140,4.025,1.05,13.718
 Bowser Jr,Joker,3,1,0,2,39,4.521,1.1,18.239
 Bowser Jr,Hero,4,1,0,2,62,0.711,1.1,18.95
+Fox,Captain Falcon,1,1,0,1,110,1.267,1.0,7.515
+Fox,Mr Game & Watch,2,0,1,-2,106,-0.367,1.0,7.148
+Sheik,Banjo & Kazooie,1,1,0,2,91,2.154,0.9,8.393
+Sheik,Luigi,2,1,0,1,29,2.371,1.05,10.764
+Sheik,Pokemon Trainer,3,1,0,1,0,2.85,0.95,13.614
+Sheik,Ganondorf,4,0,1,-1,115,0.182,0.95,13.796
+Sheik,Mr Game & Watch,4,0,0,0,0,0.0,1.0,13.796
+Meta Knight,Daisy,1,1,0,2,116,2.227,1.0,8.371
+Meta Knight,Mega Man,2,0,1,-1,129,1.075,1.0,9.446
+Little Mac,Mewtwo,1,0,1,-2,37,-0.678,0.9,5.431
