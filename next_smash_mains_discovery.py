@@ -1257,24 +1257,66 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Little Mac", "Mewtwo", 1, -2, 37),
     ],
     "Inkling": [ # 65th Previously
-        MatchResult("Inkling", "Kirby", 1, 0, 0),
-        MatchResult("Inkling", "Luigi", 2, 0, 0),
-        MatchResult("Inkling", "Pokemon Trainer", 3, 0, 0),
+        MatchResult("Inkling", "Kirby", 1, 1, 116),
+        MatchResult("Inkling", "Roy", 2, 2, 131),
+        MatchResult("Inkling", "Sonic", 3, 2, 115),
+        MatchResult("Inkling", "Bowser", 4, -1, 129),
     ],
     "Ken": [ # 66th Previously
-        MatchResult("Ken", "ROB", 1, 0, 0),
-        MatchResult("Ken", "Luigi", 2, 0, 0),
-        MatchResult("Ken", "Pokemon Trainer", 3, 0, 0),
+        MatchResult("Ken", "ROB", 1, 1, 23),
+        MatchResult("Ken", "Snake", 2, 2, 80),
+        MatchResult("Ken", "Bowser", 3, -1, 69),
     ],
     "Diddy Kong": [ # 67th Previously
-        MatchResult("Diddy Kong", "Ridley", 1, 0, 0),
-        MatchResult("Diddy Kong", "Luigi", 2, 0, 0),
-        MatchResult("Diddy Kong", "Pokemon Trainer", 3, 0, 0),
+        MatchResult("Diddy Kong", "Ridley", 1, 2, 48),
+        MatchResult("Diddy Kong", "Wario", 2, 1, 51),
+        MatchResult("Diddy Kong", "Fox", 3, 2, 105),
     ],
     "Ridley": [ # 68th Previously
-        MatchResult("Ridley", "Bowser Jr", 1, 0, 0),
-        MatchResult("Ridley", "Luigi", 2, 0, 0),
-        MatchResult("Ridley", "Pokemon Trainer", 3, 0, 0),
+        MatchResult("Ridley", "Bowser Jr", 1, 2, 45),
+        MatchResult("Ridley", "Robin", 2, 2, 90),
+        MatchResult("Ridley", "Steve", 3, 2, 0),
+        MatchResult("Ridley", "Inkling", 5, 2, 144),
+    ],
+    "Falco": [ # 69th Previously
+        MatchResult("Falco", "Pit", 1, 2, 135),
+        MatchResult("Falco", "Captain Falcon", 2, -1, 48),
+    ],
+    "Kazuya": [ # 70th Previously
+        MatchResult("Kazuya", "Lucario", 1, 1, 126),
+        MatchResult("Kazuya", "Robin", 2, -1, 78),
+    ],
+    "Sonic": [ # 71st Previously
+        MatchResult("Sonic", "Ganondorf", 1, 2, 72),
+        MatchResult("Sonic", "Joker", 2, 2, 138),
+        MatchResult("Sonic", "Richter", 3, 2, 39),
+        MatchResult("Sonic", "Pikachu", 4, 3, 197),
+    ],
+    "Dark Pit": [ # 72nd Previously
+        MatchResult("Dark Pit", "Fox", 1, 2, 0),
+        MatchResult("Dark Pit", "PacMan", 2, 2, 8),
+        MatchResult("Dark Pit", "Hero", 3, 1, 13),
+        MatchResult("Dark Pit", "Cloud", 4, 2, 47),
+    ],
+    "Lucina": [ # 73rd Previously
+        MatchResult("Lucina", "Banjo & Kazooie", 1, 0, 0),
+        MatchResult("Lucina", "PacMan", 2, 0, 0),
+        MatchResult("Lucina", "Hero", 3, 0, 0),
+    ],
+    "Richter": [ # 74th Previously
+        MatchResult("Richter", "Incineroar", 1, 0, 0),
+        MatchResult("Richter", "PacMan", 2, 0, 0),
+        MatchResult("Richter", "Hero", 3, 0, 0),
+    ],
+    "Steve": [ # 75th Previously
+        MatchResult("Steve", "Shulk", 1, 0, 0),
+        MatchResult("Steve", "PacMan", 2, 0, 0),
+        MatchResult("Steve", "Hero", 3, 0, 0),
+    ],
+    "ROB": [ # 76th Previously
+        MatchResult("ROB", "Inkling", 1, 0, 0),
+        MatchResult("ROB", "PacMan", 2, 0, 0),
+        MatchResult("ROB", "Hero", 3, 0, 0),
     ],
 }
 
