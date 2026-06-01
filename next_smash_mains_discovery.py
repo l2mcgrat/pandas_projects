@@ -1299,24 +1299,59 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Dark Pit", "Cloud", 4, 2, 47),
     ],
     "Lucina": [ # 73rd Previously
-        MatchResult("Lucina", "Banjo & Kazooie", 1, 0, 0),
-        MatchResult("Lucina", "PacMan", 2, 0, 0),
-        MatchResult("Lucina", "Hero", 3, 0, 0),
+        MatchResult("Lucina", "Banjo & Kazooie", 1, 2, 99),
+        MatchResult("Lucina", "Olimar", 2, 2, 147),
+        MatchResult("Lucina", "Kazuya", 3, 1, 0),
     ],
     "Richter": [ # 74th Previously
-        MatchResult("Richter", "Incineroar", 1, 0, 0),
-        MatchResult("Richter", "PacMan", 2, 0, 0),
-        MatchResult("Richter", "Hero", 3, 0, 0),
+        MatchResult("Richter", "Incineroar", 1, 2, 0),
+        MatchResult("Richter", "Peach", 2, 1, 68),
+        MatchResult("Richter", "Piranha Plant", 3, 2, 0),
     ],
     "Steve": [ # 75th Previously
-        MatchResult("Steve", "Shulk", 1, 0, 0),
-        MatchResult("Steve", "PacMan", 2, 0, 0),
-        MatchResult("Steve", "Hero", 3, 0, 0),
+        MatchResult("Steve", "Shulk", 1, 1, 84),
+        MatchResult("Steve", "Hero", 2, 1, 138),
+        MatchResult("Steve", "Mewtwo", 3, 2, 0),
     ],
     "ROB": [ # 76th Previously
-        MatchResult("ROB", "Inkling", 1, 0, 0),
-        MatchResult("ROB", "PacMan", 2, 0, 0),
-        MatchResult("ROB", "Hero", 3, 0, 0),
+        MatchResult("ROB", "Inkling", 1, 2, 65),
+        MatchResult("ROB", "Villager", 2, 2, 53),
+        MatchResult("ROB", "Ike", 3, 3, 105),
+    ],
+    "Byleth": [ # 77th Previously
+        MatchResult("Byleth", "Pit", 1, 2, 65),
+        MatchResult("Byleth", "Yoshi", 2, -1, 74),
+    ],
+    "Bayonetta": [ # 78th Previously
+        MatchResult("Bayonetta", "Ice Climbers", 1, 2, 42),
+        MatchResult("Bayonetta", "Sephiroth", 2, -1, 86),
+    ],
+    "Mega Man": [ # 79th Previously
+        MatchResult("Mega Man", "Rosalina & Luma", 1, 2, 63),
+        MatchResult("Mega Man", "Greninja", 2, 2, 143),
+        MatchResult("Mega Man", "PacMan", 3, 1, 0),
+        MatchResult("Mega Man", "Chrom", 4, 2, 129),
+    ],
+    "Link": [ # 80th Previously
+        MatchResult("Link", "Dark Pit", 1, 3, 150),
+        MatchResult("Link", "King Dedede", 2, 1, 0),
+        MatchResult("Link", "Captain Falcon", 3, 2, 99),
+        MatchResult("Link", "Ryu", 4, 3, 163),
+    ],
+    "Palutena": [ # 81st Previously
+        MatchResult("Palutena", "Zelda", 1, 0, 0),
+        MatchResult("Palutena", "King Dedede", 2, 0, 0),
+        MatchResult("Palutena", "Captain Falcon", 3, 0, 0),
+    ],
+    "Samus": [ # 82nd Previously
+        MatchResult("Samus", "Richter", 1, 0, 0),
+        MatchResult("Samus", "King Dedede", 2, 0, 0),
+        MatchResult("Samus", "Captain Falcon", 3, 0, 0),
+    ],
+    "Rosalina & Luma": [ # 83rd Previously
+        MatchResult("Rosalina & Luma", "Dr Mario", 1, 0, 0),
+        MatchResult("Rosalina & Luma", "King Dedede", 2, 0, 0),
+        MatchResult("Rosalina & Luma", "Captain Falcon", 3, 0, 0),
     ],
 }
 
