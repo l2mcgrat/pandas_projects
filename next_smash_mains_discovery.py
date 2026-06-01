@@ -1339,19 +1339,18 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Link", "Ryu", 4, 3, 163),
     ],
     "Palutena": [ # 81st Previously
-        MatchResult("Palutena", "Zelda", 1, 0, 0),
-        MatchResult("Palutena", "King Dedede", 2, 0, 0),
-        MatchResult("Palutena", "Captain Falcon", 3, 0, 0),
+        MatchResult("Palutena", "Zelda", 1, 1, 24),
+        MatchResult("Palutena", "Captain Falcon", 2, 2, 78),
+        MatchResult("Palutena", "Snake", 3, 0, 0),
     ],
     "Samus": [ # 82nd Previously
-        MatchResult("Samus", "Richter", 1, 0, 0),
-        MatchResult("Samus", "King Dedede", 2, 0, 0),
+        MatchResult("Samus", "Richter", 1, 2, 113),
+        MatchResult("Samus", "Incineroar", 2, 2, 84),
         MatchResult("Samus", "Captain Falcon", 3, 0, 0),
     ],
     "Rosalina & Luma": [ # 83rd Previously
-        MatchResult("Rosalina & Luma", "Dr Mario", 1, 0, 0),
-        MatchResult("Rosalina & Luma", "King Dedede", 2, 0, 0),
-        MatchResult("Rosalina & Luma", "Captain Falcon", 3, 0, 0),
+        MatchResult("Rosalina & Luma", "Dr Mario", 1, 2, 199),
+        MatchResult("Rosalina & Luma", "Piranha Plant", 2, -2, 113),
     ],
 }
 
