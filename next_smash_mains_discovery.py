@@ -1341,16 +1341,32 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
     "Palutena": [ # 81st Previously
         MatchResult("Palutena", "Zelda", 1, 1, 24),
         MatchResult("Palutena", "Captain Falcon", 2, 2, 78),
-        MatchResult("Palutena", "Snake", 3, 0, 0),
+        MatchResult("Palutena", "Snake", 3, 3, 147),
+        MatchResult("Palutena", "Meta Knight", 4, 2, 24),
     ],
     "Samus": [ # 82nd Previously
         MatchResult("Samus", "Richter", 1, 2, 113),
         MatchResult("Samus", "Incineroar", 2, 2, 84),
-        MatchResult("Samus", "Captain Falcon", 3, 0, 0),
+        MatchResult("Samus", "Greninja", 3, 3, 97),
     ],
     "Rosalina & Luma": [ # 83rd Previously
         MatchResult("Rosalina & Luma", "Dr Mario", 1, 2, 199),
         MatchResult("Rosalina & Luma", "Piranha Plant", 2, -2, 113),
+    ],
+    "Pyra & Mythra": [ # 84th Previously
+        MatchResult("Pyra & Mythra", "Jigglypuff", 1, 0, 0),
+        MatchResult("Pyra & Mythra", "Captain Falcon", 2, 0, 0),
+        MatchResult("Pyra & Mythra", "Snake", 3, 0, 0),
+    ],
+    "Mewtwo": [ # 85th Previously
+        MatchResult("Mewtwo", "Yoshi", 1, 0, 0),
+        MatchResult("Mewtwo", "Captain Falcon", 2, 0, 0),
+        MatchResult("Mewtwo", "Snake", 3, 0, 0),
+    ],
+    "Marth": [ # 86th Previously
+        MatchResult("Marth", "Piranha Plant", 1, 0, 0),
+        MatchResult("Marth", "Captain Falcon", 2, 0, 0),
+        MatchResult("Marth", "Snake", 3, 0, 0),
     ],
 }
 
