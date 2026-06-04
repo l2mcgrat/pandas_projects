@@ -30,6 +30,10 @@ RECORDS_DIR.mkdir(parents=True, exist_ok=True)
 MATCHUP_PATH = ROOT / "matchup_chart.csv"
 MATCHUP_DF = pd.read_csv(MATCHUP_PATH) if MATCHUP_PATH.exists() else pd.DataFrame()
 
+def apply_score_reduction(scores: dict[str, float]) -> dict[str, float]:
+    """Reduce all scores to score^(2/3), applied entering/exiting elimination rounds."""
+    return {char: round(score ** (2 / 3), 3) for char, score in scores.items()}
+
 def bar_generator(value_map: dict, x_axis: str, y_axis: str, title: str, pdf: PdfPages) -> None:
     keys = list(value_map.keys())
     values = list(value_map.values())
@@ -292,7 +296,8 @@ class TournamentManager:
         rules: dict[int, RoundScoringRule] = {}
         rules[1] = ROUND_1_RULE
         rules[2] = ROUND_2_RULE
-        for r in range(3, 51):
+        rules[3] = ELIMINATION_1_RULE
+        for r in range(4, 51):
             rules[r] = RoundScoringRule(round_number=r, max_percentage=175, early_multiplier_fn=lambda _m: 1.0)
         return rules
 
@@ -357,6 +362,74 @@ class TournamentManager:
         filename = self.ranking_changes_dir / f"round_{round_number}_ranking_changes.pdf"
         with PdfPages(filename) as pdf:
             pdf.savefig(fig)
+        plt.close(fig)
+
+    def _ranking_changes_elimination(self, initial_scores: dict[str, float], final_scores: dict[str, float], round_number: int) -> None:
+        """Generate elimination ranking changes with fixed top 64.
+
+        Ranks 1-64 are locked and shown as grey arrows. Only initial ranks 65+
+        are re-ordered based on final scores among that subset.
+        """
+        def ordinal(n: int) -> str:
+            if 10 <= n % 100 <= 20:
+                suffix = "th"
+            else:
+                suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+            return f"{n}{suffix}"
+
+        initial_ranks = self._score_to_ranks(initial_scores)
+        if not initial_ranks:
+            return
+
+        ordered_initial = [c for c, _rank in sorted(initial_ranks.items(), key=lambda x: x[1])]
+        bottom_characters = [c for c in ordered_initial if initial_ranks[c] >= 65]
+        if not bottom_characters:
+            return
+
+        bottom_sorted_by_final = sorted(bottom_characters, key=lambda c: final_scores.get(c, float("-inf")), reverse=True)
+        display_final_ranks = {c: 65 + i for i, c in enumerate(bottom_sorted_by_final)}
+
+        changes = []
+        for c in ordered_initial:
+            i_rank = initial_ranks[c]
+            if i_rank <= 64:
+                f_rank = i_rank
+                color = "#7f7f7f"  # grey
+            else:
+                f_rank = display_final_ranks[c]
+                if f_rank <= 72:
+                    color = "#2ca02c"  # green
+                elif f_rank <= 80:
+                    color = "#bcbd22"  # yellow
+                else:
+                    color = "#d62728"  # red
+            changes.append((c, i_rank, f_rank, color))
+
+        fig_height = max(15, 0.25 * len(changes))
+        fig, ax = plt.subplots(figsize=(15, fig_height))
+
+        for c, i_rank, f_rank, color in changes:
+            ax.text(0, i_rank, f"{ordinal(i_rank)} {c}", ha="right", va="center", fontsize=8)
+            ax.text(1, f_rank, f"{ordinal(f_rank)} {c}", ha="left", va="center", fontsize=8)
+            ax.annotate(
+                "",
+                xy=(1, f_rank),
+                xycoords="data",
+                xytext=(0, i_rank),
+                textcoords="data",
+                arrowprops=dict(arrowstyle="->", lw=2, color=color),
+            )
+
+        ax.set_xlim(-0.5, 1.5)
+        ax.set_ylim(0.5, len(changes) + 0.5)
+        ax.invert_yaxis()
+        ax.axis("off")
+        ax.set_title("Elimination 1: Rank 86 to 64 Rank Changes", fontsize=14)
+
+        plt.tight_layout()
+        filename = self.ranking_changes_dir / "elimination_1_ranking_changes.pdf"
+        with PdfPages(filename) as pdf:
+            pdf.savefig(fig, bbox_inches="tight")
         plt.close(fig)
 
     def _ranking_changes_black_arrows(self, seed_order: list[str], final_scores: dict[str, float], round_number: int = 1) -> None:
@@ -470,6 +543,8 @@ class TournamentManager:
             if round_number == 2 and previous_scores:
                 seed_order = [character for character, _score in sorted(previous_scores.items(), key=lambda item: item[1], reverse=True)]
                 self._ranking_changes_black_arrows(seed_order, cumulative_scores, round_number=round_number)
+            elif round_number == 3 and previous_scores:
+                self._ranking_changes_elimination(previous_scores, cumulative_scores, round_number=round_number)
             elif previous_scores:
                 eliminated = set(previous_scores) - set(cumulative_scores)
                 self._ranking_changes_colored(previous_scores, cumulative_scores, round_number, eliminated)
@@ -1354,19 +1429,146 @@ ROUND_2_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Rosalina & Luma", "Piranha Plant", 2, -2, 113),
     ],
     "Pyra & Mythra": [ # 84th Previously
-        MatchResult("Pyra & Mythra", "Jigglypuff", 1, 0, 0),
-        MatchResult("Pyra & Mythra", "Captain Falcon", 2, 0, 0),
-        MatchResult("Pyra & Mythra", "Snake", 3, 0, 0),
+        MatchResult("Pyra & Mythra", "Jigglypuff", 1, 1, 9),
+        MatchResult("Pyra & Mythra", "Pokemon Trainer", 2, 2, 68),
+        MatchResult("Pyra & Mythra", "PacMan", 3, 3, 81),
+        MatchResult("Pyra & Mythra", "Little Mac", 4, 1, 41),
     ],
     "Mewtwo": [ # 85th Previously
-        MatchResult("Mewtwo", "Yoshi", 1, 0, 0),
-        MatchResult("Mewtwo", "Captain Falcon", 2, 0, 0),
-        MatchResult("Mewtwo", "Snake", 3, 0, 0),
+        MatchResult("Mewtwo", "Yoshi", 1, 2, 145),
+        MatchResult("Mewtwo", "Mario", 2, 2, 87),
+        MatchResult("Mewtwo", "Lucas", 3, 2, 124),
     ],
     "Marth": [ # 86th Previously
-        MatchResult("Marth", "Piranha Plant", 1, 0, 0),
-        MatchResult("Marth", "Captain Falcon", 2, 0, 0),
-        MatchResult("Marth", "Snake", 3, 0, 0),
+        MatchResult("Marth", "Piranha Plant", 1, 1, 0),
+        MatchResult("Marth", "Terry", 2, 1, 62),
+        MatchResult("Marth", "Little Mac", 3, -1, 83),
+    ],
+}
+
+#######################################################
+################### ELIMINATION 1 #####################
+#######################################################
+
+ELIMINATION_1_RULE = RoundScoringRule(
+    round_number=3,
+    max_percentage=250,
+    early_round_limit=3,
+    early_multiplier_fn=lambda m: 1 + (m - 1) / 2,
+    use_matchup_multiplier=True,
+    late_match_division=True,
+)
+
+ELIMINATION_1_MATCHES: dict[str, list[MatchResult]] = {
+    "Palutena": [ # 65th Previously
+        MatchResult("Palutena", "Jigglypuff", 1, 0, 0),
+        MatchResult("Palutena", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Palutena", "PacMan", 3, 0, 0),
+    ],
+    "Mii Brawler": [ # 66th Previously
+        MatchResult("Mii Brawler", "Jigglypuff", 1, 0, 0),
+        MatchResult("Mii Brawler", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Mii Brawler", "PacMan", 3, 0, 0),
+    ],
+    "Meta Knight": [ # 67th Previously
+        MatchResult("Meta Knight", "Jigglypuff", 1, 0, 0),
+        MatchResult("Meta Knight", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Meta Knight", "PacMan", 3, 0, 0),
+    ],
+    "Lucario": [ # 68th Previously
+        MatchResult("Lucario", "Jigglypuff", 1, 0, 0),
+        MatchResult("Lucario", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Lucario", "PacMan", 3, 0, 0),
+    ],
+    "Steve": [ # 69th Previously
+        MatchResult("Steve", "Jigglypuff", 1, 0, 0),
+        MatchResult("Steve", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Steve", "PacMan", 3, 0, 0),
+    ],
+    "Wario": [ # 70th Previously
+        MatchResult("Wario", "Jigglypuff", 1, 0, 0),
+        MatchResult("Wario", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Wario", "PacMan", 3, 0, 0),
+    ],
+    "Mega Man": [ # 71st Previously
+        MatchResult("Mega Man", "Jigglypuff", 1, 0, 0),
+        MatchResult("Mega Man", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Mega Man", "PacMan", 3, 0, 0),
+    ],
+    "Villager": [ # 72nd Previously
+        MatchResult("Villager", "Jigglypuff", 1, 0, 0),
+        MatchResult("Villager", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Villager", "PacMan", 3, 0, 0),
+    ],
+    "Ness": [ # 73rd Previously
+        MatchResult("Ness", "Jigglypuff", 1, 0, 0),
+        MatchResult("Ness", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Ness", "PacMan", 3, 0, 0),
+    ],
+    "Mewtwo": [ # 74th Previously
+        MatchResult("Mewtwo", "Jigglypuff", 1, 0, 0),
+        MatchResult("Mewtwo", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Mewtwo", "PacMan", 3, 0, 0),
+    ],
+    "Snake": [ # 75th Previously
+        MatchResult("Snake", "Jigglypuff", 1, 0, 0),
+        MatchResult("Snake", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Snake", "PacMan", 3, 0, 0),
+    ],
+    "Pikachu": [ # 76th Previously
+        MatchResult("Pikachu", "Jigglypuff", 1, 0, 0),
+        MatchResult("Pikachu", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Pikachu", "PacMan", 3, 0, 0),
+    ],
+    "Fox": [ # 77th Previously
+        MatchResult("Fox", "Jigglypuff", 1, 0, 0),
+        MatchResult("Fox", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Fox", "PacMan", 3, 0, 0),
+    ],
+    "Falco": [ # 78th Previously
+        MatchResult("Falco", "Jigglypuff", 1, 0, 0),
+        MatchResult("Falco", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Falco", "PacMan", 3, 0, 0),
+    ],
+    "Daisy": [ # 79th Previously
+        MatchResult("Daisy", "Jigglypuff", 1, 0, 0),
+        MatchResult("Daisy", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Daisy", "PacMan", 3, 0, 0),
+    ],
+    "Pichu": [ # 80th Previously
+        MatchResult("Pichu", "Jigglypuff", 1, 0, 0),
+        MatchResult("Pichu", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Pichu", "PacMan", 3, 0, 0),
+    ],
+    "Kazuya": [ # 81st Previously
+        MatchResult("Kazuya", "Jigglypuff", 1, 0, 0),
+        MatchResult("Kazuya", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Kazuya", "PacMan", 3, 0, 0),
+    ],
+    "Little Mac": [ # 82nd Previously
+        MatchResult("Little Mac", "Jigglypuff", 1, 0, 0),
+        MatchResult("Little Mac", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Little Mac", "PacMan", 3, 0, 0),
+    ],
+    "Marth": [ # 83rd Previously
+        MatchResult("Marth", "Jigglypuff", 1, 0, 0),
+        MatchResult("Marth", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Marth", "PacMan", 3, 0, 0),
+    ],
+    "Byleth": [ # 84th Previously
+        MatchResult("Byleth", "Jigglypuff", 1, 0, 0),
+        MatchResult("Byleth", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Byleth", "PacMan", 3, 0, 0),
+    ],
+    "Bayonetta": [ # 85th Previously
+        MatchResult("Bayonetta", "Jigglypuff", 1, 0, 0),
+        MatchResult("Bayonetta", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Bayonetta", "PacMan", 3, 0, 0),
+    ],
+    "Rosalina & Luma": [ # 86th Previously
+        MatchResult("Rosalina & Luma", "Jigglypuff", 1, 0, 0),
+        MatchResult("Rosalina & Luma", "Pokemon Trainer", 2, 0, 0),
+        MatchResult("Rosalina & Luma", "PacMan", 3, 0, 0),
     ],
 }
 
@@ -1384,14 +1586,23 @@ def main() -> None:
         #print("Rebuilt Round 1 from in-file match data.")
         #print(round_1_summary.scores)
         manager._ranking_changes_black_arrows(seed_order, round_1_summary.scores, round_number=1)
+    round_2_summary: RoundSummary | None = None
     if ROUND_2_MATCHES and round_1_summary is not None:
         seed_order = [character for character, _score in sorted(round_1_summary.scores.items(), key=lambda item: item[1], reverse=True)]
-        summary = manager.bootstrap_round_from_matches(2, ROUND_2_MATCHES, previous_scores=round_1_summary.scores)
-        ordered_summary = {character: summary.scores[character] for character in seed_order if character in summary.scores}
-        print("Rebuilt Round 2 from in-file match data.")
+        round_2_summary = manager.bootstrap_round_from_matches(2, ROUND_2_MATCHES, previous_scores=round_1_summary.scores)
+        ordered_summary = {character: round_2_summary.scores[character] for character in seed_order if character in round_2_summary.scores}
+        #print("Rebuilt Round 2 from in-file match data.")
+        #print(ordered_summary)
+        manager._ranking_changes_black_arrows(seed_order, round_2_summary.scores, round_number=2)
+    if ELIMINATION_1_MATCHES and round_2_summary is not None:
+        reduced_scores = apply_score_reduction(round_2_summary.scores)
+        seed_order = [character for character, _score in sorted(reduced_scores.items(), key=lambda item: item[1], reverse=True)]
+        elim_1_summary = manager.bootstrap_round_from_matches(3, ELIMINATION_1_MATCHES, previous_scores=reduced_scores)
+        ordered_summary = {character: elim_1_summary.scores[character] for character in seed_order if character in elim_1_summary.scores}
+        print("Rebuilt Elimination 1 from in-file match data.")
         print(ordered_summary)
-        manager._ranking_changes_black_arrows(seed_order, summary.scores, round_number=2)
-    
+        manager._ranking_changes_elimination(reduced_scores, elim_1_summary.scores, round_number=3)
+
     final_scores = manager.run()
     #print("Tournament rerun complete.")
     #print(final_scores)

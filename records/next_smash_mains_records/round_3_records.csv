@@ -1,0 +1,13 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Palutena,Jigglypuff,1,1,0,3,0,4.0,1.0,8.71
+Palutena,Pokemon Trainer,2,1,0,1,0,3.15,1.05,11.86
+Palutena,PacMan,3,1,0,1,0,4.0,1.0,15.86
+Mii Brawler,Jigglypuff,1,1,0,1,0,2.0,1.0,6.481
+Mii Brawler,Pokemon Trainer,2,1,0,2,0,4.725,1.05,11.206
+Mii Brawler,PacMan,3,1,0,1,0,4.2,1.05,15.406
+Meta Knight,Jigglypuff,1,1,0,1,0,2.2,1.1,6.669
+Meta Knight,Pokemon Trainer,2,1,0,1,0,3.0,1.0,9.669
+Meta Knight,PacMan,3,1,0,3,0,8.0,1.0,17.669
+Lucario,Jigglypuff,1,1,0,1,0,2.1,1.05,6.537
+Lucario,Pokemon Trainer,2,1,0,1,0,3.15,1.05,9.687
+Lucario,PacMan,3,1,0,2,0,6.0,1.0,15.687
