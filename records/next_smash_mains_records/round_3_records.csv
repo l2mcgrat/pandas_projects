@@ -1,13 +1,61 @@
 Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
-Palutena,Jigglypuff,1,1,0,3,0,4.0,1.0,8.71
-Palutena,Pokemon Trainer,2,1,0,1,0,3.15,1.05,11.86
-Palutena,PacMan,3,1,0,1,0,4.0,1.0,15.86
-Mii Brawler,Jigglypuff,1,1,0,1,0,2.0,1.0,6.481
-Mii Brawler,Pokemon Trainer,2,1,0,2,0,4.725,1.05,11.206
-Mii Brawler,PacMan,3,1,0,1,0,4.2,1.05,15.406
-Meta Knight,Jigglypuff,1,1,0,1,0,2.2,1.1,6.669
-Meta Knight,Pokemon Trainer,2,1,0,1,0,3.0,1.0,9.669
-Meta Knight,PacMan,3,1,0,3,0,8.0,1.0,17.669
-Lucario,Jigglypuff,1,1,0,1,0,2.1,1.05,6.537
-Lucario,Pokemon Trainer,2,1,0,1,0,3.15,1.05,9.687
-Lucario,PacMan,3,1,0,2,0,6.0,1.0,15.687
+Palutena,Mr Game & Watch,1,1,0,3,95,3.62,1.0,8.33
+Palutena,King K Rool,2,0,1,-1,64,0.346,0.9,8.676
+Mii Brawler,Marth,1,1,0,2,53,2.927,1.05,7.408
+Mii Brawler,Steve,2,1,0,2,101,4.089,1.05,11.497
+Mii Brawler,Bowser,3,1,0,2,71,5.432,1.0,16.929
+Meta Knight,Robin,1,1,0,2,5,2.682,0.9,7.151
+Meta Knight,Kazuya,2,1,0,1,108,2.587,1.1,9.738
+Meta Knight,Simon,3,1,0,2,0,5.7,0.95,15.438
+Lucario,Lucina,1,1,0,3,135,3.633,1.05,8.07
+Lucario,Wolf,2,1,0,1,93,2.442,1.0,10.512
+Lucario,Simon,3,1,0,1,5,4.356,1.1,14.868
+Steve,Mr Game & Watch,1,1,0,2,0,2.85,0.95,7.284
+Steve,Link,2,0,1,-2,90,-0.816,0.85,6.468
+Wario,Samus,1,1,0,1,11,1.956,1.0,6.36
+Wario,Min Min,2,1,0,2,28,4.549,1.05,10.909
+Wario,Zero Suit Samus,3,1,0,2,0,5.7,0.95,16.609
+Wario,Little Mac,4,1,0,2,64,0.583,0.85,17.192
+Wario,Falco,5,1,0,2,58,0.581,1.05,17.773
+Mega Man,Samus,1,1,0,1,55,1.869,1.05,6.209
+Mega Man,Pichu,2,1,0,2,110,3.648,0.95,9.857
+Mega Man,Pit,3,1,0,3,143,6.513,0.95,16.37
+Villager,Ken,1,1,0,2,127,2.741,1.1,6.976
+Villager,King Dedede,2,1,0,1,93,2.076,0.85,9.052
+Villager,Daisy,3,1,0,3,131,6.952,1.0,16.004
+Ness,Ridley,1,1,0,2,69,2.452,0.9,6.667
+Ness,Ryu,2,1,0,2,0,4.5,1.0,11.167
+Ness,Zero Suit Samus,3,1,0,1,0,3.8,0.95,14.967
+Mewtwo,Donkey Kong,1,1,0,1,0,2.2,1.1,6.321
+Mewtwo,Sephiroth,2,1,0,1,79,2.652,1.05,8.973
+Mewtwo,Palutena,3,1,0,2,22,6.406,1.1,15.38
+Snake,Lucina,1,1,0,1,11,1.858,0.95,5.904
+Snake,Olimar,2,1,0,1,69,2.586,1.0,8.49
+Snake,Mega Man,3,1,0,2,104,5.168,1.0,13.658
+Pikachu,Ganondorf,1,0,1,-1,74,0.281,0.95,4.313
+Fox,Luigi,1,1,0,2,12,3.247,1.1,6.958
+Fox,Kirby,2,1,0,1,0,2.7,0.9,9.658
+Fox,Ken,3,1,0,2,2,5.984,1.0,15.642
+Fox,Link,4,1,0,1,71,0.429,1.0,16.071
+Falco,Dr Mario,1,0,1,-1,107,0.428,1.0,4.062
+Daisy,Cloud,1,1,0,2,32,2.872,1.0,6.396
+Daisy,Little Mac,2,0,1,-1,83,0.423,0.85,6.819
+Pichu,Link,1,1,0,1,27,1.892,1.0,5.271
+Pichu,Peach,2,1,0,1,3,3.131,1.05,8.402
+Pichu,Duck Hunt,3,1,0,3,135,6.574,0.95,14.976
+Kazuya,Lucas,1,0,1,-1,124,0.521,1.05,3.724
+Little Mac,Incineroar,1,1,0,2,106,2.834,1.1,5.924
+Little Mac,Yoshi,2,1,0,2,152,3.767,1.05,9.691
+Little Mac,Cloud,3,1,0,3,79,7.736,1.05,17.427
+Marth,Olimar,1,1,0,1,56,1.776,1.0,4.854
+Marth,Terry,2,0,1,-2,135,-0.793,1.15,4.061
+Byleth,King Dedede,1,1,0,1,0,1.9,0.95,4.647
+Byleth,Pokemon Trainer,2,1,0,1,40,2.484,0.9,7.131
+Byleth,Dr Mario,3,1,0,1,78,3.207,0.95,10.338
+Bayonetta,Ridley,1,1,0,2,72,2.441,0.9,5.166
+Bayonetta,Toon Link,2,1,0,1,117,2.298,1.0,7.464
+Bayonetta,King Dedede,3,1,0,2,86,4.781,0.9,12.245
+Bayonetta,Terry,4,1,0,1,60,0.44,1.0,12.685
+Rosalina & Luma,Mr Game & Watch,1,1,0,1,42,1.649,0.9,3.149
+Rosalina & Luma,Zelda,2,1,0,2,25,4.35,1.0,7.499
+Rosalina & Luma,Pyra & Mythra,3,1,0,2,114,5.342,1.05,12.841
