@@ -1,17 +1,29 @@
 Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Zelda,Pikachu,1,1,0,2,82,2.672,1.0,10.613
+Zelda,King Dedede,2,1,0,2,120,3.78,1.0,14.393
+Zelda,Lucario,3,1,0,2,32,5.457,0.95,19.85
 Piranha Plant,Min Min,1,1,0,2,57,2.911,1.05,10.236
 Piranha Plant,Duck Hunt,2,1,0,3,138,5.689,1.1,15.925
 Piranha Plant,Kazuya,3,0,1,-1,0,0.0,1.15,15.925
+Chrom,Diddy Kong,1,1,0,3,135,3.806,1.1,11.017
+Chrom,Fox,2,1,0,2,24,4.792,1.1,15.809
+Chrom,Corrin,3,1,0,2,109,5.128,1.0,20.937
 Corrin,Duck Hunt,1,1,0,2,126,2.246,0.9,9.419
 Corrin,Hero,2,1,0,2,46,4.435,1.05,13.855
 Corrin,Shulk,3,1,0,2,87,5.039,0.95,18.893
 King K Rool,Toon Link,1,1,0,2,16,2.936,1.0,9.909
 King K Rool,Byleth,2,1,0,2,165,3.685,1.05,13.594
 King K Rool,Captain Falcon,3,0,1,-2,80,-1.496,1.1,12.098
+Ridley,Ike,1,1,0,2,142,2.31,0.95,9.063
+Ridley,Wii Fit Trainer,2,1,0,3,141,4.896,0.95,13.96
+Ridley,Min Min,3,1,0,1,113,3.251,1.05,17.21
 Toon Link,Banjo & Kazooie,1,1,0,2,116,2.536,1.0,9.236
 Toon Link,Ken,2,1,0,2,63,4.122,1.0,13.358
 Toon Link,Dr Mario,3,1,0,3,152,6.445,0.95,19.803
 Toon Link,Captain Falcon,4,0,1,-1,52,0.052,1.0,19.855
+Hero,Palutena,1,1,0,3,175,3.135,0.95,9.768
+Hero,PacMan,2,1,0,3,85,5.215,0.95,14.983
+Hero,Mr Game & Watch,3,1,0,1,0,3.6,0.9,18.584
 Wolf,Wii Fit Trainer,1,1,0,3,108,3.211,0.9,9.698
 Wolf,Marth,2,1,0,2,125,3.562,0.95,13.261
 Wolf,Shulk,3,1,0,3,151,6.792,1.0,20.053

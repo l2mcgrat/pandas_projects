@@ -1671,9 +1671,9 @@ ROUND_3_RULE = RoundScoringRule(
 
 ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
     "Zelda": [ # 1st Previously
-        MatchResult("Zelda", "Link", 1, 0, 0),
-        MatchResult("Zelda", "Link", 2, 0, 0),
-        MatchResult("Zelda", "Link", 3, 0, 0),
+        MatchResult("Zelda", "Pikachu", 1, 2, 82),
+        MatchResult("Zelda", "King Dedede", 2, 2, 120),
+        MatchResult("Zelda", "Lucario", 3, 2, 32),
     ],
     "Min Min": [ # 2nd Previously
         MatchResult("Min Min", "Link", 1, 0, 0),
@@ -1716,9 +1716,9 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Dr Mario", "Link", 3, 0, 0),
     ],
     "Chrom": [ # 10th Previously
-        MatchResult("Chrom", "Link", 1, 0, 0),
-        MatchResult("Chrom", "Link", 2, 0, 0),
-        MatchResult("Chrom", "Link", 3, 0, 0),
+        MatchResult("Chrom", "Diddy Kong", 1, 3, 135),
+        MatchResult("Chrom", "Fox", 2, 2, 24),
+        MatchResult("Chrom", "Corrin", 3, 2, 109),
     ],
     "Corrin": [ # 11th Previously
         MatchResult("Corrin", "Duck Hunt", 1, 2, 126),
@@ -1796,9 +1796,9 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("PacMan", "Link", 3, 0, 0),
     ],
     "Ridley": [ # 26th Previously
-        MatchResult("Ridley", "Link", 1, 0, 0),
-        MatchResult("Ridley", "Link", 2, 0, 0),
-        MatchResult("Ridley", "Link", 3, 0, 0),
+        MatchResult("Ridley", "Ike", 1, 2, 142),
+        MatchResult("Ridley", "Wii Fit Trainer", 2, 3, 141),
+        MatchResult("Ridley", "Min Min", 3, 1, 113),
     ],
     "Toon Link": [ # 27th Previously
         MatchResult("Toon Link", "Banjo & Kazooie", 1, 2, 116),
@@ -1812,9 +1812,9 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Ike", "Link", 3, 0, 0),
     ],
     "Hero": [ # 29th Previously
-        MatchResult("Hero", "Link", 1, 0, 0),
-        MatchResult("Hero", "Link", 2, 0, 0),
-        MatchResult("Hero", "Link", 3, 0, 0),
+        MatchResult("Hero", "Palutena", 1, 3, 175),
+        MatchResult("Hero", "PacMan", 2, 3, 85),
+        MatchResult("Hero", "Mr Game & Watch", 3, 1, 0),
     ],
     "Jigglypuff": [ # 30th Previously
         MatchResult("Jigglypuff", "Link", 1, 0, 0),
