@@ -1,1 +1,39 @@
 Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Piranha Plant,Min Min,1,1,0,2,57,2.911,1.05,10.236
+Piranha Plant,Duck Hunt,2,1,0,3,138,5.689,1.1,15.925
+Piranha Plant,Kazuya,3,0,1,-1,0,0.0,1.15,15.925
+Corrin,Duck Hunt,1,1,0,2,126,2.246,0.9,9.419
+Corrin,Hero,2,1,0,2,46,4.435,1.05,13.855
+Corrin,Shulk,3,1,0,2,87,5.039,0.95,18.893
+King K Rool,Toon Link,1,1,0,2,16,2.936,1.0,9.909
+King K Rool,Byleth,2,1,0,2,165,3.685,1.05,13.594
+King K Rool,Captain Falcon,3,0,1,-2,80,-1.496,1.1,12.098
+Toon Link,Banjo & Kazooie,1,1,0,2,116,2.536,1.0,9.236
+Toon Link,Ken,2,1,0,2,63,4.122,1.0,13.358
+Toon Link,Dr Mario,3,1,0,3,152,6.445,0.95,19.803
+Toon Link,Captain Falcon,4,0,1,-1,52,0.052,1.0,19.855
+Wolf,Wii Fit Trainer,1,1,0,3,108,3.211,0.9,9.698
+Wolf,Marth,2,1,0,2,125,3.562,0.95,13.261
+Wolf,Shulk,3,1,0,3,151,6.792,1.0,20.053
+Wolf,Ganondorf,5,1,0,3,55,0.794,1.05,20.847
+Yoshi,Marth,1,1,0,1,70,1.72,1.0,8.128
+Yoshi,Sonic,2,1,0,2,47,4.429,1.05,12.557
+Yoshi,Roy,3,1,0,3,109,7.128,1.0,19.685
+Cloud,Dr Mario,1,1,0,1,119,1.448,0.95,7.841
+Cloud,Mr Game & Watch,2,1,0,2,65,4.11,1.0,11.951
+Cloud,Zero Suit Samus,3,1,0,3,66,7.098,0.95,19.049
+Joker,Samus,1,1,0,3,150,3.23,0.95,9.577
+Joker,Ness,2,0,1,-1,87,0.522,1.0,10.099
+Dark Pit,Pichu,1,1,0,2,81,2.676,1.0,8.475
+Dark Pit,Wario,2,1,0,2,88,4.171,1.05,12.646
+Dark Pit,Roy,3,1,0,2,35,6.006,1.05,18.652
+Dark Pit,Captain Falcon,5,1,0,2,92,0.579,1.1,19.231
+Simon,Joker,1,1,0,1,32,1.966,1.05,7.614
+Simon,ROB,2,1,0,2,80,4.422,1.1,12.036
+Simon,Young Link,3,1,0,1,0,4.0,1.0,16.036
+Richter,Toon Link,1,1,0,2,21,2.624,0.9,7.979
+Richter,Pikachu,2,1,0,2,88,4.369,1.1,12.349
+Richter,ROB,3,1,0,2,130,5.456,1.1,17.805
+Mewtwo,Lucina,1,1,0,2,0,3.0,1.0,7.369
+Mewtwo,Joker,2,1,0,2,65,4.521,1.1,11.89
+Mewtwo,Ganondorf,3,1,0,1,101,3.352,1.05,15.242
