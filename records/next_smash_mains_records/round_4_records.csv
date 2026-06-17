@@ -11,6 +11,12 @@ Chrom,Corrin,3,1,0,2,109,5.128,1.0,20.937
 Corrin,Duck Hunt,1,1,0,2,126,2.246,0.9,9.419
 Corrin,Hero,2,1,0,2,46,4.435,1.05,13.855
 Corrin,Shulk,3,1,0,2,87,5.039,0.95,18.893
+Bowser,Link,1,1,0,2,116,2.536,1.0,9.616
+Bowser,Wario,2,1,0,3,92,5.993,1.1,15.609
+Bowser,ROB,3,1,0,2,0,6.6,1.1,22.209
+Bowser,Captain Falcon,4,1,0,2,36,0.714,1.0,22.923
+Mii Swordfighter,Jigglypuff,1,1,0,2,20,2.92,1.0,9.94
+Mii Swordfighter,Villager,2,0,1,-1,35,0.179,0.85,10.118
 King K Rool,Toon Link,1,1,0,2,16,2.936,1.0,9.909
 King K Rool,Byleth,2,1,0,2,165,3.685,1.05,13.594
 King K Rool,Captain Falcon,3,0,1,-2,80,-1.496,1.1,12.098
@@ -34,12 +40,18 @@ Yoshi,Roy,3,1,0,3,109,7.128,1.0,19.685
 Cloud,Dr Mario,1,1,0,1,119,1.448,0.95,7.841
 Cloud,Mr Game & Watch,2,1,0,2,65,4.11,1.0,11.951
 Cloud,Zero Suit Samus,3,1,0,3,66,7.098,0.95,19.049
+Mr Game & Watch,Simon,1,1,0,2,16,2.936,1.0,9.293
+Mr Game & Watch,Wolf,2,1,0,1,111,2.451,1.05,11.744
+Mr Game & Watch,Ness,3,1,0,1,0,3.6,0.9,15.344
 Joker,Samus,1,1,0,3,150,3.23,0.95,9.577
 Joker,Ness,2,0,1,-1,87,0.522,1.0,10.099
 Dark Pit,Pichu,1,1,0,2,81,2.676,1.0,8.475
 Dark Pit,Wario,2,1,0,2,88,4.171,1.05,12.646
 Dark Pit,Roy,3,1,0,2,35,6.006,1.05,18.652
 Dark Pit,Captain Falcon,5,1,0,2,92,0.579,1.1,19.231
+Luigi,Steve,1,1,0,1,40,1.932,1.05,7.617
+Luigi,Rosalina & Luma,2,1,0,2,39,4.693,1.1,12.31
+Luigi,Snake,3,1,0,2,83,5.336,1.0,17.646
 Simon,Joker,1,1,0,1,32,1.966,1.05,7.614
 Simon,ROB,2,1,0,2,80,4.422,1.1,12.036
 Simon,Young Link,3,1,0,1,0,4.0,1.0,16.036

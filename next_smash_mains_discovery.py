@@ -1741,9 +1741,10 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Banjo & Kazooie", "Link", 3, 0, 0),
     ],
     "Bowser": [ # 15th Previously
-        MatchResult("Bowser", "Link", 1, 0, 0),
-        MatchResult("Bowser", "Link", 2, 0, 0),
-        MatchResult("Bowser", "Link", 3, 0, 0),
+        MatchResult("Bowser", "Link", 1, 2, 116),
+        MatchResult("Bowser", "Wario", 2, 3, 92),
+        MatchResult("Bowser", "ROB", 3, 2, 0),
+        MatchResult("Bowser", "Captain Falcon", 4, 2, 36),
     ],
     "Shulk": [ # 16th Previously
         MatchResult("Shulk", "Link", 1, 0, 0),
@@ -1751,9 +1752,8 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Shulk", "Link", 3, 0, 0),
     ],
     "Mii Swordfighter": [ # 17th Previously
-        MatchResult("Mii Swordfighter", "Link", 1, 0, 0),
-        MatchResult("Mii Swordfighter", "Link", 2, 0, 0),
-        MatchResult("Mii Swordfighter", "Link", 3, 0, 0),
+        MatchResult("Mii Swordfighter", "Jigglypuff", 1, 2, 20),
+        MatchResult("Mii Swordfighter", "Villager", 2, -1, 35),
     ],
     "Donkey Kong": [ # 18th Previously
         MatchResult("Donkey Kong", "Link", 1, 0, 0),
@@ -1853,14 +1853,14 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Kirby", "Link", 3, 0, 0),
     ],
     "Terry": [ # 37th Previously
-        MatchResult("Terry", "Link", 1, 0, 0),
-        MatchResult("Terry", "Link", 2, 0, 0),
+        MatchResult("Terry", "Pyra & Mythra", 1, 3, 149),
+        MatchResult("Terry", "Mega Man", 2, 0, 0),
         MatchResult("Terry", "Link", 3, 0, 0),
     ],
     "Mr Game & Watch": [ # 38th Previously
-        MatchResult("Mr Game & Watch", "Link", 1, 0, 0),
-        MatchResult("Mr Game & Watch", "Link", 2, 0, 0),
-        MatchResult("Mr Game & Watch", "Link", 3, 0, 0),
+        MatchResult("Mr Game & Watch", "Simon", 1, 2, 16),
+        MatchResult("Mr Game & Watch", "Wolf", 2, 1, 111),
+        MatchResult("Mr Game & Watch", "Ness", 3, 1, 0),
     ],
     "Joker": [ # 39th Previously
         MatchResult("Joker", "Samus", 1, 3, 150),
@@ -1903,8 +1903,8 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Dark Pit", "Captain Falcon", 5, 2, 92),
     ],
     "Sheik": [ # 47th Previously
-        MatchResult("Sheik", "Link", 1, 0, 0),
-        MatchResult("Sheik", "Link", 2, 0, 0),
+        MatchResult("Sheik", "Greninja", 1, 2, 21),
+        MatchResult("Sheik", "Steve", 2, 0, 0),
         MatchResult("Sheik", "Link", 3, 0, 0),
     ],
     "Inkling": [ # 48th Previously
@@ -1913,9 +1913,9 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Inkling", "Link", 3, 0, 0),
     ],
     "Luigi": [ # 49th Previously
-        MatchResult("Luigi", "Link", 1, 0, 0),
-        MatchResult("Luigi", "Link", 2, 0, 0),
-        MatchResult("Luigi", "Link", 3, 0, 0),
+        MatchResult("Luigi", "Steve", 1, 1, 40),
+        MatchResult("Luigi", "Rosalina & Luma", 2, 2, 39),
+        MatchResult("Luigi", "Snake", 3, 2, 83),
     ],
     "Pokemon Trainer": [ # 50th Previously
         MatchResult("Pokemon Trainer", "Link", 1, 0, 0),
@@ -1973,8 +1973,8 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Captain Falcon", "Link", 3, 0, 0),
     ],
     "Pyra & Mythra": [ # 61st Previously
-        MatchResult("Pyra & Mythra", "Link", 1, 0, 0),
-        MatchResult("Pyra & Mythra", "Link", 2, 0, 0),
+        MatchResult("Pyra & Mythra", "Jigglypuff", 1, 3, 153),
+        MatchResult("Pyra & Mythra", "Sora", 2, 0, 0),
         MatchResult("Pyra & Mythra", "Link", 3, 0, 0),
     ],
     "Samus": [ # 62nd Previously
@@ -2018,7 +2018,7 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Fox", "Link", 3, 0, 0),
     ],
     "Villager": [ # 70th Previously
-        MatchResult("Villager", "Link", 1, 0, 0),
+        MatchResult("Villager", "Duck Hunt", 1, 2, 12),
         MatchResult("Villager", "Link", 2, 0, 0),
         MatchResult("Villager", "Link", 3, 0, 0),
     ],
