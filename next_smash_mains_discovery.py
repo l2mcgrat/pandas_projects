@@ -1676,12 +1676,12 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Zelda", "Lucario", 3, 2, 32),
     ],
     "Min Min": [ # 2nd Previously
-        MatchResult("Min Min", "Link", 1, 0, 0),
-        MatchResult("Min Min", "Link", 2, 0, 0),
-        MatchResult("Min Min", "Link", 3, 0, 0),
+        MatchResult("Min Min", "ROB", 1, 2, 163),
+        MatchResult("Min Min", "Bowser", 2, 2, 39),
+        MatchResult("Min Min", "Captain Falcon", 3, 1, 41),
     ],
     "Lucas": [ # 3rd Previously
-        MatchResult("Lucas", "Link", 1, 0, 0),
+        MatchResult("Lucas", "PacMan", 1, 0, 0),
         MatchResult("Lucas", "Link", 2, 0, 0),
         MatchResult("Lucas", "Link", 3, 0, 0),
     ],
@@ -1691,7 +1691,7 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Roy", "Link", 3, 0, 0),
     ],
     "Dark Samus": [ # 5th Previously
-        MatchResult("Dark Samus", "Link", 1, 0, 0),
+        MatchResult("Dark Samus", "Snake", 1, 0, 0),
         MatchResult("Dark Samus", "Link", 2, 0, 0),
         MatchResult("Dark Samus", "Link", 3, 0, 0),
     ],
@@ -1781,19 +1781,19 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Robin", "Link", 3, 0, 0),
     ],
     "Olimar": [ # 23rd Previously
-        MatchResult("Olimar", "Link", 1, 0, 0),
+        MatchResult("Olimar", "Pikachu", 1, 0, 0),
         MatchResult("Olimar", "Link", 2, 0, 0),
         MatchResult("Olimar", "Link", 3, 0, 0),
     ],
     "Sora": [ # 24th Previously
-        MatchResult("Sora", "Link", 1, 0, 0),
-        MatchResult("Sora", "Link", 2, 0, 0),
-        MatchResult("Sora", "Link", 3, 0, 0),
+        MatchResult("Sora", "Wolf", 1, 1, 32),
+        MatchResult("Sora", "Steve", 2, 2, 103),
+        MatchResult("Sora", "Sonic", 3, 2, 17),
     ],
     "PacMan": [ # 25th Previously
-        MatchResult("PacMan", "Link", 1, 0, 0),
-        MatchResult("PacMan", "Link", 2, 0, 0),
-        MatchResult("PacMan", "Link", 3, 0, 0),
+        MatchResult("PacMan", "Banjo & Kazooie", 1, 2, 25),
+        MatchResult("PacMan", "Lucario", 2, 2, 0),
+        MatchResult("PacMan", "Wii Fit Trainer", 3, 2, 0),
     ],
     "Ridley": [ # 26th Previously
         MatchResult("Ridley", "Ike", 1, 2, 142),
@@ -1868,7 +1868,7 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Joker", "Ness", 2, -1, 87),
     ],
     "Pit": [ # 40th Previously
-        MatchResult("Pit", "Link", 1, 0, 0),
+        MatchResult("Pit", "Toon Link", 1, 0, 0),
         MatchResult("Pit", "Link", 2, 0, 0),
         MatchResult("Pit", "Link", 3, 0, 0),
     ],
@@ -1939,14 +1939,14 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Simon", "Young Link", 3, 1, 0),
     ],
     "Sonic": [ # 54th Previously
-        MatchResult("Sonic", "Link", 1, 0, 0),
-        MatchResult("Sonic", "Link", 2, 0, 0),
-        MatchResult("Sonic", "Link", 3, 0, 0),
+        MatchResult("Sonic", "Ice Climbers", 1, 2, 60),
+        MatchResult("Sonic", "Meta Knight", 2, 2, 73),
+        MatchResult("Sonic", "Roy", 3, 1, 63),
+        MatchResult("Sonic", "Ken", 4, 1, 0),
     ],
     "Zero Suit Samus": [ # 55th Previously
-        MatchResult("Zero Suit Samus", "Link", 1, 0, 0),
-        MatchResult("Zero Suit Samus", "Link", 2, 0, 0),
-        MatchResult("Zero Suit Samus", "Link", 3, 0, 0),
+        MatchResult("Zero Suit Samus", "Jigglypuff", 1, 1, 20),
+        MatchResult("Zero Suit Samus", "King K Rool", 2, -1, 37),
     ],
     "Richter": [ # 56th Previously
         MatchResult("Richter", "Toon Link", 1, 2, 21),
@@ -1979,9 +1979,10 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Pyra & Mythra", "Meta Knight", 3, -1, 17),
     ],
     "Samus": [ # 62nd Previously
-        MatchResult("Samus", "Link", 1, 0, 0),
-        MatchResult("Samus", "Link", 2, 0, 0),
-        MatchResult("Samus", "Link", 3, 0, 0),
+        MatchResult("Samus", "Duck Hunt", 1, 2, 104),
+        MatchResult("Samus", "Diddy Kong", 2, 2, 121),
+        MatchResult("Samus", "Isabelle", 3, 2, 88),
+        MatchResult("Samus", "Robin", 4, 1, 143),
     ],
     "Link": [ # 63rd Previously
         MatchResult("Link", "Link", 1, 0, 0),
@@ -1989,9 +1990,9 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Link", "Link", 3, 0, 0),
     ],
     "Isabelle": [ # 64th Previously
-        MatchResult("Isabelle", "Link", 1, 0, 0),
-        MatchResult("Isabelle", "Link", 2, 0, 0),
-        MatchResult("Isabelle", "Link", 3, 0, 0),
+        MatchResult("Isabelle", "Corrin", 1, 1, 14),
+        MatchResult("Isabelle", "Ryu", 2, 2, 57),
+        MatchResult("Isabelle", "Pokemon Trainer", 3, 2, 59),
     ],
     "Wario": [ # 65th Previously
         MatchResult("Wario", "Link", 1, 0, 0),
@@ -2014,9 +2015,7 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Mega Man", "Link", 3, 0, 0),
     ],
     "Fox": [ # 69th Previously
-        MatchResult("Fox", "Link", 1, 0, 0),
-        MatchResult("Fox", "Link", 2, 0, 0),
-        MatchResult("Fox", "Link", 3, 0, 0),
+        MatchResult("Fox", "Robin", 1, -2, 101),
     ],
     "Villager": [ # 70th Previously
         MatchResult("Villager", "Duck Hunt", 1, 2, 12),
