@@ -1681,9 +1681,9 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Min Min", "Captain Falcon", 3, 1, 41),
     ],
     "Lucas": [ # 3rd Previously
-        MatchResult("Lucas", "PacMan", 1, 0, 0),
-        MatchResult("Lucas", "Link", 2, 0, 0),
-        MatchResult("Lucas", "Link", 3, 0, 0),
+        MatchResult("Lucas", "PacMan", 1, 2, 36),
+        MatchResult("Lucas", "Richter", 2, 2, 145),
+        MatchResult("Lucas", "Ken", 3, 2, 63),
     ],
     "Roy": [ # 4th Previously
         MatchResult("Roy", "Link", 1, 0, 0),
@@ -1691,9 +1691,9 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Roy", "Link", 3, 0, 0),
     ],
     "Dark Samus": [ # 5th Previously
-        MatchResult("Dark Samus", "Snake", 1, 0, 0),
-        MatchResult("Dark Samus", "Link", 2, 0, 0),
-        MatchResult("Dark Samus", "Link", 3, 0, 0),
+        MatchResult("Dark Samus", "Snake", 1, 3, 149),
+        MatchResult("Dark Samus", "Meta Knight", 2, 2, 79),
+        MatchResult("Dark Samus", "Robin", 3, 1, 0),
     ],
     "Mii Gunner": [ # 6th Previously
         MatchResult("Mii Gunner", "Link", 1, 0, 0),
@@ -1781,9 +1781,9 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Robin", "Link", 3, 0, 0),
     ],
     "Olimar": [ # 23rd Previously
-        MatchResult("Olimar", "Pikachu", 1, 0, 0),
-        MatchResult("Olimar", "Link", 2, 0, 0),
-        MatchResult("Olimar", "Link", 3, 0, 0),
+        MatchResult("Olimar", "Pikachu", 1, 3, 176),
+        MatchResult("Olimar", "Yoshi", 2, 3, 124),
+        MatchResult("Olimar", "Palutena", 3, 1, 52),
     ],
     "Sora": [ # 24th Previously
         MatchResult("Sora", "Wolf", 1, 1, 32),
@@ -1868,9 +1868,9 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Joker", "Ness", 2, -1, 87),
     ],
     "Pit": [ # 40th Previously
-        MatchResult("Pit", "Toon Link", 1, 0, 0),
-        MatchResult("Pit", "Link", 2, 0, 0),
-        MatchResult("Pit", "Link", 3, 0, 0),
+        MatchResult("Pit", "Toon Link", 1, 2, 34),
+        MatchResult("Pit", "Shulk", 2, 2, 142),
+        MatchResult("Pit", "Roy", 3, 2, 0),
     ],
     "Peach": [ # 41st Previously
         MatchResult("Peach", "Link", 1, 0, 0),
