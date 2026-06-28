@@ -1890,9 +1890,10 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Jigglypuff", "Link", 3, 0, 0),
     ],
     "Ganondorf": [ # 31st Previously
-        MatchResult("Ganondorf", "Link", 1, 0, 0),
-        MatchResult("Ganondorf", "Link", 2, 0, 0),
-        MatchResult("Ganondorf", "Link", 3, 0, 0),
+        MatchResult("Ganondorf", "Meta Knight", 1, 1, 0),
+        MatchResult("Ganondorf", "Duck Hunt", 2, 2, 114),
+        MatchResult("Ganondorf", "Lucina", 3, 2, 0),
+        MatchResult("Ganondorf", "Terry", 4, 2, 181),
     ],
     "Wolf": [ # 32nd Previously
         MatchResult("Wolf", "Wii Fit Trainer", 1, 3, 108),
@@ -1941,9 +1942,7 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Pit", "Roy", 3, 2, 0),
     ],
     "Peach": [ # 41st Previously
-        MatchResult("Peach", "Link", 1, 0, 0),
-        MatchResult("Peach", "Link", 2, 0, 0),
-        MatchResult("Peach", "Link", 3, 0, 0),
+        MatchResult("Peach", "Inkling", 1, -1, 50),
     ],
     "Young Link": [ # 42nd Previously
         MatchResult("Young Link", "Falco", 1, 3, 151),
@@ -1973,12 +1972,11 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
     "Sheik": [ # 47th Previously
         MatchResult("Sheik", "Greninja", 1, 2, 21),
         MatchResult("Sheik", "Steve", 2, -1, 121),
-        MatchResult("Sheik", "Link", 3, 0, 0),
     ],
     "Inkling": [ # 48th Previously
-        MatchResult("Inkling", "Link", 1, 0, 0),
-        MatchResult("Inkling", "Link", 2, 0, 0),
-        MatchResult("Inkling", "Link", 3, 0, 0),
+        MatchResult("Inkling", "Wii Fit Trainer", 1, 1, 39),
+        MatchResult("Inkling", "Wario", 2, 2, 99),
+        MatchResult("Inkling", "Pyra & Mythra", 3, 1, 14),
     ],
     "Luigi": [ # 49th Previously
         MatchResult("Luigi", "Steve", 1, 1, 40),
@@ -2021,8 +2019,8 @@ ROUND_3_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Richter", "ROB", 3, 2, 130),
     ],
     "ROB": [ # 57th Previously
-        MatchResult("ROB", "Link", 1, 0, 0),
-        MatchResult("ROB", "Link", 2, 0, 0),
+        MatchResult("ROB", "King Dedede", 1, 1, 0),
+        MatchResult("ROB", "Little Mac", 2, 0, 0),
         MatchResult("ROB", "Link", 3, 0, 0),
     ],
     "Lucina": [ # 58th Previously

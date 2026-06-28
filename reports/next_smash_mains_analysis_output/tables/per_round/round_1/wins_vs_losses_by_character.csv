@@ -16,6 +16,7 @@ King Dedede,3,0,1.0,3
 Cloud,4,0,1.0,4
 Dark Samus,3,0,1.0,3
 Corrin,4,0,1.0,4
+Ganondorf,4,0,1.0,4
 Sora,3,0,1.0,3
 Banjo & Kazooie,3,0,1.0,3
 Hero,3,0,1.0,3
@@ -34,6 +35,7 @@ Ike,3,0,1.0,3
 Sonic,2,1,0.6666666666666666,3
 Villager,4,0,1.0,4
 Simon,4,0,1.0,4
+Inkling,3,0,1.0,3
 Piranha Plant,4,0,1.0,4
 Mr Game & Watch,3,0,1.0,3
 Mewtwo,0,1,0.0,1
@@ -49,22 +51,20 @@ Zero Suit Samus,3,0,1.0,3
 Mii Gunner,4,0,1.0,4
 Sephiroth,3,0,1.0,3
 Dr Mario,3,0,1.0,3
+ROB,1,1,0.5,2
 Incineroar,3,0,1.0,3
 Bowser Jr,2,1,0.6666666666666666,3
 Shulk,3,0,1.0,3
 Donkey Kong,4,0,1.0,4
 Robin,3,0,1.0,3
 Jigglypuff,3,0,1.0,3
-Ganondorf,4,0,1.0,4
 Peach,3,0,1.0,3
 Wii Fit Trainer,4,0,1.0,4
 Mario,3,0,1.0,3
 Greninja,4,0,1.0,4
-Inkling,3,0,1.0,3
 Pokemon Trainer,2,1,0.6666666666666666,3
 Ryu,3,1,0.75,4
 Diddy Kong,2,1,0.6666666666666666,3
-ROB,1,1,0.5,2
 Lucina,1,1,0.5,2
 Captain Falcon,3,0,1.0,3
 Link,0,1,0.0,1
