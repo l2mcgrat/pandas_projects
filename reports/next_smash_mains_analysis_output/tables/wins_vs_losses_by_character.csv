@@ -1,10 +1,15 @@
 Character,Wins,Losses,Win_Rate,Fights
+Roy,11,0,1.0,11
+Sephiroth,9,0,1.0,9
 Bowser,11,0,1.0,11
 Zelda,9,0,1.0,9
 Meta Knight,10,2,0.8333333333333334,12
+Dr Mario,9,0,1.0,9
 Little Mac,9,1,0.9,10
+Mii Brawler,9,1,0.9,10
 Chrom,9,0,1.0,9
 Lucas,10,0,1.0,10
+Bowser Jr,9,1,0.9,10
 Villager,11,1,0.9166666666666666,12
 Min Min,10,0,1.0,10
 Dark Samus,9,0,1.0,9
@@ -12,74 +17,69 @@ PacMan,10,0,1.0,10
 Corrin,10,1,0.9090909090909091,11
 Wolf,10,0,1.0,10
 Ice Climbers,9,0,1.0,9
+Donkey Kong,10,1,0.9090909090909091,11
+Mii Gunner,10,0,1.0,10
 King Dedede,10,0,1.0,10
 Toon Link,10,1,0.9090909090909091,11
 Mewtwo,9,1,0.9,10
 Banjo & Kazooie,10,0,1.0,10
+Pichu,10,1,0.9090909090909091,11
 Young Link,9,1,0.9,10
 Sora,10,0,1.0,10
+Wario,11,2,0.8461538461538461,13
 Terry,10,0,1.0,10
 Yoshi,9,0,1.0,9
 Olimar,9,0,1.0,9
+Robin,11,0,1.0,11
+Shulk,9,0,1.0,9
 Hero,10,0,1.0,10
 Pit,8,1,0.8888888888888888,9
 Duck Hunt,10,0,1.0,10
 Ganondorf,11,0,1.0,11
 Cloud,10,0,1.0,10
+Incineroar,9,0,1.0,9
 Piranha Plant,9,1,0.9,10
 Mega Man,10,1,0.9090909090909091,11
 Ridley,9,1,0.9,10
 Kirby,8,1,0.8888888888888888,9
 Dark Pit,9,1,0.9,10
+Greninja,10,0,1.0,10
 Ike,11,0,1.0,11
+Palutena,8,2,0.8,10
 Luigi,11,1,0.9166666666666666,12
 Mr Game & Watch,9,0,1.0,9
 Richter,7,1,0.875,8
+Link,7,1,0.875,8
+ROB,8,2,0.8,10
 Inkling,9,1,0.9,10
 Sonic,10,1,0.9090909090909091,11
 Simon,9,1,0.9,10
+Lucina,7,1,0.875,8
 King K Rool,9,1,0.9,10
-Wario,9,1,0.9,10
+Mario,10,0,1.0,10
 Isabelle,7,1,0.875,8
+Ryu,8,2,0.8,10
 Samus,7,1,0.875,8
-Mii Brawler,6,1,0.8571428571428571,7
+Pokemon Trainer,8,1,0.8888888888888888,9
 Mii Swordfighter,7,1,0.875,8
-Roy,7,0,1.0,7
-Mii Gunner,7,0,1.0,7
-Sephiroth,6,0,1.0,6
+Jigglypuff,8,2,0.8,10
 Lucario,6,1,0.8571428571428571,7
-Dr Mario,6,0,1.0,6
 Joker,8,1,0.8888888888888888,9
+Captain Falcon,7,1,0.875,8
 Ness,7,1,0.875,8
-Incineroar,6,0,1.0,6
 Fox,8,2,0.8,10
-Bowser Jr,6,1,0.8571428571428571,7
 Ken,7,2,0.7777777777777778,9
-Shulk,6,0,1.0,6
-Donkey Kong,7,1,0.875,8
-Robin,7,0,1.0,7
-Pichu,6,1,0.8571428571428571,7
 Snake,6,1,0.8571428571428571,7
 Sheik,7,2,0.7777777777777778,9
 Pyra & Mythra,6,2,0.75,8
-Jigglypuff,7,0,1.0,7
 Peach,6,1,0.8571428571428571,7
-Mario,6,0,1.0,6
-Greninja,7,0,1.0,7
+Diddy Kong,6,2,0.75,8
 Zero Suit Samus,7,1,0.875,8
 Wii Fit Trainer,6,2,0.75,8
 Bayonetta,6,2,0.75,8
-Palutena,5,2,0.7142857142857143,7
-ROB,5,1,0.8333333333333334,6
-Pokemon Trainer,5,1,0.8333333333333334,6
-Ryu,5,2,0.7142857142857143,7
-Diddy Kong,5,1,0.8333333333333334,6
 Rosalina & Luma,4,2,0.6666666666666666,6
 Byleth,5,2,0.7142857142857143,7
-Lucina,4,1,0.8,5
 Steve,5,2,0.7142857142857143,7
-Captain Falcon,4,1,0.8,5
-Link,4,1,0.8,5
 Daisy,4,2,0.6666666666666666,6
 Pikachu,3,2,0.6,5
 Falco,3,3,0.5,6
