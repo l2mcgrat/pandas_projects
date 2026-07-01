@@ -29,6 +29,26 @@ REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 RANKING_CHANGES_DIR.mkdir(parents=True, exist_ok=True)
 RECORDS_DIR.mkdir(parents=True, exist_ok=True)
 
+# Maps internal sequential round number → semantic filename prefix and display name.
+# Pattern: Round 1, Round 2, Elimination 1, Round 3, Elimination 2, Round 4, ...
+ROUND_LABEL: dict[int, str] = {
+    1: "round_1",
+    2: "round_2",
+    3: "elimination_1",
+    4: "round_3",
+    5: "elimination_2",
+    6: "round_4",
+}
+ROUND_DISPLAY: dict[int, str] = {
+    1: "Round 1",
+    2: "Round 2",
+    3: "Elimination 1",
+    4: "Round 3",
+    5: "Elimination 2",
+    6: "Round 4",
+}
+LABEL_TO_ROUND: dict[str, int] = {v: k for k, v in ROUND_LABEL.items()}
+
 MATCHUP_PATH = ROOT / "matchup_chart.csv"
 MATCHUP_DF = pd.read_csv(MATCHUP_PATH) if MATCHUP_PATH.exists() else pd.DataFrame()
 ANALYSIS_SCRIPT_PATH = ROOT / "next_smash_mains_analysis.py"
@@ -86,6 +106,12 @@ def build_elimination_2_matches(round_3_scores: dict[str, float]) -> dict[str, l
     return placeholder_elimination_matches(
         rank_window_characters(round_3_scores, ELIMINATION_2_RANK_START, ELIMINATION_2_RANK_END)
     )
+
+def build_round_4_matches(round_3_scores: dict[str, float], elimination_2_scores: dict[str, float]) -> dict[str, list[MatchResult]]:
+    top_56 = rank_window_characters(round_3_scores, 1, 56)
+    top_8 = rank_window_characters(elimination_2_scores, 1, 8)
+    ordered_characters = top_56 + [character for character in top_8 if character not in top_56]
+    return placeholder_elimination_matches(ordered_characters)
 
 def placeholder_round_matches(character: str) -> list[MatchResult]:
     return [
@@ -358,19 +384,18 @@ class TournamentManager:
         rules[2] = ROUND_2_RULE
         rules[3] = ELIMINATION_1_RULE
         rules[4] = ROUND_3_RULE
-        rules[5] = ELIMINATION_2_RULE
+        rules[5] = ROUND_4_RULE
         for r in range(6, 51):
             rules[r] = RoundScoringRule(round_number=r, max_percentage=175, early_multiplier_fn=lambda _m: 1.0)
         return rules
 
     def _round_files(self) -> list[tuple[int, Path]]:
         files = []
-        for f in self.records_dir.glob("round_*_records.csv"):
-            try:
-                number = int(f.stem.split("_")[1])
+        for f in self.records_dir.glob("*_records.csv"):
+            label = f.stem.removesuffix("_records")
+            number = LABEL_TO_ROUND.get(label)
+            if number is not None:
                 files.append((number, f))
-            except Exception:
-                continue
         return sorted(files, key=lambda x: x[0])
 
     @staticmethod
@@ -461,13 +486,15 @@ class TournamentManager:
                 ax.text(1.02, f_rank, c, fontsize=7, va="center")
         self._overlay_rank_change_scorecards(ax, changes)
         ax.set_xticks([0, 1])
-        ax.set_xticklabels(["Previous Round", f"Round {round_number}"])
+        display = ROUND_DISPLAY.get(round_number, f"Round {round_number}")
+        ax.set_xticklabels(["Previous Round", display])
         ax.invert_yaxis()
         ax.set_ylabel("Rank")
-        ax.set_title(f"Round {round_number}: Ranking Changes")
+        ax.set_title(f"{display}: Ranking Changes")
         ax.grid(axis="y", alpha=0.2)
         plt.tight_layout()
-        filename = self.ranking_changes_dir / f"round_{round_number}_ranking_changes.pdf"
+        label = ROUND_LABEL.get(round_number, f"round_{round_number}")
+        filename = self.ranking_changes_dir / f"{label}_ranking_changes.pdf"
         with PdfPages(filename) as pdf:
             pdf.savefig(fig)
         plt.close(fig)
@@ -675,16 +702,18 @@ class TournamentManager:
         ax.set_ylim(0.5, len(changes) + 0.5)
         ax.invert_yaxis()
         ax.axis("off")
-        ax.set_title(f"Round {round_number}: Rank 86 to 1 Rank Changes", fontsize=14)
+        display = ROUND_DISPLAY.get(round_number, f"Round {round_number}")
+        ax.set_title(f"{display}: Rank 86 to 1 Rank Changes", fontsize=14)
         
         plt.tight_layout()
-        filename = self.ranking_changes_dir / f"round_{round_number}_ranking_changes.pdf"
+        label = ROUND_LABEL.get(round_number, f"round_{round_number}")
+        filename = self.ranking_changes_dir / f"{label}_ranking_changes.pdf"
         with PdfPages(filename) as pdf:
             pdf.savefig(fig, bbox_inches="tight")
         plt.close(fig)
 
     def _ranking_changes_round_3(self, previous_scores: dict[str, float], final_scores: dict[str, float]) -> None:
-        """Generate Round 4 changes chart as 'Round 3 Ranking Changes' with rank-band colors."""
+        """Generate Round 3 changes chart with rank-band colors."""
         def ordinal(n: int) -> str:
             if 10 <= n % 100 <= 20:
                 suffix = "th"
@@ -702,12 +731,14 @@ class TournamentManager:
             i_rank = initial_ranks[c]
             f_rank = final_ranks[c]
             delta = i_rank - f_rank
-            if f_rank <= 56:
+            if f_rank <= 48:
                 color = "#2ca02c"  # green
-            elif f_rank <= 80:
+            elif f_rank <= 72:
                 color = "#bcbd22"  # yellow
-            else:
+            elif f_rank <= 80:
                 color = "#d62728"  # red
+            else:
+                color = "#000000"  # black
             changes.append((c, i_rank, f_rank, delta, color))
 
         if not changes:
@@ -738,10 +769,71 @@ class TournamentManager:
         ax.set_title("Round 3 Ranking Changes", fontsize=14)
 
         plt.tight_layout()
-        legacy_filename = self.ranking_changes_dir / "round_4_ranking_changes.pdf"
-        if legacy_filename.exists():
-            legacy_filename.unlink()
         filename = self.ranking_changes_dir / "round_3_ranking_changes.pdf"
+        with PdfPages(filename) as pdf:
+            pdf.savefig(fig, bbox_inches="tight")
+        plt.close(fig)
+
+    def _ranking_changes_round_4(self, previous_scores: dict[str, float], final_scores: dict[str, float]) -> None:
+        """Generate Round 4 ranking changes using elimination-style arrows and rank bands."""
+        def ordinal(n: int) -> str:
+            if 10 <= n % 100 <= 20:
+                suffix = "th"
+            else:
+                suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+            return f"{n}{suffix}"
+
+        def band_color(rank: int) -> str:
+            if rank <= 48:
+                return "#2ca02c"  # green
+            if rank <= 72:
+                return "#bcbd22"  # yellow
+            if rank <= 80:
+                return "#d62728"  # red
+            return "#000000"      # black
+
+        initial_ranks = self._score_to_ranks(previous_scores)
+        if not initial_ranks:
+            return
+
+        ordered_initial = [c for c, _rank in sorted(initial_ranks.items(), key=lambda x: x[1])]
+        final_sorted = sorted(ordered_initial, key=lambda c: final_scores.get(c, float("-inf")), reverse=True)
+        display_final_ranks = {character: idx + 1 for idx, character in enumerate(final_sorted)}
+
+        changes = []
+        for character in ordered_initial:
+            initial_rank = initial_ranks[character]
+            final_rank = display_final_ranks.get(character, initial_rank)
+            delta = initial_rank - final_rank
+            color = band_color(final_rank)
+            changes.append((character, initial_rank, final_rank, delta, color))
+
+        changes.sort(key=lambda x: x[1])
+        fig_height = max(15, 0.25 * len(changes))
+        fig, ax = plt.subplots(figsize=(15, fig_height))
+
+        for character, initial_rank, final_rank, _delta, color in changes:
+            ax.text(0, initial_rank, f"{ordinal(initial_rank)} {character}", ha="right", va="center", fontsize=8)
+            ax.text(1, final_rank, f"{ordinal(final_rank)} {character}", ha="left", va="center", fontsize=8)
+            ax.annotate(
+                "",
+                xy=(1, final_rank),
+                xycoords="data",
+                xytext=(0, initial_rank),
+                textcoords="data",
+                arrowprops=dict(arrowstyle="->", lw=2, color=color),
+            )
+
+        self._overlay_rank_change_scorecards(ax, changes, limit=15)
+
+        ax.set_xlim(-0.5, 1.5)
+        ax.set_ylim(0.5, len(changes) + 0.5)
+        ax.invert_yaxis()
+        ax.axis("off")
+        ax.set_title("Round 4 Ranking Changes", fontsize=14)
+
+        plt.tight_layout()
+        filename = self.ranking_changes_dir / "round_4_ranking_changes.pdf"
         with PdfPages(filename) as pdf:
             pdf.savefig(fig, bbox_inches="tight")
         plt.close(fig)
@@ -751,12 +843,13 @@ class TournamentManager:
         win_loss_totals = {k: v[0] for k, v in summary.win_loses.items()}
         win_loss_averages = {k: round(v[1] / (v[0] if v[0] else 1), 3) for k, v in summary.win_loses.items()}
         win_loss_characters = {k: v[2] for k, v in summary.win_loses.items()}
+        display = ROUND_DISPLAY.get(summary.round_number, f"Round {summary.round_number}")
         with PdfPages(output_pdf) as pdf:
-            bar_generator(win_loss_totals, "Category", "Count", f"Round {summary.round_number}: Win/Loss Totals", pdf)
-            bar_generator(win_loss_averages, "Category", "Average Score", f"Round {summary.round_number}: Win/Loss Average Scores", pdf)
-            table_generator(win_loss_characters, f"Round {summary.round_number}: End-Scenario Characters", pdf)
-            histogram_generator(summary.scores, "Score", "Frequency", f"Round {summary.round_number}: Score Distribution", pdf)
-            distribution_generator(summary.scores, "Score", "Density", f"Round {summary.round_number}: Score Density", pdf)
+            bar_generator(win_loss_totals, "Category", "Count", f"{display}: Win/Loss Totals", pdf)
+            bar_generator(win_loss_averages, "Category", "Average Score", f"{display}: Win/Loss Average Scores", pdf)
+            table_generator(win_loss_characters, f"{display}: End-Scenario Characters", pdf)
+            histogram_generator(summary.scores, "Score", "Frequency", f"{display}: Score Distribution", pdf)
+            distribution_generator(summary.scores, "Score", "Density", f"{display}: Score Density", pdf)
 
     def bootstrap_round_from_matches(
         self,
@@ -772,7 +865,8 @@ class TournamentManager:
             matchup_df=self.matchup_df,
         )
         summary, records_df = round_engine.calculate_with_records(previous_scores or {}, defaultdict(int))
-        records_path = self.records_dir / f"round_{round_number}_records.csv"
+        label = ROUND_LABEL.get(round_number, f"round_{round_number}")
+        records_path = self.records_dir / f"{label}_records.csv"
         records_df.to_csv(records_path, index=False)
         return summary
 
@@ -799,17 +893,27 @@ class TournamentManager:
                 cumulative_scores = apply_selective_score_reduction(cumulative_scores, elimination_characters, exponent=0.539555)
                 previous_scores = dict(cumulative_scores)
             elif round_number == 5 and cumulative_scores:
-                elimination_characters = set(
-                    rank_window_characters(cumulative_scores, ELIMINATION_2_RANK_START, ELIMINATION_2_RECALC_RANK_END)
+                elimination_characters = set(ELIMINATION_2_MATCHES.keys())
+                cumulative_scores = apply_selective_score_reduction(
+                    cumulative_scores,
+                    elimination_characters,
+                    exponent=ELIMINATION_2_ENTRY_EXPONENT,
                 )
-                cumulative_scores = apply_selective_score_reduction(cumulative_scores, elimination_characters, exponent=0.8037)
+                previous_scores = dict(cumulative_scores)
+            elif round_number == 6 and cumulative_scores:
+                elimination_characters = set(ELIMINATION_2_MATCHES.keys())
+                cumulative_scores = apply_selective_score_reduction(
+                    cumulative_scores,
+                    elimination_characters,
+                    exponent=ROUND_4_SETUP_EXPONENT,
+                )
                 previous_scores = dict(cumulative_scores)
             else:
                 previous_scores = dict(cumulative_scores)
             summary = round_engine.calculate(cumulative_scores, loss_counter)
             cumulative_scores = summary.scores
             round_history[round_number] = dict(cumulative_scores)
-            report_path = self.reports_dir / f"round_{round_number}_results.pdf"
+            report_path = self.reports_dir / f"{ROUND_LABEL.get(round_number, f'round_{round_number}')}_results.pdf"
             self._round_report(summary, report_path)
             if round_number == 2 and previous_scores:
                 seed_order = [character for character, _score in sorted(previous_scores.items(), key=lambda item: item[1], reverse=True)]
@@ -818,6 +922,9 @@ class TournamentManager:
                 self._ranking_changes_elimination(previous_scores, cumulative_scores, round_number=round_number)
             elif round_number == 4 and previous_scores:
                 self._ranking_changes_round_3(previous_scores, cumulative_scores)
+            elif round_number == 6 and previous_scores:
+                # Round 4 (semantic) ranking changes are generated in main() using ROUND_4_MATCHES.
+                pass
             elif round_number == 5 and previous_scores:
                 self._ranking_changes_elimination_2(previous_scores, cumulative_scores)
             elif previous_scores:
@@ -827,10 +934,12 @@ class TournamentManager:
             return {}
         with PdfPages(self.reports_dir / "all_rounds_histogram_evolution.pdf") as pdf:
             for rn in sorted(round_history):
-                histogram_generator(round_history[rn], "Score", "Frequency", f"Round {rn}: Score Distribution", pdf)
+                display = ROUND_DISPLAY.get(rn, f"Round {rn}")
+                histogram_generator(round_history[rn], "Score", "Frequency", f"{display}: Score Distribution", pdf)
         with PdfPages(self.reports_dir / "all_rounds_distribution_evolution.pdf") as pdf:
             for rn in sorted(round_history):
-                distribution_generator(round_history[rn], "Score", "Density", f"Round {rn}: Score Density", pdf)
+                display = ROUND_DISPLAY.get(rn, f"Round {rn}")
+                distribution_generator(round_history[rn], "Score", "Density", f"{display}: Score Density", pdf)
         final_round = max(round_history)
         final_scores = round_history[final_round]
         final_ranks = self._score_to_ranks(final_scores)
@@ -2237,65 +2346,64 @@ ELIMINATION_2_RULE = RoundScoringRule(
 ELIMINATION_2_RANK_START = 57
 ELIMINATION_2_RANK_END = 80
 ELIMINATION_2_RECALC_RANK_END = 71
+ELIMINATION_2_ENTRY_EXPONENT = 0.8037
+ROUND_4_SETUP_EXPONENT = 0.814
 
 ELIMINATION_2_MATCHES: dict[str, list[MatchResult]] = {
     "Captain Falcon": [ # 57th Previously
-        MatchResult("Captain Falcon", "Lucina", 1, 0, 0),
-        MatchResult("Captain Falcon", "Link", 2, 0, 0),
-        MatchResult("Captain Falcon", "Link", 3, 0, 0),
+        MatchResult("Captain Falcon", "Lucina", 1, 2, 63),
+        MatchResult("Captain Falcon", "PacMan", 2, 1, 11),
+        MatchResult("Captain Falcon", "Wario", 3, -1, 117),
     ],
     "Ken": [ # 58th Previously
-        MatchResult("Ken", "Link", 1, 0, 0),
-        MatchResult("Ken", "Link", 2, 0, 0),
-        MatchResult("Ken", "Link", 3, 0, 0),
+        MatchResult("Ken", "Greninja", 1, 3, 111),
+        MatchResult("Ken", "Inkling", 2, -2, 39),
     ],
     "King K Rool": [ # 59th Previously
-        MatchResult("King K Rool", "Link", 1, 0, 0),
-        MatchResult("King K Rool", "Link", 2, 0, 0),
-        MatchResult("King K Rool", "Link", 3, 0, 0),
+        MatchResult("King K Rool", "Bayonetta", 1, 3, 146),
+        MatchResult("King K Rool", "Steve", 2, 3, 163),
+        MatchResult("King K Rool", "Sonic", 3, 3, 172),
     ],
     "Wario": [ # 60th Previously
-        MatchResult("Wario", "Link", 1, 0, 0),
-        MatchResult("Wario", "Link", 2, 0, 0),
-        MatchResult("Wario", "Link", 3, 0, 0),
+        MatchResult("Wario", "Ridley", 1, 2, 79),
+        MatchResult("Wario", "Samus", 2, 2, 85),
+        MatchResult("Wario", "Inkling", 3, 1, 42),
     ],
     "Mega Man": [ # 61st Previously
-        MatchResult("Mega Man", "Link", 1, 0, 0),
-        MatchResult("Mega Man", "Link", 2, 0, 0),
-        MatchResult("Mega Man", "Link", 3, 0, 0),
+        MatchResult("Mega Man", "Samus", 1, -1, 106),
     ],
     "Pyra & Mythra": [ # 62nd Previously
-        MatchResult("Pyra & Mythra", "Link", 1, 0, 0),
-        MatchResult("Pyra & Mythra", "Link", 2, 0, 0),
-        MatchResult("Pyra & Mythra", "Link", 3, 0, 0),
+        MatchResult("Pyra & Mythra", "Incineroar", 1, 3, 125),
+        MatchResult("Pyra & Mythra", "Sephiroth", 2, 3, 63),
+        MatchResult("Pyra & Mythra", "King K Rool", 3, 2, 64),
     ],
     "Mii Swordfighter": [ # 63rd Previously
-        MatchResult("Mii Swordfighter", "Link", 1, 0, 0),
-        MatchResult("Mii Swordfighter", "Link", 2, 0, 0),
-        MatchResult("Mii Swordfighter", "Link", 3, 0, 0),
+        MatchResult("Mii Swordfighter", "Lucas", 1, 1, 0),
+        MatchResult("Mii Swordfighter", "Ryu", 2, 2, 78),
+        MatchResult("Mii Swordfighter", "Wolf", 3, 2, 94),
     ],
     "Joker": [ # 64th Previously
-        MatchResult("Joker", "Link", 1, 0, 0),
-        MatchResult("Joker", "Link", 2, 0, 0),
-        MatchResult("Joker", "Link", 3, 0, 0),
+        MatchResult("Joker", "Isabelle", 1, 2, 80),
+        MatchResult("Joker", "Peach", 2, 2, 43),
+        MatchResult("Joker", "Wii Fit Trainer", 3, 2, 48),
     ],
     "Sheik": [ # 65th Previously
-        MatchResult("Sheik", "Link", 1, 0, 0),
-        MatchResult("Sheik", "Link", 2, 0, 0),
-        MatchResult("Sheik", "Link", 3, 0, 0),
+        MatchResult("Sheik", "Dr Mario", 1, 1, 84),
+        MatchResult("Sheik", "Corrin", 2, 2, 110),
+        MatchResult("Sheik", "Ike", 3, 2, 55),
     ],
     "Jigglypuff": [ # 66th Previously
         MatchResult("Jigglypuff", "Bowser Jr", 1, -1, 131),
     ],
     "Diddy Kong": [ # 67th Previously
-        MatchResult("Diddy Kong", "Link", 1, 0, 0),
-        MatchResult("Diddy Kong", "Link", 2, 0, 0),
-        MatchResult("Diddy Kong", "Link", 3, 0, 0),
+        MatchResult("Diddy Kong", "Bowser", 1, 3, 114),
+        MatchResult("Diddy Kong", "Rosalina & Luma", 2, 2, 57),
+        MatchResult("Diddy Kong", "Wario", 3, 2, 68),
     ],
     "Zero Suit Samus": [ # 68th Previously
-        MatchResult("Zero Suit Samus", "Link", 1, 0, 0),
-        MatchResult("Zero Suit Samus", "Link", 2, 0, 0),
-        MatchResult("Zero Suit Samus", "Link", 3, 0, 0),
+        MatchResult("Zero Suit Samus", "Robin", 1, 2, 123),
+        MatchResult("Zero Suit Samus", "Cloud", 2, 1, 9),
+        MatchResult("Zero Suit Samus", "Diddy Kong", 3, 2, 0),
     ],
     "ROB": [ # 69th Previously
         MatchResult("ROB", "Dr Mario", 1, 2, 94),
@@ -2303,14 +2411,15 @@ ELIMINATION_2_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("ROB", "Ice Climbers", 3, 2, 129),
     ],
     "Peach": [ # 70th Previously
-        MatchResult("Peach", "Link", 1, 0, 0),
-        MatchResult("Peach", "Link", 2, 0, 0),
-        MatchResult("Peach", "Link", 3, 0, 0),
+        MatchResult("Peach", "Peach", 1, 2, 122),
+        MatchResult("Peach", "Chrom", 2, 2, 56),
+        MatchResult("Peach", "Lucas", 3, 1, 10),
     ],
     "Wii Fit Trainer": [ # 71st Previously
-        MatchResult("Wii Fit Trainer", "Link", 1, 0, 0),
-        MatchResult("Wii Fit Trainer", "Link", 2, 0, 0),
-        MatchResult("Wii Fit Trainer", "Link", 3, 0, 0),
+        MatchResult("Wii Fit Trainer", "Lucina", 1, 2, 136),
+        MatchResult("Wii Fit Trainer", "Sheik", 2, 2, 33),
+        MatchResult("Wii Fit Trainer", "Roy", 3, 2, 6),
+        MatchResult("Wii Fit Trainer", "Wolf", 4, -1, 17),
     ],
     "Pichu": [ # 72nd Previously
         MatchResult("Pichu", "Link", 1, 2, 110),
@@ -2319,44 +2428,382 @@ ELIMINATION_2_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Pichu", "Isabelle", 4, 2, 112),
     ],
     "Ness": [ # 73rd Previously
-        MatchResult("Ness", "Link", 1, 0, 0),
-        MatchResult("Ness", "Link", 2, 0, 0),
-        MatchResult("Ness", "Link", 3, 0, 0),
+        MatchResult("Ness", "Sonic", 1, 2, 79),
+        MatchResult("Ness", "Jigglypuff", 2, 3, 128),
+        MatchResult("Ness", "Little Mac", 3, -1, 67),
     ],
     "Lucario": [ # 74th Previously
         MatchResult("Lucario", "Diddy Kong", 1, 2, 110),
-        MatchResult("Lucario", "Link", 2, 0, 0),
-        MatchResult("Lucario", "Link", 3, 0, 0),
+        MatchResult("Lucario", "Banjo & Kazooie", 2, 1, 87),
+        MatchResult("Lucario", "Toon Link", 3, 2, 117),
     ],
     "Snake": [ # 75th Previously
-        MatchResult("Snake", "Link", 1, 0, 0),
-        MatchResult("Snake", "Link", 2, 0, 0),
-        MatchResult("Snake", "Link", 3, 0, 0),
+        MatchResult("Snake", "Pichu", 1, 1, 55),
+        MatchResult("Snake", "Chrom", 2, 2, 44),
+        MatchResult("Snake", "ROB", 3, 1, 37),
     ],
     "Rosalina & Luma": [ # 76th Previously
-        MatchResult("Rosalina & Luma", "Duck Hunt", 1, 0, 0),
-        MatchResult("Rosalina & Luma", "Link", 2, 0, 0),
-        MatchResult("Rosalina & Luma", "Link", 3, 0, 0),
+        MatchResult("Rosalina & Luma", "Duck Hunt", 1, 1, 96),
+        MatchResult("Rosalina & Luma", "Snake", 2, 2, 42),
+        MatchResult("Rosalina & Luma", "Kazuya", 3, 2, 121),
+        MatchResult("Rosalina & Luma", "Wario", 4, 2, 81),
     ],
     "Fox": [ # 77th Previously
-        MatchResult("Fox", "Link", 1, 0, 0),
-        MatchResult("Fox", "Link", 2, 0, 0),
-        MatchResult("Fox", "Link", 3, 0, 0),
+        MatchResult("Fox", "Zero Suit Samus", 1, 2, 55),
+        MatchResult("Fox", "Sephiroth", 2, 2, 82),
+        MatchResult("Fox", "Steve", 3, -1, 84),
     ],
     "Bayonetta": [ # 78th Previously
-        MatchResult("Bayonetta", "Kirby", 1, 0, 0),
-        MatchResult("Bayonetta", "Link", 2, 0, 0),
-        MatchResult("Bayonetta", "Link", 3, 0, 0),
+        MatchResult("Bayonetta", "Kirby", 1, 3, 154),
+        MatchResult("Bayonetta", "Wii Fit Trainer", 2, 1, 10),
+        MatchResult("Bayonetta", "Pokemon Trainer", 3, 2, 0),
     ],
     "Byleth": [ # 79th Previously
-        MatchResult("Byleth", "Link", 1, 0, 0),
-        MatchResult("Byleth", "Link", 2, 0, 0),
-        MatchResult("Byleth", "Link", 3, 0, 0),
+        MatchResult("Byleth", "Mr Game & Watch", 1, 3, 84),
+        MatchResult("Byleth", "Young Link", 2, 1, 12),
+        MatchResult("Byleth", "Ganondorf", 3, 1, 0),
+        MatchResult("Byleth", "Little Mac", 4, 1, 92),
     ],
     "Palutena": [ # 80th Previously
         MatchResult("Palutena", "Snake", 1, 2, 32),
         MatchResult("Palutena", "Richter", 2, 1, 78),
         MatchResult("Palutena", "Corrin", 3, 2, 64),
+    ],
+}
+
+#################################################
+################### ROUND 4 #####################
+#################################################
+
+ROUND_4_RULE = RoundScoringRule(
+    round_number=5,
+    max_percentage=175,
+    early_round_limit=3,
+    early_multiplier_fn=lambda m: 1.33 + (m - 1) / 3,
+    use_matchup_multiplier=True,
+    late_match_division=True,
+)
+
+ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
+    'Bowser': [ # 1st Previously
+        MatchResult('Bowser', "Bowser", 1, 0, 0),
+        MatchResult('Bowser', "Bowser", 2, 0, 0),
+        MatchResult('Bowser', "Bowser", 3, 0, 0),
+    ],
+    'Sephiroth': [ # 2nd Previously
+        MatchResult('Sephiroth', "Bowser", 1, 0, 0),
+        MatchResult('Sephiroth', "Bowser", 2, 1, 0),
+        MatchResult('Sephiroth', "Bowser", 3, 1, 0),
+    ],
+    'Roy': [ # 3rd Previously
+        MatchResult('Roy', "Bowser", 1, 1, 0),
+        MatchResult('Roy', "Bowser", 2, 0, 0),
+        MatchResult('Roy', "Bowser", 3, 3, 0),
+    ],
+    'Dr Mario': [ # 4th Previously
+        MatchResult('Dr Mario', "Bowser", 1, 0, 0),
+        MatchResult('Dr Mario', "Bowser", 2, 0, 0),
+        MatchResult('Dr Mario', "Bowser", 3, 0, 0),
+    ],
+    'Young Link': [ # 5th Previously
+        MatchResult('Young Link', "Bowser", 1, 0, 0),
+        MatchResult('Young Link', "Bowser", 2, 0, 0),
+        MatchResult('Young Link', "Bowser", 3, 0, 0),
+    ],
+    'Chrom': [ # 6th Previously
+        MatchResult('Chrom', "Bowser", 1, 0, 0),
+        MatchResult('Chrom', "Bowser", 2, 0, 0),
+        MatchResult('Chrom', "Bowser", 3, 0, 0),
+    ],
+    'Wolf': [ # 7th Previously
+        MatchResult('Wolf', "Bowser", 1, 0, 0),
+        MatchResult('Wolf', "Bowser", 2, 0, 0),
+        MatchResult('Wolf', "Bowser", 3, 0, 0),
+    ],
+    'Ice Climbers': [ # 8th Previously
+        MatchResult('Ice Climbers', "Bowser", 1, 0, 0),
+        MatchResult('Ice Climbers', "Bowser", 2, 0, 0),
+        MatchResult('Ice Climbers', "Bowser", 3, 0, 0),
+    ],
+    'Bowser Jr': [ # 9th Previously
+        MatchResult('Bowser Jr', "Bowser", 1, 0, 0),
+        MatchResult('Bowser Jr', "Bowser", 2, 0, 0),
+        MatchResult('Bowser Jr', "Bowser", 3, 0, 0),
+    ],
+    'PacMan': [ # 10th Previously
+        MatchResult('PacMan', "Bowser", 1, 0, 0),
+        MatchResult('PacMan', "Bowser", 2, 0, 0),
+        MatchResult('PacMan', "Bowser", 3, 0, 0),
+    ],
+    'Terry': [ # 11th Previously
+        MatchResult('Terry', "Bowser", 1, 0, 0),
+        MatchResult('Terry', "Bowser", 2, 0, 0),
+        MatchResult('Terry', "Bowser", 3, 0, 0),
+    ],
+    'Toon Link': [ # 12th Previously
+        MatchResult('Toon Link', "Bowser", 1, 0, 0),
+        MatchResult('Toon Link', "Bowser", 2, 0, 0),
+        MatchResult('Toon Link', "Bowser", 3, 0, 0),
+    ],
+    'Zelda': [ # 13th Previously
+        MatchResult('Zelda', "Bowser", 1, 0, 0),
+        MatchResult('Zelda', "Bowser", 2, 0, 0),
+        MatchResult('Zelda', "Bowser", 3, 0, 0),
+    ],
+    'Yoshi': [ # 14th Previously
+        MatchResult('Yoshi', "Bowser", 1, 0, 0),
+        MatchResult('Yoshi', "Bowser", 2, 0, 0),
+        MatchResult('Yoshi', "Bowser", 3, 0, 0),
+    ],
+    'Lucas': [ # 15th Previously
+        MatchResult('Lucas', "Bowser", 1, 0, 0),
+        MatchResult('Lucas', "Bowser", 2, 0, 0),
+        MatchResult('Lucas', "Bowser", 3, 0, 0),
+    ],
+    'Pit': [ # 16th Previously
+        MatchResult('Pit', "Bowser", 1, 0, 0),
+        MatchResult('Pit', "Bowser", 2, 0, 0),
+        MatchResult('Pit', "Bowser", 3, 0, 0),
+    ],
+    'Dark Pit': [ # 17th Previously
+        MatchResult('Dark Pit', "Bowser", 1, 0, 0),
+        MatchResult('Dark Pit', "Bowser", 2, 0, 0),
+        MatchResult('Dark Pit', "Bowser", 3, 0, 0),
+    ],
+    'King Dedede': [ # 18th Previously
+        MatchResult('King Dedede', "Bowser", 1, 0, 0),
+        MatchResult('King Dedede', "Bowser", 2, 0, 0),
+        MatchResult('King Dedede', "Bowser", 3, 0, 0),
+    ],
+    'Link': [ # 19th Previously
+        MatchResult('Link', "Bowser", 1, 0, 0),
+        MatchResult('Link', "Bowser", 2, 0, 0),
+        MatchResult('Link', "Bowser", 3, 0, 0),
+    ],
+    'Donkey Kong': [ # 20th Previously
+        MatchResult('Donkey Kong', "Bowser", 1, 0, 0),
+        MatchResult('Donkey Kong', "Bowser", 2, 0, 0),
+        MatchResult('Donkey Kong', "Bowser", 3, 0, 0),
+    ],
+    'Cloud': [ # 21st Previously
+        MatchResult('Cloud', "Bowser", 1, 0, 0),
+        MatchResult('Cloud', "Bowser", 2, 0, 0),
+        MatchResult('Cloud', "Bowser", 3, 0, 0),
+    ],
+    'Dark Samus': [ # 22nd Previously
+        MatchResult('Dark Samus', "Bowser", 1, 0, 0),
+        MatchResult('Dark Samus', "Bowser", 2, 0, 0),
+        MatchResult('Dark Samus', "Bowser", 3, 0, 0),
+    ],
+    'Corrin': [ # 23rd Previously
+        MatchResult('Corrin', "Bowser", 1, 0, 0),
+        MatchResult('Corrin', "Bowser", 2, 0, 0),
+        MatchResult('Corrin', "Bowser", 3, 0, 0),
+    ],
+    'Ganondorf': [ # 24th Previously
+        MatchResult('Ganondorf', "Bowser", 1, 0, 0),
+        MatchResult('Ganondorf', "Bowser", 2, 0, 0),
+        MatchResult('Ganondorf', "Bowser", 3, 0, 0),
+    ],
+    'Sora': [ # 25th Previously
+        MatchResult('Sora', "Bowser", 1, 0, 0),
+        MatchResult('Sora', "Bowser", 2, 0, 0),
+        MatchResult('Sora', "Bowser", 3, 0, 0),
+    ],
+    'Banjo & Kazooie': [ # 26th Previously
+        MatchResult('Banjo & Kazooie', "Bowser", 1, 0, 0),
+        MatchResult('Banjo & Kazooie', "Bowser", 2, 0, 0),
+        MatchResult('Banjo & Kazooie', "Bowser", 3, 0, 0),
+    ],
+    'Hero': [ # 27th Previously
+        MatchResult('Hero', "Bowser", 1, 0, 0),
+        MatchResult('Hero', "Bowser", 2, 0, 0),
+        MatchResult('Hero', "Bowser", 3, 0, 0),
+    ],
+    'Little Mac': [ # 28th Previously
+        MatchResult('Little Mac', "Bowser", 1, 0, 0),
+        MatchResult('Little Mac', "Bowser", 2, 0, 0),
+        MatchResult('Little Mac', "Bowser", 3, 0, 0),
+    ],
+    'Meta Knight': [ # 29th Previously
+        MatchResult('Meta Knight', "Bowser", 1, 0, 0),
+        MatchResult('Meta Knight', "Bowser", 2, 0, 0),
+        MatchResult('Meta Knight', "Bowser", 3, 0, 0),
+    ],
+    'Olimar': [ # 30th Previously
+        MatchResult('Olimar', "Bowser", 1, 0, 0),
+        MatchResult('Olimar', "Bowser", 2, 0, 0),
+        MatchResult('Olimar', "Bowser", 3, 0, 0),
+    ],
+    'Greninja': [ # 31st Previously
+        MatchResult('Greninja', "Bowser", 1, 0, 0),
+        MatchResult('Greninja', "Bowser", 2, 0, 0),
+        MatchResult('Greninja', "Bowser", 3, 0, 0),
+    ],
+    'Robin': [ # 32nd Previously
+        MatchResult('Robin', "Bowser", 1, 0, 0),
+        MatchResult('Robin', "Bowser", 2, 0, 0),
+        MatchResult('Robin', "Bowser", 3, 0, 0),
+    ],
+    'Min Min': [ # 33rd Previously
+        MatchResult('Min Min', "Bowser", 1, 0, 0),
+        MatchResult('Min Min', "Bowser", 2, 0, 0),
+        MatchResult('Min Min', "Bowser", 3, 0, 0),
+    ],
+    'Richter': [ # 34th Previously
+        MatchResult('Richter', "Bowser", 1, 0, 0),
+        MatchResult('Richter', "Bowser", 2, 0, 0),
+        MatchResult('Richter', "Bowser", 3, 0, 0),
+    ],
+    'Kirby': [ # 35th Previously
+        MatchResult('Kirby', "Bowser", 1, 0, 0),
+        MatchResult('Kirby', "Bowser", 2, 0, 0),
+        MatchResult('Kirby', "Bowser", 3, 0, 0),
+    ],
+    'Mii Gunner': [ # 36th Previously
+        MatchResult('Mii Gunner', "Bowser", 1, 0, 0),
+        MatchResult('Mii Gunner', "Bowser", 2, 0, 0),
+        MatchResult('Mii Gunner', "Bowser", 3, 0, 0),
+    ],
+    'Luigi': [ # 37th Previously
+        MatchResult('Luigi', "Bowser", 1, 0, 0),
+        MatchResult('Luigi', "Bowser", 2, 0, 0),
+        MatchResult('Luigi', "Bowser", 3, 0, 0),
+    ],
+    'Duck Hunt': [ # 38th Previously
+        MatchResult('Duck Hunt', "Bowser", 1, 0, 0),
+        MatchResult('Duck Hunt', "Bowser", 2, 0, 0),
+        MatchResult('Duck Hunt', "Bowser", 3, 0, 0),
+    ],
+    'Shulk': [ # 39th Previously
+        MatchResult('Shulk', "Bowser", 1, 0, 0),
+        MatchResult('Shulk', "Bowser", 2, 0, 0),
+        MatchResult('Shulk', "Bowser", 3, 0, 0),
+    ],
+    'Ridley': [ # 40th Previously
+        MatchResult('Ridley', "Bowser", 1, 0, 0),
+        MatchResult('Ridley', "Bowser", 2, 0, 0),
+        MatchResult('Ridley', "Bowser", 3, 0, 0),
+    ],
+    'Lucina': [ # 41st Previously
+        MatchResult('Lucina', "Bowser", 1, 0, 0),
+        MatchResult('Lucina', "Bowser", 2, 0, 0),
+        MatchResult('Lucina', "Bowser", 3, 0, 0),
+    ],
+    'Isabelle': [ # 42nd Previously
+        MatchResult('Isabelle', "Bowser", 1, 0, 0),
+        MatchResult('Isabelle', "Bowser", 2, 0, 0),
+        MatchResult('Isabelle', "Bowser", 3, 0, 0),
+    ],
+    'Incineroar': [ # 43rd Previously
+        MatchResult('Incineroar', "Bowser", 1, 0, 0),
+        MatchResult('Incineroar', "Bowser", 2, 0, 0),
+        MatchResult('Incineroar', "Bowser", 3, 0, 0),
+    ],
+    'Samus': [ # 44th Previously
+        MatchResult('Samus', "Bowser", 1, 0, 0),
+        MatchResult('Samus', "Bowser", 2, 0, 0),
+        MatchResult('Samus', "Bowser", 3, 0, 0),
+    ],
+    'Ike': [ # 45th Previously
+        MatchResult('Ike', "Bowser", 1, 0, 0),
+        MatchResult('Ike', "Bowser", 2, 0, 0),
+        MatchResult('Ike', "Bowser", 3, 0, 0),
+    ],
+    'Sonic': [ # 46th Previously
+        MatchResult('Sonic', "Bowser", 1, 0, 0),
+        MatchResult('Sonic', "Bowser", 2, 0, 0),
+        MatchResult('Sonic', "Bowser", 3, 0, 0),
+    ],
+    'Villager': [ # 47th Previously
+        MatchResult('Villager', "Bowser", 1, 0, 0),
+        MatchResult('Villager', "Bowser", 2, 0, 0),
+        MatchResult('Villager', "Bowser", 3, 0, 0),
+    ],
+    'Simon': [ # 48th Previously
+        MatchResult('Simon', "Bowser", 1, 0, 0),
+        MatchResult('Simon', "Bowser", 2, 0, 0),
+        MatchResult('Simon', "Bowser", 3, 0, 0),
+    ],
+    'Inkling': [ # 49th Previously
+        MatchResult('Inkling', "Bowser", 1, 0, 0),
+        MatchResult('Inkling', "Bowser", 2, 0, 0),
+        MatchResult('Inkling', "Bowser", 3, 0, 0),
+    ],
+    'Mii Brawler': [ # 50th Previously
+        MatchResult('Mii Brawler', "Bowser", 1, 0, 0),
+        MatchResult('Mii Brawler', "Bowser", 2, 0, 0),
+        MatchResult('Mii Brawler', "Bowser", 3, 0, 0),
+    ],
+    'Piranha Plant': [ # 51st Previously
+        MatchResult('Piranha Plant', "Bowser", 1, 0, 0),
+        MatchResult('Piranha Plant', "Bowser", 2, 0, 0),
+        MatchResult('Piranha Plant', "Bowser", 3, 0, 0),
+    ],
+    'Mr Game & Watch': [ # 52nd Previously
+        MatchResult('Mr Game & Watch', "Bowser", 1, 0, 0),
+        MatchResult('Mr Game & Watch', "Bowser", 2, 0, 0),
+        MatchResult('Mr Game & Watch', "Bowser", 3, 0, 0),
+    ],
+    'Mewtwo': [ # 53rd Previously
+        MatchResult('Mewtwo', "Bowser", 1, 0, 0),
+        MatchResult('Mewtwo', "Bowser", 2, 0, 0),
+        MatchResult('Mewtwo', "Bowser", 3, 0, 0),
+    ],
+    'Ryu': [ # 54th Previously
+        MatchResult('Ryu', "Bowser", 1, 0, 0),
+        MatchResult('Ryu', "Bowser", 2, 0, 0),
+        MatchResult('Ryu', "Bowser", 3, 0, 0),
+    ],
+    'Mario': [ # 55th Previously
+        MatchResult('Mario', "Bowser", 1, 0, 0),
+        MatchResult('Mario', "Bowser", 2, 0, 0),
+        MatchResult('Mario', "Bowser", 3, 0, 0),
+    ],
+    'Pokemon Trainer': [ # 56th Previously
+        MatchResult('Pokemon Trainer', "Bowser", 1, 0, 0),
+        MatchResult('Pokemon Trainer', "Bowser", 2, 0, 0),
+        MatchResult('Pokemon Trainer', "Bowser", 3, 0, 0),
+    ],
+    'King K Rool': [ # 57th Previously
+        MatchResult('King K Rool', "Bowser", 1, 0, 0),
+        MatchResult('King K Rool', "Bowser", 2, 0, 0),
+        MatchResult('King K Rool', "Bowser", 3, 0, 0),
+    ],
+    'Pyra & Mythra': [ # 58th Previously
+        MatchResult('Pyra & Mythra', "Bowser", 1, 0, 0),
+        MatchResult('Pyra & Mythra', "Bowser", 2, 0, 0),
+        MatchResult('Pyra & Mythra', "Bowser", 3, 0, 0),
+    ],
+    'Diddy Kong': [ # 59th Previously
+        MatchResult('Diddy Kong', "Bowser", 1, 0, 0),
+        MatchResult('Diddy Kong', "Bowser", 2, 0, 0),
+        MatchResult('Diddy Kong', "Bowser", 3, 0, 0),
+    ],
+    'Mii Swordfighter': [ # 60th Previously
+        MatchResult('Mii Swordfighter', "Bowser", 1, 0, 0),
+        MatchResult('Mii Swordfighter', "Bowser", 2, 0, 0),
+        MatchResult('Mii Swordfighter', "Bowser", 3, 0, 0),
+    ],
+    'Joker': [ # 61st Previously
+        MatchResult('Joker', "Bowser", 1, 0, 0),
+        MatchResult('Joker', "Bowser", 2, 0, 0),
+        MatchResult('Joker', "Bowser", 3, 0, 0),
+    ],
+    'Zero Suit Samus': [ # 62nd Previously
+        MatchResult('Zero Suit Samus', "Bowser", 1, 0, 0),
+        MatchResult('Zero Suit Samus', "Bowser", 2, 0, 0),
+        MatchResult('Zero Suit Samus', "Bowser", 3, 0, 0),
+    ],
+    'Wario': [ # 63rd Previously
+        MatchResult('Wario', "Bowser", 1, 0, 0),
+        MatchResult('Wario', "Bowser", 2, 0, 0),
+        MatchResult('Wario', "Bowser", 3, 0, 0),
+    ],
+    'Wii Fit Trainer': [ # 64th Previously
+        MatchResult('Wii Fit Trainer', "Bowser", 1, 0, 0),
+        MatchResult('Wii Fit Trainer', "Bowser", 2, 0, 0),
+        MatchResult('Wii Fit Trainer', "Bowser", 3, 0, 0),
     ],
 }
 
@@ -2367,6 +2814,8 @@ def main() -> None:
         ranking_changes_dir=RANKING_CHANGES_DIR,
         matchup_df=MATCHUP_DF,
     )
+
+    # Bootstrap rounds in dependency order: each block runs only if prior data exists.
     round_1_summary: RoundSummary | None = None
     if ROUND_1_MATCHES:
         seed_order = list(ROUND_1_MATCHES.keys())
@@ -2375,44 +2824,64 @@ def main() -> None:
         #print(round_1_summary.scores)
         #print_placeholder_only_characters("Round 1", ROUND_1_MATCHES)
         manager._ranking_changes_black_arrows(seed_order, round_1_summary.scores, round_number=1)
+
     round_2_summary: RoundSummary | None = None
-    if ROUND_2_MATCHES and round_1_summary is not None:
+    if round_1_summary is not None and ROUND_2_MATCHES:
         seed_order = [character for character, _score in sorted(round_1_summary.scores.items(), key=lambda item: item[1], reverse=True)]
         round_2_summary = manager.bootstrap_round_from_matches(2, ROUND_2_MATCHES, previous_scores=round_1_summary.scores)
-        ordered_summary = {character: round_2_summary.scores[character] for character in seed_order if character in round_2_summary.scores}
         #print("Rebuilt Round 2 from in-file match data.")
-        #print(ordered_summary)
         #print_placeholder_only_characters("Round 2", ROUND_2_MATCHES)
         manager._ranking_changes_black_arrows(seed_order, round_2_summary.scores, round_number=2)
+
     elim_1_summary: RoundSummary | None = None
-    if ELIMINATION_1_MATCHES and round_2_summary is not None:
+    if round_2_summary is not None and ELIMINATION_1_MATCHES:
         reduced_scores = apply_score_reduction(round_2_summary.scores)
-        elim_1_summary = manager.bootstrap_round_from_matches(3, ELIMINATION_1_MATCHES, previous_scores=reduced_scores)        
-        ordered_summary = dict(sorted(elim_1_summary.scores.items(), key=lambda item: item[1], reverse=True))
+        elim_1_summary = manager.bootstrap_round_from_matches(3, ELIMINATION_1_MATCHES, previous_scores=reduced_scores)
         #print("Rebuilt Elimination 1 from in-file match data.")
-        #print(ordered_summary)
         #print_placeholder_only_characters("Elimination 1", ELIMINATION_1_MATCHES)
+
     round_3_summary: RoundSummary | None = None
-    if ROUND_3_MATCHES and elim_1_summary is not None:
+    if elim_1_summary is not None and ROUND_3_MATCHES:
         elimination_characters = set(ELIMINATION_1_MATCHES.keys())
         round_3_start_scores = apply_selective_score_reduction(elim_1_summary.scores, elimination_characters, exponent=0.53955)
         round_3_summary = manager.bootstrap_round_from_matches(4, ROUND_3_MATCHES, previous_scores=round_3_start_scores)
-        ordered_summary = dict(sorted(round_3_summary.scores.items(), key=lambda item: item[1], reverse=True))
         #print("Rebuilt Round 3 from in-file match data.")
-        #print(ordered_summary)
         print_placeholder_only_characters("Round 3", ROUND_3_MATCHES)
-    elim_2_summary: RoundSummary | None = None
-    if round_3_summary is not None:
-        elimination_2_targets = set(
-            rank_window_characters(round_3_summary.scores, ELIMINATION_2_RANK_START, ELIMINATION_2_RECALC_RANK_END)
-        )
-        elim_2_start_scores = apply_selective_score_reduction(round_3_summary.scores, elimination_2_targets, exponent=0.8037)
-        elim_2_summary = manager.bootstrap_round_from_matches(5, ELIMINATION_2_MATCHES, previous_scores=elim_2_start_scores)
-        ordered_summary = dict(sorted(elim_2_summary.scores.items(), key=lambda item: item[1], reverse=True))
-        print("Rebuilt Elimination 2 from in-file match data.")
-        print(ordered_summary)
-        print_placeholder_only_characters("Elimination 2", ELIMINATION_2_MATCHES)
 
+    elim_2_summary: RoundSummary | None = None
+    round_4_seed_scores: dict[str, float] | None = None
+    if round_3_summary is not None and ELIMINATION_2_MATCHES:
+        elimination_2_targets = set(ELIMINATION_2_MATCHES.keys())
+        elim_2_start_scores = apply_selective_score_reduction(
+            round_3_summary.scores,
+            elimination_2_targets,
+            exponent=ELIMINATION_2_ENTRY_EXPONENT,
+        )
+        elim_2_summary = manager.bootstrap_round_from_matches(5, ELIMINATION_2_MATCHES, previous_scores=elim_2_start_scores)
+        ordered_elim_2_scores = dict(sorted(elim_2_summary.scores.items(), key=lambda item: item[1], reverse=True))
+        #print("Rebuilt Elimination 2 from in-file match data.")
+        #print(ordered_elim_2_scores)
+        round_4_seed_scores = apply_selective_score_reduction(
+            elim_2_summary.scores,
+            set(ELIMINATION_2_MATCHES.keys()),
+            exponent=ROUND_4_SETUP_EXPONENT,
+        )
+        ordered_round_4_seed_scores = dict(
+            sorted(round_4_seed_scores.items(), key=lambda item: item[1], reverse=True)
+        )
+        print("Round 4 seed scores after Elimination 2 rescale.")
+        print(ordered_round_4_seed_scores)
+        #print_placeholder_only_characters("Elimination 2", ELIMINATION_2_MATCHES)
+
+    if round_4_seed_scores is not None and ROUND_4_MATCHES:
+        round_4_engine = Round(
+            round_number=6,
+            matches_by_character=ROUND_4_MATCHES,
+            scoring_rule=ROUND_4_RULE,
+            matchup_df=MATCHUP_DF,
+        )
+        round_4_summary = round_4_engine.calculate(round_4_seed_scores, defaultdict(int))
+        manager._ranking_changes_round_4(round_4_seed_scores, round_4_summary.scores)
 
     final_scores = manager.run()
     #print("Tournament rerun complete.")
@@ -2421,3 +2890,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+

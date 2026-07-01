@@ -1,0 +1,72 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Matchup,Accumulated_Sum
+Captain Falcon,Lucina,1,1,0,2,63,3.511,1.0,11.584
+Captain Falcon,PacMan,2,1,0,1,11,3.222,1.0,14.806
+Captain Falcon,Wario,3,0,1,-1,117,1.402,1.05,16.208
+Ken,Greninja,1,1,0,3,111,4.476,1.0,11.992
+Ken,Inkling,2,0,1,-2,39,-1.228,0.95,10.764
+King K Rool,Bayonetta,1,1,0,3,146,4.421,1.05,11.837
+King K Rool,Steve,2,1,0,3,163,5.614,1.1,17.451
+King K Rool,Sonic,3,1,0,3,172,6.928,1.15,24.379
+Wario,Ridley,1,1,0,2,79,3.22,0.95,10.52
+Wario,Samus,2,1,0,2,85,4.182,1.0,14.702
+Wario,Inkling,3,1,0,1,42,3.338,0.95,18.041
+Mega Man,Samus,1,0,1,-1,106,0.846,1.05,8.07
+Pyra & Mythra,Incineroar,1,1,0,3,125,4.589,1.05,11.562
+Pyra & Mythra,Sephiroth,2,1,0,3,63,6.055,1.0,17.617
+Pyra & Mythra,King K Rool,3,1,0,2,64,4.471,0.85,22.088
+Mii Swordfighter,Lucas,1,1,0,1,0,2.926,1.1,9.35
+Mii Swordfighter,Ryu,2,1,0,2,78,4.249,1.0,13.599
+Mii Swordfighter,Wolf,3,1,0,2,94,5.655,1.15,19.254
+Joker,Isabelle,1,1,0,2,80,3.044,0.9,9.458
+Joker,Peach,2,1,0,2,43,4.581,1.0,14.039
+Joker,Wii Fit Trainer,3,1,0,2,48,5.17,0.95,19.209
+Sheik,Dr Mario,1,1,0,1,84,1.819,0.9,7.927
+Sheik,Corrin,2,1,0,2,110,3.944,1.0,11.872
+Sheik,Ike,3,1,0,2,55,4.826,0.9,16.698
+Jigglypuff,Bowser Jr,1,0,1,-1,131,0.996,1.0,6.815
+Diddy Kong,Bowser,1,1,0,3,114,4.231,0.95,9.487
+Diddy Kong,Rosalina & Luma,2,1,0,2,57,4.448,1.0,13.935
+Diddy Kong,Wario,3,1,0,2,68,5.475,1.05,19.41
+Zero Suit Samus,Robin,1,1,0,2,123,2.597,0.85,7.656
+Zero Suit Samus,Cloud,2,1,0,1,9,3.403,1.05,11.059
+Zero Suit Samus,Diddy Kong,3,1,0,2,0,6.589,1.1,17.648
+ROB,Dr Mario,1,1,0,2,94,2.948,0.9,7.84
+ROB,Robin,2,1,0,1,36,2.686,0.9,10.526
+ROB,Ice Climbers,3,1,0,2,129,4.292,0.95,14.818
+Peach,Peach,1,1,0,2,122,3.063,1.0,7.57
+Peach,Chrom,2,1,0,2,56,4.012,0.9,11.582
+Peach,Lucas,3,1,0,1,10,3.491,0.9,15.073
+Wii Fit Trainer,Lucina,1,1,0,2,136,2.661,0.9,6.969
+Wii Fit Trainer,Sheik,2,1,0,2,33,4.91,1.05,11.879
+Wii Fit Trainer,Roy,3,1,0,2,6,5.625,0.95,17.504
+Wii Fit Trainer,Wolf,4,0,1,-1,17,0.027,1.1,17.531
+Pichu,Link,1,1,0,2,110,3.154,1.0,6.388
+Pichu,Ken,2,1,0,2,78,3.611,0.85,9.999
+Pichu,Falco,3,1,0,2,121,4.609,1.0,14.609
+Pichu,Isabelle,4,1,0,2,112,0.56,0.95,15.169
+Ness,Sonic,1,1,0,2,79,3.39,1.0,6.623
+Ness,Jigglypuff,2,1,0,3,128,5.709,1.05,12.331
+Ness,Little Mac,3,0,1,-1,67,0.688,0.9,13.019
+Lucario,Diddy Kong,1,1,0,2,110,3.469,1.1,6.692
+Lucario,Banjo & Kazooie,2,1,0,1,87,2.5,1.0,9.192
+Lucario,Toon Link,3,1,0,2,117,4.888,1.05,14.08
+Snake,Pichu,1,1,0,1,55,2.018,0.9,5.125
+Snake,Chrom,2,1,0,2,44,4.343,0.95,9.468
+Snake,ROB,3,1,0,1,37,3.571,1.0,13.039
+Rosalina & Luma,Duck Hunt,1,1,0,1,96,1.834,0.95,4.859
+Rosalina & Luma,Snake,2,1,0,2,42,4.591,1.0,9.45
+Rosalina & Luma,Kazuya,3,1,0,2,121,4.84,1.05,14.29
+Rosalina & Luma,Wario,4,1,0,2,81,0.666,1.05,14.956
+Fox,Zero Suit Samus,1,1,0,2,55,3.572,1.0,6.581
+Fox,Sephiroth,2,1,0,2,82,3.79,0.9,10.371
+Fox,Steve,3,0,1,-1,84,1.054,1.1,11.425
+Bayonetta,Kirby,1,1,0,3,154,4.15,1.0,7.159
+Bayonetta,Wii Fit Trainer,2,1,0,1,10,3.07,0.95,10.229
+Bayonetta,Pokemon Trainer,3,1,0,2,0,5.99,1.0,16.219
+Byleth,Mr Game & Watch,1,1,0,3,84,5.384,1.15,8.137
+Byleth,Young Link,2,1,0,1,12,3.052,0.95,11.189
+Byleth,Ganondorf,3,1,0,1,0,3.993,1.0,15.182
+Byleth,Little Mac,4,1,0,1,92,0.387,1.05,15.569
+Palutena,Snake,1,1,0,2,32,3.559,0.95,6.111
+Palutena,Richter,2,1,0,1,78,2.715,1.05,8.826
+Palutena,Corrin,3,1,0,2,64,5.26,1.0,14.086

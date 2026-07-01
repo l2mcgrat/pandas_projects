@@ -17,24 +17,42 @@ ROUND_TABLES_DIR = TABLES_DIR / "per_round"
 ROUND_CHARTS_DIR = CHARTS_DIR / "per_round"
 ROUND_SUMMARY_PDF = OUTPUT_DIR / "next_smash_mains_rounds_summary.pdf"
 
+ROUND_LABEL: dict[int, str] = {
+    1: "round_1",
+    2: "round_2",
+    3: "elimination_1",
+    4: "round_3",
+    5: "elimination_2",
+    6: "round_4",
+}
+ROUND_DISPLAY: dict[int, str] = {
+    1: "Round 1",
+    2: "Round 2",
+    3: "Elimination 1",
+    4: "Round 3",
+    5: "Elimination 2",
+    6: "Round 4",
+}
+LABEL_TO_ROUND: dict[str, int] = {v: k for k, v in ROUND_LABEL.items()}
+
 
 def sorted_round_files(records_dir: Path) -> list[Path]:
     round_files = [
         path
-        for path in records_dir.glob("round_*_records.csv")
-        if re.fullmatch(r"round_\d+_records\.csv", path.name)
+        for path in records_dir.glob("*_records.csv")
+        if path.stem.removesuffix("_records") in LABEL_TO_ROUND
     ]
 
     def round_key(path: Path) -> int:
-        match = re.search(r"round_(\d+)_records\.csv", path.name)
-        return int(match.group(1)) if match else 0
+        label = path.stem.removesuffix("_records")
+        return LABEL_TO_ROUND.get(label, 0)
 
     return sorted(round_files, key=round_key)
 
 
 def round_number_from_path(path: Path) -> int:
-    match = re.search(r"round_(\d+)_records\.csv", path.name)
-    return int(match.group(1)) if match else 0
+    label = path.stem.removesuffix("_records")
+    return LABEL_TO_ROUND.get(label, 0)
 
 
 def prepare_round_dataframe(df: pd.DataFrame) -> pd.DataFrame:
@@ -144,7 +162,8 @@ def save_tables(character_summary: pd.DataFrame, total_summary: pd.DataFrame) ->
 
 
 def save_round_tables(round_number: int, character_summary: pd.DataFrame, total_summary: pd.DataFrame) -> None:
-    round_dir = ROUND_TABLES_DIR / f"round_{round_number}"
+    label = ROUND_LABEL.get(round_number, f"round_{round_number}")
+    round_dir = ROUND_TABLES_DIR / label
     round_dir.mkdir(parents=True, exist_ok=True)
     character_summary.to_csv(round_dir / "average_stock_damage_per_fight_by_character.csv", index=False)
     character_summary[["Character", "Wins", "Losses", "Win_Rate", "Fights"]].to_csv(
@@ -403,6 +422,7 @@ def plot_character_scores_all_rounds(round_records: dict[int, pd.DataFrame], sco
 
     ax.set_xlim(min(x) - 0.35, max(x) + 0.35)
     ax.set_xticks(x)
+    ax.set_xticklabels([ROUND_DISPLAY.get(rn, str(rn)) for rn in x])
     ax.set_xlabel("Round", fontsize=12)
     ax.set_ylabel("Accumulated Score", fontsize=12)
     ax.set_title("Accumulated Character Scores by Round (All Points Labeled)", fontsize=17, pad=16)
@@ -455,30 +475,32 @@ def main() -> None:
 
             save_round_tables(round_number, round_character_summary_ranked, round_total_summary)
 
-            round_chart_dir = ROUND_CHARTS_DIR / f"round_{round_number}"
+            round_label = ROUND_LABEL.get(round_number, f"round_{round_number}")
+            round_display = ROUND_DISPLAY.get(round_number, f"Round {round_number}")
+            round_chart_dir = ROUND_CHARTS_DIR / round_label
 
             plot_avg_stock_and_damage(
                 round_character_summary_ranked,
                 round_chart_dir / "average_stock_and_damage_per_fight.png",
-                f"Round {round_number}: Average Stock Differential and Damage per Fight (Rank Ordered)",
+                f"{round_display}: Average Stock Differential and Damage per Fight (Rank Ordered)",
                 pdf=pdf,
             )
             plot_wins_vs_losses(
                 round_character_summary_ranked,
                 round_chart_dir / "wins_vs_losses_by_character.png",
-                f"Round {round_number}: Wins vs Losses by Character (Rank Ordered)",
+                f"{round_display}: Wins vs Losses by Character (Rank Ordered)",
                 pdf=pdf,
             )
             plot_total_wins_vs_losses(
                 round_total_summary,
                 round_chart_dir / "total_wins_vs_losses_donut.png",
-                f"Round {round_number}: Total Wins vs Losses",
+                f"{round_display}: Total Wins vs Losses",
                 pdf=pdf,
             )
             plot_round_pareto(
                 round_score_profile,
                 round_chart_dir / "pareto_curve_round_scores.png",
-                f"Round {round_number}: Pareto Curve by Character Score",
+                f"{round_display}: Pareto Curve by Character Score",
                 pdf=pdf,
             )
 
