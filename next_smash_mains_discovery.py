@@ -2594,9 +2594,9 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Cloud', "Bowser", 3, 0, 0),
     ],
     'Dark Samus': [ # 22nd Previously
-        MatchResult('Dark Samus', "Bowser", 1, 0, 0),
-        MatchResult('Dark Samus', "Bowser", 2, 0, 0),
-        MatchResult('Dark Samus', "Bowser", 3, 0, 0),
+        MatchResult('Dark Samus', "Ice Climbers", 1, 2, 93),
+        MatchResult('Dark Samus', "Wii Fit Trainer", 2, 1, 0),
+        MatchResult('Dark Samus', "Ryu", 3, 0, 0),
     ],
     'Corrin': [ # 23rd Previously
         MatchResult('Corrin', "Bowser", 1, 0, 0),
@@ -2655,9 +2655,7 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Min Min', "Snake", 3, 2, 0),
     ],
     'Richter': [ # 34th Previously
-        MatchResult('Richter', "Bowser", 1, 0, 0),
-        MatchResult('Richter', "Bowser", 2, 0, 0),
-        MatchResult('Richter', "Bowser", 3, 0, 0),
+        MatchResult('Richter', "Kazuya", 1, -1, 8),
     ],
     'Kirby': [ # 35th Previously
         MatchResult('Kirby', "Bowser", 1, 0, 0),
@@ -2719,8 +2717,8 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Sonic', "Bowser", 3, 0, 0),
     ],
     'Villager': [ # 47th Previously
-        MatchResult('Villager', "Bowser", 1, 0, 0),
-        MatchResult('Villager', "Bowser", 2, 0, 0),
+        MatchResult('Villager', "Ness", 1, 2, 100),
+        MatchResult('Villager', "Sora", 2, -1, 120),
         MatchResult('Villager', "Bowser", 3, 0, 0),
     ],
     'Simon': [ # 48th Previously
@@ -2729,7 +2727,7 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Simon', "Bowser", 3, 0, 0),
     ],
     'Inkling': [ # 49th Previously
-        MatchResult('Inkling', "Bowser", 1, 0, 0),
+        MatchResult('Inkling', "Villager", 1, 1, 111),
         MatchResult('Inkling', "Bowser", 2, 0, 0),
         MatchResult('Inkling', "Bowser", 3, 0, 0),
     ],
