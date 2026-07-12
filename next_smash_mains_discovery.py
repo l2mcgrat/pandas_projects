@@ -2533,9 +2533,9 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Bowser Jr', "Ken", 3, 3, 34),
     ],
     'PacMan': [ # 10th Previously
-        MatchResult('PacMan', "Bowser", 1, 0, 0),
-        MatchResult('PacMan', "Bowser", 2, 0, 0),
-        MatchResult('PacMan', "Bowser", 3, 0, 0),
+        MatchResult('PacMan', "Hero", 1, 1, 119),
+        MatchResult('PacMan', "Min-Min", 2, 2, 112),
+        MatchResult('PacMan', "Richter", 3, 1, 135),
     ],
     'Terry': [ # 11th Previously
         MatchResult('Terry', "Bowser", 1, 0, 0),
@@ -2594,9 +2594,10 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Cloud', "Bowser", 3, 0, 0),
     ],
     'Dark Samus': [ # 22nd Previously
-        MatchResult('Dark Samus', "Ice Climbers", 1, 2, 93),
-        MatchResult('Dark Samus', "Wii Fit Trainer", 2, 1, 0),
-        MatchResult('Dark Samus', "Ryu", 3, 0, 0),
+        MatchResult('Dark Samus', "Ice Climbers", 1, 1, 99),
+        MatchResult('Dark Samus', "Olimar", 2, 2, 207),
+        MatchResult('Dark Samus', "Sonic", 3, 2, 8),
+        MatchResult('Dark Samus', "Snake", 4, 1, 142),
     ],
     'Corrin': [ # 23rd Previously
         MatchResult('Corrin', "Bowser", 1, 0, 0),
@@ -2609,9 +2610,10 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Ganondorf', "Bowser", 3, 0, 0),
     ],
     'Sora': [ # 25th Previously
-        MatchResult('Sora', "Bowser", 1, 0, 0),
-        MatchResult('Sora', "Bowser", 2, 0, 0),
-        MatchResult('Sora', "Bowser", 3, 0, 0),
+        MatchResult('Sora', "Dark Samus", 1, 3, 64),
+        MatchResult('Sora', "Dark Pit", 2, 2, 124),
+        MatchResult('Sora', "Pikachu", 3, 1, 82),
+        MatchResult('Sora', "King K Rool", 4, 1, 0),
     ],
     'Banjo & Kazooie': [ # 26th Previously
         MatchResult('Banjo & Kazooie', "Bowser", 1, 0, 0),
@@ -2634,9 +2636,9 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Meta Knight', "Bowser", 3, 0, 0),
     ],
     'Olimar': [ # 30th Previously
-        MatchResult('Olimar', "Bowser", 1, 0, 0),
-        MatchResult('Olimar', "Bowser", 2, 0, 0),
-        MatchResult('Olimar', "Bowser", 3, 0, 0),
+        MatchResult('Olimar', "Cloud", 1, 1, 0),
+        MatchResult('Olimar', "Diddy Kong", 2, 3, 88),
+        MatchResult('Olimar', "Ike", 3, 2, 140),
     ],
     'Greninja': [ # 31st Previously
         MatchResult('Greninja', "Bowser", 1, 0, 0),
@@ -2655,7 +2657,9 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Min Min', "Snake", 3, 2, 0),
     ],
     'Richter': [ # 34th Previously
-        MatchResult('Richter', "Kazuya", 1, -1, 8),
+        MatchResult('Richter', "Snake", 1, -1, 48),
+        MatchResult('Richter', "Kazuya", 2, 0, 0),
+        MatchResult('Richter', "Kazuya", 3, 0, 0),
     ],
     'Kirby': [ # 35th Previously
         MatchResult('Kirby', "Bowser", 1, 0, 0),
@@ -2702,9 +2706,7 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Incineroar', "Bowser", 3, 0, 0),
     ],
     'Samus': [ # 44th Previously
-        MatchResult('Samus', "Bowser", 1, 0, 0),
-        MatchResult('Samus', "Bowser", 2, 0, 0),
-        MatchResult('Samus', "Bowser", 3, 0, 0),
+        MatchResult('Samus', "Pyra & Mythra", 1, -1, 81),
     ],
     'Ike': [ # 45th Previously
         MatchResult('Ike', "Bowser", 1, 0, 0),
@@ -2717,9 +2719,7 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Sonic', "Bowser", 3, 0, 0),
     ],
     'Villager': [ # 47th Previously
-        MatchResult('Villager', "Ness", 1, 2, 100),
-        MatchResult('Villager', "Sora", 2, -1, 120),
-        MatchResult('Villager', "Bowser", 3, 0, 0),
+        MatchResult('Villager', "Falco", 1, -1, 97),
     ],
     'Simon': [ # 48th Previously
         MatchResult('Simon', "Bowser", 1, 0, 0),
@@ -2727,9 +2727,10 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Simon', "Bowser", 3, 0, 0),
     ],
     'Inkling': [ # 49th Previously
-        MatchResult('Inkling', "Villager", 1, 1, 111),
-        MatchResult('Inkling', "Bowser", 2, 0, 0),
-        MatchResult('Inkling', "Bowser", 3, 0, 0),
+        MatchResult('Inkling', "Byleth", 1, 2, 70),
+        MatchResult('Inkling', "Rosalina & Luma", 2, 2, 92),
+        MatchResult('Inkling', "Pit", 3, 1, 0),
+        MatchResult('Inkling', "Pikachu", 4, 2, 48),
     ],
     'Mii Brawler': [ # 50th Previously
         MatchResult('Mii Brawler', "Bowser", 1, 0, 0),
