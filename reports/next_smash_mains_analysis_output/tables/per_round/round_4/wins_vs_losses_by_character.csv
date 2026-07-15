@@ -1,5 +1,6 @@
 Character,Wins,Losses,Win_Rate,Fights
 Bowser Jr,3,0,1.0,3
+Sephiroth,5,0,1.0,5
 Ice Climbers,4,0,1.0,4
 Zelda,3,0,1.0,3
 Lucas,3,0,1.0,3
@@ -8,10 +9,12 @@ Dark Pit,3,0,1.0,3
 Ridley,3,0,1.0,3
 Young Link,3,0,1.0,3
 Greninja,3,0,1.0,3
+Kirby,4,0,1.0,4
 King Dedede,3,0,1.0,3
 Pit,3,0,1.0,3
 Terry,3,0,1.0,3
 Min Min,3,0,1.0,3
+Cloud,3,0,1.0,3
 Donkey Kong,3,0,1.0,3
 Sora,4,0,1.0,4
 Yoshi,4,0,1.0,4
@@ -21,21 +24,34 @@ Ganondorf,3,0,1.0,3
 Little Mac,3,0,1.0,3
 Robin,4,0,1.0,4
 Mewtwo,4,0,1.0,4
+Shulk,4,0,1.0,4
+Ike,4,0,1.0,4
+Mii Brawler,3,1,0.75,4
 PacMan,3,0,1.0,3
 Inkling,4,0,1.0,4
 Piranha Plant,3,0,1.0,3
 Corrin,3,0,1.0,3
+Hero,2,1,0.6666666666666666,3
 Incineroar,3,0,1.0,3
 Simon,3,0,1.0,3
+Mii Gunner,3,0,1.0,3
 King K Rool,3,0,1.0,3
 Luigi,3,0,1.0,3
+Pokemon Trainer,3,0,1.0,3
 Duck Hunt,3,0,1.0,3
+Mr Game & Watch,2,1,0.6666666666666666,3
 Diddy Kong,3,0,1.0,3
 Pyra & Mythra,3,0,1.0,3
+Isabelle,2,0,1.0,2
 Lucina,1,1,0.5,2
+Meta Knight,1,1,0.5,2
+Wii Fit Trainer,3,0,1.0,3
+Toon Link,0,1,0.0,1
 Richter,0,1,0.0,1
+Sonic,0,1,0.0,1
 Mario,1,1,0.5,2
 Samus,0,1,0.0,1
 Wario,2,1,0.6666666666666666,3
 Villager,0,1,0.0,1
 Ryu,0,1,0.0,1
+Mii Swordfighter,0,1,0.0,1

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -606,8 +607,10 @@ class TournamentManager:
         fig, ax = plt.subplots(figsize=(15, fig_height))
 
         for c, i_rank, f_rank, _delta, color in changes:
-            ax.text(0, i_rank, f"{ordinal(i_rank)} {c}", ha="right", va="center", fontsize=8)
-            ax.text(1, f_rank, f"{ordinal(f_rank)} {c}", ha="left", va="center", fontsize=8)
+            i_score = math.floor(initial_scores[c] * 100) / 100
+            f_score = math.floor(final_scores.get(c, initial_scores[c]) * 100) / 100
+            ax.text(0, i_rank, f"{ordinal(i_rank)} {c}  {i_score:.2f}", ha="right", va="center", fontsize=8)
+            ax.text(1, f_rank, f"{f_score:.2f}  {ordinal(f_rank)} {c}", ha="left", va="center", fontsize=8)
             ax.annotate(
                 "",
                 xy=(1, f_rank),
@@ -687,8 +690,10 @@ class TournamentManager:
         fig, ax = plt.subplots(figsize=(15, fig_height))
 
         for character, initial_rank, final_rank, _delta, color in changes:
-            ax.text(0, initial_rank, f"{ordinal(initial_rank)} {character}", ha="right", va="center", fontsize=8)
-            ax.text(1, final_rank, f"{ordinal(final_rank)} {character}", ha="left", va="center", fontsize=8)
+            i_score = math.floor(initial_scores[character] * 100) / 100
+            f_score = math.floor(final_scores.get(character, initial_scores[character]) * 100) / 100
+            ax.text(0, initial_rank, f"{ordinal(initial_rank)} {character}  {i_score:.2f}", ha="right", va="center", fontsize=8)
+            ax.text(1, final_rank, f"{f_score:.2f}  {ordinal(final_rank)} {character}", ha="left", va="center", fontsize=8)
             ax.annotate(
                 "",
                 xy=(1, final_rank),
@@ -712,11 +717,12 @@ class TournamentManager:
             pdf.savefig(fig, bbox_inches="tight")
         plt.close(fig)
 
-    def _ranking_changes_black_arrows(self, seed_order: list[str], final_scores: dict[str, float], round_number: int = 1) -> None:
+    def _ranking_changes_black_arrows(self, seed_order: list[str], final_scores: dict[str, float], round_number: int = 1, initial_scores: dict[str, float] | None = None) -> None:
         """Generate Round 1 ranking changes with black arrows only (no color coding).
         
         seed_order: List of character names in seed/bracket order (1st seed, 2nd seed, etc.)
         final_scores: Dictionary of character names to their final round scores.
+        initial_scores: Optional dict of scores at the start of this round (shown on left side).
         """
         def ordinal(n: int) -> str:
             if 10 <= n % 100 <= 20:
@@ -746,8 +752,10 @@ class TournamentManager:
         fig, ax = plt.subplots(figsize=(15, fig_height))
         
         for c, i_rank, f_rank, delta in changes:
-            ax.text(0, i_rank, f"{ordinal(i_rank)} {c}", ha="right", va="center", fontsize=8)
-            ax.text(1, f_rank, f"{ordinal(f_rank)} {c}", ha="left", va="center", fontsize=8)
+            left_score = f"  {math.floor(initial_scores[c] * 100) / 100:.2f}" if initial_scores and c in initial_scores else ""
+            right_score = f"{math.floor(final_scores[c] * 100) / 100:.2f}  " if c in final_scores else ""
+            ax.text(0, i_rank, f"{ordinal(i_rank)} {c}{left_score}", ha="right", va="center", fontsize=8)
+            ax.text(1, f_rank, f"{right_score}{ordinal(f_rank)} {c}", ha="left", va="center", fontsize=8)
             ax.annotate(
                 "",
                 xy=(1, f_rank),
@@ -810,8 +818,10 @@ class TournamentManager:
         fig, ax = plt.subplots(figsize=(15, fig_height))
 
         for c, i_rank, f_rank, _delta, color in changes:
-            ax.text(0, i_rank, f"{ordinal(i_rank)} {c}", ha="right", va="center", fontsize=8)
-            ax.text(1, f_rank, f"{ordinal(f_rank)} {c}", ha="left", va="center", fontsize=8)
+            i_score = math.floor(previous_scores[c] * 100) / 100
+            f_score = math.floor(final_scores[c] * 100) / 100
+            ax.text(0, i_rank, f"{ordinal(i_rank)} {c}  {i_score:.2f}", ha="right", va="center", fontsize=8)
+            ax.text(1, f_rank, f"{f_score:.2f}  {ordinal(f_rank)} {c}", ha="left", va="center", fontsize=8)
             ax.annotate(
                 "",
                 xy=(1, f_rank),
@@ -874,8 +884,10 @@ class TournamentManager:
         fig, ax = plt.subplots(figsize=(15, fig_height))
 
         for character, initial_rank, final_rank, _delta, color in changes:
-            ax.text(0, initial_rank, f"{ordinal(initial_rank)} {character}", ha="right", va="center", fontsize=8)
-            ax.text(1, final_rank, f"{ordinal(final_rank)} {character}", ha="left", va="center", fontsize=8)
+            i_score = math.floor(previous_scores[character] * 100) / 100
+            f_score = math.floor(final_scores[character] * 100) / 100
+            ax.text(0, initial_rank, f"{ordinal(initial_rank)} {character}  {i_score:.2f}", ha="right", va="center", fontsize=8)
+            ax.text(1, final_rank, f"{f_score:.2f}  {ordinal(final_rank)} {character}", ha="left", va="center", fontsize=8)
             ax.annotate(
                 "",
                 xy=(1, final_rank),
@@ -2552,19 +2564,20 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Bowser', "PacMan", 3, 2, 57),
     ],
     'Sephiroth': [ # 2nd Previously
-        MatchResult('Sephiroth', "Bowser", 1, 0, 0),
-        MatchResult('Sephiroth', "Bowser", 2, 0, 0),
-        MatchResult('Sephiroth', "Bowser", 3, 0, 0),
+        MatchResult('Sephiroth', "Mr Game & Watch", 1, 1, 0),
+        MatchResult('Sephiroth', "Corrin", 2, 2, 66),
+        MatchResult('Sephiroth', "Sonic", 3, 3, 104),
+        MatchResult('Sephiroth', "Ness", 4, 1, 44),
+        MatchResult('Sephiroth', "Villager", 5, 2, 85),
     ],
     'Roy': [ # 3rd Previously
-        MatchResult('Roy', "Bowser", 1, 0, 0),
-        MatchResult('Roy', "Bowser", 2, 0, 0),
-        MatchResult('Roy', "Bowser", 3, 0, 0),
+        MatchResult('Roy', "Fox", 1, 2, 16),
+        MatchResult('Roy', "Bowser Jr", 2, 1, 0),
+        MatchResult('Roy', "Isabelle", 3, 1, 147),
+        MatchResult('Roy', "Olimar", 4, 0, 0),
     ],
     'Dr Mario': [ # 4th Previously
-        MatchResult('Dr Mario', "Bowser", 1, 0, 0),
-        MatchResult('Dr Mario', "Bowser", 2, 0, 0),
-        MatchResult('Dr Mario', "Bowser", 3, 0, 0),
+        MatchResult('Dr Mario', "Ganondorf", 1, -1, 29),
     ],
     'Young Link': [ # 5th Previously
         MatchResult('Young Link', "PacMan", 1, 2, 152),
@@ -2577,9 +2590,9 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Chrom', "Bowser", 3, 0, 0),
     ],
     'Wolf': [ # 7th Previously
-        MatchResult('Wolf', "Bowser", 1, 0, 0),
-        MatchResult('Wolf', "Bowser", 2, 0, 0),
-        MatchResult('Wolf', "Bowser", 3, 0, 0),
+        MatchResult('Wolf', "Sheik", 1, 1, 125),
+        MatchResult('Wolf', "Mario", 2, 2, 45),
+        MatchResult('Wolf', "Rosalina & Luma", 3, 0, 0),
     ],
     'Ice Climbers': [ # 8th Previously
         MatchResult('Ice Climbers', "Palutena", 1, 2, 28),
@@ -2603,9 +2616,7 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Terry', "Lucas", 3, 2, 12),
     ],
     'Toon Link': [ # 12th Previously
-        MatchResult('Toon Link', "Bowser", 1, 0, 0),
-        MatchResult('Toon Link', "Bowser", 2, 0, 0),
-        MatchResult('Toon Link', "Bowser", 3, 0, 0),
+        MatchResult('Toon Link', "Daisy", 1, -2, 85),
     ],
     'Zelda': [ # 13th Previously
         MatchResult('Zelda', "Falco", 1, 2, 69),
@@ -2639,9 +2650,9 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('King Dedede', "Pit", 3, 1, 0),
     ],
     'Link': [ # 19th Previously
-        MatchResult('Link', "Bowser", 1, 0, 0),
-        MatchResult('Link', "Bowser", 2, 0, 0),
-        MatchResult('Link', "Bowser", 3, 0, 0),
+        MatchResult('Link', "Kazuya", 1, 2, 166),
+        MatchResult('Link', "Terry", 2, 2, 99),
+        MatchResult('Link', "Peach", 3, 0, 0),
     ],
     'Donkey Kong': [ # 20th Previously
         MatchResult('Donkey Kong', "Roy", 1, 3, 172),
@@ -2649,9 +2660,9 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Donkey Kong', "Sephiroth", 3, 1, 44),
     ],
     'Cloud': [ # 21st Previously
-        MatchResult('Cloud', "Snake", 1, 0, 0),
-        MatchResult('Cloud', "Bowser", 2, 0, 0),
-        MatchResult('Cloud', "Bowser", 3, 0, 0),
+        MatchResult('Cloud', "Snake", 1, 1, 57),
+        MatchResult('Cloud', "Isabelle", 2, 1, 21),
+        MatchResult('Cloud', "Samus", 3, 3, 118),
     ],
     'Dark Samus': [ # 22nd Previously
         MatchResult('Dark Samus', "Ice Climbers", 1, 1, 99),
@@ -2681,9 +2692,9 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Banjo & Kazooie', "Bowser", 3, 0, 0),
     ],
     'Hero': [ # 27th Previously
-        MatchResult('Hero', "Bowser", 1, 0, 0),
-        MatchResult('Hero', "Bowser", 2, 0, 0),
-        MatchResult('Hero', "Bowser", 3, 0, 0),
+        MatchResult('Hero', "Zero Suit Samus", 1, 3, 122),
+        MatchResult('Hero', "Chrom", 2, 2, 39),
+        MatchResult('Hero', "Luigi", 3, -1, 0),
     ],
     'Little Mac': [ # 28th Previously
         MatchResult('Little Mac', "Mega Man", 1, 2, 50),
@@ -2691,9 +2702,8 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Little Mac', "Bowser", 3, 1, 106),
     ],
     'Meta Knight': [ # 29th Previously
-        MatchResult('Meta Knight', "Bowser", 1, 0, 0),
-        MatchResult('Meta Knight', "Bowser", 2, 0, 0),
-        MatchResult('Meta Knight', "Bowser", 3, 0, 0),
+        MatchResult('Meta Knight', "Chrom", 1, 2, 141),
+        MatchResult('Meta Knight', "Villager", 2, -1, 60),
     ],
     'Olimar': [ # 30th Previously
         MatchResult('Olimar', "Cloud", 1, 1, 0),
@@ -2723,13 +2733,14 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
     ],
     'Kirby': [ # 35th Previously
         MatchResult('Kirby', "Pokemon Trainer", 1, 2, 37),
-        MatchResult('Kirby', "Pikachu", 2, 0, 0),
-        MatchResult('Kirby', "Bowser", 3, 0, 0),
+        MatchResult('Kirby', "Pikachu", 2, 2, 22),
+        MatchResult('Kirby', "Peach", 3, 2, 13),
+        MatchResult('Kirby', "Piranha Plant", 4, 2, 73)
     ],
     'Mii Gunner': [ # 36th Previously
-        MatchResult('Mii Gunner', "Hero", 1, 0, 0),
-        MatchResult('Mii Gunner', "Bowser", 2, 0, 0),
-        MatchResult('Mii Gunner', "Bowser", 3, 0, 0),
+        MatchResult('Mii Gunner', "Hero", 1, 1, 57),
+        MatchResult('Mii Gunner', "Bowser", 2, 1, 0),
+        MatchResult('Mii Gunner', "Dark Samus", 3, 1, 13),
     ],
     'Luigi': [ # 37th Previously
         MatchResult('Luigi', "Wolf", 1, 1, 93),
@@ -2742,9 +2753,10 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Duck Hunt', "Olimar", 3, 1, 184),
     ],
     'Shulk': [ # 39th Previously
-        MatchResult('Shulk', "Bowser", 1, 0, 0),
-        MatchResult('Shulk', "Bowser", 2, 0, 0),
-        MatchResult('Shulk', "Bowser", 3, 0, 0),
+        MatchResult('Shulk', "Ness", 1, 2, 156),
+        MatchResult('Shulk', "Link", 2, 1, 39),
+        MatchResult('Shulk', "Toon Link", 3, 2, 0),
+        MatchResult('Shulk', "Lucario", 5, 2, 38),
     ],
     'Ridley': [ # 40th Previously
         MatchResult('Ridley', "Greninja", 1, 2, 15),
@@ -2756,9 +2768,8 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Lucina', "Incineroar", 2, -1, 122),
     ],
     'Isabelle': [ # 42nd Previously
-        MatchResult('Isabelle', "Bowser", 1, 0, 0),
-        MatchResult('Isabelle', "Bowser", 2, 0, 0),
-        MatchResult('Isabelle', "Bowser", 3, 0, 0),
+        MatchResult('Isabelle', "Bowser Jr", 1, 2, 127),
+        MatchResult('Isabelle', "Lucario", 2, 1, -78),
     ],
     'Incineroar': [ # 43rd Previously
         MatchResult('Incineroar', "Falco", 1, 1, 0),
@@ -2769,14 +2780,13 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Samus', "Pyra & Mythra", 1, -1, 81),
     ],
     'Ike': [ # 45th Previously
-        MatchResult('Ike', "Bowser", 1, 0, 0),
-        MatchResult('Ike', "Bowser", 2, 0, 0),
-        MatchResult('Ike', "Bowser", 3, 0, 0),
+        MatchResult('Ike', "Kirby", 1, 1, 26),
+        MatchResult('Ike', "Donkey Kong", 2, 2, 54),
+        MatchResult('Ike', "Cloud", 3, 2, 127),
+        MatchResult('Ike', "Banjo & Kazooie", 5, 1, 4),
     ],
     'Sonic': [ # 46th Previously
-        MatchResult('Sonic', "Bowser", 1, 0, 0),
-        MatchResult('Sonic', "Bowser", 2, 0, 0),
-        MatchResult('Sonic', "Bowser", 3, 0, 0),
+        MatchResult('Sonic', "Inkling", 1, -1, 137),
     ],
     'Villager': [ # 47th Previously
         MatchResult('Villager', "Falco", 1, -1, 97),
@@ -2793,9 +2803,10 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Inkling', "Pikachu", 4, 2, 48),
     ],
     'Mii Brawler': [ # 50th Previously
-        MatchResult('Mii Brawler', "Bowser", 1, 0, 0),
-        MatchResult('Mii Brawler', "Bowser", 2, 0, 0),
-        MatchResult('Mii Brawler', "Bowser", 3, 0, 0),
+        MatchResult('Mii Brawler', "Ridley", 1, 2, 23),
+        MatchResult('Mii Brawler', "Ice Climbers", 2, 1, 0),
+        MatchResult('Mii Brawler', "Inkling", 3, 3, 181),
+        MatchResult('Mii Brawler', "Villager", 4, -1, 18),
     ],
     'Piranha Plant': [ # 51st Previously
         MatchResult('Piranha Plant', "Daisy", 1, 1, 0),
@@ -2804,8 +2815,8 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
     ],
     'Mr Game & Watch': [ # 52nd Previously
         MatchResult('Mr Game & Watch', "Mega Man", 1, 2, 47),
-        MatchResult('Mr Game & Watch', "Bowser", 2, 0, 0),
-        MatchResult('Mr Game & Watch', "Bowser", 3, 0, 0),
+        MatchResult('Mr Game & Watch', "Inkling", 2, 3, 161),
+        MatchResult('Mr Game & Watch', "Piranha Plant", 3, -1, 69),
     ],
     'Mewtwo': [ # 53rd Previously
         MatchResult('Mewtwo', "Byleth", 1, 1, 0),
@@ -2821,9 +2832,10 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Mario', "Byleth", 2, -1, 46),
     ],
     'Pokemon Trainer': [ # 56th Previously
-        MatchResult('Pokemon Trainer', "Bowser", 1, 0, 0),
-        MatchResult('Pokemon Trainer', "Bowser", 2, 0, 0),
-        MatchResult('Pokemon Trainer', "Bowser", 3, 0, 0),
+        MatchResult('Pokemon Trainer', "Yoshi", 1, 1, 81),
+        MatchResult('Pokemon Trainer', "Lucas", 2, 2, 159),
+        MatchResult('Pokemon Trainer', "Ryu", 3, 2, 6),
+        MatchResult('Pokemon Trainer', "Ryu", 5, 0, 0),
     ],
     'King K Rool': [ # 57th Previously
         MatchResult('King K Rool', "Pokemon Trainer", 1, 2, 0),
@@ -2841,9 +2853,7 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Diddy Kong', "Villager", 3, 2, 21),
     ],
     'Mii Swordfighter': [ # 60th Previously
-        MatchResult('Mii Swordfighter', "Bowser", 1, 0, 0),
-        MatchResult('Mii Swordfighter', "Bowser", 2, 0, 0),
-        MatchResult('Mii Swordfighter', "Bowser", 3, 0, 0),
+        MatchResult('Mii Swordfighter', "Ness", 1, -1, 50),
     ],
     'Joker': [ # 61st Previously
         MatchResult('Joker', "Bowser", 1, 0, 0),
@@ -2861,9 +2871,9 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Wario', "Wolf", 3, -1, 87),
     ],
     'Wii Fit Trainer': [ # 64th Previously
-        MatchResult('Wii Fit Trainer', "Bowser", 1, 0, 0),
-        MatchResult('Wii Fit Trainer', "Bowser", 2, 0, 0),
-        MatchResult('Wii Fit Trainer', "Bowser", 3, 0, 0),
+        MatchResult('Wii Fit Trainer', "Min Min", 1, 1, 38),
+        MatchResult('Wii Fit Trainer', "Lucas", 2, 1, 87),
+        MatchResult('Wii Fit Trainer', "Sheik", 3, 2, 87),
     ],
 }
 
@@ -2891,7 +2901,7 @@ def main() -> None:
         round_2_summary = manager.bootstrap_round_from_matches(2, ROUND_2_MATCHES, previous_scores=round_1_summary.scores)
         #print("Rebuilt Round 2 from in-file match data.")
         #print_placeholder_only_characters("Round 2", ROUND_2_MATCHES)
-        manager._ranking_changes_black_arrows(seed_order, round_2_summary.scores, round_number=2)
+        manager._ranking_changes_black_arrows(seed_order, round_2_summary.scores, round_number=2, initial_scores=round_1_summary.scores)
 
     elim_1_summary: RoundSummary | None = None
     elim_1_entry_scores: dict[str, float] | None = None
