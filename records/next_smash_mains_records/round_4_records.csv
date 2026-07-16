@@ -7,9 +7,17 @@ Sephiroth,Corrin,2,1,0,2,66,4.363,1.0,29.685
 Sephiroth,Sonic,3,1,0,3,104,6.46,0.95,36.145
 Sephiroth,Ness,4,1,0,1,44,0.393,0.9,36.538
 Sephiroth,Villager,5,1,0,2,85,0.453,0.9,36.991
+Roy,Fox,1,1,0,2,16,3.868,1.0,25.98
+Roy,Bowser Jr,2,1,0,1,0,2.994,0.9,28.974
+Roy,Isabelle,3,1,0,1,147,2.316,1.0,31.291
+Roy,Olimar,4,1,0,1,78,0.369,0.95,31.66
+Dr Mario,Ganondorf,1,0,1,-1,29,0.22,1.0,21.798
 Young Link,PacMan,1,1,0,2,152,2.835,1.0,23.929
 Young Link,Pokemon Trainer,2,1,0,2,26,4.743,1.0,28.672
 Young Link,Bowser,3,1,0,2,111,4.724,1.0,33.395
+Wolf,Sheik,1,1,0,1,125,1.624,0.95,22.472
+Wolf,Mario,2,1,0,2,45,4.562,1.0,27.034
+Wolf,Rosalina & Luma,3,1,0,2,10,5.876,1.0,32.91
 Ice Climbers,Palutena,1,1,0,2,28,3.588,0.95,24.275
 Ice Climbers,Roy,2,1,0,3,96,5.167,0.9,29.442
 Ice Climbers,Greninja,3,1,0,2,80,5.585,1.1,35.027
@@ -43,6 +51,9 @@ Dark Pit,Toon Link,3,1,0,3,168,6.07,1.0,33.597
 King Dedede,Bayonetta,1,1,0,3,159,4.523,1.1,23.608
 King Dedede,Marth,2,1,0,3,159,5.142,1.0,28.75
 King Dedede,Pit,3,1,0,1,0,4.193,1.05,32.943
+Link,Kazuya,1,1,0,2,166,3.138,1.15,22.215
+Link,Terry,2,1,0,2,99,4.454,1.1,26.669
+Link,Peach,3,1,0,2,44,5.488,1.0,32.157
 Donkey Kong,Roy,1,1,0,3,172,3.812,0.95,22.879
 Donkey Kong,Zero Suit Samus,2,1,0,2,27,4.733,1.0,27.613
 Donkey Kong,Sephiroth,3,1,0,1,44,3.491,1.0,31.104

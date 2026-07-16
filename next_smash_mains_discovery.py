@@ -2574,7 +2574,7 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Roy', "Fox", 1, 2, 16),
         MatchResult('Roy', "Bowser Jr", 2, 1, 0),
         MatchResult('Roy', "Isabelle", 3, 1, 147),
-        MatchResult('Roy', "Olimar", 4, 0, 0),
+        MatchResult('Roy', "Olimar", 4, 1, 78),
     ],
     'Dr Mario': [ # 4th Previously
         MatchResult('Dr Mario', "Ganondorf", 1, -1, 29),
@@ -2592,7 +2592,7 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
     'Wolf': [ # 7th Previously
         MatchResult('Wolf', "Sheik", 1, 1, 125),
         MatchResult('Wolf', "Mario", 2, 2, 45),
-        MatchResult('Wolf', "Rosalina & Luma", 3, 0, 0),
+        MatchResult('Wolf', "Rosalina & Luma", 3, 2, 10),
     ],
     'Ice Climbers': [ # 8th Previously
         MatchResult('Ice Climbers', "Palutena", 1, 2, 28),
@@ -2652,7 +2652,7 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
     'Link': [ # 19th Previously
         MatchResult('Link', "Kazuya", 1, 2, 166),
         MatchResult('Link', "Terry", 2, 2, 99),
-        MatchResult('Link', "Peach", 3, 0, 0),
+        MatchResult('Link', "Peach", 3, 2, 44),
     ],
     'Donkey Kong': [ # 20th Previously
         MatchResult('Donkey Kong', "Roy", 1, 3, 172),
