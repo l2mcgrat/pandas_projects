@@ -15,6 +15,9 @@ Dr Mario,Ganondorf,1,0,1,-1,29,0.22,1.0,21.798
 Young Link,PacMan,1,1,0,2,152,2.835,1.0,23.929
 Young Link,Pokemon Trainer,2,1,0,2,26,4.743,1.0,28.672
 Young Link,Bowser,3,1,0,2,111,4.724,1.0,33.395
+Chrom,Samus,1,1,0,2,65,3.846,1.1,24.783
+Chrom,Pyra & Mythra,2,1,0,2,110,4.142,1.05,28.924
+Chrom,Wario,3,1,0,1,61,3.627,1.1,32.551
 Wolf,Sheik,1,1,0,1,125,1.624,0.95,22.472
 Wolf,Mario,2,1,0,2,45,4.562,1.0,27.034
 Wolf,Rosalina & Luma,3,1,0,2,10,5.876,1.0,32.91
@@ -74,6 +77,10 @@ Sora,Dark Samus,1,1,0,3,64,4.834,1.0,23.57
 Sora,Dark Pit,2,1,0,2,124,4.002,1.05,27.572
 Sora,Pikachu,3,1,0,1,82,2.905,0.95,30.476
 Sora,King K Rool,4,1,0,1,0,0.525,1.05,31.001
+Banjo & Kazooie,Piranha Plant,1,1,0,1,0,2.527,0.95,21.211
+Banjo & Kazooie,Sonic,2,1,0,2,54,4.701,1.05,25.912
+Banjo & Kazooie,Ike,3,1,0,3,153,6.865,1.1,32.777
+Banjo & Kazooie,Ridley,5,1,0,2,91,0.446,0.9,33.223
 Hero,Zero Suit Samus,1,1,0,3,122,4.173,0.95,22.757
 Hero,Chrom,2,1,0,2,39,4.619,1.0,27.376
 Hero,Luigi,3,0,1,-1,0,0.0,0.95,27.376
@@ -167,6 +174,13 @@ Diddy Kong,Cloud,1,1,0,1,0,2.66,1.0,13.84
 Diddy Kong,ROB,2,1,0,2,67,4.353,1.0,18.193
 Diddy Kong,Villager,3,1,0,2,21,6.325,1.1,24.519
 Mii Swordfighter,Ness,1,0,1,-1,50,0.399,1.05,11.506
+Joker,Peach,1,1,0,2,130,3.002,1.0,14.088
+Joker,Sephiroth,2,1,0,2,103,3.81,0.95,17.898
+Joker,Ridley,3,0,1,-1,118,1.414,1.05,19.312
+Zero Suit Samus,Richter,1,1,0,1,140,1.756,1.1,12.103
+Zero Suit Samus,Kirby,2,1,0,2,83,4.831,1.15,16.934
+Zero Suit Samus,Palutena,3,1,0,1,100,2.71,0.95,19.644
+Zero Suit Samus,Ridley,4,0,1,-1,69,0.099,1.0,19.742
 Wario,Simon,1,1,0,1,113,1.621,0.9,12.155
 Wario,Chrom,2,1,0,2,58,3.995,0.9,16.15
 Wario,Wolf,3,0,1,-1,87,0.993,1.0,17.143

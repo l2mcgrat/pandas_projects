@@ -2585,9 +2585,9 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Young Link', "Bowser", 3, 2, 111),
     ],
     'Chrom': [ # 6th Previously
-        MatchResult('Chrom', "Bowser", 1, 0, 0),
-        MatchResult('Chrom', "Bowser", 2, 0, 0),
-        MatchResult('Chrom', "Bowser", 3, 0, 0),
+        MatchResult('Chrom', "Samus", 1, 2, 65),
+        MatchResult('Chrom', "Pyra & Mythra", 2, 2, 110),
+        MatchResult('Chrom', "Wario", 3, 1, 61),
     ],
     'Wolf': [ # 7th Previously
         MatchResult('Wolf', "Sheik", 1, 1, 125),
@@ -2687,9 +2687,10 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Sora', "King K Rool", 4, 1, 0),
     ],
     'Banjo & Kazooie': [ # 26th Previously
-        MatchResult('Banjo & Kazooie', "Bowser", 1, 0, 0),
-        MatchResult('Banjo & Kazooie', "Bowser", 2, 0, 0),
-        MatchResult('Banjo & Kazooie', "Bowser", 3, 0, 0),
+        MatchResult('Banjo & Kazooie', "Piranha Plant", 1, 1, 0),
+        MatchResult('Banjo & Kazooie', "Sonic", 2, 2, 54),
+        MatchResult('Banjo & Kazooie', "Ike", 3, 3, 153),
+        MatchResult('Banjo & Kazooie', "Ridley", 5, 2, 91),
     ],
     'Hero': [ # 27th Previously
         MatchResult('Hero', "Zero Suit Samus", 1, 3, 122),
@@ -2856,14 +2857,15 @@ ROUND_4_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult('Mii Swordfighter', "Ness", 1, -1, 50),
     ],
     'Joker': [ # 61st Previously
-        MatchResult('Joker', "Bowser", 1, 0, 0),
-        MatchResult('Joker', "Bowser", 2, 0, 0),
-        MatchResult('Joker', "Bowser", 3, 0, 0),
+        MatchResult('Joker', "Peach", 1, 2, 130),
+        MatchResult('Joker', "Sephiroth", 2, 2, 103),
+        MatchResult('Joker', "Ridley", 3, -1, 118),
     ],
     'Zero Suit Samus': [ # 62nd Previously
-        MatchResult('Zero Suit Samus', "Bowser", 1, 0, 0),
-        MatchResult('Zero Suit Samus', "Bowser", 2, 0, 0),
-        MatchResult('Zero Suit Samus', "Bowser", 3, 0, 0),
+        MatchResult('Zero Suit Samus', "Richter", 1, 1, 140),
+        MatchResult('Zero Suit Samus', "Kirby", 2, 2, 83),
+        MatchResult('Zero Suit Samus', "Palutena", 3, 1, 100),
+        MatchResult('Zero Suit Samus', "Ridley", 4, -1, 69),
     ],
     'Wario': [ # 63rd Previously
         MatchResult('Wario', "Simon", 1, 1, 113),

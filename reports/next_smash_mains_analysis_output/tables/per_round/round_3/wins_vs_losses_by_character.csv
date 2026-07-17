@@ -10,9 +10,11 @@ Ridley,3,0,1.0,3
 Young Link,4,0,1.0,4
 Greninja,3,0,1.0,3
 Kirby,3,0,1.0,3
+Banjo & Kazooie,3,0,1.0,3
 King Dedede,3,0,1.0,3
 Wolf,4,0,1.0,4
 Pit,3,0,1.0,3
+Chrom,3,0,1.0,3
 Terry,4,0,1.0,4
 Link,3,0,1.0,3
 Roy,4,0,1.0,4
@@ -49,10 +51,10 @@ Isabelle,3,0,1.0,3
 Lucina,3,0,1.0,3
 Dr Mario,3,0,1.0,3
 Meta Knight,3,0,1.0,3
-Chrom,3,0,1.0,3
 Wii Fit Trainer,0,1,0.0,1
+Zero Suit Samus,1,1,0.5,2
+Joker,1,1,0.5,2
 Toon Link,3,1,0.75,4
-Banjo & Kazooie,3,0,1.0,3
 Richter,3,0,1.0,3
 Sonic,4,0,1.0,4
 Mario,4,0,1.0,4
@@ -61,8 +63,6 @@ Wario,2,1,0.6666666666666666,3
 Villager,3,0,1.0,3
 Ryu,3,0,1.0,3
 Mii Swordfighter,1,1,0.5,2
-Joker,1,1,0.5,2
-Zero Suit Samus,1,1,0.5,2
 Sheik,1,1,0.5,2
 Captain Falcon,3,0,1.0,3
 Peach,0,1,0.0,1
