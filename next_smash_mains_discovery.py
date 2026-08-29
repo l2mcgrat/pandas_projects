@@ -13,7 +13,7 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from collections import defaultdict
-from typing import Callable
+from typing import Callable, Iterable
 
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
@@ -218,30 +218,28 @@ def build_elimination_5_matches(
     return brackets
 
 
-def build_elimination_5_entry_scores(
-    round_6_scores: dict[str, float],
-    elimination_4_scores: dict[str, float],
-    *,
-    total_remaining: int = 56,
-    coefficient: float = 1 / 5,
-    score_max: float = 58.63,
-) -> dict[str, float]:
-    """Apply the custom entry formula: (T - rank) * C * S_max, where rank is the active rank among the 56 remaining chars."""
-    all_scores = {**elimination_4_scores, **round_6_scores}
-    ordered = [
-        character for character, _score in sorted(all_scores.items(), key=lambda item: item[1], reverse=True)
-    ]
-    rank_lookup = {character: rank for rank, character in enumerate(ordered, start=1)}
-    bracket = build_elimination_5_matchup_window(round_6_scores, elimination_4_scores)
-    return {
-        character: round((total_remaining - rank_lookup.get(character, total_remaining)) * coefficient * score_max, 3)
-        for character in bracket
-    }
-
-
 ELIMINATION_5_ENTRY_COEFFICIENT = 1 / 5
 ELIMINATION_5_SCORE_MAX = 58.63
 ELIMINATION_5_TOTAL_REMAINING = 56
+
+
+def build_elimination_5_entry_scores(
+    round_6_final_ranks: dict[str, int],
+    participants: Iterable[str],
+    *,
+    total_remaining: int = ELIMINATION_5_TOTAL_REMAINING,
+    coefficient: float = ELIMINATION_5_ENTRY_COEFFICIENT,
+    score_max: float = ELIMINATION_5_SCORE_MAX,
+) -> dict[str, float]:
+    """Apply the custom entry formula: ((T - rank) / T) * C * S_max, using each character's Round 6 final rank."""
+    entry_scores: dict[str, float] = {}
+    for character in participants:
+        rank = round_6_final_ranks.get(character, total_remaining)
+        entry_scores[character] = round(
+            ((total_remaining - rank) / total_remaining) * coefficient * score_max,
+            3,
+        )
+    return entry_scores
 
 
 def round_5_placeholder(character: str) -> list[MatchResult]:
@@ -4923,23 +4921,39 @@ def main(
         full_post_round6.update(round_6_summary.scores)
         manager._ranking_changes_round_6(elim_4_final_ranks, full_pre_round6, full_post_round6)
 
+        # Round 6 final ranks: only Round 6 participants reorder into 1-48; 49-86 stay at Elim 4 ranks.
+        round_6_final_ranks = dict(elim_4_final_ranks)
+        round_6_sorted = sorted(
+            [c for c in ROUND_6_MATCHES if c in full_post_round6],
+            key=lambda c: full_post_round6[c],
+            reverse=True,
+        )
+        for idx, character in enumerate(round_6_sorted):
+            round_6_final_ranks[character] = 1 + idx
+
+        # Pre-Elimination 5 score recalculation off the Round 6 results.
+        elim_5_entry_scores = build_elimination_5_entry_scores(round_6_final_ranks, ELIMINATION_5_MATCHES)
+        full_pre_elim5 = dict(full_post_round6)
+        full_pre_elim5.update(elim_5_entry_scores)
+
         # Elimination 5 ranking changes should only reflect the currently completed matches.
-        # Right now that is just Isabelle, so everything else stays at its Round 6 score.
+        # Right now that is just Isabelle, so everything else stays at its pre-Elim-5 score.
         completed_elim5 = {
             character: matches
             for character, matches in ELIMINATION_5_MATCHES.items()
             if matches and any(result.stock_diff != 0 or result.percentage != 0 for result in matches)
         }
         if completed_elim5:
+            elim5_entry_subset = {c: full_pre_elim5[c] for c in completed_elim5 if c in full_pre_elim5}
             elim5_summary = manager.bootstrap_round_from_matches(
                 11,
                 completed_elim5,
-                previous_scores=full_post_round6,
-                previous_adjusted_scores=full_post_round6,
+                previous_scores=elim5_entry_subset,
+                previous_adjusted_scores=elim5_entry_subset,
             )
-            elim5_current_scores = dict(full_post_round6)
+            elim5_current_scores = dict(full_pre_elim5)
             elim5_current_scores.update(elim5_summary.scores)
-            manager._ranking_changes_elimination_5(elim_4_final_ranks, full_post_round6, elim5_current_scores)
+            manager._ranking_changes_elimination_5(round_6_final_ranks, full_pre_elim5, elim5_current_scores)
 
     final_scores = manager.run()
 
