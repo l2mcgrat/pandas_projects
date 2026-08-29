@@ -1157,22 +1157,26 @@ class TournamentManager:
     def _render_elimination_rank_chart(
         self,
         prior_ranks: dict[str, int],
-        entry_scores: dict[str, float],
-        final_scores: dict[str, float],
+        left_scores: dict[str, float],
+        right_scores: dict[str, float],
         *,
         title: str,
         filename: str,
         band_color,
-        reorder_characters: set[str] | None = None,
+        movable_characters: set[str],
         start_rank: int | None = None,
-        use_final_rank_order: bool = False,
+        rank_order_source: str = "score",
     ) -> None:
-        """Shared logic for the text-heavy elimination chart format.
+        """Render the shared elimination-style rank-change chart.
 
-        The left side always uses the pre-elimination scores, and the right side uses the
-        post-elimination scores. The only real differences between elimination charts are:
-        1) which characters are allowed to move, and
-        2) the arrow color rule.
+        The only inputs are:
+        - the prior rank order on the left
+        - the score source on the left
+        - the score source on the right
+        - the set of characters allowed to move
+        - the color rule for the arrows
+
+        There is no hidden branching between rounds; each round passes the exact rule it needs.
         """
 
         def ordinal(n: int) -> str:
@@ -1182,34 +1186,20 @@ class TournamentManager:
                 suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
             return f"{n}{suffix}"
 
-        if not prior_ranks or not entry_scores:
+        if not prior_ranks or not left_scores:
             return
 
         ordered = [c for c, _rank in sorted(prior_ranks.items(), key=lambda x: x[1])]
-
         display_final_ranks: dict[str, int] = {c: prior_ranks[c] for c in ordered}
 
-        if reorder_characters is not None:
-            reorder_chars = [c for c in ordered if c in reorder_characters]
-            if use_final_rank_order:
-                reorder_chars = sorted(reorder_chars, key=lambda c: final_scores.get(c, float("-inf")), reverse=True)
-            if start_rank is not None:
-                for idx, character in enumerate(reorder_chars):
-                    display_final_ranks[character] = start_rank + idx
-            else:
-                current_ranks = self._score_to_ranks(final_scores)
-                for character in reorder_chars:
-                    display_final_ranks[character] = current_ranks.get(character, prior_ranks[character])
+        move_candidates = [c for c in ordered if c in movable_characters]
+        if rank_order_source == "start_rank" and start_rank is not None:
+            for idx, character in enumerate(move_candidates):
+                display_final_ranks[character] = start_rank + idx
         else:
-            changed_characters = {
-                character
-                for character in entry_scores
-                if character in final_scores and final_scores[character] != entry_scores[character]
-            }
-            current_ranks = self._score_to_ranks(final_scores)
-            for character in ordered:
-                if character in changed_characters:
-                    display_final_ranks[character] = current_ranks.get(character, prior_ranks[character])
+            right_ranks = self._score_to_ranks(right_scores)
+            for character in move_candidates:
+                display_final_ranks[character] = right_ranks.get(character, prior_ranks[character])
 
         changes = []
         for character in ordered:
@@ -1223,10 +1213,10 @@ class TournamentManager:
         fig, ax = plt.subplots(figsize=(15, fig_height))
 
         for character, initial_rank, final_rank, _delta, color in changes:
-            i_score = math.floor(entry_scores.get(character, 0) * 100) / 100
-            f_score = math.floor(final_scores.get(character, entry_scores.get(character, 0)) * 100) / 100
-            ax.text(0, initial_rank, f"{ordinal(initial_rank)} {character}  {i_score:.2f}", ha="right", va="center", fontsize=8)
-            ax.text(1, final_rank, f"{f_score:.2f}  {ordinal(final_rank)} {character}", ha="left", va="center", fontsize=8)
+            left_score = math.floor(left_scores.get(character, 0) * 100) / 100
+            right_score = math.floor(right_scores.get(character, left_scores.get(character, 0)) * 100) / 100
+            ax.text(0, initial_rank, f"{ordinal(initial_rank)} {character}  {left_score:.2f}", ha="right", va="center", fontsize=8)
+            ax.text(1, final_rank, f"{right_score:.2f}  {ordinal(final_rank)} {character}", ha="left", va="center", fontsize=8)
             ax.annotate(
                 "",
                 xy=(1, final_rank),
@@ -1266,6 +1256,13 @@ class TournamentManager:
         Only Elim 4 participants (41-64) reorder; everyone else keeps their rank.
         """
 
+        def ordinal(n: int) -> str:
+            if 10 <= n % 100 <= 20:
+                suffix = "th"
+            else:
+                suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+            return f"{n}{suffix}"
+
         def band_color(rank: int) -> str:
             if rank <= 40:
                 return "#7f7f7f"  # grey (locked top 40)
@@ -1277,17 +1274,63 @@ class TournamentManager:
                 return "#d62728"  # red
             return "#000000"      # black (eliminated)
 
-        self._render_elimination_rank_chart(
-            prior_ranks,
-            entry_scores,
-            final_scores,
-            title="Elimination 4: Rank 86 to 1 Rank Changes",
-            filename="elimination_4_ranking_changes.pdf",
-            band_color=band_color,
-            reorder_characters=set(ELIMINATION_4_MATCHES),
-            start_rank=41,
-            use_final_rank_order=True,
+        if not prior_ranks:
+            return
+
+        ordered = [c for c, _rank in sorted(prior_ranks.items(), key=lambda x: x[1])]
+
+        elim4_chars = [c for c in ordered if c in ELIMINATION_4_MATCHES]
+        elim4_sorted = sorted(
+            elim4_chars,
+            key=lambda c: final_scores.get(c, float("-inf")),
+            reverse=True,
         )
+
+        display_final_ranks: dict[str, int] = {}
+        for c in ordered:
+            if c not in ELIMINATION_4_MATCHES:
+                display_final_ranks[c] = prior_ranks[c]
+        for idx, character in enumerate(elim4_sorted):
+            display_final_ranks[character] = 41 + idx
+
+        changes = []
+        for character in ordered:
+            initial_rank = prior_ranks[character]
+            final_rank = display_final_ranks.get(character, initial_rank)
+            delta = initial_rank - final_rank
+            color = band_color(final_rank)
+            changes.append((character, initial_rank, final_rank, delta, color))
+
+        fig_height = max(15, 0.25 * len(changes))
+        fig, ax = plt.subplots(figsize=(15, fig_height))
+
+        for character, initial_rank, final_rank, _delta, color in changes:
+            i_score = math.floor(entry_scores.get(character, 0) * 100) / 100
+            f_score = math.floor(final_scores.get(character, entry_scores.get(character, 0)) * 100) / 100
+            ax.text(0, initial_rank, f"{ordinal(initial_rank)} {character}  {i_score:.2f}", ha="right", va="center", fontsize=8)
+            ax.text(1, final_rank, f"{f_score:.2f}  {ordinal(final_rank)} {character}", ha="left", va="center", fontsize=8)
+            ax.annotate(
+                "",
+                xy=(1, final_rank),
+                xycoords="data",
+                xytext=(0, initial_rank),
+                textcoords="data",
+                arrowprops=dict(arrowstyle="->", lw=2, color=color),
+            )
+
+        self._overlay_rank_change_scorecards(ax, changes, limit=5)
+
+        ax.set_xlim(-0.5, 1.5)
+        ax.set_ylim(0.5, len(changes) + 0.5)
+        ax.invert_yaxis()
+        ax.axis("off")
+        ax.set_title("Elimination 4: Rank 86 to 1 Rank Changes", fontsize=14)
+
+        plt.tight_layout()
+        filename = self.ranking_changes_dir / "elimination_4_ranking_changes.pdf"
+        with PdfPages(filename) as pdf:
+            pdf.savefig(fig, bbox_inches="tight")
+        plt.close(fig)
 
     def _ranking_changes_elimination_5(
         self,
@@ -1295,12 +1338,19 @@ class TournamentManager:
         entry_scores: dict[str, float],
         final_scores: dict[str, float],
     ) -> None:
-        """Generate Elimination 5 ranking changes using the earlier elimination format.
+        """Generate Elimination 5 ranking changes in the Elimination 4 visual format.
 
-        The left side uses the pre-Elimination 5 scores after the refactor/renormalization,
-        while the right side uses the scores after the completed Elimination 5 matches.
-        Only characters whose score changed in this round move; everyone else stays fixed.
+        Rule: keep all non-Elimination-5 characters fixed in their prior rank order; for the
+        Elimination 5 subset, reorder only within their initial rank band based on their final
+        Elimination 5 scores, while keeping the full 86-character chart visible.
         """
+
+        def ordinal(n: int) -> str:
+            if 10 <= n % 100 <= 20:
+                suffix = "th"
+            else:
+                suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+            return f"{n}{suffix}"
 
         def band_color(rank: int) -> str:
             if rank <= 32:
@@ -1311,21 +1361,67 @@ class TournamentManager:
                 return "#d62728"  # red
             return "#000000"      # black
 
-        changed_characters = {
-            character
-            for character in entry_scores
-            if character in final_scores and final_scores[character] != entry_scores[character]
-        }
+        if not prior_ranks:
+            return
 
-        self._render_elimination_rank_chart(
-            prior_ranks,
-            entry_scores,
-            final_scores,
-            title="Elimination 5: Rank 86 to 1 Rank Changes",
-            filename="elimination_5_ranking_changes.pdf",
-            band_color=band_color,
-            reorder_characters=changed_characters,
-        )
+        ordered = [c for c, _rank in sorted(prior_ranks.items(), key=lambda x: x[1])]
+        elim5_chars = [c for c in ordered if c in ELIMINATION_5_MATCHES]
+
+        display_final_ranks: dict[str, int] = {c: prior_ranks[c] for c in ordered}
+
+        if elim5_chars:
+            # Preserve the original rank-band placement, then reorder only within that subset.
+            subset_rank_min = 33
+            subset_rank_max = 56
+            subset_order = sorted(
+                elim5_chars,
+                key=lambda c: final_scores.get(c, float("-inf")),
+                reverse=True,
+            )
+            for idx, character in enumerate(subset_order):
+                target_rank = subset_rank_min + idx
+                if target_rank > subset_rank_max:
+                    target_rank = subset_rank_max
+                display_final_ranks[character] = target_rank
+
+        changes = []
+        for character in ordered:
+            initial_rank = prior_ranks[character]
+            final_rank = display_final_ranks.get(character, initial_rank)
+            delta = initial_rank - final_rank
+            color = band_color(final_rank)
+            changes.append((character, initial_rank, final_rank, delta, color))
+
+        fig_height = max(15, 0.25 * len(changes))
+        fig, ax = plt.subplots(figsize=(15, fig_height))
+
+        for character, initial_rank, final_rank, _delta, color in changes:
+            i_score = math.floor(entry_scores.get(character, 0) * 100) / 100
+            f_score = math.floor(final_scores.get(character, entry_scores.get(character, 0)) * 100) / 100
+            ax.text(0, initial_rank, f"{ordinal(initial_rank)} {character}  {i_score:.2f}", ha="right", va="center", fontsize=8)
+            ax.text(1, final_rank, f"{f_score:.2f}  {ordinal(final_rank)} {character}", ha="left", va="center", fontsize=8)
+            ax.annotate(
+                "",
+                xy=(1, final_rank),
+                xycoords="data",
+                xytext=(0, initial_rank),
+                textcoords="data",
+                arrowprops=dict(arrowstyle="->", lw=2, color=color),
+            )
+
+        self._overlay_rank_change_scorecards(ax, changes, limit=5)
+
+        ax.set_xlim(-0.5, 1.5)
+        ax.set_ylim(0.5, len(changes) + 0.5)
+        ax.invert_yaxis()
+        ax.axis("off")
+        ax.set_title("Elimination 5: Rank 86 to 1 Rank Changes", fontsize=14)
+
+        plt.tight_layout()
+        filename = self.ranking_changes_dir / "elimination_5_ranking_changes.pdf"
+        with PdfPages(filename) as pdf:
+            pdf.savefig(fig, bbox_inches="tight")
+        plt.close(fig)
 
     def _ranking_changes_black_arrows(self, seed_order: list[str], final_scores: dict[str, float], round_number: int = 1, initial_scores: dict[str, float] | None = None) -> None:
         """Generate Round 1 ranking changes with black arrows only (no color coding).
@@ -1661,6 +1757,9 @@ class TournamentManager:
                 pass
             elif round_number == 10 and previous_scores:
                 # Round 6 ranking changes are generated in main() with full 86-char scores.
+                pass
+            elif round_number == 11 and previous_scores:
+                # Elimination 5 is generated explicitly in main() using the text-heavy Elimination 4 layout.
                 pass
             elif previous_scores:
                 eliminated = set(previous_scores) - set(cumulative_scores)
@@ -4513,9 +4612,9 @@ ELIMINATION_5_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("King Dedede", "Pyra & Mythra", 3, 0, 0),
     ],
     "Byleth": [  # 54th Previously
-        MatchResult("Byleth", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Byleth", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Byleth", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Byleth", "Pyra & Mythra", 1, 1, 0),
+        MatchResult("Byleth", "Pyra & Mythra", 2, 2, 0),
+        MatchResult("Byleth", "Pyra & Mythra", 3, 3, 0),
     ],
     "ROB": [  # 55th Previously
         MatchResult("ROB", "Pyra & Mythra", 1, 0, 0),
@@ -4523,9 +4622,9 @@ ELIMINATION_5_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("ROB", "Pyra & Mythra", 3, 0, 0),
     ],
     "Mario": [  # 56th Previously
-        MatchResult("Mario", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Mario", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Mario", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Mario", "Pyra & Mythra", 1, 2, 0),
+        MatchResult("Mario", "Pyra & Mythra", 2, 2, 0),
+        MatchResult("Mario", "Pyra & Mythra", 3, 2, 0),
     ],
 }
 
@@ -4735,7 +4834,7 @@ def main(
     if round_4_summary is not None and elim_3_summary is not None and ROUND_5_MATCHES:
         round_5_entry_scores = build_round_5_entry_scores(round_4_summary.scores, elim_3_summary.scores)
         round_5_entry_adjusted_scores = build_round_5_entry_scores(round_4_summary.adjusted_scores, elim_3_summary.adjusted_scores)
-        print_score_window("Round 5 entry scores", round_5_entry_scores)
+        #print_score_window("Round 5 entry scores", round_5_entry_scores)
         if placeholder_only_characters(ROUND_5_MATCHES) == list(ROUND_5_MATCHES.keys()):
             print_placeholder_only_characters("Round 5", ROUND_5_MATCHES)
         else:
@@ -4745,11 +4844,11 @@ def main(
                 previous_scores=round_5_entry_scores,
                 previous_adjusted_scores=round_5_entry_adjusted_scores,
             )
-            print("Rebuilt Round 5 from in-file match data.")
-            print_placeholder_only_characters("Round 5", ROUND_5_MATCHES)
+            #print("Rebuilt Round 5 from in-file match data.")
+            #print_placeholder_only_characters("Round 5", ROUND_5_MATCHES)
             # Print post-match scores for Round 5 participants (more accurate than entry scores)
             current_round_5_scores = {c: round_5_summary.scores[c] for c in round_5_entry_scores if c in round_5_summary.scores}
-            print_score_window("Round 5 current scores (post-match)", current_round_5_scores)
+            #print_score_window("Round 5 current scores (post-match)", current_round_5_scores)
             # Build the full 86-char pre-round-5 score dict (elim-3 chars refactored).
             # elim_3_summary.scores carries all accumulated history so it covers all 86 chars.
             full_pre_round5_main = {
@@ -4784,7 +4883,7 @@ def main(
             previous_scores=elim_4_entry_scores,
             previous_adjusted_scores=elim_4_entry_adjusted_scores,
         )
-        print_placeholder_only_characters("Elimination 4", ELIMINATION_4_MATCHES)
+        #print_placeholder_only_characters("Elimination 4", ELIMINATION_4_MATCHES)
 
         # Full 86-char post-elim4 scores for ranking changes chart.
         full_post_elim4 = dict(full_pre_elim4)
@@ -4817,7 +4916,7 @@ def main(
             previous_scores=round_6_entry_scores,
             previous_adjusted_scores=round_6_entry_adjusted,
         )
-        print_placeholder_only_characters("Round 6", ROUND_6_MATCHES)
+        #print_placeholder_only_characters("Round 6", ROUND_6_MATCHES)
 
         # Ranking changes chart: full 86-char post-round-6 scores
         full_post_round6 = dict(full_pre_round6)

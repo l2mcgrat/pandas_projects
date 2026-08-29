@@ -1,5 +1,6 @@
 Character,Wins,Losses,Win_Rate,Fights
 Isabelle,3,0,1.0,3
+Mario,4,0,1.0,4
 Ganondorf,4,0,1.0,4
 Young Link,4,0,1.0,4
 Piranha Plant,2,1,0.6666666666666666,3
@@ -55,7 +56,6 @@ Sonic,4,0,1.0,4
 Wario,2,1,0.6666666666666666,3
 King Dedede,3,0,1.0,3
 ROB,1,1,0.5,2
-Mario,4,0,1.0,4
 PacMan,3,0,1.0,3
 Shulk,3,0,1.0,3
 Richter,3,0,1.0,3
