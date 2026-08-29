@@ -4931,8 +4931,11 @@ def main(
         for idx, character in enumerate(round_6_sorted):
             round_6_final_ranks[character] = 1 + idx
 
-        # Pre-Elimination 5 score recalculation off the Round 6 results.
-        elim_5_entry_scores = build_elimination_5_entry_scores(round_6_final_ranks, ELIMINATION_5_MATCHES)
+        # Pre-Elimination 5 score recalculation off the Round 6 results, applied to all 56 remaining characters.
+        remaining_pre_elim5 = [
+            c for c, rank in round_6_final_ranks.items() if rank <= ELIMINATION_5_TOTAL_REMAINING
+        ]
+        elim_5_entry_scores = build_elimination_5_entry_scores(round_6_final_ranks, remaining_pre_elim5)
         full_pre_elim5 = dict(full_post_round6)
         full_pre_elim5.update(elim_5_entry_scores)
 
