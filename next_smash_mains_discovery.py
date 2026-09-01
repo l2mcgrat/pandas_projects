@@ -47,6 +47,7 @@ ROUND_LABEL: dict[int, str] = {
     9: "elimination_4",
     10: "round_6",
     11: "elimination_5",
+    12: "round_7",
 }
 ROUND_DISPLAY: dict[int, str] = {
     1: "Round 1",
@@ -60,6 +61,7 @@ ROUND_DISPLAY: dict[int, str] = {
     9: "Elimination 4",
     10: "Round 6",
     11: "Elimination 5",
+    12: "Round 7",
 }
 LABEL_TO_ROUND: dict[str, int] = {v: k for k, v in ROUND_LABEL.items()}
 ROUND_5_ELIMINATION_3_ENTRY_EXPONENT = 0.8905
@@ -590,6 +592,40 @@ class Round:
         return summary
 
 
+@dataclass
+class StageConfig:
+    """Declarative definition of a late-tournament stage (Elimination 4 onward).
+
+    entry_transform receives the full 86-character score state plus the prior ranks and
+    returns the full 86-character state after the stage's pre-round recalculation.
+    """
+
+    round_number: int
+    matches: dict[str, list[MatchResult]]
+    entry_transform: Callable[[dict[str, float], dict[str, int]], dict[str, float]]
+    reorder_start_rank: int
+    reorder_end_rank: int
+    rank_bands: list[tuple[int, str]]
+    chart_title: str
+    chart_filename: str
+    completed_matches_only: bool = False
+
+    def color_for(self, rank: int) -> str:
+        for max_rank, color in self.rank_bands:
+            if rank <= max_rank:
+                return color
+        return "#000000"
+
+
+@dataclass
+class StageResult:
+    ranks: dict[str, int]
+    scores: dict[str, float]
+    adjusted_scores: dict[str, float]
+    entry_scores: dict[str, float]
+    summary: RoundSummary | None
+
+
 class TournamentManager:
     def __init__(self, records_dir: Path, reports_dir: Path, ranking_changes_dir: Path, matchup_df: pd.DataFrame):
         self.records_dir = records_dir
@@ -598,6 +634,8 @@ class TournamentManager:
         self.matchup_df = matchup_df
         self.elimination_rounds = {3, 5, 8, 10, 12, 14, 16, 18, 20, 22}
         self.rules = self._build_round_rules()
+        # Constrained ranks carried out of the most recent StageConfig run.
+        self.latest_stage_ranks: dict[str, int] = {}
 
     @staticmethod
     def _build_round_rules() -> dict[int, RoundScoringRule]:
@@ -613,7 +651,8 @@ class TournamentManager:
         rules[9] = ELIMINATION_4_RULE
         rules[10] = ROUND_6_RULE
         rules[11] = ELIMINATION_5_RULE
-        for r in range(12, 51):
+        rules[12] = ROUND_7_RULE
+        for r in range(13, 51):
             rules[r] = RoundScoringRule(round_number=r, max_percentage=175, early_multiplier_fn=lambda _m: 1.0)
         return rules
 
@@ -743,92 +782,6 @@ class TournamentManager:
         ax.set_title("Round 5: Rank 86 to 1 Ranking Changes", fontsize=14)
         plt.tight_layout()
         filename = self.ranking_changes_dir / "round_5_ranking_changes.pdf"
-        with PdfPages(filename) as pdf:
-            pdf.savefig(fig, bbox_inches="tight")
-        plt.close(fig)
-
-    def _ranking_changes_round_6(
-        self,
-        prior_ranks: dict[str, int],
-        entry_scores: dict[str, float],
-        final_scores: dict[str, float],
-    ) -> None:
-        """Generate Round 6 ranking changes showing all 86 characters.
-
-        prior_ranks: the Elim 4 final ranks (1-86) — used as the left side.
-        Only Round 6 participants (ranks 1-48) reorder; 49-86 locked.
-        """
-
-        def ordinal(n: int) -> str:
-            if 10 <= n % 100 <= 20:
-                suffix = "th"
-            else:
-                suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
-            return f"{n}{suffix}"
-
-        def band_color(rank: int) -> str:
-            if rank <= 32:
-                return "#2ca02c"  # green — top 32
-            if rank <= 56:
-                return "#bcbd22"  # yellow — ranks 33-56
-            if rank <= 64:
-                return "#d62728"  # red — ranks 57-64
-            return "#000000"      # black — ranks 65-86
-        if not prior_ranks:
-            return
-
-        ordered = [c for c, _rank in sorted(prior_ranks.items(), key=lambda x: x[1])]
-
-        # Only Round 6 participants reorder; everyone else locked.
-        r6_chars = [c for c in ordered if c in ROUND_6_MATCHES]
-        r6_sorted = sorted(
-            r6_chars,
-            key=lambda c: final_scores.get(c, float("-inf")),
-            reverse=True,
-        )
-
-        display_final_ranks: dict[str, int] = {}
-        for c in ordered:
-            if c not in ROUND_6_MATCHES:
-                display_final_ranks[c] = prior_ranks[c]
-        for idx, character in enumerate(r6_sorted):
-            display_final_ranks[character] = 1 + idx
-
-        changes = []
-        for character in ordered:
-            initial_rank = prior_ranks[character]
-            final_rank = display_final_ranks.get(character, initial_rank)
-            delta = initial_rank - final_rank
-            color = band_color(final_rank)
-            changes.append((character, initial_rank, final_rank, delta, color))
-
-        fig_height = max(15, 0.25 * len(changes))
-        fig, ax = plt.subplots(figsize=(15, fig_height))
-
-        for character, initial_rank, final_rank, _delta, color in changes:
-            i_score = math.floor(entry_scores.get(character, 0) * 100) / 100
-            f_score = math.floor(final_scores.get(character, entry_scores.get(character, 0)) * 100) / 100
-            ax.text(0, initial_rank, f"{ordinal(initial_rank)} {character}  {i_score:.2f}", ha="right", va="center", fontsize=8)
-            ax.text(1, final_rank, f"{f_score:.2f}  {ordinal(final_rank)} {character}", ha="left", va="center", fontsize=8)
-            ax.annotate(
-                "",
-                xy=(1, final_rank),
-                xycoords="data",
-                xytext=(0, initial_rank),
-                textcoords="data",
-                arrowprops=dict(arrowstyle="->", lw=2, color=color),
-            )
-
-        self._overlay_rank_change_scorecards(ax, changes, limit=5)
-
-        ax.set_xlim(-0.5, 1.5)
-        ax.set_ylim(0.5, len(changes) + 0.5)
-        ax.invert_yaxis()
-        ax.axis("off")
-        ax.set_title("Round 6: Rank 86 to 1 Rank Changes", fontsize=14)
-
-        plt.tight_layout()
-        filename = self.ranking_changes_dir / "round_6_ranking_changes.pdf"
         with PdfPages(filename) as pdf:
             pdf.savefig(fig, bbox_inches="tight")
         plt.close(fig)
@@ -1155,27 +1108,15 @@ class TournamentManager:
     def _render_elimination_rank_chart(
         self,
         prior_ranks: dict[str, int],
+        display_final_ranks: dict[str, int],
         left_scores: dict[str, float],
         right_scores: dict[str, float],
         *,
         title: str,
         filename: str,
-        band_color,
-        movable_characters: set[str],
-        start_rank: int | None = None,
-        rank_order_source: str = "score",
+        band_color: Callable[[int], str],
     ) -> None:
-        """Render the shared elimination-style rank-change chart.
-
-        The only inputs are:
-        - the prior rank order on the left
-        - the score source on the left
-        - the score source on the right
-        - the set of characters allowed to move
-        - the color rule for the arrows
-
-        There is no hidden branching between rounds; each round passes the exact rule it needs.
-        """
+        """Render the shared 86-character rank-change chart used by every late stage."""
 
         def ordinal(n: int) -> str:
             if 10 <= n % 100 <= 20:
@@ -1188,16 +1129,6 @@ class TournamentManager:
             return
 
         ordered = [c for c, _rank in sorted(prior_ranks.items(), key=lambda x: x[1])]
-        display_final_ranks: dict[str, int] = {c: prior_ranks[c] for c in ordered}
-
-        move_candidates = [c for c in ordered if c in movable_characters]
-        if rank_order_source == "start_rank" and start_rank is not None:
-            for idx, character in enumerate(move_candidates):
-                display_final_ranks[character] = start_rank + idx
-        else:
-            right_ranks = self._score_to_ranks(right_scores)
-            for character in move_candidates:
-                display_final_ranks[character] = right_ranks.get(character, prior_ranks[character])
 
         changes = []
         for character in ordered:
@@ -1237,189 +1168,71 @@ class TournamentManager:
             pdf.savefig(fig, bbox_inches="tight")
         plt.close(fig)
 
-    def _ranking_changes_elimination_4(
+    def run_stage(
         self,
+        config: StageConfig,
         prior_ranks: dict[str, int],
-        entry_scores: dict[str, float],
-        final_scores: dict[str, float],
-    ) -> None:
-        """Generate Elimination 4 ranking changes showing all 86 characters.
+        full_scores: dict[str, float],
+        full_adjusted: dict[str, float],
+    ) -> StageResult:
+        """Apply one late-tournament stage: pre-round recalculation, matches, ranks, chart."""
+        played = config.matches
+        if config.completed_matches_only:
+            played = {
+                character: matches
+                for character, matches in config.matches.items()
+                if matches and any(result.stock_diff != 0 or result.percentage != 0 for result in matches)
+            }
 
-        prior_ranks: the Round 5 final ranks (1-86) — used as the left side.
-        entry_scores: scores entering Elimination 4 (after refactoring).
-        final_scores: scores after Elimination 4 matches.
+        pending = [character for character in config.matches if character not in played]
+        if pending:
+            label = ROUND_DISPLAY.get(config.round_number, f"Round {config.round_number}")
+            print(f"{label} not played yet ({len(pending)} of {len(config.matches)}):")
+            for character in pending:
+                print(f"  - {character}")
 
-        Ranks 1-40: grey.  41-48: green.  49-56: yellow.
-        57-64: red.  65-86: black.
-        Only Elim 4 participants (41-64) reorder; everyone else keeps their rank.
-        """
+        if not played:
+            return StageResult(prior_ranks, full_scores, full_adjusted, {}, None)
 
-        def ordinal(n: int) -> str:
-            if 10 <= n % 100 <= 20:
-                suffix = "th"
-            else:
-                suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
-            return f"{n}{suffix}"
+        full_pre = config.entry_transform(full_scores, prior_ranks)
+        full_pre_adjusted = config.entry_transform(full_adjusted, prior_ranks)
 
-        def band_color(rank: int) -> str:
-            if rank <= 40:
-                return "#7f7f7f"  # grey (locked top 40)
-            if rank <= 48:
-                return "#2ca02c"  # green
-            if rank <= 56:
-                return "#bcbd22"  # yellow
-            if rank <= 64:
-                return "#d62728"  # red
-            return "#000000"      # black (eliminated)
-
-        if not prior_ranks:
-            return
-
-        ordered = [c for c, _rank in sorted(prior_ranks.items(), key=lambda x: x[1])]
-
-        elim4_chars = [c for c in ordered if c in ELIMINATION_4_MATCHES]
-        elim4_sorted = sorted(
-            elim4_chars,
-            key=lambda c: final_scores.get(c, float("-inf")),
-            reverse=True,
+        entry_scores = {c: full_pre[c] for c in played if c in full_pre}
+        entry_adjusted = {c: full_pre_adjusted[c] for c in played if c in full_pre_adjusted}
+        summary = self.bootstrap_round_from_matches(
+            config.round_number,
+            played,
+            previous_scores=entry_scores,
+            previous_adjusted_scores=entry_adjusted,
         )
 
-        display_final_ranks: dict[str, int] = {}
-        for c in ordered:
-            if c not in ELIMINATION_4_MATCHES:
-                display_final_ranks[c] = prior_ranks[c]
-        for idx, character in enumerate(elim4_sorted):
-            display_final_ranks[character] = 41 + idx
+        full_post = dict(full_pre)
+        full_post.update(summary.scores)
+        full_post_adjusted = dict(full_pre_adjusted)
+        full_post_adjusted.update(summary.adjusted_scores)
 
-        changes = []
-        for character in ordered:
-            initial_rank = prior_ranks[character]
-            final_rank = display_final_ranks.get(character, initial_rank)
-            delta = initial_rank - final_rank
-            color = band_color(final_rank)
-            changes.append((character, initial_rank, final_rank, delta, color))
+        # Only the stage's declared participants move, and only inside their rank band.
+        participants = sorted(
+            (c for c in config.matches if c in full_post),
+            key=lambda c: full_post[c],
+            reverse=True,
+        )
+        new_ranks = dict(prior_ranks)
+        for idx, character in enumerate(participants):
+            new_ranks[character] = min(config.reorder_start_rank + idx, config.reorder_end_rank)
 
-        fig_height = max(15, 0.25 * len(changes))
-        fig, ax = plt.subplots(figsize=(15, fig_height))
+        self._render_elimination_rank_chart(
+            prior_ranks,
+            new_ranks,
+            full_pre,
+            full_post,
+            title=config.chart_title,
+            filename=config.chart_filename,
+            band_color=config.color_for,
+        )
 
-        for character, initial_rank, final_rank, _delta, color in changes:
-            i_score = math.floor(entry_scores.get(character, 0) * 100) / 100
-            f_score = math.floor(final_scores.get(character, entry_scores.get(character, 0)) * 100) / 100
-            ax.text(0, initial_rank, f"{ordinal(initial_rank)} {character}  {i_score:.2f}", ha="right", va="center", fontsize=8)
-            ax.text(1, final_rank, f"{f_score:.2f}  {ordinal(final_rank)} {character}", ha="left", va="center", fontsize=8)
-            ax.annotate(
-                "",
-                xy=(1, final_rank),
-                xycoords="data",
-                xytext=(0, initial_rank),
-                textcoords="data",
-                arrowprops=dict(arrowstyle="->", lw=2, color=color),
-            )
-
-        self._overlay_rank_change_scorecards(ax, changes, limit=5)
-
-        ax.set_xlim(-0.5, 1.5)
-        ax.set_ylim(0.5, len(changes) + 0.5)
-        ax.invert_yaxis()
-        ax.axis("off")
-        ax.set_title("Elimination 4: Rank 86 to 1 Rank Changes", fontsize=14)
-
-        plt.tight_layout()
-        filename = self.ranking_changes_dir / "elimination_4_ranking_changes.pdf"
-        with PdfPages(filename) as pdf:
-            pdf.savefig(fig, bbox_inches="tight")
-        plt.close(fig)
-
-    def _ranking_changes_elimination_5(
-        self,
-        prior_ranks: dict[str, int],
-        entry_scores: dict[str, float],
-        final_scores: dict[str, float],
-    ) -> None:
-        """Generate Elimination 5 ranking changes in the Elimination 4 visual format.
-
-        Rule: keep all non-Elimination-5 characters fixed in their prior rank order; for the
-        Elimination 5 subset, reorder only within their initial rank band based on their final
-        Elimination 5 scores, while keeping the full 86-character chart visible.
-        """
-
-        def ordinal(n: int) -> str:
-            if 10 <= n % 100 <= 20:
-                suffix = "th"
-            else:
-                suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
-            return f"{n}{suffix}"
-
-        def band_color(rank: int) -> str:
-            if rank <= 32:
-                return "#7f7f7f"  # grey
-            if rank <= 48:
-                return "#2ca02c"  # green
-            if rank <= 56:
-                return "#d62728"  # red
-            return "#000000"      # black
-
-        if not prior_ranks:
-            return
-
-        ordered = [c for c, _rank in sorted(prior_ranks.items(), key=lambda x: x[1])]
-        elim5_chars = [c for c in ordered if c in ELIMINATION_5_MATCHES]
-
-        display_final_ranks: dict[str, int] = {c: prior_ranks[c] for c in ordered}
-
-        if elim5_chars:
-            # Preserve the original rank-band placement, then reorder only within that subset.
-            subset_rank_min = 33
-            subset_rank_max = 56
-            subset_order = sorted(
-                elim5_chars,
-                key=lambda c: final_scores.get(c, float("-inf")),
-                reverse=True,
-            )
-            for idx, character in enumerate(subset_order):
-                target_rank = subset_rank_min + idx
-                if target_rank > subset_rank_max:
-                    target_rank = subset_rank_max
-                display_final_ranks[character] = target_rank
-
-        changes = []
-        for character in ordered:
-            initial_rank = prior_ranks[character]
-            final_rank = display_final_ranks.get(character, initial_rank)
-            delta = initial_rank - final_rank
-            color = band_color(final_rank)
-            changes.append((character, initial_rank, final_rank, delta, color))
-
-        fig_height = max(15, 0.25 * len(changes))
-        fig, ax = plt.subplots(figsize=(15, fig_height))
-
-        for character, initial_rank, final_rank, _delta, color in changes:
-            i_score = math.floor(entry_scores.get(character, 0) * 100) / 100
-            f_score = math.floor(final_scores.get(character, entry_scores.get(character, 0)) * 100) / 100
-            ax.text(0, initial_rank, f"{ordinal(initial_rank)} {character}  {i_score:.2f}", ha="right", va="center", fontsize=8)
-            ax.text(1, final_rank, f"{f_score:.2f}  {ordinal(final_rank)} {character}", ha="left", va="center", fontsize=8)
-            ax.annotate(
-                "",
-                xy=(1, final_rank),
-                xycoords="data",
-                xytext=(0, initial_rank),
-                textcoords="data",
-                arrowprops=dict(arrowstyle="->", lw=2, color=color),
-            )
-
-        self._overlay_rank_change_scorecards(ax, changes, limit=5)
-
-        ax.set_xlim(-0.5, 1.5)
-        ax.set_ylim(0.5, len(changes) + 0.5)
-        ax.invert_yaxis()
-        ax.axis("off")
-        ax.set_title("Elimination 5: Rank 86 to 1 Rank Changes", fontsize=14)
-
-        plt.tight_layout()
-        filename = self.ranking_changes_dir / "elimination_5_ranking_changes.pdf"
-        with PdfPages(filename) as pdf:
-            pdf.savefig(fig, bbox_inches="tight")
-        plt.close(fig)
+        self.latest_stage_ranks = dict(new_ranks)
+        return StageResult(new_ranks, full_post, full_post_adjusted, entry_scores, summary)
 
     def _ranking_changes_black_arrows(self, seed_order: list[str], final_scores: dict[str, float], round_number: int = 1, initial_scores: dict[str, float] | None = None) -> None:
         """Generate Round 1 ranking changes with black arrows only (no color coding).
@@ -1750,14 +1563,8 @@ class TournamentManager:
                 self._ranking_changes_elimination_3(previous_scores, cumulative_scores)
             elif round_number == 8 and previous_scores:
                 self._ranking_changes_round_5(full_pre_round5, cumulative_scores)
-            elif round_number == 9 and previous_scores:
-                # Elimination 4 ranking changes are generated in main() with full 86-char scores.
-                pass
-            elif round_number == 10 and previous_scores:
-                # Round 6 ranking changes are generated in main() with full 86-char scores.
-                pass
-            elif round_number == 11 and previous_scores:
-                # Elimination 5 is generated explicitly in main() using the text-heavy Elimination 4 layout.
+            elif round_number in LATE_STAGE_ROUNDS and previous_scores:
+                # Late stages draw their own charts in main() with full 86-char scores.
                 pass
             elif previous_scores:
                 eliminated = set(previous_scores) - set(cumulative_scores)
@@ -1774,7 +1581,9 @@ class TournamentManager:
                 distribution_generator(round_history[rn], "Score", "Density", f"{display}: Score Density", pdf)
         final_round = max(round_history)
         final_scores = round_history[final_round]
-        if final_round == 7:
+        if final_round in LATE_STAGE_ROUNDS and self.latest_stage_ranks:
+            final_ranks = dict(self.latest_stage_ranks)
+        elif final_round == 7:
             final_ranks = self._elimination_3_constrained_ranks(round_entry_history.get(final_round, {}), final_scores)
         elif final_round == 8:
             final_ranks = self._round_5_final_ranks(round_entry_history.get(final_round, {}), final_scores)
@@ -4505,126 +4314,423 @@ ELIMINATION_5_RULE = RoundScoringRule(
 
 ELIMINATION_5_MATCHES: dict[str, list[MatchResult]] = {
     "Isabelle": [  # 33rd Previously
-        MatchResult("Isabelle", "Pyra & Mythra", 1, 1, 0),
-        MatchResult("Isabelle", "Pyra & Mythra", 2, 1, 0),
-        MatchResult("Isabelle", "Pyra & Mythra", 3, 1, 0),
+        MatchResult("Isabelle", "Meta Knight", 1, 2, 10),
+        MatchResult("Isabelle", "Lucas", 2, 1, 15),
+        MatchResult("Isabelle", "Sheik", 3, 2, 108),
     ],
     "Roy": [  # 34th Previously
-        MatchResult("Roy", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Roy", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Roy", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Roy", "Richter", 1, 2, 27),
+        MatchResult("Roy", "Ganondorf", 2, 2, 54),
+        MatchResult("Roy", "Ridley", 3, -2, 50),
     ],
     "Simon": [  # 35th Previously
-        MatchResult("Simon", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Simon", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Simon", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Simon", "Pit", 1, 2, 27),
+        MatchResult("Simon", "Ike", 2, 1, 110),
+        MatchResult("Simon", "Roy", 3, 1, 90),
     ],
     "Mii Swordfighter": [  # 36th Previously
-        MatchResult("Mii Swordfighter", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Mii Swordfighter", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Mii Swordfighter", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Mii Swordfighter", "Bayonetta", 1, 3, 89),
+        MatchResult("Mii Swordfighter", "Fox", 2, 2, 74),
+        MatchResult("Mii Swordfighter", "Isabelle", 3, 2, 49),
+        MatchResult("Mii Swordfighter", "Kazuya", 5, 1, 94),
     ],
     "Bowser": [  # 37th Previously
-        MatchResult("Bowser", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Bowser", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Bowser", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Bowser", "Corrin", 1, 2, 15),
+        MatchResult("Bowser", "Toon Link", 2, 3, 105),
+        MatchResult("Bowser", "Roy", 3, 3, 67),
     ],
     "Ryu": [  # 38th Previously
-        MatchResult("Ryu", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Ryu", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Ryu", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Ryu", "Bowser Jr", 1, 1, 84),
+        MatchResult("Ryu", "Cloud", 2, 1, 156),
+        MatchResult("Ryu", "ROB", 3, 2, 79),
     ],
     "Cloud": [  # 39th Previously
-        MatchResult("Cloud", "Dark Samus", 1, 0, 0),
-        MatchResult("Cloud", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Cloud", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Cloud", "Dark Samus", 1, 2, 44),
+        MatchResult("Cloud", "Pit", 2, 3, 155),
+        MatchResult("Cloud", "Peach", 3, 2, 0),
     ],
     "Greninja": [  # 40th Previously
-        MatchResult("Greninja", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Greninja", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Greninja", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Greninja", "Ridley", 1, 2, 0),
+        MatchResult("Greninja", "Incineroar", 2, -1, 77),
     ],
     "Wolf": [  # 41st Previously
-        MatchResult("Wolf", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Wolf", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Wolf", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Wolf", "Sora", 1, 2, 141),
+        MatchResult("Wolf", "Link", 2, -1, 3),
     ],
     "Min Min": [  # 42nd Previously
-        MatchResult("Min Min", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Min Min", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Min Min", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Min Min", "Hero", 1, 2, 125),
+        MatchResult("Min Min", "Meta Knight", 2, 2, 46),
+        MatchResult("Min Min", "Jigglypuff", 3, 3, 154),
+        MatchResult("Min Min", "Wario", 4, 2, 34),
+        MatchResult("Min Min", "Ridley", 5, 1, 73),
     ],
     "Chrom": [  # 43rd Previously
-        MatchResult("Chrom", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Chrom", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Chrom", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Chrom", "Simon", 1, 3, 118),
+        MatchResult("Chrom", "Wario", 2, 2, 5),
+        MatchResult("Chrom", "Dr Mario", 3, 3, 114),
+        MatchResult("Chrom", "Fox", 4, 2, 33),
     ],
     "Sora": [  # 44th Previously
-        MatchResult("Sora", "Roy", 1, 0, 0),
-        MatchResult("Sora", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Sora", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Sora", "Roy", 1, 2, 25),
+        MatchResult("Sora", "Donkey Kong", 2, 3, 101),
+        MatchResult("Sora", "Wolf", 3, 1, 75),
     ],
     "Diddy Kong": [  # 45th Previously
-        MatchResult("Diddy Kong", "Sora", 1, 0, 0),
-        MatchResult("Diddy Kong", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Diddy Kong", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Diddy Kong", "Sora", 1, 1, 100),
+        MatchResult("Diddy Kong", "Rosalina & Luma", 2, 2, 100),
+        MatchResult("Diddy Kong", "Dark Pit", 3, 2, 106),
     ],
     "Little Mac": [  # 46th Previously
-        MatchResult("Little Mac", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Little Mac", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Little Mac", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Little Mac", "Villager", 1, 1, 0),
+        MatchResult("Little Mac", "Pyra & Mythra", 2, -1, 57),
     ],
     "Pit": [  # 47th Previously
-        MatchResult("Pit", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Pit", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Pit", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Pit", "Ridley", 1, 2, 53),
+        MatchResult("Pit", "Banjo & Kazooie", 2, 2, 116),
+        MatchResult("Pit", "Peach", 3, 2, 117),
     ],
     "Luigi": [  # 48th Previously
-        MatchResult("Luigi", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Luigi", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Luigi", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Luigi", "Min Min", 1, -1, 23),
     ],
     "Toon Link": [  # 49th Previously
-        MatchResult("Toon Link", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Toon Link", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Toon Link", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Toon Link", "Donkey Kong", 1, 2, 111),
+        MatchResult("Toon Link", "Peach", 2, 2, 18),
+        MatchResult("Toon Link", "Hero", 3, 3, 165),
+        MatchResult("Toon Link", "Isabelle", 5, 3, 103),
     ],
     "Meta Knight": [  # 50th Previously
-        MatchResult("Meta Knight", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Meta Knight", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Meta Knight", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Meta Knight", "Diddy Kong", 1, 3, 67),
+        MatchResult("Meta Knight", "Min Min", 2, 2, 61),
+        MatchResult("Meta Knight", "Inkling", 3, 1, 11),
+        MatchResult("Meta Knight", "Kazuya", 4, -1, 118),
     ],
     "Inkling": [  # 51st Previously
-        MatchResult("Inkling", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("Inkling", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Inkling", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Inkling", "Yoshi", 1, -1, 169),
     ],
     "Wario": [  # 52nd Previously
-        MatchResult("Wario", "Luigi", 1, 0, 0),
-        MatchResult("Wario", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("Wario", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("Wario", "Luigi", 1, 1, 7),
+        MatchResult("Wario", "Mewtwo", 2, 1, 65),
+        MatchResult("Wario", "Ken", 3, 2, 70),
     ],
     "King Dedede": [  # 53rd Previously
-        MatchResult("King Dedede", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("King Dedede", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("King Dedede", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("King Dedede", "Richter", 1, 2, 119),
+        MatchResult("King Dedede", "Steve", 2, 3, 160),
+        MatchResult("King Dedede", "Ice Climbers", 3, 2, 0),
     ],
     "Byleth": [  # 54th Previously
-        MatchResult("Byleth", "Pyra & Mythra", 1, 1, 0),
-        MatchResult("Byleth", "Pyra & Mythra", 2, 2, 0),
-        MatchResult("Byleth", "Pyra & Mythra", 3, 3, 0),
+        MatchResult("Byleth", "Peach", 1, 3, 110),
+        MatchResult("Byleth", "Kirby", 2, 1, 0),
+        MatchResult("Byleth", "Joker", 3, 2, 6),
     ],
     "ROB": [  # 55th Previously
-        MatchResult("ROB", "Pyra & Mythra", 1, 0, 0),
-        MatchResult("ROB", "Pyra & Mythra", 2, 0, 0),
-        MatchResult("ROB", "Pyra & Mythra", 3, 0, 0),
+        MatchResult("ROB", "Little Mac", 1, 1, 0),
+        MatchResult("ROB", "Ganondorf", 2, 1, 30),
+        MatchResult("ROB", "Richter", 3, 1, 0),
     ],
     "Mario": [  # 56th Previously
-        MatchResult("Mario", "Pyra & Mythra", 1, 2, 0),
-        MatchResult("Mario", "Pyra & Mythra", 2, 2, 0),
-        MatchResult("Mario", "Pyra & Mythra", 3, 2, 0),
+        MatchResult("Mario", "Bowser", 1, 1, 56),
+        MatchResult("Mario", "Kazuya", 2, -1, 63),
     ],
 }
+
+#################################################
+################### ROUND 7 #####################
+#################################################
+
+ROUND_7_RULE = RoundScoringRule(
+    round_number=12,
+    max_percentage=250,
+    early_round_limit=3,
+    early_multiplier_fn=lambda m: 5.0 + 1.25 * (m - 1.5),
+    use_matchup_multiplier=True,
+    late_match_division=True,
+)
+
+ROUND_7_MATCHES: dict[str, list[MatchResult]] = {
+    "Ganondorf": [  # 1st Previously
+        MatchResult("Ganondorf", "Wario", 1, 1, 0),
+        MatchResult("Ganondorf", "Yoshi", 2, 1, 108),
+        MatchResult("Ganondorf", "Kirby", 3, 2, 46),
+    ],
+    "Young Link": [  # 2nd Previously
+        MatchResult("Young Link", "Hero", 1, 1, 35),
+        MatchResult("Young Link", "Rosalina & Luma", 2, 2, 78),
+        MatchResult("Young Link", "Wolf", 3, 2, 102),
+    ],
+    "Piranha Plant": [  # 3rd Previously
+        MatchResult("Piranha Plant", "Ganondorf", 1, 0, 0),
+        MatchResult("Piranha Plant", "Ganondorf", 2, 0, 0),
+        MatchResult("Piranha Plant", "Ganondorf", 3, 0, 0),
+    ],
+    "Bowser Jr": [  # 4th Previously
+        MatchResult("Bowser Jr", "Pyra & Mythra", 1, 2, 170),
+        MatchResult("Bowser Jr", "Robin", 2, 1, 0),
+        MatchResult("Bowser Jr", "Dr Mario", 3, 2, 70),
+    ],
+    "Hero": [  # 5th Previously
+        MatchResult("Hero", "Marth", 1, 2, 86),
+        MatchResult("Hero", "Mr Game & Watch", 2, 3, 130),
+        MatchResult("Hero", "Pokemon Trainer", 3, 3, 144),
+    ],
+    "Ike": [  # 6th Previously
+        MatchResult("Ike", "Kazuya", 1, -1, 0),
+    ],
+    "Mii Gunner": [  # 7th Previously
+        MatchResult("Mii Gunner", "Ganondorf", 1, 0, 0),
+        MatchResult("Mii Gunner", "Ganondorf", 2, 0, 0),
+        MatchResult("Mii Gunner", "Ganondorf", 3, 0, 0),
+    ],
+    "Banjo & Kazooie": [  # 8th Previously
+        MatchResult("Banjo & Kazooie", "Luigi", 1, 2, 104),
+        MatchResult("Banjo & Kazooie", "Roy", 2, 2, 23),
+        MatchResult("Banjo & Kazooie", "Piranha Plant", 3, 2, 69),
+        MatchResult("Banjo & Kazooie", "Piranha Plant", 4, 2, 95),
+    ],
+    "Dark Pit": [  # 9th Previously
+        MatchResult("Dark Pit", "Inkling", 1, 1, 70),
+        MatchResult("Dark Pit", "Pichu", 2, 1, 65),
+        MatchResult("Dark Pit", "Little Mac", 3, 2, 25),
+        MatchResult("Dark Pit", "Yoshi", 4, 1, 17),
+    ],
+    "Sephiroth": [  # 10th Previously
+        MatchResult("Sephiroth", "Zero Suit Samus", 1, 3, 117),
+        MatchResult("Sephiroth", "Pyra & Mythra", 2, 2, 77),
+        MatchResult("Sephiroth", "Luigi", 3, 3, 79),
+    ],
+    "Link": [  # 11th Previously
+        MatchResult("Link", "Chrom", 1, 2, 56),
+        MatchResult("Link", "Richter", 2, 3, 133),
+        MatchResult("Link", "Greninja", 3, 2, 17),
+    ],
+    "Zelda": [  # 12th Previously
+        MatchResult("Zelda", "Rosalina & Luma", 1, 3, 130),
+        MatchResult("Zelda", "Meta Knight", 2, 3, 95),
+        MatchResult("Zelda", "Chrom", 3, 0, 0),
+    ],
+    "Donkey Kong": [  # 13th Previously
+        MatchResult("Donkey Kong", "Young Link", 1, 3, 132),
+        MatchResult("Donkey Kong", "Ryu", 2, 3, 113),
+        MatchResult("Donkey Kong", "Snake", 3, 1, 102),
+    ],
+    "Ridley": [  # 14th Previously
+        MatchResult("Ridley", "Ken", 1, 2, 112),
+        MatchResult("Ridley", "Sonic", 2, 3, 152),
+        MatchResult("Ridley", "Diddy Kong", 3, 3, 142),
+    ],
+    "Incineroar": [  # 15th Previously
+        MatchResult("Incineroar", "Marth", 1, 2, 119),
+        MatchResult("Incineroar", "Ice Climbers", 2, 3, 77),
+        MatchResult("Incineroar", "Pyra & Mythra", 3, 2, 101),
+    ],
+    "Lucas": [  # 16th Previously
+        MatchResult("Lucas", "Falco", 1, 2, 3),
+        MatchResult("Lucas", "Young Link", 2, 0, 0),
+        MatchResult("Lucas", "Ganondorf", 3, 0, 0),
+    ],
+    "King K Rool": [  # 17th Previously
+        MatchResult("King K Rool", "Ice Climbers", 1, 3, 144),
+        MatchResult("King K Rool", "Wario", 2, 3, 175),
+        MatchResult("King K Rool", "Incineroar", 3, 1, 16),
+    ],
+    "Kirby": [  # 18th Previously
+        MatchResult("Kirby", "Lucas", 1, 3, 93),
+        MatchResult("Kirby", "Greninja", 2, 1, 0),
+        MatchResult("Kirby", "Bowser Jr", 3, 3, 85),
+    ],
+    "Ice Climbers": [  # 19th Previously
+        MatchResult("Ice Climbers", "Ganondorf", 1, 0, 0),
+        MatchResult("Ice Climbers", "Ganondorf", 2, 0, 0),
+        MatchResult("Ice Climbers", "Ganondorf", 3, 0, 0),
+    ],
+    "Yoshi": [  # 20th Previously
+        MatchResult("Yoshi", "Sephiroth", 1, 3, 125),
+        MatchResult("Yoshi", "Sheik", 2, 3, 169),
+        MatchResult("Yoshi", "Steve", 3, 1, 0),
+    ],
+    "Duck Hunt": [  # 21st Previously
+        MatchResult("Duck Hunt", "Dark Pit", 1, 3, 140),
+        MatchResult("Duck Hunt", "Little Mac", 2, 1, 74),
+        MatchResult("Duck Hunt", "Ness", 3, 3, 53),
+    ],
+    "Olimar": [  # 22nd Previously
+        MatchResult("Olimar", "Dark Pit", 1, 1, 0),
+        MatchResult("Olimar", "Ganondorf", 2, 0, 0),
+        MatchResult("Olimar", "Ganondorf", 3, 0, 0),
+    ],
+    "Terry": [  # 23rd Previously
+        MatchResult("Terry", "Mewtwo", 1, 3, 140),
+        MatchResult("Terry", "Peach", 2, 2, 58),
+        MatchResult("Terry", "Dr Mario", 3, 2, 114),
+    ],
+    "Lucina": [  # 24th Previously
+        MatchResult("Lucina", "Daisy", 1, 2, 108),
+        MatchResult("Lucina", "Kirby", 2, 2, 39),
+        MatchResult("Lucina", "Isabelle", 3, 3, 156),
+    ],
+    "Corrin": [  # 25th Previously
+        MatchResult("Corrin", "Ganondorf", 1, 1, 56),
+        MatchResult("Corrin", "Sora", 2, 3, 139),
+        MatchResult("Corrin", "Robin", 3, 2, 48),
+    ],
+    "Dark Samus": [  # 26th Previously
+        MatchResult("Dark Samus", "Bowser Jr", 1, 3, 102),
+        MatchResult("Dark Samus", "Jigglypuff", 2, 3, 162),
+        MatchResult("Dark Samus", "Sephiroth", 3, 2, 79),
+    ],
+    "Pokemon Trainer": [  # 27th Previously
+        MatchResult("Pokemon Trainer", "King K Rool", 1, 2, 110),
+        MatchResult("Pokemon Trainer", "Cloud", 2, -1, 59),
+    ],
+    "Pyra & Mythra": [  # 28th Previously
+        MatchResult("Pyra & Mythra", "Roy", 1, 2, 59),
+        MatchResult("Pyra & Mythra", "Shulk", 2, 3, 114),
+        MatchResult("Pyra & Mythra", "Joker", 3, 3, 118),
+    ],
+    "Mii Brawler": [  # 29th Previously
+        MatchResult("Mii Brawler", "Sephiroth", 1, 2, 78),
+        MatchResult("Mii Brawler", "King K Rool", 2, 2, 11),
+        MatchResult("Mii Brawler", "Samus", 3, 2, 13),
+    ],
+    "Mr Game & Watch": [  # 30th Previously
+        MatchResult("Mr Game & Watch", "Ganondorf", 1, 0, 0),
+        MatchResult("Mr Game & Watch", "Ganondorf", 2, 0, 0),
+        MatchResult("Mr Game & Watch", "Ganondorf", 3, 0, 0),
+    ],
+    "Dr Mario": [  # 31st Previously
+        MatchResult("Dr Mario", "Wario", 1, 2, 53),
+        MatchResult("Dr Mario", "Inkling", 2, 3, 75),
+        MatchResult("Dr Mario", "Robin", 3, 2, 66),
+    ],
+    "Robin": [  # 32nd Previously
+        MatchResult("Robin", "Pokemon Trainer", 1, 2, 34),
+        MatchResult("Robin", "Mega Man", 2, 3, 129),
+        MatchResult("Robin", "Ryu", 3, 3, 134),
+    ],
+    "Bowser": [  # 33rd Previously
+        MatchResult("Bowser", "Falco", 1, 3, 170),
+        MatchResult("Bowser", "Isabelle", 2, 2, 0),
+        MatchResult("Bowser", "Wario", 3, 2, 149),
+    ],
+    "Chrom": [  # 34th Previously
+        MatchResult("Chrom", "Snake", 1, 3, 135),
+        MatchResult("Chrom", "Ice Climbers", 2, 2, 23),
+        MatchResult("Chrom", "Hero", 3, 2, 89),
+    ],
+    "Mii Swordfighter": [  # 35th Previously
+        MatchResult("Mii Swordfighter", "Palutena", 1, 2, 0),
+        MatchResult("Mii Swordfighter", "Wario", 2, 1, 54),
+        MatchResult("Mii Swordfighter", "Dr Mario", 3, 0, 0),
+    ],
+    "Min Min": [  # 36th Previously
+        MatchResult("Min Min", "Pit", 1, 2, 37),
+        MatchResult("Min Min", "Lucina", 2, 2, 28),
+        MatchResult("Min Min", "Ganondorf", 3, 3, 61),
+    ],
+    "Cloud": [  # 37th Previously
+        MatchResult("Cloud", "Chrom", 1, 3, 99),
+        MatchResult("Cloud", "Ike", 2, 2, 53),
+        MatchResult("Cloud", "Falco", 3, 2, 60),
+    ],
+    "Toon Link": [  # 38th Previously
+        MatchResult("Toon Link", "Ryu", 1, 2, 93),
+        MatchResult("Toon Link", "ROB", 2, 2, 18),
+        MatchResult("Toon Link", "Mario", 3, 2, 53),
+    ],
+    "King Dedede": [  # 39th Previously
+        MatchResult("King Dedede", "Steve", 1, 2, 19),
+        MatchResult("King Dedede", "Bayonetta", 2, 3, 149),
+        MatchResult("King Dedede", "Sonic", 3, 3, 137),
+    ],
+    "Byleth": [  # 40th Previously
+        MatchResult("Byleth", "Palutena", 1, 2, 53),
+        MatchResult("Byleth", "Piranha Plant", 2, 2, 137),
+        MatchResult("Byleth", "Diddy Kong", 3, 1, 112),
+    ],
+}
+
+#######################################################
+################## STAGE PIPELINE #####################
+#######################################################
+# Every stage from Elimination 4 onward is declared here. To add the next round,
+# define its *_RULE and *_MATCHES above, register the rule in
+# TournamentManager._build_round_rules, and append one StageConfig to LATE_STAGES.
+
+
+def _elimination_4_entry(scores: dict[str, float], prior_ranks: dict[str, int]) -> dict[str, float]:
+    targets = {c for c, rank in prior_ranks.items() if 41 <= rank <= 64}
+    return apply_selective_score_reduction(scores, targets, exponent=ELIMINATION_4_ENTRY_EXPONENT)
+
+
+def _round_6_entry(scores: dict[str, float], prior_ranks: dict[str, int]) -> dict[str, float]:
+    targets = {c for c, rank in prior_ranks.items() if 41 <= rank <= 56}
+    reduced = apply_selective_score_reduction(scores, targets, exponent=ROUND_6_ELIM4_SELECTIVE_EXPONENT)
+    return apply_score_reduction_custom(reduced, exponent=ROUND_6_GLOBAL_EXPONENT)
+
+
+def _elimination_5_entry(scores: dict[str, float], prior_ranks: dict[str, int]) -> dict[str, float]:
+    remaining = [c for c, rank in prior_ranks.items() if rank <= ELIMINATION_5_TOTAL_REMAINING]
+    recalculated = dict(scores)
+    recalculated.update(build_elimination_5_entry_scores(prior_ranks, remaining))
+    return recalculated
+
+
+def _round_7_entry(scores: dict[str, float], prior_ranks: dict[str, int]) -> dict[str, float]:
+    # Ranks 1-32 already sit on the rank formula; 33-56 shifted during Elimination 5.
+    rerated = [c for c, rank in prior_ranks.items() if 33 <= rank <= ELIMINATION_5_TOTAL_REMAINING]
+    recalculated = dict(scores)
+    recalculated.update(build_elimination_5_entry_scores(prior_ranks, rerated))
+    return recalculated
+
+
+GREY, GREEN, YELLOW, RED = "#7f7f7f", "#2ca02c", "#bcbd22", "#d62728"
+
+LATE_STAGES: list[StageConfig] = [
+    StageConfig(
+        round_number=9,
+        matches=ELIMINATION_4_MATCHES,
+        entry_transform=_elimination_4_entry,
+        reorder_start_rank=41,
+        reorder_end_rank=64,
+        rank_bands=[(40, GREY), (48, GREEN), (56, YELLOW), (64, RED)],
+        chart_title="Elimination 4: Rank 86 to 1 Rank Changes",
+        chart_filename="elimination_4_ranking_changes.pdf",
+    ),
+    StageConfig(
+        round_number=10,
+        matches=ROUND_6_MATCHES,
+        entry_transform=_round_6_entry,
+        reorder_start_rank=1,
+        reorder_end_rank=48,
+        rank_bands=[(32, GREEN), (56, YELLOW), (64, RED)],
+        chart_title="Round 6: Rank 86 to 1 Rank Changes",
+        chart_filename="round_6_ranking_changes.pdf",
+    ),
+    StageConfig(
+        round_number=11,
+        matches=ELIMINATION_5_MATCHES,
+        entry_transform=_elimination_5_entry,
+        reorder_start_rank=33,
+        reorder_end_rank=56,
+        rank_bands=[(32, GREY), (40, GREEN), (48, YELLOW), (56, RED)],
+        chart_title="Elimination 5: Rank 86 to 1 Rank Changes",
+        chart_filename="elimination_5_ranking_changes.pdf",
+        completed_matches_only=True,
+    ),
+    StageConfig(
+        round_number=12,
+        matches=ROUND_7_MATCHES,
+        entry_transform=_round_7_entry,
+        reorder_start_rank=1,
+        reorder_end_rank=40,
+        rank_bands=[(30, GREEN), (48, YELLOW), (56, RED)],
+        chart_title="Round 7: Rank 86 to 1 Rank Changes",
+        chart_filename="round_7_ranking_changes.pdf",
+        completed_matches_only=True,
+    ),
+]
+
+LATE_STAGE_ROUNDS = {stage.round_number for stage in LATE_STAGES}
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run the Next Smash Mains tournament pipeline.")
@@ -4855,108 +4961,27 @@ def main(
             }
             manager._ranking_changes_round_5(full_pre_round5_main, round_5_summary.scores)
 
-    elim_4_summary: RoundSummary | None = None
-    elim_4_entry_scores: dict[str, float] | None = None
-    elim_4_entry_adjusted_scores: dict[str, float] | None = None
-    if round_5_summary is not None and ELIMINATION_4_MATCHES:
-        # Build full 86-char score state: pre-round-5 base + Round 5 results overlaid.
+    stage_results: dict[int, StageResult] = {}
+    if round_5_summary is not None:
+        # Full 86-char score state entering the declarative stage pipeline.
         full_post_round5 = dict(full_pre_round5_main)
         full_post_round5.update(round_5_summary.scores)
         full_post_round5_adj = dict(full_pre_round5_main)
         full_post_round5_adj.update(round_5_summary.adjusted_scores)
 
-        # All characters ranked 41-64 after Round 5 get score^0.83.
-        round_5_final_ranks = manager._round_5_final_ranks(full_pre_round5_main, round_5_summary.scores)
-        elim_4_targets = {c for c, rank in round_5_final_ranks.items() if 41 <= rank <= 64}
-        full_pre_elim4 = apply_selective_score_reduction(full_post_round5, elim_4_targets, exponent=ELIMINATION_4_ENTRY_EXPONENT)
-        full_pre_elim4_adj = apply_selective_score_reduction(full_post_round5_adj, elim_4_targets, exponent=ELIMINATION_4_ENTRY_EXPONENT)
-
-        # Entry scores for the bootstrap: only the Elim 4 participants.
-        elim_4_entry_scores = {c: full_pre_elim4[c] for c in ELIMINATION_4_MATCHES if c in full_pre_elim4}
-        elim_4_entry_adjusted_scores = {c: full_pre_elim4_adj[c] for c in ELIMINATION_4_MATCHES if c in full_pre_elim4_adj}
-
-        elim_4_summary = manager.bootstrap_round_from_matches(
-            9,
-            ELIMINATION_4_MATCHES,
-            previous_scores=elim_4_entry_scores,
-            previous_adjusted_scores=elim_4_entry_adjusted_scores,
-        )
-        #print_placeholder_only_characters("Elimination 4", ELIMINATION_4_MATCHES)
-
-        # Full 86-char post-elim4 scores for ranking changes chart.
-        full_post_elim4 = dict(full_pre_elim4)
-        full_post_elim4.update(elim_4_summary.scores)
-        manager._ranking_changes_elimination_4(round_5_final_ranks, full_pre_elim4, full_post_elim4)
-
-    round_6_summary: RoundSummary | None = None
-    round_6_entry_scores: dict[str, float] | None = None
-    if elim_4_summary is not None and ROUND_6_MATCHES:
-        # Step 1: Selective reduction — ranks 41-56 (Elim 4 constrained) get score^0.966
-        elim_4_final_ranks = dict(round_5_final_ranks)
-        elim4_chars = [c for c, rank in round_5_final_ranks.items() if 41 <= rank <= 64]
-        elim4_sorted = sorted(elim4_chars, key=lambda c: full_post_elim4.get(c, float("-inf")), reverse=True)
-        for idx, character in enumerate(elim4_sorted):
-            elim_4_final_ranks[character] = 41 + idx
-        selective_targets = {c for c, rank in elim_4_final_ranks.items() if 41 <= rank <= 56}
-        full_after_selective = apply_selective_score_reduction(full_post_elim4, selective_targets, exponent=ROUND_6_ELIM4_SELECTIVE_EXPONENT)
-
-        # Step 2: Global reduction — ALL 86 characters get score^0.6
-        full_pre_round6 = apply_score_reduction_custom(full_after_selective, exponent=ROUND_6_GLOBAL_EXPONENT)
-        full_pre_round6_adj = apply_score_reduction_custom(full_after_selective, exponent=ROUND_6_GLOBAL_EXPONENT)
-
-        # Step 3: Entry scores for Round 6 — top 48 only
-        round_6_entry_scores = {c: full_pre_round6[c] for c in ROUND_6_MATCHES if c in full_pre_round6}
-        round_6_entry_adjusted = {c: full_pre_round6_adj[c] for c in ROUND_6_MATCHES if c in full_pre_round6_adj}
-
-        round_6_summary = manager.bootstrap_round_from_matches(
-            10,
-            ROUND_6_MATCHES,
-            previous_scores=round_6_entry_scores,
-            previous_adjusted_scores=round_6_entry_adjusted,
-        )
-        #print_placeholder_only_characters("Round 6", ROUND_6_MATCHES)
-
-        # Ranking changes chart: full 86-char post-round-6 scores
-        full_post_round6 = dict(full_pre_round6)
-        full_post_round6.update(round_6_summary.scores)
-        manager._ranking_changes_round_6(elim_4_final_ranks, full_pre_round6, full_post_round6)
-
-        # Round 6 final ranks: only Round 6 participants reorder into 1-48; 49-86 stay at Elim 4 ranks.
-        round_6_final_ranks = dict(elim_4_final_ranks)
-        round_6_sorted = sorted(
-            [c for c in ROUND_6_MATCHES if c in full_post_round6],
-            key=lambda c: full_post_round6[c],
-            reverse=True,
-        )
-        for idx, character in enumerate(round_6_sorted):
-            round_6_final_ranks[character] = 1 + idx
-
-        # Pre-Elimination 5 score recalculation off the Round 6 results, applied to all 56 remaining characters.
-        remaining_pre_elim5 = [
-            c for c, rank in round_6_final_ranks.items() if rank <= ELIMINATION_5_TOTAL_REMAINING
-        ]
-        elim_5_entry_scores = build_elimination_5_entry_scores(round_6_final_ranks, remaining_pre_elim5)
-        full_pre_elim5 = dict(full_post_round6)
-        full_pre_elim5.update(elim_5_entry_scores)
-
-        # Elimination 5 ranking changes should only reflect the currently completed matches.
-        # Right now that is just Isabelle, so everything else stays at its pre-Elim-5 score.
-        completed_elim5 = {
-            character: matches
-            for character, matches in ELIMINATION_5_MATCHES.items()
-            if matches and any(result.stock_diff != 0 or result.percentage != 0 for result in matches)
-        }
-        if completed_elim5:
-            elim5_entry_subset = {c: full_pre_elim5[c] for c in completed_elim5 if c in full_pre_elim5}
-            elim5_summary = manager.bootstrap_round_from_matches(
-                11,
-                completed_elim5,
-                previous_scores=elim5_entry_subset,
-                previous_adjusted_scores=elim5_entry_subset,
-            )
-            elim5_current_scores = dict(full_pre_elim5)
-            elim5_current_scores.update(elim5_summary.scores)
-            manager._ranking_changes_elimination_5(round_6_final_ranks, full_pre_elim5, elim5_current_scores)
+        stage_ranks = manager._round_5_final_ranks(full_pre_round5_main, round_5_summary.scores)
+        stage_scores = full_post_round5
+        stage_adjusted = full_post_round5_adj
+        for stage in LATE_STAGES:
+            if not stage.matches:
+                break
+            result = manager.run_stage(stage, stage_ranks, stage_scores, stage_adjusted)
+            if result.summary is None:
+                break
+            stage_results[stage.round_number] = result
+            stage_ranks = result.ranks
+            stage_scores = result.scores
+            stage_adjusted = result.adjusted_scores
 
     final_scores = manager.run()
 
@@ -4978,10 +5003,24 @@ def main(
             {character: elim_3_summary.scores[character] for character in round_5_pull_ins if character in elim_3_summary.scores},
             {character: round_5_entry_scores[character] for character in round_5_pull_ins if character in round_5_entry_scores},
         ))
-    if round_5_summary is not None and elim_4_entry_scores is not None:
-        score_reduction_transitions.append(("Round 5 to Elimination 4 (Selective)", round_5_summary.scores, elim_4_entry_scores))
+    if round_5_summary is not None and 9 in stage_results:
+        score_reduction_transitions.append(("Round 5 to Elimination 4 (Selective)", round_5_summary.scores, stage_results[9].entry_scores))
     if score_reduction_transitions:
         generate_score_reduction_pareto(score_reduction_transitions, REPORTS_DIR / "score_reductions_pareto.pdf")
+
+    from next_smash_mains_rank_report import generate_rank_report
+
+    elimination_counts: dict[str, int] = defaultdict(int)
+    for bracket in (ELIMINATION_1_MATCHES, ELIMINATION_2_MATCHES, ELIMINATION_3_MATCHES,
+                    ELIMINATION_4_MATCHES, ELIMINATION_5_MATCHES):
+        for character in bracket:
+            elimination_counts[character] += 1
+    generate_rank_report(
+        records_dir=RECORDS_DIR,
+        output_dir=RANKING_CHANGES_DIR,
+        matchup_df=MATCHUP_DF,
+        elimination_counts=dict(elimination_counts),
+    )
 
     if update_analysis:
         regenerate_analysis_outputs()
