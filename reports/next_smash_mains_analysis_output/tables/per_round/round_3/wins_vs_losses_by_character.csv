@@ -1,13 +1,17 @@
 Character,Wins,Losses,Win_Rate,Fights
 Bowser,4,0,1.0,4
 Cloud,3,0,1.0,3
+Mii Swordfighter,1,1,0.5,2
 Chrom,3,0,1.0,3
 King Dedede,3,0,1.0,3
 Min Min,3,0,1.0,3
+Zelda,3,0,1.0,3
 Ridley,3,0,1.0,3
 Toon Link,3,1,0.75,4
 Hero,3,0,1.0,3
+Piranha Plant,2,1,0.6666666666666666,3
 Sephiroth,3,0,1.0,3
+Lucas,3,0,1.0,3
 Pyra & Mythra,2,1,0.6666666666666666,3
 Link,3,0,1.0,3
 Robin,4,0,1.0,4
@@ -15,20 +19,23 @@ Incineroar,3,0,1.0,3
 Kirby,3,0,1.0,3
 Banjo & Kazooie,3,0,1.0,3
 King K Rool,2,1,0.6666666666666666,3
+Mii Gunner,3,0,1.0,3
 Duck Hunt,3,0,1.0,3
 Young Link,4,0,1.0,4
 Dark Samus,3,0,1.0,3
 Lucina,3,0,1.0,3
 Dr Mario,3,0,1.0,3
 Donkey Kong,3,0,1.0,3
+Ice Climbers,3,0,1.0,3
 Bowser Jr,3,0,1.0,3
 Yoshi,3,0,1.0,3
 Terry,4,0,1.0,4
+Olimar,3,0,1.0,3
 Ganondorf,4,0,1.0,4
 Mii Brawler,3,0,1.0,3
 Corrin,3,0,1.0,3
 Dark Pit,4,0,1.0,4
-Mii Swordfighter,1,1,0.5,2
+Mr Game & Watch,3,0,1.0,3
 Isabelle,3,0,1.0,3
 Ryu,3,0,1.0,3
 Simon,3,0,1.0,3
@@ -37,16 +44,9 @@ Sora,3,0,1.0,3
 Pokemon Trainer,3,0,1.0,3
 Pit,3,0,1.0,3
 Meta Knight,3,0,1.0,3
-Piranha Plant,2,1,0.6666666666666666,3
 Ike,3,0,1.0,3
-Mii Gunner,3,0,1.0,3
 Diddy Kong,1,1,0.5,2
-Zelda,3,0,1.0,3
-Lucas,3,0,1.0,3
-Ice Climbers,3,0,1.0,3
-Olimar,3,0,1.0,3
 Wario,2,1,0.6666666666666666,3
-Mr Game & Watch,3,0,1.0,3
 ROB,1,1,0.5,2
 Greninja,3,0,1.0,3
 Wolf,4,0,1.0,4

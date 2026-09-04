@@ -48,6 +48,7 @@ ROUND_LABEL: dict[int, str] = {
     10: "round_6",
     11: "elimination_5",
     12: "round_7",
+    13: "elimination_6",
 }
 ROUND_DISPLAY: dict[int, str] = {
     1: "Round 1",
@@ -62,6 +63,7 @@ ROUND_DISPLAY: dict[int, str] = {
     10: "Round 6",
     11: "Elimination 5",
     12: "Round 7",
+    13: "Elimination 6",
 }
 LABEL_TO_ROUND: dict[str, int] = {v: k for k, v in ROUND_LABEL.items()}
 ROUND_5_ELIMINATION_3_ENTRY_EXPONENT = 0.8905
@@ -219,11 +221,11 @@ def build_elimination_5_matches(
         ]
     return brackets
 
-
 ELIMINATION_5_ENTRY_COEFFICIENT = 1 / 5
 ELIMINATION_5_SCORE_MAX = 58.63
 ELIMINATION_5_TOTAL_REMAINING = 56
-
+ELIMINATION_6_TOTAL_REMAINING = 48
+ELIMINATION_6_SCORE_MAX = 70.92
 
 def build_elimination_5_entry_scores(
     round_6_final_ranks: dict[str, int],
@@ -654,6 +656,7 @@ class TournamentManager:
         rules[12] = ROUND_7_RULE
         for r in range(13, 51):
             rules[r] = RoundScoringRule(round_number=r, max_percentage=175, early_multiplier_fn=lambda _m: 1.0)
+        rules[13] = ELIMINATION_6_RULE
         return rules
 
     def _round_files(self) -> list[tuple[int, Path]]:
@@ -4458,9 +4461,9 @@ ROUND_7_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Young Link", "Wolf", 3, 2, 102),
     ],
     "Piranha Plant": [  # 3rd Previously
-        MatchResult("Piranha Plant", "Ganondorf", 1, 0, 0),
-        MatchResult("Piranha Plant", "Ganondorf", 2, 0, 0),
-        MatchResult("Piranha Plant", "Ganondorf", 3, 0, 0),
+        MatchResult("Piranha Plant", "Lucario", 1, 3, 131),
+        MatchResult("Piranha Plant", "Peach", 2, 2, 41),
+        MatchResult("Piranha Plant", "Bowser Jr", 3, 2, 49),
     ],
     "Bowser Jr": [  # 4th Previously
         MatchResult("Bowser Jr", "Pyra & Mythra", 1, 2, 170),
@@ -4476,9 +4479,9 @@ ROUND_7_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Ike", "Kazuya", 1, -1, 0),
     ],
     "Mii Gunner": [  # 7th Previously
-        MatchResult("Mii Gunner", "Ganondorf", 1, 0, 0),
-        MatchResult("Mii Gunner", "Ganondorf", 2, 0, 0),
-        MatchResult("Mii Gunner", "Ganondorf", 3, 0, 0),
+        MatchResult("Mii Gunner", "Falco", 1, 1, 0),
+        MatchResult("Mii Gunner", "King Dedede", 2, 1, 20),
+        MatchResult("Mii Gunner", "Mega Man", 3, 3, 58),
     ],
     "Banjo & Kazooie": [  # 8th Previously
         MatchResult("Banjo & Kazooie", "Luigi", 1, 2, 104),
@@ -4505,7 +4508,7 @@ ROUND_7_MATCHES: dict[str, list[MatchResult]] = {
     "Zelda": [  # 12th Previously
         MatchResult("Zelda", "Rosalina & Luma", 1, 3, 130),
         MatchResult("Zelda", "Meta Knight", 2, 3, 95),
-        MatchResult("Zelda", "Chrom", 3, 0, 0),
+        MatchResult("Zelda", "Chrom", 3, 3, 87),
     ],
     "Donkey Kong": [  # 13th Previously
         MatchResult("Donkey Kong", "Young Link", 1, 3, 132),
@@ -4524,8 +4527,8 @@ ROUND_7_MATCHES: dict[str, list[MatchResult]] = {
     ],
     "Lucas": [  # 16th Previously
         MatchResult("Lucas", "Falco", 1, 2, 3),
-        MatchResult("Lucas", "Young Link", 2, 0, 0),
-        MatchResult("Lucas", "Ganondorf", 3, 0, 0),
+        MatchResult("Lucas", "Young Link", 2, 3, 92),
+        MatchResult("Lucas", "Corrin", 3, 2, 64),
     ],
     "King K Rool": [  # 17th Previously
         MatchResult("King K Rool", "Ice Climbers", 1, 3, 144),
@@ -4538,9 +4541,9 @@ ROUND_7_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Kirby", "Bowser Jr", 3, 3, 85),
     ],
     "Ice Climbers": [  # 19th Previously
-        MatchResult("Ice Climbers", "Ganondorf", 1, 0, 0),
-        MatchResult("Ice Climbers", "Ganondorf", 2, 0, 0),
-        MatchResult("Ice Climbers", "Ganondorf", 3, 0, 0),
+        MatchResult("Ice Climbers", "Chrom", 1, 2, 88),
+        MatchResult("Ice Climbers", "Ness", 2, 1, 0),
+        MatchResult("Ice Climbers", "Greninja", 3, 3, 168),
     ],
     "Yoshi": [  # 20th Previously
         MatchResult("Yoshi", "Sephiroth", 1, 3, 125),
@@ -4554,8 +4557,8 @@ ROUND_7_MATCHES: dict[str, list[MatchResult]] = {
     ],
     "Olimar": [  # 22nd Previously
         MatchResult("Olimar", "Dark Pit", 1, 1, 0),
-        MatchResult("Olimar", "Ganondorf", 2, 0, 0),
-        MatchResult("Olimar", "Ganondorf", 3, 0, 0),
+        MatchResult("Olimar", "Ganondorf", 2, 2, 32),
+        MatchResult("Olimar", "Wolf", 3, 2, 88),
     ],
     "Terry": [  # 23rd Previously
         MatchResult("Terry", "Mewtwo", 1, 3, 140),
@@ -4592,9 +4595,9 @@ ROUND_7_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Mii Brawler", "Samus", 3, 2, 13),
     ],
     "Mr Game & Watch": [  # 30th Previously
-        MatchResult("Mr Game & Watch", "Ganondorf", 1, 0, 0),
-        MatchResult("Mr Game & Watch", "Ganondorf", 2, 0, 0),
-        MatchResult("Mr Game & Watch", "Ganondorf", 3, 0, 0),
+        MatchResult("Mr Game & Watch", "Pikachu", 1, 2, 65),
+        MatchResult("Mr Game & Watch", "Min Min", 2, 2, 23),
+        MatchResult("Mr Game & Watch", "Ganondorf", 3, 2, 60),
     ],
     "Dr Mario": [  # 31st Previously
         MatchResult("Dr Mario", "Wario", 1, 2, 53),
@@ -4619,7 +4622,7 @@ ROUND_7_MATCHES: dict[str, list[MatchResult]] = {
     "Mii Swordfighter": [  # 35th Previously
         MatchResult("Mii Swordfighter", "Palutena", 1, 2, 0),
         MatchResult("Mii Swordfighter", "Wario", 2, 1, 54),
-        MatchResult("Mii Swordfighter", "Dr Mario", 3, 0, 0),
+        MatchResult("Mii Swordfighter", "Dr Mario", 3, 1, 64),
     ],
     "Min Min": [  # 36th Previously
         MatchResult("Min Min", "Pit", 1, 2, 37),
@@ -4645,6 +4648,112 @@ ROUND_7_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Byleth", "Palutena", 1, 2, 53),
         MatchResult("Byleth", "Piranha Plant", 2, 2, 137),
         MatchResult("Byleth", "Diddy Kong", 3, 1, 112),
+    ],
+}
+
+#######################################################
+################## ELIMINATION 6 ######################
+#######################################################
+
+ELIMINATION_6_RULE = RoundScoringRule(
+    round_number=13,
+    max_percentage=175,
+    early_round_limit=3,
+    early_multiplier_fn=lambda m: 4.0 + 1.33 * (m - 1.5),
+    use_matchup_multiplier=True,
+    late_match_division=True,
+)
+
+ELIMINATION_6_MATCHES: dict[str, list[MatchResult]] = {
+    "Mii Brawler": [  # 31st Previously
+        MatchResult("Mii Brawler", "Bowser", 1, 4, 0),
+        MatchResult("Mii Brawler", "Bowser", 2, 4, 0),
+        MatchResult("Mii Brawler", "Bowser", 3, 4, 0),
+    ],
+    "Bowser Jr": [  # 32nd Previously
+        MatchResult("Bowser Jr", "Bowser", 1, 0, 0),
+        MatchResult("Bowser Jr", "Bowser", 2, 0, 0),
+        MatchResult("Bowser Jr", "Bowser", 3, 0, 0),
+    ],
+    "Corrin": [  # 33rd Previously
+        MatchResult("Corrin", "Bowser", 1, 0, 0),
+        MatchResult("Corrin", "Bowser", 2, 0, 0),
+        MatchResult("Corrin", "Bowser", 3, 0, 0),
+    ],
+    "Mr Game & Watch": [  # 34th Previously
+        MatchResult("Mr Game & Watch", "Bowser", 1, 0, 0),
+        MatchResult("Mr Game & Watch", "Bowser", 2, 0, 0),
+        MatchResult("Mr Game & Watch", "Bowser", 3, 0, 0),
+    ],
+    "Ganondorf": [  # 35th Previously
+        MatchResult("Ganondorf", "Bowser", 1, 0, 0),
+        MatchResult("Ganondorf", "Bowser", 2, 0, 0),
+        MatchResult("Ganondorf", "Bowser", 3, 0, 0),
+    ],
+    "Dark Pit": [  # 36th Previously
+        MatchResult("Dark Pit", "Bowser", 1, 0, 0),
+        MatchResult("Dark Pit", "Bowser", 2, 0, 0),
+        MatchResult("Dark Pit", "Bowser", 3, 0, 0),
+    ],
+    "Mii Swordfighter": [  # 37th Previously
+        MatchResult("Mii Swordfighter", "Bowser", 1, 0, 0),
+        MatchResult("Mii Swordfighter", "Bowser", 2, 0, 0),
+        MatchResult("Mii Swordfighter", "Bowser", 3, 0, 0),
+    ],
+    "Byleth": [  # 38th Previously
+        MatchResult("Byleth", "Bowser", 1, 0, 0),
+        MatchResult("Byleth", "Bowser", 2, 0, 0),
+        MatchResult("Byleth", "Bowser", 3, 0, 0),
+    ],
+    "Pokemon Trainer": [  # 39th Previously
+        MatchResult("Pokemon Trainer", "Bowser", 1, 0, 0),
+        MatchResult("Pokemon Trainer", "Bowser", 2, 0, 0),
+        MatchResult("Pokemon Trainer", "Bowser", 3, 0, 0),
+    ],
+    "Ike": [  # 40th Previously
+        MatchResult("Ike", "Bowser", 1, 0, 0),
+        MatchResult("Ike", "Bowser", 2, 0, 0),
+        MatchResult("Ike", "Bowser", 3, 0, 0),
+    ],
+    "Meta Knight": [  # 41st Previously
+        MatchResult("Meta Knight", "Bowser", 1, 0, 0),
+        MatchResult("Meta Knight", "Bowser", 2, 0, 0),
+        MatchResult("Meta Knight", "Bowser", 3, 0, 0),
+    ],
+    "Isabelle": [  # 42nd Previously
+        MatchResult("Isabelle", "Bowser", 1, 0, 0),
+        MatchResult("Isabelle", "Bowser", 2, 0, 0),
+        MatchResult("Isabelle", "Bowser", 3, 0, 0),
+    ],
+    "Sora": [  # 43rd Previously
+        MatchResult("Sora", "Bowser", 1, 0, 0),
+        MatchResult("Sora", "Bowser", 2, 0, 0),
+        MatchResult("Sora", "Bowser", 3, 0, 0),
+    ],
+    "Pit": [  # 44th Previously
+        MatchResult("Pit", "Bowser", 1, 0, 0),
+        MatchResult("Pit", "Bowser", 2, 0, 0),
+        MatchResult("Pit", "Bowser", 3, 0, 0),
+    ],
+    "Diddy Kong": [  # 45th Previously
+        MatchResult("Diddy Kong", "Bowser", 1, 0, 0),
+        MatchResult("Diddy Kong", "Bowser", 2, 0, 0),
+        MatchResult("Diddy Kong", "Bowser", 3, 0, 0),
+    ],
+    "Wario": [  # 46th Previously
+        MatchResult("Wario", "Bowser", 1, 0, 0),
+        MatchResult("Wario", "Bowser", 2, 0, 0),
+        MatchResult("Wario", "Bowser", 3, 0, 0),
+    ],
+    "Ryu": [  # 47th Previously
+        MatchResult("Ryu", "Bowser", 1, 0, 0),
+        MatchResult("Ryu", "Bowser", 2, 0, 0),
+        MatchResult("Ryu", "Bowser", 3, 0, 0),
+    ],
+    "Simon": [  # 48th Previously
+        MatchResult("Simon", "Bowser", 1, 0, 0),
+        MatchResult("Simon", "Bowser", 2, 0, 0),
+        MatchResult("Simon", "Bowser", 3, 0, 0),
     ],
 }
 
@@ -4679,6 +4788,19 @@ def _round_7_entry(scores: dict[str, float], prior_ranks: dict[str, int]) -> dic
     rerated = [c for c, rank in prior_ranks.items() if 33 <= rank <= ELIMINATION_5_TOTAL_REMAINING]
     recalculated = dict(scores)
     recalculated.update(build_elimination_5_entry_scores(prior_ranks, rerated))
+    return recalculated
+
+
+def _elimination_6_entry(scores: dict[str, float], prior_ranks: dict[str, int]) -> dict[str, float]:
+    recalculated = dict(scores)
+    recalculated.update(
+        build_elimination_5_entry_scores(
+            prior_ranks,
+            ELIMINATION_6_MATCHES,
+            total_remaining=ELIMINATION_6_TOTAL_REMAINING,
+            score_max=ELIMINATION_6_SCORE_MAX,
+        )
+    )
     return recalculated
 
 
@@ -4725,6 +4847,17 @@ LATE_STAGES: list[StageConfig] = [
         rank_bands=[(30, GREEN), (48, YELLOW), (56, RED)],
         chart_title="Round 7: Rank 86 to 1 Rank Changes",
         chart_filename="round_7_ranking_changes.pdf",
+        completed_matches_only=True,
+    ),
+    StageConfig(
+        round_number=13,
+        matches=ELIMINATION_6_MATCHES,
+        entry_transform=_elimination_6_entry,
+        reorder_start_rank=31,
+        reorder_end_rank=48,
+        rank_bands=[(30, GREY), (36, GREEN), (42, YELLOW), (48, RED)],
+        chart_title="Elimination 6: Rank 86 to 1 Rank Changes",
+        chart_filename="elimination_6_ranking_changes.pdf",
         completed_matches_only=True,
     ),
 ]
