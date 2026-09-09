@@ -49,6 +49,7 @@ ROUND_LABEL: dict[int, str] = {
     11: "elimination_5",
     12: "round_7",
     13: "elimination_6",
+    14: "round_8",
 }
 ROUND_DISPLAY: dict[int, str] = {
     1: "Round 1",
@@ -64,6 +65,7 @@ ROUND_DISPLAY: dict[int, str] = {
     11: "Elimination 5",
     12: "Round 7",
     13: "Elimination 6",
+    14: "Round 8",
 }
 LABEL_TO_ROUND: dict[str, int] = {v: k for k, v in ROUND_LABEL.items()}
 ROUND_5_ELIMINATION_3_ENTRY_EXPONENT = 0.8905
@@ -226,6 +228,9 @@ ELIMINATION_5_SCORE_MAX = 58.63
 ELIMINATION_5_TOTAL_REMAINING = 56
 ELIMINATION_6_TOTAL_REMAINING = 48
 ELIMINATION_6_SCORE_MAX = 70.92
+ROUND_8_TOTAL_REMAINING = 36
+ROUND_8_ENTRY_COEFFICIENT = 2 / 13
+ROUND_8_SCORE_MAX = 70.92
 
 def build_elimination_5_entry_scores(
     round_6_final_ranks: dict[str, int],
@@ -657,6 +662,7 @@ class TournamentManager:
         for r in range(13, 51):
             rules[r] = RoundScoringRule(round_number=r, max_percentage=175, early_multiplier_fn=lambda _m: 1.0)
         rules[13] = ELIMINATION_6_RULE
+        rules[14] = ROUND_8_RULE
         return rules
 
     def _round_files(self) -> list[tuple[int, Path]]:
@@ -4666,94 +4672,292 @@ ELIMINATION_6_RULE = RoundScoringRule(
 
 ELIMINATION_6_MATCHES: dict[str, list[MatchResult]] = {
     "Mii Brawler": [  # 31st Previously
-        MatchResult("Mii Brawler", "Bowser", 1, 4, 0),
-        MatchResult("Mii Brawler", "Bowser", 2, 4, 0),
-        MatchResult("Mii Brawler", "Bowser", 3, 4, 0),
+        MatchResult("Mii Brawler", "Steve", 1, -1, 6),
     ],
     "Bowser Jr": [  # 32nd Previously
-        MatchResult("Bowser Jr", "Bowser", 1, 0, 0),
-        MatchResult("Bowser Jr", "Bowser", 2, 0, 0),
-        MatchResult("Bowser Jr", "Bowser", 3, 0, 0),
+        MatchResult("Bowser Jr", "Captain Falcon", 1, 3, 144),
+        MatchResult("Bowser Jr", "Bayonetta", 2, 3, 27),
+        MatchResult("Bowser Jr", "Isabelle", 3, 3, 143),
+        MatchResult("Bowser Jr", "Sephiroth", 5, 3, 100),
     ],
     "Corrin": [  # 33rd Previously
-        MatchResult("Corrin", "Bowser", 1, 0, 0),
-        MatchResult("Corrin", "Bowser", 2, 0, 0),
-        MatchResult("Corrin", "Bowser", 3, 0, 0),
+        MatchResult("Corrin", "Sephiroth", 1, -1, 15),
     ],
     "Mr Game & Watch": [  # 34th Previously
-        MatchResult("Mr Game & Watch", "Bowser", 1, 0, 0),
-        MatchResult("Mr Game & Watch", "Bowser", 2, 0, 0),
-        MatchResult("Mr Game & Watch", "Bowser", 3, 0, 0),
+        MatchResult("Mr Game & Watch", "Pit", 1, 2, 18),
+        MatchResult("Mr Game & Watch", "Bayonetta", 2, 3, 93),
+        MatchResult("Mr Game & Watch", "Min Min", 3, 3, 63),
     ],
     "Ganondorf": [  # 35th Previously
-        MatchResult("Ganondorf", "Bowser", 1, 0, 0),
-        MatchResult("Ganondorf", "Bowser", 2, 0, 0),
-        MatchResult("Ganondorf", "Bowser", 3, 0, 0),
+        MatchResult("Ganondorf", "Pokemon Trainer", 1, 2, 39),
+        MatchResult("Ganondorf", "Pichu", 2, 2, 116),
+        MatchResult("Ganondorf", "Palutena", 3, 1, 53),
     ],
     "Dark Pit": [  # 36th Previously
-        MatchResult("Dark Pit", "Bowser", 1, 0, 0),
-        MatchResult("Dark Pit", "Bowser", 2, 0, 0),
-        MatchResult("Dark Pit", "Bowser", 3, 0, 0),
+        MatchResult("Dark Pit", "Wii Fit Trainer", 1, 3, 112),
+        MatchResult("Dark Pit", "Little Mac", 2, 2, 20),
+        MatchResult("Dark Pit", "Villager", 3, 3, 103),
     ],
     "Mii Swordfighter": [  # 37th Previously
-        MatchResult("Mii Swordfighter", "Bowser", 1, 0, 0),
-        MatchResult("Mii Swordfighter", "Bowser", 2, 0, 0),
-        MatchResult("Mii Swordfighter", "Bowser", 3, 0, 0),
+        MatchResult("Mii Swordfighter", "Chrom", 1, 3, 96),
+        MatchResult("Mii Swordfighter", "Inkling", 2, 2, 106),
+        MatchResult("Mii Swordfighter", "Mega Man", 3, 3, 123),
     ],
     "Byleth": [  # 38th Previously
-        MatchResult("Byleth", "Bowser", 1, 0, 0),
-        MatchResult("Byleth", "Bowser", 2, 0, 0),
-        MatchResult("Byleth", "Bowser", 3, 0, 0),
+        MatchResult("Byleth", "Bayonetta", 1, 4, 106),
+        MatchResult("Byleth", "Hero", 2, 2, 80),
+        MatchResult("Byleth", "King K Rool", 3, 2, 0),
     ],
     "Pokemon Trainer": [  # 39th Previously
-        MatchResult("Pokemon Trainer", "Bowser", 1, 0, 0),
-        MatchResult("Pokemon Trainer", "Bowser", 2, 0, 0),
-        MatchResult("Pokemon Trainer", "Bowser", 3, 0, 0),
+        MatchResult("Pokemon Trainer", "Lucas", 1, 3, 52),
+        MatchResult("Pokemon Trainer", "Palutena", 2, 3, 82),
+        MatchResult("Pokemon Trainer", "Duck Hunt", 3, 2, 8),
+        MatchResult("Pokemon Trainer", "Sephiroth", 4, -1, 25),
     ],
     "Ike": [  # 40th Previously
-        MatchResult("Ike", "Bowser", 1, 0, 0),
-        MatchResult("Ike", "Bowser", 2, 0, 0),
-        MatchResult("Ike", "Bowser", 3, 0, 0),
+        MatchResult("Ike", "Ganondorf", 1, 1, 67),
+        MatchResult("Ike", "Banjo & Kazooie", 2, 3, 69),
+        MatchResult("Ike", "Zelda", 3, 2, 37),
     ],
     "Meta Knight": [  # 41st Previously
-        MatchResult("Meta Knight", "Bowser", 1, 0, 0),
-        MatchResult("Meta Knight", "Bowser", 2, 0, 0),
-        MatchResult("Meta Knight", "Bowser", 3, 0, 0),
+        MatchResult("Meta Knight", "Cloud", 1, 1, 52),
+        MatchResult("Meta Knight", "Sheik", 2, 4, 160),
+        MatchResult("Meta Knight", "Falco", 3, 2, 131),
     ],
     "Isabelle": [  # 42nd Previously
-        MatchResult("Isabelle", "Bowser", 1, 0, 0),
-        MatchResult("Isabelle", "Bowser", 2, 0, 0),
-        MatchResult("Isabelle", "Bowser", 3, 0, 0),
+        MatchResult("Isabelle", "PacMan", 1, 4, 148),
+        MatchResult("Isabelle", "Corrin", 2, 3, 130),
+        MatchResult("Isabelle", "Duck Hunt", 3, 3, 22),
     ],
     "Sora": [  # 43rd Previously
-        MatchResult("Sora", "Bowser", 1, 0, 0),
-        MatchResult("Sora", "Bowser", 2, 0, 0),
-        MatchResult("Sora", "Bowser", 3, 0, 0),
+        MatchResult("Sora", "Steve", 1, 2, 0),
+        MatchResult("Sora", "Pikachu", 2, 2, 62),
+        MatchResult("Sora", "Greninja", 3, 4, 118),
     ],
     "Pit": [  # 44th Previously
-        MatchResult("Pit", "Bowser", 1, 0, 0),
-        MatchResult("Pit", "Bowser", 2, 0, 0),
-        MatchResult("Pit", "Bowser", 3, 0, 0),
+        MatchResult("Pit", "Shulk", 1, 3, 53),
+        MatchResult("Pit", "Daisy", 2, 3, 99),
+        MatchResult("Pit", "Dark Samus", 3, 2, 26),
+        MatchResult("Pit", "Jigglypuff", 4, 3, 55),
     ],
     "Diddy Kong": [  # 45th Previously
-        MatchResult("Diddy Kong", "Bowser", 1, 0, 0),
-        MatchResult("Diddy Kong", "Bowser", 2, 0, 0),
-        MatchResult("Diddy Kong", "Bowser", 3, 0, 0),
+        MatchResult("Diddy Kong", "Joker", 1, 3, 137),
+        MatchResult("Diddy Kong", "Mr Game & Watch", 2, 3, 114),
+        MatchResult("Diddy Kong", "Banjo & Kazooie", 3, 4, 179),
+        MatchResult("Diddy Kong", "Roy", 4, 3, 42),
     ],
     "Wario": [  # 46th Previously
-        MatchResult("Wario", "Bowser", 1, 0, 0),
-        MatchResult("Wario", "Bowser", 2, 0, 0),
-        MatchResult("Wario", "Bowser", 3, 0, 0),
+        MatchResult("Wario", "Isabelle", 1, 3, 169),
+        MatchResult("Wario", "Wii Fit Trainer", 2, 2, 52),
+        MatchResult("Wario", "Falco", 3, 3, 87),
     ],
     "Ryu": [  # 47th Previously
-        MatchResult("Ryu", "Bowser", 1, 0, 0),
-        MatchResult("Ryu", "Bowser", 2, 0, 0),
-        MatchResult("Ryu", "Bowser", 3, 0, 0),
+        MatchResult("Ryu", "Joker", 1, 2, 33),
+        MatchResult("Ryu", "Rosalina & Luma", 2, 2, 54),
+        MatchResult("Ryu", "Ganondorf", 3, 2, 62),
     ],
     "Simon": [  # 48th Previously
-        MatchResult("Simon", "Bowser", 1, 0, 0),
-        MatchResult("Simon", "Bowser", 2, 0, 0),
-        MatchResult("Simon", "Bowser", 3, 0, 0),
+        MatchResult("Simon", "Dr Mario", 1, 3, 40),
+        MatchResult("Simon", "PacMan", 2, 3, 99),
+        MatchResult("Simon", "Palutena", 3, 2, 124),
+        MatchResult("Simon", "Greninja", 4, 3, 51),
+    ],
+}
+
+#######################################################
+####################### ROUND 8 #######################
+#######################################################
+
+ROUND_8_RULE = RoundScoringRule(
+    round_number=14,
+    max_percentage=175,
+    early_round_limit=3,
+    early_multiplier_fn=lambda m: 4.0 + 1.33 * (m - 1.5),
+    use_matchup_multiplier=True,
+    late_match_division=True,
+)
+
+ROUND_8_MATCHES: dict[str, list[MatchResult]] = {
+    "Zelda": [  # 1st Previously
+        MatchResult("Zelda", "Zelda", 1, 0, 0),
+        MatchResult("Zelda", "Zelda", 2, 0, 0),
+        MatchResult("Zelda", "Zelda", 3, 0, 0),
+    ],
+    "Ridley": [  # 2nd Previously
+        MatchResult("Ridley", "Zelda", 1, 0, 0),
+        MatchResult("Ridley", "Zelda", 2, 0, 0),
+        MatchResult("Ridley", "Zelda", 3, 0, 0),
+    ],
+    "Hero": [  # 3rd Previously
+        MatchResult("Hero", "Zelda", 1, 0, 0),
+        MatchResult("Hero", "Zelda", 2, 0, 0),
+        MatchResult("Hero", "Zelda", 3, 0, 0),
+    ],
+    "Robin": [  # 4th Previously
+        MatchResult("Robin", "Zelda", 1, 0, 0),
+        MatchResult("Robin", "Zelda", 2, 0, 0),
+        MatchResult("Robin", "Zelda", 3, 0, 0),
+    ],
+    "King Dedede": [  # 5th Previously
+        MatchResult("King Dedede", "Zelda", 1, 0, 0),
+        MatchResult("King Dedede", "Zelda", 2, 0, 0),
+        MatchResult("King Dedede", "Zelda", 3, 0, 0),
+    ],
+    "Pyra & Mythra": [  # 6th Previously
+        MatchResult("Pyra & Mythra", "Marth", 1, 3, 16),
+        MatchResult("Pyra & Mythra", "Inkling", 2, 3, 76),
+        MatchResult("Pyra & Mythra", "Robin", 3, 3, 70),
+    ],
+    "Piranha Plant": [  # 7th Previously
+        MatchResult("Piranha Plant", "Zelda", 1, 0, 0),
+        MatchResult("Piranha Plant", "Zelda", 2, 0, 0),
+        MatchResult("Piranha Plant", "Zelda", 3, 0, 0),
+    ],
+    "Lucas": [  # 8th Previously
+        MatchResult("Lucas", "Zelda", 1, 0, 0),
+        MatchResult("Lucas", "Zelda", 2, 0, 0),
+        MatchResult("Lucas", "Zelda", 3, 0, 0),
+    ],
+    "Sephiroth": [  # 9th Previously
+        MatchResult("Sephiroth", "Zelda", 1, 0, 0),
+        MatchResult("Sephiroth", "Zelda", 2, 0, 0),
+        MatchResult("Sephiroth", "Zelda", 3, 0, 0),
+    ],
+    "Kirby": [  # 10th Previously
+        MatchResult("Kirby", "Diddy Kong", 1, 3, 98),
+        MatchResult("Kirby", "Samus", 2, 4, 135),
+        MatchResult("Kirby", "Dark Pit", 3, 3, 106),
+        MatchResult("Kirby", "Kazuya", 4, 3, 92),
+    ],
+    "Link": [  # 11th Previously
+        MatchResult("Link", "Kazuya", 1, 2, 0),
+        MatchResult("Link", "Young Link", 2, 3, 77),
+        MatchResult("Link", "Pyra & Mythra", 3, 3, 57),
+    ],
+    "Incineroar": [  # 12th Previously
+        MatchResult("Incineroar", "Zelda", 1, 0, 0),
+        MatchResult("Incineroar", "Zelda", 2, 0, 0),
+        MatchResult("Incineroar", "Zelda", 3, 0, 0),
+    ],
+    "King K Rool": [  # 13th Previously
+        MatchResult("King K Rool", "Joker", 1, 3, 35),
+        MatchResult("King K Rool", "Ken", 2, 1, 0),
+        MatchResult("King K Rool", "Dark Pit", 3, 3, 93),
+    ],
+    "Dark Samus": [  # 14th Previously
+        MatchResult("Dark Samus", "Zelda", 1, 0, 0),
+        MatchResult("Dark Samus", "Zelda", 2, 0, 0),
+        MatchResult("Dark Samus", "Zelda", 3, 0, 0),
+    ],
+    "Dr Mario": [  # 15th Previously
+        MatchResult("Dr Mario", "Zelda", 1, 0, 0),
+        MatchResult("Dr Mario", "Zelda", 2, 0, 0),
+        MatchResult("Dr Mario", "Zelda", 3, 0, 0),
+    ],
+    "Lucina": [  # 16th Previously
+        MatchResult("Lucina", "Zelda", 1, 0, 0),
+        MatchResult("Lucina", "Zelda", 2, 0, 0),
+        MatchResult("Lucina", "Zelda", 3, 0, 0),
+    ],
+    "Duck Hunt": [  # 17th Previously
+        MatchResult("Duck Hunt", "Zelda", 1, 0, 0),
+        MatchResult("Duck Hunt", "Zelda", 2, 0, 0),
+        MatchResult("Duck Hunt", "Zelda", 3, 0, 0),
+    ],
+    "Banjo & Kazooie": [  # 18th Previously
+        MatchResult("Banjo & Kazooie", "Zelda", 1, 0, 0),
+        MatchResult("Banjo & Kazooie", "Zelda", 2, 0, 0),
+        MatchResult("Banjo & Kazooie", "Zelda", 3, 0, 0),
+    ],
+    "Chrom": [  # 19th Previously
+        MatchResult("Chrom", "Zelda", 1, 0, 0),
+        MatchResult("Chrom", "Zelda", 2, 0, 0),
+        MatchResult("Chrom", "Zelda", 3, 0, 0),
+    ],
+    "Min Min": [  # 20th Previously
+        MatchResult("Min Min", "Zelda", 1, 0, 0),
+        MatchResult("Min Min", "Zelda", 2, 0, 0),
+        MatchResult("Min Min", "Zelda", 3, 0, 0),
+    ],
+    "Mii Gunner": [  # 21st Previously
+        MatchResult("Mii Gunner", "Ike", 1, 2, 117),
+        MatchResult("Mii Gunner", "Terry", 2, 3, 146),
+        MatchResult("Mii Gunner", "Sonic", 3, 3, 63),
+    ],
+    "Ice Climbers": [  # 22nd Previously
+        MatchResult("Ice Climbers", "Isabelle", 1, 3, 103),
+        MatchResult("Ice Climbers", "Falco", 2, 2, 3),
+        MatchResult("Ice Climbers", "Sheik", 3, 3, 35),
+    ],
+    "Bowser": [  # 23rd Previously
+        MatchResult("Bowser", "Duck Hunt", 1, 3, 42),
+        MatchResult("Bowser", "Sheik", 2, 3, 63),
+        MatchResult("Bowser", "Piranha Plant", 3, 3, 76),
+    ],
+    "Donkey Kong": [  # 24th Previously
+        MatchResult("Donkey Kong", "Zelda", 1, 0, 0),
+        MatchResult("Donkey Kong", "Zelda", 2, 0, 0),
+        MatchResult("Donkey Kong", "Zelda", 3, 0, 0),
+    ],
+    "Young Link": [  # 25th Previously
+        MatchResult("Young Link", "Zelda", 1, 0, 0),
+        MatchResult("Young Link", "Zelda", 2, 0, 0),
+        MatchResult("Young Link", "Zelda", 3, 0, 0),
+    ],
+    "Yoshi": [  # 26th Previously
+        MatchResult("Yoshi", "Yoshi", 1, 2, 15),
+        MatchResult("Yoshi", "Jigglypuff", 2, 3, 100),
+        MatchResult("Yoshi", "Donkey Kong", 3, 2, 69),
+    ],
+    "Terry": [  # 27th Previously
+        MatchResult("Terry", "Villager", 1, 3, 161),
+        MatchResult("Terry", "Sora", 2, 1, 117),
+        MatchResult("Terry", "Kazuya", 3, -1, 61),
+    ],
+    "Cloud": [  # 28th Previously
+        MatchResult("Cloud", "Zelda", 1, 0, 0),
+        MatchResult("Cloud", "Zelda", 2, 0, 0),
+        MatchResult("Cloud", "Zelda", 3, 0, 0),
+    ],
+    "Olimar": [  # 29th Previously
+        MatchResult("Olimar", "Zelda", 1, 0, 0),
+        MatchResult("Olimar", "Zelda", 2, 0, 0),
+        MatchResult("Olimar", "Zelda", 3, 0, 0),
+    ],
+    "Toon Link": [  # 30th Previously
+        MatchResult("Toon Link", "Zelda", 1, 0, 0),
+        MatchResult("Toon Link", "Zelda", 2, 0, 0),
+        MatchResult("Toon Link", "Zelda", 3, 0, 0),
+    ],
+    "Isabelle": [  # 31st Previously
+        MatchResult("Isabelle", "Ice Climbers", 1, 2, 75),
+        MatchResult("Isabelle", "Diddy Kong", 2, 3, 69),
+        MatchResult("Isabelle", "Jigglypuff", 3, 3, 76),
+    ],
+    "Bowser Jr": [  # 32nd Previously
+        MatchResult("Bowser Jr", "Zelda", 1, 0, 0),
+        MatchResult("Bowser Jr", "Zelda", 2, 0, 0),
+        MatchResult("Bowser Jr", "Zelda", 3, 0, 0),
+    ],
+    "Mr Game & Watch": [  # 33rd Previously
+        MatchResult("Mr Game & Watch", "Zelda", 1, 0, 0),
+        MatchResult("Mr Game & Watch", "Zelda", 2, 0, 0),
+        MatchResult("Mr Game & Watch", "Zelda", 3, 0, 0),
+    ],
+    "Pokemon Trainer": [  # 34th Previously
+        MatchResult("Pokemon Trainer", "Inkling", 1, 1, 114),
+        MatchResult("Pokemon Trainer", "Robin", 2, 3, 71),
+        MatchResult("Pokemon Trainer", "Falco", 3, 2, 25),
+    ],
+    "Dark Pit": [  # 35th Previously
+        MatchResult("Dark Pit", "Zelda", 1, 0, 0),
+        MatchResult("Dark Pit", "Zelda", 2, 0, 0),
+        MatchResult("Dark Pit", "Zelda", 3, 0, 0),
+    ],
+    "Sora": [  # 36th Previously
+        MatchResult("Sora", "Dark Pit", 1, 2, 13),
+        MatchResult("Sora", "Hero", 2, 1, 0),
+        MatchResult("Sora", "Sephiroth", 3, 1, 0),
     ],
 }
 
@@ -4796,9 +5000,23 @@ def _elimination_6_entry(scores: dict[str, float], prior_ranks: dict[str, int]) 
     recalculated.update(
         build_elimination_5_entry_scores(
             prior_ranks,
-            ELIMINATION_6_MATCHES,
+            [character for character, rank in prior_ranks.items() if rank <= ELIMINATION_6_TOTAL_REMAINING],
             total_remaining=ELIMINATION_6_TOTAL_REMAINING,
             score_max=ELIMINATION_6_SCORE_MAX,
+        )
+    )
+    return recalculated
+
+
+def _round_8_entry(scores: dict[str, float], prior_ranks: dict[str, int]) -> dict[str, float]:
+    recalculated = dict(scores)
+    recalculated.update(
+        build_elimination_5_entry_scores(
+            prior_ranks,
+            [character for character, rank in prior_ranks.items() if rank <= ROUND_8_TOTAL_REMAINING],
+            total_remaining=ROUND_8_TOTAL_REMAINING,
+            coefficient=ROUND_8_ENTRY_COEFFICIENT,
+            score_max=ROUND_8_SCORE_MAX,
         )
     )
     return recalculated
@@ -4858,6 +5076,17 @@ LATE_STAGES: list[StageConfig] = [
         rank_bands=[(30, GREY), (36, GREEN), (42, YELLOW), (48, RED)],
         chart_title="Elimination 6: Rank 86 to 1 Rank Changes",
         chart_filename="elimination_6_ranking_changes.pdf",
+        completed_matches_only=True,
+    ),
+    StageConfig(
+        round_number=14,
+        matches=ROUND_8_MATCHES,
+        entry_transform=_round_8_entry,
+        reorder_start_rank=1,
+        reorder_end_rank=36,
+        rank_bands=[(24, GREEN), (42, YELLOW), (48, RED)],
+        chart_title="Round 8: Rank 86 to 1 Rank Changes",
+        chart_filename="round_8_ranking_changes.pdf",
         completed_matches_only=True,
     ),
 ]
