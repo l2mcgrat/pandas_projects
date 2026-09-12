@@ -4789,14 +4789,14 @@ ROUND_8_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Ridley", "Daisy", 3, 4, 158),
     ],
     "Hero": [  # 3rd Previously
-        MatchResult("Hero", "Zelda", 1, 0, 0),
-        MatchResult("Hero", "Zelda", 2, 0, 0),
-        MatchResult("Hero", "Zelda", 3, 0, 0),
+        MatchResult("Hero", "Roy", 1, 4, 131),
+        MatchResult("Hero", "Shulk", 2, 3, 61),
+        MatchResult("Hero", "Simon", 3, 3, 66),
     ],
     "Robin": [  # 4th Previously
-        MatchResult("Robin", "Zelda", 1, 0, 0),
-        MatchResult("Robin", "Zelda", 2, 0, 0),
-        MatchResult("Robin", "Zelda", 3, 0, 0),
+        MatchResult("Robin", "Peach", 1, 3, 87),
+        MatchResult("Robin", "Daisy", 2, 3, 60),
+        MatchResult("Robin", "Ice Climbers", 3, 4, 138),
     ],
     "King Dedede": [  # 5th Previously
         MatchResult("King Dedede", "Zelda", 1, 0, 0),
@@ -4809,9 +4809,9 @@ ROUND_8_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Pyra & Mythra", "Robin", 3, 3, 70),
     ],
     "Piranha Plant": [  # 7th Previously
-        MatchResult("Piranha Plant", "Zelda", 1, 0, 0),
-        MatchResult("Piranha Plant", "Zelda", 2, 0, 0),
-        MatchResult("Piranha Plant", "Zelda", 3, 0, 0),
+        MatchResult("Piranha Plant", "Inkling", 1, 1, 10),
+        MatchResult("Piranha Plant", "Kazuya", 2, 1, 230),
+        MatchResult("Piranha Plant", "Pikachu", 3, 3, 40),
     ],
     "Lucas": [  # 8th Previously
         MatchResult("Lucas", "Sora", 1, 3, 3),
@@ -4845,9 +4845,9 @@ ROUND_8_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("King K Rool", "Dark Pit", 3, 3, 93),
     ],
     "Dark Samus": [  # 14th Previously
-        MatchResult("Dark Samus", "Zelda", 1, 0, 0),
-        MatchResult("Dark Samus", "Zelda", 2, 0, 0),
-        MatchResult("Dark Samus", "Zelda", 3, 0, 0),
+        MatchResult("Dark Samus", "Diddy Kong", 1, 3, 9),
+        MatchResult("Dark Samus", "Cloud", 2, 1, 67),
+        MatchResult("Dark Samus", "Mega Man", 3, 3, 126),
     ],
     "Dr Mario": [  # 15th Previously
         MatchResult("Dr Mario", "Zelda", 1, 0, 0),

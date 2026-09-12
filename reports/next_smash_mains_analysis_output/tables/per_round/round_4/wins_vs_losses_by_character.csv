@@ -3,6 +3,8 @@ Bowser,3,0,1.0,3
 Isabelle,2,0,1.0,2
 Mii Swordfighter,0,1,0.0,1
 Ridley,3,0,1.0,3
+Hero,2,1,0.6666666666666666,3
+Robin,4,0,1.0,4
 Kirby,4,0,1.0,4
 Link,3,0,1.0,3
 Incineroar,3,0,1.0,3
@@ -12,8 +14,10 @@ Lucas,3,0,1.0,3
 Duck Hunt,3,0,1.0,3
 King K Rool,3,0,1.0,3
 Mii Gunner,3,0,1.0,3
+Piranha Plant,3,0,1.0,3
 Ice Climbers,4,0,1.0,4
 Pokemon Trainer,3,0,1.0,3
+Dark Samus,4,0,1.0,4
 Sora,4,0,1.0,4
 Yoshi,4,0,1.0,4
 Dark Pit,3,0,1.0,3
@@ -28,15 +32,11 @@ Zelda,3,0,1.0,3
 Terry,3,0,1.0,3
 Toon Link,0,1,0.0,1
 Ryu,0,1,0.0,1
-Hero,2,1,0.6666666666666666,3
-Piranha Plant,3,0,1.0,3
 Sephiroth,5,0,1.0,5
 Pit,3,0,1.0,3
-Robin,4,0,1.0,4
 Diddy Kong,3,0,1.0,3
 Banjo & Kazooie,4,0,1.0,4
 Young Link,3,0,1.0,3
-Dark Samus,4,0,1.0,4
 Lucina,1,1,0.5,2
 Dr Mario,0,1,0.0,1
 Donkey Kong,3,0,1.0,3
