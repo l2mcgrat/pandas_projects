@@ -4784,9 +4784,9 @@ ROUND_8_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Zelda", "Zelda", 3, 0, 0),
     ],
     "Ridley": [  # 2nd Previously
-        MatchResult("Ridley", "Zelda", 1, 0, 0),
-        MatchResult("Ridley", "Zelda", 2, 0, 0),
-        MatchResult("Ridley", "Zelda", 3, 0, 0),
+        MatchResult("Ridley", "Luigi", 1, 3, 127),
+        MatchResult("Ridley", "Pichu", 2, 3, 0),
+        MatchResult("Ridley", "Daisy", 3, 4, 158),
     ],
     "Hero": [  # 3rd Previously
         MatchResult("Hero", "Zelda", 1, 0, 0),
@@ -4814,9 +4814,9 @@ ROUND_8_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Piranha Plant", "Zelda", 3, 0, 0),
     ],
     "Lucas": [  # 8th Previously
-        MatchResult("Lucas", "Zelda", 1, 0, 0),
-        MatchResult("Lucas", "Zelda", 2, 0, 0),
-        MatchResult("Lucas", "Zelda", 3, 0, 0),
+        MatchResult("Lucas", "Sora", 1, 3, 3),
+        MatchResult("Lucas", "Hero", 2, 2, 66),
+        MatchResult("Lucas", "Dr Mario", 3, 2, 64),
     ],
     "Sephiroth": [  # 9th Previously
         MatchResult("Sephiroth", "Zelda", 1, 0, 0),
@@ -4835,9 +4835,9 @@ ROUND_8_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Link", "Pyra & Mythra", 3, 3, 57),
     ],
     "Incineroar": [  # 12th Previously
-        MatchResult("Incineroar", "Zelda", 1, 0, 0),
-        MatchResult("Incineroar", "Zelda", 2, 0, 0),
-        MatchResult("Incineroar", "Zelda", 3, 0, 0),
+        MatchResult("Incineroar", "Meta Knight", 1, 3, 90),
+        MatchResult("Incineroar", "Palutena", 2, 2, 56),
+        MatchResult("Incineroar", "Marth", 3, 4, 161),
     ],
     "King K Rool": [  # 13th Previously
         MatchResult("King K Rool", "Joker", 1, 3, 35),
@@ -4860,9 +4860,9 @@ ROUND_8_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Lucina", "Zelda", 3, 0, 0),
     ],
     "Duck Hunt": [  # 17th Previously
-        MatchResult("Duck Hunt", "Zelda", 1, 0, 0),
-        MatchResult("Duck Hunt", "Zelda", 2, 0, 0),
-        MatchResult("Duck Hunt", "Zelda", 3, 0, 0),
+        MatchResult("Duck Hunt", "Wolf", 1, 3, 129),
+        MatchResult("Duck Hunt", "Piranha Plant", 2, 4, 137),
+        MatchResult("Duck Hunt", "Captain Falcon", 3, 2, 50),
     ],
     "Banjo & Kazooie": [  # 18th Previously
         MatchResult("Banjo & Kazooie", "Zelda", 1, 0, 0),
