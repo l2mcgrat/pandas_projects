@@ -4819,9 +4819,9 @@ ROUND_8_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Lucas", "Dr Mario", 3, 2, 64),
     ],
     "Sephiroth": [  # 9th Previously
-        MatchResult("Sephiroth", "Zelda", 1, 0, 0),
-        MatchResult("Sephiroth", "Zelda", 2, 0, 0),
-        MatchResult("Sephiroth", "Zelda", 3, 0, 0),
+        MatchResult("Sephiroth", "Duck Hunt", 1, 3, 9),
+        MatchResult("Sephiroth", "Yoshi", 2, 3, 99),
+        MatchResult("Sephiroth", "Kirby", 3, 3, 114),
     ],
     "Kirby": [  # 10th Previously
         MatchResult("Kirby", "Diddy Kong", 1, 3, 98),
@@ -4875,9 +4875,9 @@ ROUND_8_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Chrom", "Zelda", 3, 0, 0),
     ],
     "Min Min": [  # 20th Previously
-        MatchResult("Min Min", "Zelda", 1, 0, 0),
-        MatchResult("Min Min", "Zelda", 2, 0, 0),
-        MatchResult("Min Min", "Zelda", 3, 0, 0),
+        MatchResult("Min Min", "Rosalina & Luma", 1, 3, 122),
+        MatchResult("Min Min", "Mewtwo", 2, 3, 15),
+        MatchResult("Min Min", "Young Link", 3, 4, 208),
     ],
     "Mii Gunner": [  # 21st Previously
         MatchResult("Mii Gunner", "Ike", 1, 2, 117),
@@ -4940,9 +4940,9 @@ ROUND_8_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Bowser Jr", "Zelda", 3, 0, 0),
     ],
     "Mr Game & Watch": [  # 33rd Previously
-        MatchResult("Mr Game & Watch", "Zelda", 1, 0, 0),
-        MatchResult("Mr Game & Watch", "Zelda", 2, 0, 0),
-        MatchResult("Mr Game & Watch", "Zelda", 3, 0, 0),
+        MatchResult("Mr Game & Watch", "PacMan", 1, 2, 0),
+        MatchResult("Mr Game & Watch", "King K Rool", 2, 1, 79),
+        MatchResult("Mr Game & Watch", "Wario", 3, 2, 33),
     ],
     "Pokemon Trainer": [  # 34th Previously
         MatchResult("Pokemon Trainer", "Inkling", 1, 1, 114),
@@ -4950,9 +4950,9 @@ ROUND_8_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Pokemon Trainer", "Falco", 3, 2, 25),
     ],
     "Dark Pit": [  # 35th Previously
-        MatchResult("Dark Pit", "Zelda", 1, 0, 0),
-        MatchResult("Dark Pit", "Zelda", 2, 0, 0),
-        MatchResult("Dark Pit", "Zelda", 3, 0, 0),
+        MatchResult("Dark Pit", "Bayonetta", 1, 1, 9),
+        MatchResult("Dark Pit", "Banjo & Kazooie", 2, 3, 93),
+        MatchResult("Dark Pit", "Richter", 3, 2, 66),
     ],
     "Sora": [  # 36th Previously
         MatchResult("Sora", "Dark Pit", 1, 2, 13),

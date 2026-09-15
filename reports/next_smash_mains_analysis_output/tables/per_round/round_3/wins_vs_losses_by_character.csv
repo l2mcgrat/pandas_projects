@@ -1,12 +1,16 @@
 Character,Wins,Losses,Win_Rate,Fights
 Bowser,4,0,1.0,4
 Isabelle,3,0,1.0,3
+Dark Pit,4,0,1.0,4
 Mii Swordfighter,1,1,0.5,2
+Min Min,3,0,1.0,3
+Mr Game & Watch,3,0,1.0,3
 Ridley,3,0,1.0,3
 Hero,3,0,1.0,3
 Robin,4,0,1.0,4
 Kirby,3,0,1.0,3
 Link,3,0,1.0,3
+Sephiroth,3,0,1.0,3
 Incineroar,3,0,1.0,3
 Pyra & Mythra,2,1,0.6666666666666666,3
 Bowser Jr,3,0,1.0,3
@@ -20,19 +24,15 @@ Pokemon Trainer,3,0,1.0,3
 Dark Samus,3,0,1.0,3
 Sora,3,0,1.0,3
 Yoshi,3,0,1.0,3
-Dark Pit,4,0,1.0,4
-Mr Game & Watch,3,0,1.0,3
 Cloud,3,0,1.0,3
 Ganondorf,4,0,1.0,4
 Chrom,3,0,1.0,3
 King Dedede,3,0,1.0,3
-Min Min,3,0,1.0,3
 Simon,3,0,1.0,3
 Zelda,3,0,1.0,3
 Terry,4,0,1.0,4
 Toon Link,3,1,0.75,4
 Ryu,3,0,1.0,3
-Sephiroth,3,0,1.0,3
 Pit,3,0,1.0,3
 Diddy Kong,1,1,0.5,2
 Banjo & Kazooie,3,0,1.0,3
