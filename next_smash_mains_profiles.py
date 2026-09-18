@@ -54,6 +54,7 @@ ROUND_LABEL: dict[int, str] = {
     12: "round_7",
     13: "elimination_6",
     14: "round_8",
+    15: "elimination_7",
 }
 ROUND_DISPLAY: dict[int, str] = {
     1: "Round 1",
@@ -70,6 +71,7 @@ ROUND_DISPLAY: dict[int, str] = {
     12: "Round 7",
     13: "Elim 6",
     14: "Round 8",
+    15: "Elim 7",
 }
 LABEL_TO_ROUND: dict[str, int] = {v: k for k, v in ROUND_LABEL.items()}
 
@@ -80,6 +82,7 @@ ELIMINATION_RANK_OFFSETS: dict[str, int] = {
     "elimination_4": 40,
     "elimination_5": 32,
     "elimination_6": 30,
+    "elimination_7": 24,
 }
 
 # Colour assigned to each round for charts
@@ -98,6 +101,7 @@ ROUND_COLORS: dict[str, str] = {
     "round_7":       "#499894",
     "elimination_6": "#d37295",
     "round_8":       "#59a14f",
+    "elimination_7": "#fabfd2",
 }
 
 
@@ -110,6 +114,7 @@ def _elimination_rank_box_characters(label: str, fallback: list[str]) -> list[st
         "elimination_4": "ELIMINATION_4_MATCHES",
         "elimination_5": "ELIMINATION_5_MATCHES",
         "elimination_6": "ELIMINATION_6_MATCHES",
+        "elimination_7": "ELIMINATION_7_MATCHES",
     }
     attr = attr_by_label.get(label)
     if attr is None:
