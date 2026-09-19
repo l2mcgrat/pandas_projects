@@ -1,0 +1,4 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Base Score,Stage Multiplier,Matchup,Late Match Divisor,Total Multiplier,Multiplier Adjusted Score,Accumulated_Sum,Multiplier Adjusted Accumulated Sum
+Ridley,Ridley,1,1,0,1,0,10.0,2.0,5.0,1.0,1.0,5.0,2.0,19.179,11.179
+Ridley,Ridley,2,1,0,1,0,14.0,2.0,7.0,1.0,1.0,7.0,2.0,33.179,13.179
+Ridley,Ridley,3,1,0,1,0,18.0,2.0,9.0,1.0,1.0,9.0,2.0,51.179,15.179
