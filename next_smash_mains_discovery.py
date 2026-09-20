@@ -5095,9 +5095,9 @@ ROUND_9_RULE = RoundScoringRule(
 
 ROUND_9_MATCHES: dict[str, list[MatchResult]] = {
     "Ridley": [  # 1st Previously
-        MatchResult("Ridley", "Ridley", 1, 1, 0),
-        MatchResult("Ridley", "Ridley", 2, 1, 0),
-        MatchResult("Ridley", "Ridley", 3, 1, 0),
+        MatchResult("Ridley", "Diddy Kong", 1, 0, 0),
+        MatchResult("Ridley", "Ridley", 2, 0, 0),
+        MatchResult("Ridley", "Ridley", 3, 0, 0),
     ],
     "Robin": [  # 2nd Previously
         MatchResult("Robin", "Ridley", 1, 0, 0),
@@ -5105,29 +5105,29 @@ ROUND_9_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Robin", "Ridley", 3, 0, 0),
     ],
     "Kirby": [  # 3rd Previously
-        MatchResult("Kirby", "Ridley", 1, 0, 0),
-        MatchResult("Kirby", "Ridley", 2, 0, 0),
-        MatchResult("Kirby", "Ridley", 3, 0, 0),
+        MatchResult("Kirby", "Daisy", 1, 3, 24),
+        MatchResult("Kirby", "King Dedede", 2, 2, 32),
+        MatchResult("Kirby", "Rosalina & Luma", 3, 2, 68),
     ],
     "Hero": [  # 4th Previously
         MatchResult("Hero", "Peach", 1, 1, 101),
-        MatchResult("Hero", "Mega Man", 2, 0, 0),
-        MatchResult("Hero", "Ridley", 3, 0, 0),
+        MatchResult("Hero", "Mega Man", 2, 4, 135),
+        MatchResult("Hero", "Falco", 3, 4, 169),
     ],
     "Dr Mario": [  # 5th Previously
-        MatchResult("Dr Mario", "Ridley", 1, 0, 0),
-        MatchResult("Dr Mario", "Ridley", 2, 0, 0),
-        MatchResult("Dr Mario", "Ridley", 3, 0, 0),
+        MatchResult("Dr Mario", "Incineroar", 1, 1, 31),
+        MatchResult("Dr Mario", "Pokemon Trainer", 2, 3, 76),
+        MatchResult("Dr Mario", "King Dedede", 3, 3, 72),
     ],
     "King Dedede": [  # 6th Previously
-        MatchResult("King Dedede", "Ridley", 1, 0, 0),
+        MatchResult("King Dedede", "Roy", 1, 0, 0),
         MatchResult("King Dedede", "Ridley", 2, 0, 0),
         MatchResult("King Dedede", "Ridley", 3, 0, 0),
     ],
     "Link": [  # 7th Previously
         MatchResult("Link", "Banjo & Kazooie", 1, 2, 127),
         MatchResult("Link", "Sonic", 2, 3, 0),
-        MatchResult("Link", "Shulk", 3, 0, 0),
+        MatchResult("Link", "Shulk", 3, 3, 110),
     ],
     "Incineroar": [  # 8th Previously
         MatchResult("Incineroar", "Ridley", 1, 0, 0),
@@ -5135,9 +5135,9 @@ ROUND_9_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Incineroar", "Ridley", 3, 0, 0),
     ],
     "Zelda": [  # 9th Previously
-        MatchResult("Zelda", "Ridley", 1, 0, 0),
-        MatchResult("Zelda", "Ridley", 2, 0, 0),
-        MatchResult("Zelda", "Ridley", 3, 0, 0),
+        MatchResult("Zelda", "Mario", 1, 4, 163),
+        MatchResult("Zelda", "Diddy Kong", 2, 4, 165),
+        MatchResult("Zelda", "Marth", 3, 3, 61),
     ],
     "Sephiroth": [  # 10th Previously
         MatchResult("Sephiroth", "Ridley", 1, 0, 0),
@@ -5145,9 +5145,9 @@ ROUND_9_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Sephiroth", "Ridley", 3, 0, 0),
     ],
     "Chrom": [  # 11th Previously
-        MatchResult("Chrom", "Ridley", 1, 0, 0),
-        MatchResult("Chrom", "Ridley", 2, 0, 0),
-        MatchResult("Chrom", "Ridley", 3, 0, 0),
+        MatchResult("Chrom", "Shulk", 1, 3, 125),
+        MatchResult("Chrom", "Yoshi", 2, 2, 86),
+        MatchResult("Chrom", "Bowser", 3, 1, 50),
     ],
     "Olimar": [  # 12th Previously
         MatchResult("Olimar", "Ridley", 1, 0, 0),
@@ -5155,9 +5155,9 @@ ROUND_9_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Olimar", "Ridley", 3, 0, 0),
     ],
     "Pyra & Mythra": [  # 13th Previously
-        MatchResult("Pyra & Mythra", "Ridley", 1, 0, 0),
-        MatchResult("Pyra & Mythra", "Ridley", 2, 0, 0),
-        MatchResult("Pyra & Mythra", "Ridley", 3, 0, 0),
+        MatchResult("Pyra & Mythra", "Samus", 1, 3, 106),
+        MatchResult("Pyra & Mythra", "Ganondorf", 2, 3, 97),
+        MatchResult("Pyra & Mythra", "Luigi", 3, 3, 113),
     ],
     "Min Min": [  # 14th Previously
         MatchResult("Min Min", "Ridley", 1, 0, 0),
@@ -5181,8 +5181,9 @@ ROUND_9_MATCHES: dict[str, list[MatchResult]] = {
     ],
     "King K Rool": [  # 18th Previously
         MatchResult("King K Rool", "Pikachu", 1, 2, 19),
-        MatchResult("King K Rool", "Terry", 2, 0, 0),
-        MatchResult("King K Rool", "Ridley", 3, 0, 0),
+        MatchResult("King K Rool", "Terry", 2, 2, 60),
+        MatchResult("King K Rool", "Zelda", 3, 3, 88),
+        MatchResult("King K Rool", "Wario", 4, 3, 78),
     ],
     "Lucas": [  # 19th Previously
         MatchResult("Lucas", "Ridley", 1, 0, 0),
@@ -5200,14 +5201,15 @@ ROUND_9_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Mii Gunner", "Ridley", 3, 0, 0),
     ],
     "Bowser Jr": [  # 22nd Previously
-        MatchResult("Bowser Jr", "Ridley", 1, 0, 0),
+        MatchResult("Bowser Jr", "Incineroar", 1, 0, 0),
         MatchResult("Bowser Jr", "Ridley", 2, 0, 0),
         MatchResult("Bowser Jr", "Ridley", 3, 0, 0),
     ],
     "Ice Climbers": [  # 23rd Previously
-        MatchResult("Ice Climbers", "Ridley", 1, 0, 0),
-        MatchResult("Ice Climbers", "Ridley", 2, 0, 0),
-        MatchResult("Ice Climbers", "Ridley", 3, 0, 0),
+        MatchResult("Ice Climbers", "Joker", 1, 3, 58),
+        MatchResult("Ice Climbers", "Daisy", 2, 3, 164),
+        MatchResult("Ice Climbers", "Zero Suit Samus", 3, 2, 17),
+        MatchResult("Ice Climbers", "Byleth", 4, 2, 164),
     ],
     "Isabelle": [  # 24th Previously
         MatchResult("Isabelle", "Ridley", 1, 0, 0),
@@ -5215,22 +5217,21 @@ ROUND_9_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Isabelle", "Ridley", 3, 0, 0),
     ],
     "Lucina": [  # 25th Previously
-        MatchResult("Lucina", "Ridley", 1, 0, 0),
-        MatchResult("Lucina", "Ridley", 2, 0, 0),
-        MatchResult("Lucina", "Ridley", 3, 0, 0),
+        MatchResult("Lucina", "Pyra & Mythra", 1, 3, 110),
+        MatchResult("Lucina", "Pikachu", 2, 3, 165),
+        MatchResult("Lucina", "Byleth", 3, -1, 56),
     ],
     "Dark Pit": [  # 26th Previously
-        MatchResult("Dark Pit", "Ridley", 1, 0, 0),
-        MatchResult("Dark Pit", "Ridley", 2, 0, 0),
-        MatchResult("Dark Pit", "Ridley", 3, 0, 0),
+        MatchResult("Dark Pit", "Donkey Kong", 1, 1, 68),
+        MatchResult("Dark Pit", "Lucas", 2, 3, 112),
+        MatchResult("Dark Pit", "Terry", 3, 2, 77),
     ],
     "Byleth": [  # 27th Previously
         MatchResult("Byleth", "Ness", 1, 3, 64),
-        MatchResult("Byleth", "Captain Falcon", 2, 0, 0),
-        MatchResult("Byleth", "Ridley", 3, 0, 0),
+        MatchResult("Byleth", "Captain Falcon", 2, -1, 84),
     ],
     "Sora": [  # 28th Previously
-        MatchResult("Sora", "Ridley", 1, 0, 0),
+        MatchResult("Sora", "Hero", 1, 0, 0),
         MatchResult("Sora", "Ridley", 2, 0, 0),
         MatchResult("Sora", "Ridley", 3, 0, 0),
     ],
