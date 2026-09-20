@@ -5095,12 +5095,12 @@ ROUND_9_RULE = RoundScoringRule(
 
 ROUND_9_MATCHES: dict[str, list[MatchResult]] = {
     "Ridley": [  # 1st Previously
-        MatchResult("Ridley", "Diddy Kong", 1, 0, 0),
-        MatchResult("Ridley", "Ridley", 2, 0, 0),
-        MatchResult("Ridley", "Ridley", 3, 0, 0),
+        MatchResult("Ridley", "Diddy Kong", 1, 2, 0),
+        MatchResult("Ridley", "Steve", 2, 3, 102),
+        MatchResult("Ridley", "Lucas", 3, 4, 120),
     ],
     "Robin": [  # 2nd Previously
-        MatchResult("Robin", "Ridley", 1, 0, 0),
+        MatchResult("Robin", "Daisy", 1, 0, 0),
         MatchResult("Robin", "Ridley", 2, 0, 0),
         MatchResult("Robin", "Ridley", 3, 0, 0),
     ],
@@ -5120,9 +5120,9 @@ ROUND_9_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Dr Mario", "King Dedede", 3, 3, 72),
     ],
     "King Dedede": [  # 6th Previously
-        MatchResult("King Dedede", "Roy", 1, 0, 0),
-        MatchResult("King Dedede", "Ridley", 2, 0, 0),
-        MatchResult("King Dedede", "Ridley", 3, 0, 0),
+        MatchResult("King Dedede", "Roy", 1, 3, 123),
+        MatchResult("King Dedede", "Sephiroth", 2, 2, 54),
+        MatchResult("King Dedede", "Richter", 3, 2, 98),
     ],
     "Link": [  # 7th Previously
         MatchResult("Link", "Banjo & Kazooie", 1, 2, 127),
@@ -5130,7 +5130,7 @@ ROUND_9_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Link", "Shulk", 3, 3, 110),
     ],
     "Incineroar": [  # 8th Previously
-        MatchResult("Incineroar", "Ridley", 1, 0, 0),
+        MatchResult("Incineroar", "Wario", 1, 0, 0),
         MatchResult("Incineroar", "Ridley", 2, 0, 0),
         MatchResult("Incineroar", "Ridley", 3, 0, 0),
     ],
@@ -5150,7 +5150,7 @@ ROUND_9_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Chrom", "Bowser", 3, 1, 50),
     ],
     "Olimar": [  # 12th Previously
-        MatchResult("Olimar", "Ridley", 1, 0, 0),
+        MatchResult("Olimar", "Robin", 1, 0, 0),
         MatchResult("Olimar", "Ridley", 2, 0, 0),
         MatchResult("Olimar", "Ridley", 3, 0, 0),
     ],
@@ -5196,14 +5196,14 @@ ROUND_9_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Donkey Kong", "Ridley", 3, 0, 0),
     ],
     "Mii Gunner": [  # 21st Previously
-        MatchResult("Mii Gunner", "Ridley", 1, 0, 0),
+        MatchResult("Mii Gunner", "Villager", 1, 0, 0),
         MatchResult("Mii Gunner", "Ridley", 2, 0, 0),
         MatchResult("Mii Gunner", "Ridley", 3, 0, 0),
     ],
     "Bowser Jr": [  # 22nd Previously
-        MatchResult("Bowser Jr", "Incineroar", 1, 0, 0),
-        MatchResult("Bowser Jr", "Ridley", 2, 0, 0),
-        MatchResult("Bowser Jr", "Ridley", 3, 0, 0),
+        MatchResult("Bowser Jr", "Incineroar", 1, 2, 75),
+        MatchResult("Bowser Jr", "Sheik", 2, 3, 40),
+        MatchResult("Bowser Jr", "Byleth", 3, 3, 0),
     ],
     "Ice Climbers": [  # 23rd Previously
         MatchResult("Ice Climbers", "Joker", 1, 3, 58),
@@ -5231,9 +5231,9 @@ ROUND_9_MATCHES: dict[str, list[MatchResult]] = {
         MatchResult("Byleth", "Captain Falcon", 2, -1, 84),
     ],
     "Sora": [  # 28th Previously
-        MatchResult("Sora", "Hero", 1, 0, 0),
-        MatchResult("Sora", "Ridley", 2, 0, 0),
-        MatchResult("Sora", "Ridley", 3, 0, 0),
+        MatchResult("Sora", "Hero", 1, 1, 27),
+        MatchResult("Sora", "Shulk", 2, 3, 7),
+        MatchResult("Sora", "Mr Game & Watch", 3, 2, 39),
     ],
     "Simon": [  # 29th Previously
         MatchResult("Simon", "Ridley", 1, 0, 0),
