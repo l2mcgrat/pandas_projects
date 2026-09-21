@@ -22,6 +22,7 @@ from next_smash_mains_profiles import (
 
 GOOD = "#2ca02c"
 BAD = "#d62728"
+WARNING = "#bcbd22"
 NEUTRAL = "#4e79a7"
 ACCENT = "#f28e2b"
 
@@ -222,6 +223,131 @@ def _page_elimination_survival(pdf: PdfPages, profiles: dict[str, CharacterProfi
     plt.close(fig)
 
 
+def _elimination_status_page(
+    pdf: PdfPages,
+    profiles: dict[str, CharacterProfile],
+    label: str,
+    cumulative_counts: dict[str, int],
+    elimination_participants: set[str],
+    rank_bands: list[tuple[int, str]] | None,
+) -> None:
+    round_number = LABEL_TO_ROUND.get(label, 99)
+    ranked_characters: list[tuple[int, str]] = []
+    for profile in profiles.values():
+        prior_ranks = [
+            (LABEL_TO_ROUND.get(round_label, 99), rank)
+            for round_label, rank in profile.ranks_by_round.items()
+            if LABEL_TO_ROUND.get(round_label, 99) <= round_number
+        ]
+        if prior_ranks:
+            ranked_characters.append((max(prior_ranks)[1], profile.name))
+    ranked_characters.sort()
+
+    count_groups: dict[int, list[tuple[str, str]]] = {}
+    for rank, character in ranked_characters:
+        if rank_bands:
+            arrow_color = "#000000"
+            for max_rank, color in rank_bands:
+                if rank <= max_rank:
+                    arrow_color = color
+                    break
+            if arrow_color == WARNING:
+                status = "Currently in Elimination"
+            elif arrow_color in {BAD, "#000000"}:
+                status = "Eliminated"
+            else:
+                status = "Not in Elimination"
+        elif character in elimination_participants:
+            status = "Currently in Elimination"
+        else:
+            status = "Not in Elimination"
+        status_color = {
+            "Not in Elimination": GOOD,
+            "Currently in Elimination": WARNING,
+            "Eliminated": BAD,
+        }[status]
+        count = cumulative_counts.get(character, 0)
+        count_groups.setdefault(count, []).append((character, status_color))
+
+    row_lines: list[tuple[int, list[tuple[str, str]]]] = []
+    for count, characters in sorted(count_groups.items()):
+        for index in range(0, len(characters), 4):
+            row_lines.append((count, characters[index:index + 4]))
+
+    row_height = 0.042
+    fig_height = max(8, 2.4 + len(row_lines) * 0.62)
+    fig, ax = plt.subplots(figsize=(16, fig_height))
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.axis("off")
+
+    left, right = 0.015, 0.985
+    count_column = 0.17
+    top = 0.92
+    bottom = 0.07
+    available_height = top - bottom
+    line_height = available_height / (len(row_lines) + 1)
+
+    ax.add_patch(plt.Rectangle((left, top - line_height), right - left, line_height, fill=False, linewidth=1.2))
+    ax.plot([count_column, count_column], [bottom, top], color="black", linewidth=1.2)
+    ax.text((left + count_column) / 2, top - line_height / 2, "Elimination Count", ha="center", va="center", weight="bold")
+    ax.text((count_column + right) / 2, top - line_height / 2, "Characters", ha="center", va="center", weight="bold")
+
+    previous_count: int | None = None
+    for line_index, (count, characters) in enumerate(row_lines, start=1):
+        y_top = top - line_height * line_index
+        y_bottom = y_top - line_height
+        ax.add_patch(plt.Rectangle((left, y_bottom), right - left, line_height, fill=False, linewidth=0.8))
+        if count != previous_count:
+            count_label = f"{count} Elimination" if count == 1 else f"{count} Eliminations"
+            ax.text((left + count_column) / 2, y_bottom + line_height / 2, count_label, ha="center", va="center")
+        previous_count = count
+
+        slot_width = (right - count_column) / 4
+        for slot, (character, color) in enumerate(characters):
+            x = count_column + slot_width * (slot + 0.5)
+            ax.text(x, y_bottom + line_height / 2, character, color=color, ha="center", va="center", fontsize=9)
+
+    status_colors = {
+        "Not in Elimination": GOOD,
+        "Currently in Elimination": WARNING,
+        "Eliminated": BAD,
+    }
+    ax.set_title(f"{_display(label)}: Elimination History", fontsize=14)
+    legend_x = [0.31, 0.5, 0.69]
+    for x, (status, color) in zip(legend_x, status_colors.items()):
+        ax.text(x, 0.025, status, color=color, ha="center", fontsize=9, weight="bold")
+    plt.tight_layout(rect=[0.01, 0.02, 0.99, 0.96])
+    pdf.savefig(fig, bbox_inches="tight")
+    plt.close(fig)
+
+
+def generate_elimination_history_report(
+    profiles: dict[str, CharacterProfile],
+    output_dir: Path,
+    elimination_round_participants: dict[str, set[str]],
+    status_bands_by_round: dict[str, list[tuple[int, str]]],
+    filename: str = "elimination_history_by_round.pdf",
+) -> Path:
+    output_path = output_dir / filename
+    cumulative_counts: dict[str, int] = {character: 0 for character in profiles}
+    with PdfPages(output_path) as pdf:
+        for label in _ordered_labels(profiles):
+            participants = elimination_round_participants.get(label, set())
+            for character in participants:
+                cumulative_counts[character] = cumulative_counts.get(character, 0) + 1
+            _elimination_status_page(
+                pdf,
+                profiles,
+                label,
+                cumulative_counts,
+                participants,
+                status_bands_by_round.get(label),
+            )
+    print(f"Elimination history report saved: {output_path}")
+    return output_path
+
+
 def _page_overperformance(pdf: PdfPages, profiles: dict[str, CharacterProfile]) -> None:
     entries = [
         (p.name, p.avg_overperformance)
@@ -284,6 +410,8 @@ def generate_rank_report(
     output_dir: Path,
     matchup_df: pd.DataFrame,
     elimination_counts: dict[str, int] | None = None,
+    elimination_round_participants: dict[str, set[str]] | None = None,
+    status_bands_by_round: dict[str, list[tuple[int, str]]] | None = None,
     filename: str = "average_rank_report.pdf",
 ) -> Path:
     """Build the multi-page rank analytics PDF."""
@@ -302,6 +430,14 @@ def generate_rank_report(
         _page_overperformance(pdf, profiles)
         _page_rescoring_losses(pdf, profiles)
         _page_efficiency(pdf, profiles)
+
+    if elimination_round_participants is not None and status_bands_by_round is not None:
+        generate_elimination_history_report(
+            profiles,
+            output_dir,
+            elimination_round_participants,
+            status_bands_by_round,
+        )
 
     print(f"Rank analytics report saved: {output_path}")
     return output_path
