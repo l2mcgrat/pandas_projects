@@ -1,0 +1,7 @@
+Character,Opponent,Round,Win,Loss,Stock Diff,Percentage,Score,Base Score,Stage Multiplier,Matchup,Late Match Divisor,Total Multiplier,Multiplier Adjusted Score,Accumulated_Sum,Multiplier Adjusted Accumulated Sum
+Byleth,Robin,1,1,0,4,0,27.75,5.0,6.0,0.925,1.0,5.55,5.0,29.687,6.937
+Byleth,Robin,2,1,0,4,0,39.312,5.0,8.5,0.925,1.0,7.863,5.0,69.0,11.937
+Byleth,Robin,3,1,0,4,0,50.875,5.0,11.0,0.925,1.0,10.175,5.0,119.875,16.937
+Young Link,Robin,1,1,0,1,0,12.0,2.0,6.0,1.0,1.0,6.0,2.0,12.0,2.0
+Young Link,Robin,2,1,0,1,0,17.0,2.0,8.5,1.0,1.0,8.5,2.0,29.0,4.0
+Young Link,Robin,3,1,0,1,0,22.0,2.0,11.0,1.0,1.0,11.0,2.0,51.0,6.0

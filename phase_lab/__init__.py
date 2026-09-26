@@ -1,0 +1,1 @@
+"""Qualitative rigid-dipole molecular dynamics and phase-order visualization."""

@@ -5,6 +5,8 @@ import json
 import shutil
 from pathlib import Path
 
+from phase_lab.publishing import physics_landing_page, publish_available_runs
+
 from next_smash_mains_profiles import (
     MATCHUP_DF,
     MODELS_DIR,
@@ -452,6 +454,8 @@ def home_page() -> str:
 
 
 def category_page(label: str) -> str:
+    if label == "Physics":
+        return physics_landing_page(SITE_DIR)
     if label == "Gaming":
         return page_shell(
             f"{label} | LiamMs_PandasProjects",
@@ -1311,7 +1315,7 @@ function drawLineChart(canvas, points, title) {
   ctx.fillStyle = '#8ea3bf'; ctx.font = '12px Georgia';
   points.forEach((p, i) => { const x = xAt(i); ctx.save(); ctx.translate(x, height - 42); ctx.rotate(-0.55); ctx.textAlign = 'right'; ctx.fillText(p.round, 0, 0); ctx.restore(); });
 }
-const ROUND_ORDER = {round_1:1, round_2:2, elimination_1:3, round_3:4, elimination_2:5, round_4:6, elimination_3:7, round_5:8, elimination_4:9, round_6:10, elimination_5:11, round_7:12, elimination_6:13, round_8:14, elimination_7:15, round_9:16, elimination_8:17};
+const ROUND_ORDER = {round_1:1, round_2:2, elimination_1:3, round_3:4, elimination_2:5, round_4:6, elimination_3:7, round_5:8, elimination_4:9, round_6:10, elimination_5:11, round_7:12, elimination_6:13, round_8:14, elimination_7:15, round_9:16, elimination_8:17, round_10:18};
 function allRounds(chars) {
   const seen = new Map();
   chars.forEach(c => (c.ranks || []).forEach(p => { if (!seen.has(p.roundLabel)) seen.set(p.roundLabel, p.round); }));
@@ -1682,6 +1686,7 @@ function renderParetoTable(node, chars, metric) {
 
 def main() -> None:
     ensure_dirs()
+    publish_available_runs(ROOT, SITE_DIR)
     crop_icon_sheet()
     profiles = build_profiles(RECORDS_DIR, MATCHUP_DF)
     opponent_profiles = build_opponent_profiles(RECORDS_DIR)
@@ -1726,7 +1731,7 @@ def main() -> None:
         o["oppRank"] = i + 1
 
     # Build opponent rank trajectory (cumulative NT score per round → rank at each round)
-    _ROUND_ORDER_LABELS = ["round_1", "round_2", "elimination_1", "round_3", "elimination_2", "round_4", "elimination_3", "round_5", "elimination_4", "round_6", "elimination_5", "round_7", "elimination_6", "round_8", "elimination_7", "round_9", "elimination_8"]
+    _ROUND_ORDER_LABELS = ["round_1", "round_2", "elimination_1", "round_3", "elimination_2", "round_4", "elimination_3", "round_5", "elimination_4", "round_6", "elimination_5", "round_7", "elimination_6", "round_8", "elimination_7", "round_9", "elimination_8", "round_10"]
     opp_cumul: dict[str, dict[str, float]] = {}
     for opp_profile in opponent_profiles.values():
         name = opp_profile.name

@@ -57,6 +57,7 @@ ROUND_LABEL: dict[int, str] = {
     15: "elimination_7",
     16: "round_9",
     17: "elimination_8",
+    18: "round_10",
 }
 ROUND_DISPLAY: dict[int, str] = {
     1: "Round 1",
@@ -76,6 +77,7 @@ ROUND_DISPLAY: dict[int, str] = {
     15: "Elim 7",
     16: "Round 9",
     17: "Elim 8",
+    18: "Round 10",
 }
 LABEL_TO_ROUND: dict[str, int] = {v: k for k, v in ROUND_LABEL.items()}
 
@@ -109,6 +111,7 @@ ROUND_COLORS: dict[str, str] = {
     "elimination_7": "#fabfd2",
     "round_9":       "#86bcb6",
     "elimination_8": "#e15759",
+    "round_10":      "#4e79a7",
 }
 
 
