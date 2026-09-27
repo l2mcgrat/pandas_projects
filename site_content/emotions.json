@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "description": "Custom, editable English text-cue lexicon inspired by the requested 12 feelings-wheel families, not an authoritative wheel transcription. Branches describe textual categories, never a diagnosis. Words are exact casefold forms, not stems; phrases are token sequences. Occurrences score 1, or 0 when negated. No trained model, probability or clinical inference. Shared cues deliberately expose ambiguity.",
+  "families": [
+    {
+      "family": "Proud", "color": "#A16207",
+      "branches": {
+        "Confident": ["proud", "confident", "confidence", "bold", "fearless", "self assured", "stand tall", "head held high"],
+        "Successful": ["successful", "accomplished", "achievement", "achieved", "triumphant", "victorious", "champion", "made it"],
+        "Respected": ["respected", "admired", "recognized", "honored", "honoured", "dignity", "earned respect"],
+        "Worthy": ["worthy", "capable", "empowered", "resilient", "strong", "strength", "believe in myself"]
+      }
+    },
+    {
+      "family": "Joyful", "color": "#CA8A04",
+      "branches": {
+        "Happy": ["joy", "joyful", "happy", "happiness", "delighted", "cheerful", "glad", "bliss", "overjoyed", "elated"],
+        "Excited": ["excited", "excitement", "thrilled", "ecstatic", "euphoric", "hyped", "pumped", "on cloud nine"],
+        "Playful": ["playful", "laugh", "laughing", "laughter", "fun", "amused", "joking", "lighthearted"],
+        "Content": ["content", "contented", "satisfied", "peaceful", "serene", "cheer", "at peace"]
+      }
+    },
+    {
+      "family": "Intrigued", "color": "#65A30D",
+      "branches": {
+        "Curious": ["intrigued", "curious", "curiosity", "inquisitive", "wondering", "questioning", "eager to know"],
+        "Fascinated": ["fascinated", "fascinating", "captivated", "mesmerized", "spellbound", "engrossed", "drawn in"],
+        "Interested": ["interested", "absorbed", "attentive", "exploring", "discovering", "investigating", "open minded"],
+        "Inspired": ["inspired", "inspiration", "creative", "imaginative", "motivated", "envision", "new ideas"]
+      }
+    },
+    {
+      "family": "Trusting", "color": "#0D9488",
+      "branches": {
+        "Safe": ["trust", "trusting", "trusted", "safe", "safety", "protected", "sheltered", "safe and sound"],
+        "Secure": ["secure", "assured", "reassured", "reliable", "dependable", "steady", "count on"],
+        "Accepted": ["accepted", "included", "welcomed", "belong", "belonging", "supported", "fit in"],
+        "Hopeful": ["hope", "hopeful", "optimistic", "optimism", "faith", "faithful", "looking forward"]
+      }
+    },
+    {
+      "family": "Loving", "color": "#DB2777",
+      "branches": {
+        "Affectionate": ["love", "loving", "loved", "adore", "adored", "affection", "affectionate", "cherish", "cherished", "in love"],
+        "Connected": ["connected", "close", "intimate", "intimacy", "devoted", "togetherness", "by your side"],
+        "Tender": ["tender", "tenderness", "gentle", "warmth", "embrace", "cuddle", "hold you close"],
+        "Compassionate": ["compassion", "compassionate", "empathy", "empathetic", "caring", "kindness", "merciful", "forgiving"]
+      }
+    },
+    {
+      "family": "Grateful", "color": "#7C3AED",
+      "branches": {
+        "Thankful": ["grateful", "gratitude", "thankful", "thanks", "thank", "thankfulness", "thank you"],
+        "Appreciative": ["appreciate", "appreciated", "appreciative", "appreciation", "valued", "indebted", "much obliged"],
+        "Relieved": ["relieved", "relief", "unburdened", "reassured", "comforted", "weight off my shoulders", "breathe again"],
+        "Blessed": ["blessed", "blessing", "blessings", "fortunate", "lucky", "thank my stars", "count my blessings"]
+      }
+    },
+    {
+      "family": "Disgusted", "color": "#4D7C0F",
+      "branches": {
+        "Repulsed": ["disgusted", "disgust", "disgusting", "repulsed", "repulsive", "revolted", "revolting", "nauseated", "sickened"],
+        "Disapproving": ["disapprove", "disapproving", "contempt", "contemptuous", "scorn", "scornful", "disdain", "disdainful"],
+        "Averse": ["loathe", "loathing", "detest", "detested", "abhorrent", "aversion", "gross", "makes me sick"],
+        "Ashamed": ["ashamed", "shame", "shameful", "guilty", "guilt", "remorse", "remorseful", "self disgust"]
+      }
+    },
+    {
+      "family": "Sad", "color": "#2563EB",
+      "branches": {
+        "Hurt": ["sad", "sadness", "hurt", "hurting", "heartbroken", "heartbreak", "wounded", "betrayed", "broken heart"],
+        "Lonely": ["lonely", "loneliness", "alone", "isolated", "abandoned", "forsaken", "left out", "left behind"],
+        "Disappointed": ["disappointed", "disappointment", "regret", "regretful", "let down", "disheartened", "dejected"],
+        "Grieving": ["grief", "grieving", "mourn", "mourning", "sorrow", "sorrowful", "weep", "weeping", "cry", "crying", "tears"]
+      }
+    },
+    {
+      "family": "Depressed", "color": "#475569",
+      "branches": {
+        "Empty": ["depressed", "empty", "emptiness", "numb", "numbness", "hollow", "detached", "apathetic", "feel nothing"],
+        "Hopeless": ["hopeless", "hopelessness", "despair", "despairing", "desolate", "defeated", "given up", "out of hope"],
+        "Exhausted": ["exhausted", "exhaustion", "drained", "weary", "fatigued", "lethargic", "burnt out", "burned out", "running on empty"],
+        "Unworthy": ["worthless", "unworthy", "useless", "inadequate", "powerless", "helpless", "self loathing"]
+      }
+    },
+    {
+      "family": "Surprised", "color": "#C026D3",
+      "branches": {
+        "Amazed": ["surprised", "surprise", "amazed", "amazing", "astonished", "astounded", "awed", "awe", "in awe"],
+        "Startled": ["startled", "shocked", "stunned", "dumbfounded", "flabbergasted", "speechless", "caught off guard", "taken aback"],
+        "Confused": ["confused", "confusion", "puzzled", "perplexed", "bewildered", "baffled", "disoriented"],
+        "Overwhelmed": ["overwhelmed", "overwhelming", "overcome", "overloaded", "dazed", "disbelief", "can't believe"]
+      }
+    },
+    {
+      "family": "Afraid", "color": "#EA580C",
+      "branches": {
+        "Scared": ["afraid", "scared", "fear", "fearful", "frightened", "terrified", "terror", "petrified", "panicked", "panic"],
+        "Anxious": ["anxious", "anxiety", "worried", "worry", "worrying", "nervous", "uneasy", "dread", "on edge"],
+        "Insecure": ["insecure", "insecurity", "uncertain", "uncertainty", "doubt", "doubtful", "self doubt", "second guessing"],
+        "Vulnerable": ["vulnerable", "exposed", "defenseless", "defenceless", "threatened", "intimidated", "fragile", "walking on eggshells"]
+      }
+    },
+    {
+      "family": "Angry", "color": "#DC2626",
+      "branches": {
+        "Furious": ["angry", "anger", "furious", "fury", "enraged", "rage", "raging", "irate", "livid", "seeing red"],
+        "Frustrated": ["frustrated", "frustration", "annoyed", "annoyance", "irritated", "irritation", "agitated", "fed up"],
+        "Resentful": ["resentful", "resentment", "resent", "bitter", "bitterness", "betrayed", "jealous", "jealousy", "grudge"],
+        "Provoked": ["provoked", "hostile", "hostility", "indignant", "outraged", "offended", "insulted", "disrespected", "seeing red"]
+      }
+    }
+  ]
+}

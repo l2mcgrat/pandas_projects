@@ -1,0 +1,6 @@
+{
+  "name": "liam-fieldnotes-rendering",
+  "private": true,
+  "description": "Locally hosted equation rendering for the existing static site",
+  "dependencies": { "mathjax": "3.2.2" }
+}

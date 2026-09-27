@@ -5,7 +5,8 @@ import json
 import shutil
 from pathlib import Path
 
-from phase_lab.publishing import physics_landing_page, publish_available_runs
+from phase_lab.publishing import publish_available_runs
+from site_content.publishing import collection_html, home_html, publish_portfolio, shell
 
 from next_smash_mains_profiles import (
     MATCHUP_DF,
@@ -391,30 +392,7 @@ def _write_page_data(filename: str, data: dict) -> str:
 
 
 def page_shell(title: str, body: str, depth: int = 0, data_file: str | None = None, brand_text: str = "Character Analysis and Journey") -> str:
-    prefix = "../" * depth
-    data_script = f'<script src="{prefix}{data_file}"></script>' if data_file else ""
-    return f"""<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{html.escape(title)}</title>
-  <link rel="stylesheet" href="{prefix}assets/styles.css">
-</head>
-<body>
-  <header class="site-header">
-    <a class="brand" href="{prefix}index.html">{html.escape(brand_text)}</a>
-    <nav>
-      <a href="{prefix}Smash/index.html">Smash</a>
-      <a href="{prefix}assets/profile_pdfs/index.html">PDFs</a>
-    </nav>
-  </header>
-  {body}
-  {data_script}
-  <script src="{prefix}assets/site.js"></script>
-</body>
-</html>
-"""
+    return shell(title, body, depth, data_file, brand_text)
 
 
 CATEGORY_PAGES = [
@@ -428,65 +406,11 @@ CATEGORY_PAGES = [
 
 
 def home_page() -> str:
-    category_links = "\n".join(
-        f'<a class="hex-node node-{slug.lower()}" href="{slug}/index.html"><span>{symbol}</span><strong>{label}</strong></a>'
-        for slug, label, symbol in CATEGORY_PAGES
-    )
-    return page_shell(
-        "LiamMs_PandasProjects",
-        f"""
-<main class="home-landing">
-  <section class="home-stage">
-    <div class="home-copy">
-      <h1>Data Analysis</h1>
-      <p class="home-signature">By Liam McGrath</p>
-    </div>
-    <nav class="hex-map" aria-label="Analysis categories">
-      <div class="hex-frame" aria-hidden="true"></div>
-      {category_links}
-    </nav>
-  </section>
-</main>
-""",
-        depth=0,
-  brand_text="Wonderous Insights Exist Here",
-    )
+    return home_html()
 
 
 def category_page(label: str) -> str:
-    if label == "Physics":
-        return physics_landing_page(SITE_DIR)
-    if label == "Gaming":
-        return page_shell(
-            f"{label} | LiamMs_PandasProjects",
-            """
-<main class="category-page">
-  <section class="category-panel">
-    <p class="eyebrow">Gaming analysis</p>
-    <h1>Gaming Insights</h1>
-    <div class="analysis-directory">
-      <article class="game-analysis-card">
-        <a class="smash-orb" href="../Smash/index.html" aria-label="Open Super Smash Bros analysis">
-          <span class="smash-mark" aria-hidden="true"></span>
-        </a>
-        <strong>Super Smash Bros</strong>
-      </article>
-    </div>
-  </section>
-</main>
-""",
-            depth=1,
-            brand_text="Gaming Insights Exist Here",
-        )
-    return page_shell(
-        f"{label} | LiamMs_PandasProjects",
-        """
-<main class="placeholder-page">
-  <p>To be Filled with Analysis</p>
-</main>
-""",
-        depth=1,
-    )
+    return collection_html(label, SITE_DIR)
 
 
 def smash_page(characters: list[dict[str, object]]) -> str:
@@ -1770,6 +1694,7 @@ def main() -> None:
     for character in characters:
         write_text(SMASH_DIR / str(character["slug"]) / "index.html", character_page(character))
 
+    publish_portfolio(ROOT, SITE_DIR)
     print(f"Generated static site: {SITE_DIR}")
     print(f"Character pages: {len(characters)}")
 
