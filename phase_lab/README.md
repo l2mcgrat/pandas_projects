@@ -271,9 +271,11 @@ page linking runs, plots, PDFs, and compressed records. Existing hand-written Ph
 content is preserved by the standalone publisher.
 
 [generate_liamms_site.py](../generate_liamms_site.py) now copies completed,
-already-rendered runs into the site during normal builds and generates the Physics
-landing page. It does **not** rerun molecular dynamics. That full generator still
-owns/rebuilds category pages, so edit [publishing.py](publishing.py) rather than
+already-rendered runs into the site during normal builds. It does **not** rerun
+molecular dynamics. The portfolio publisher then turns `Physics/index.html` into a
+forwarding page to the atlas route `Science-and-Engineering/Physics/`, whose
+Dipole Atlas card opens the stable explorer, so edit
+[site_content/atlas_views.py](../site_content/atlas_views.py) rather than
 hand-editing generated Physics HTML for lasting design changes.
 
 No commits or pushes are performed automatically. Commit source, canonical CSVs,

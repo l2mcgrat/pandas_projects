@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="504pt" viewBox="0 0 864 504" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <title>1v1 / TWO OUTSIDE, ONE INSIDE</title>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>1v1 / TWO OUTSIDE, ONE INSIDE</dc:title>
+    <dc:description>First to reach or exceed seven; no supplied win-by-two rule</dc:description>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>First to Four original diagrams</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 504 
+L 864 504 
+L 864 0 
+L 0 0 
+z
+" style="fill: #fffdf7"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 83.808 410.976 
+L 418.608 410.976 
+L 418.608 116.208 
+L 83.808 116.208 
+L 83.808 410.976 
+z
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #536775; stroke-width: 1.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 251.208 382.4928 
+C 253.33896 382.4928 255.382928 381.655264 256.889744 380.16465 
+C 258.396561 378.674036 259.2432 376.652046 259.2432 374.544 
+C 259.2432 372.435954 258.396561 370.413964 256.889744 368.92335 
+C 255.382928 367.432736 253.33896 366.5952 251.208 366.5952 
+C 249.07704 366.5952 247.033072 367.432736 245.526256 368.92335 
+C 244.019439 370.413964 243.1728 372.435954 243.1728 374.544 
+C 243.1728 376.652046 244.019439 378.674036 245.526256 380.16465 
+C 247.033072 381.655264 249.07704 382.4928 251.208 382.4928 
+L 251.208 382.4928 
+z
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 197.64 410.976 
+L 304.776 410.976 
+L 304.776 281.808 
+L 197.64 281.808 
+L 197.64 410.976 
+z
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #536775; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 396.846 374.544 
+C 396.846 326.250693 381.491566 279.885954 354.189617 245.737429 
+C 326.887669 211.588904 289.818785 192.384 251.208 192.384 
+C 212.597215 192.384 175.528331 211.588904 148.226383 245.737429 
+C 120.924434 279.885954 105.57 326.250693 105.57 374.544 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #536775; stroke-width: 1.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 468.1584 229.1472 
+L 797.6016 229.1472 
+Q 805.6368 229.1472 805.6368 221.1984 
+L 805.6368 123.8256 
+Q 805.6368 115.8768 797.6016 115.8768 
+L 468.1584 115.8768 
+Q 460.1232 115.8768 460.1232 123.8256 
+L 460.1232 221.1984 
+Q 460.1232 229.1472 468.1584 229.1472 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 468.1584 379.8432 
+L 797.6016 379.8432 
+Q 805.6368 379.8432 805.6368 371.8944 
+L 805.6368 251.3376 
+Q 805.6368 243.3888 797.6016 243.3888 
+L 468.1584 243.3888 
+Q 460.1232 243.3888 460.1232 251.3376 
+L 460.1232 371.8944 
+Q 460.1232 379.8432 468.1584 379.8432 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 36.936 91.0368 
+L 827.064 91.0368 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 224.424 387.792 
+L 277.992 387.792 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #183047; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 83.808 134.7552 
+L 418.608 134.7552 
+" clip-path="url(#p825037869d)" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #536775; stroke-width: 1.5"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #183047" x="36.936" y="43.950013" transform="rotate(-0 36.936 43.950013)">1v1 / TWO OUTSIDE, ONE INSIDE</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536775" x="36.936" y="72.875313" transform="rotate(-0 36.936 72.875313)">First to reach or exceed seven; no supplied win-by-two rule</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536775" x="36.936" y="481.024238" transform="rotate(-0 36.936 481.024238)">FIRST TO FOUR  /  Original house-rule illustration  /  Schematic, not official court dimensions</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="251.208" y="302.231125" transform="rotate(-0 251.208 302.231125)">1 POINT</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #b75016" x="251.208" y="169.751125" transform="rotate(-0 251.208 169.751125)">2 POINTS</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="632.88" y="149.12853" transform="rotate(-0 632.88 149.12853)">REACH OR EXCEED 7</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(545.14125 181.59173)">A two-point shot can finish at 8.</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(557.264453 195.998895)">Win by two is not specified.</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="632.88" y="282.20469" transform="rotate(-0 632.88 282.20469)">START WITH A CHECK</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(546.095156 313.492148)">Respectful pass back and forth.</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(568.184531 327.899313)">Sudden-death shootout</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(569.456406 342.306477)">determines the starter.</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="432" y="450.443312" transform="rotate(-0 432 450.443312)">More players may agree a higher target. Agree line calls and possession details before play.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p825037869d">
+   <rect x="30.24" y="20.16" width="803.52" height="463.68"/>
+  </clipPath>
+ </defs>
+</svg>

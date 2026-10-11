@@ -1,0 +1,35 @@
+{
+  "compiler": {
+    "flags": [
+      "--untrusted",
+      "--keep-logs",
+      "--keep-intermediates",
+      "--outdir",
+      "output"
+    ],
+    "name": "tectonic",
+    "sourceDateEpoch": "946684800",
+    "version": "Tectonic 0.17.0"
+  },
+  "inputs": {
+    "images": [
+      {
+        "archive": "tex_images/sports/format_overview.png",
+        "path": "tex_images/sports/format_overview.png",
+        "sha256": "61a226af0165f0e61b3099b3f0a9e5eaf7dcc88b79db439f2b10db13ee49647f"
+      },
+      {
+        "archive": "tex_images/sports/creator_episode.png",
+        "path": "tex_images/sports/creator_episode.png",
+        "sha256": "6f0737e5825f205c8e7707437f0380a054a45eca70e4031e74c291381435bb56"
+      }
+    ],
+    "source": {
+      "path": "notebook_sources/sports/creator_pitch.tex",
+      "sha256": "c09c05991f5745bb4ea3dfcef66b35d140dfb28ab48fc1de41e6230dc99b54df"
+    }
+  },
+  "key": "creator-pitch",
+  "pdfSha256": "14286ab0cc0a5e41f347be55016dd373f6783e8db01efe0281b7dae7114b6fd8",
+  "schemaVersion": 1
+}

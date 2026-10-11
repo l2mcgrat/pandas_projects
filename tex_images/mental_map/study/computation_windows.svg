@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="720pt" height="331.2pt" viewBox="0 0 720 331.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Original mental-map study diagrams</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 331.2 
+L 720 331.2 
+L 720 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 146.804734 163.734841 
+L 213.808961 163.734841 
+L 213.808961 124.141434 
+L 146.804734 124.141434 
+z
+" clip-path="url(#p2fc433c8f2)" style="fill: #e5eef6; stroke: #192d3e; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 219.900254 163.734841 
+L 286.90448 163.734841 
+L 286.90448 124.141434 
+L 219.900254 124.141434 
+z
+" clip-path="url(#p2fc433c8f2)" style="fill: #f9dabd; stroke: #192d3e; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 292.995774 163.734841 
+L 360 163.734841 
+L 360 124.141434 
+L 292.995774 124.141434 
+z
+" clip-path="url(#p2fc433c8f2)" style="fill: #f9dabd; stroke: #192d3e; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 366.091293 163.734841 
+L 433.09552 163.734841 
+L 433.09552 124.141434 
+L 366.091293 124.141434 
+z
+" clip-path="url(#p2fc433c8f2)" style="fill: #f9dabd; stroke: #192d3e; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 439.186813 163.734841 
+L 506.191039 163.734841 
+L 506.191039 124.141434 
+L 439.186813 124.141434 
+z
+" clip-path="url(#p2fc433c8f2)" style="fill: #e5eef6; stroke: #192d3e; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 512.282333 163.734841 
+L 579.286559 163.734841 
+L 579.286559 124.141434 
+L 512.282333 124.141434 
+z
+" clip-path="url(#p2fc433c8f2)" style="fill: #e5eef6; stroke: #192d3e; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="180.306848" y="146.697513" transform="rotate(-0 180.306848 146.697513)">2</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="253.402367" y="146.697513" transform="rotate(-0 253.402367 146.697513)">1</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="326.497887" y="146.697513" transform="rotate(-0 326.497887 146.697513)">3</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="399.593406" y="146.697513" transform="rotate(-0 399.593406 146.697513)">2</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="472.688926" y="146.697513" transform="rotate(-0 472.688926 146.697513)">4</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="545.784446" y="146.697513" transform="rotate(-0 545.784446 146.697513)">1</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #00776c" x="143.759088" y="78.456735" transform="rotate(-0 143.759088 78.456735)">0</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #00776c" x="216.854607" y="78.456735" transform="rotate(-0 216.854607 78.456735)">2</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #00776c" x="289.950127" y="78.456735" transform="rotate(-0 289.950127 78.456735)">3</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #00776c" x="363.045647" y="78.456735" transform="rotate(-0 363.045647 78.456735)">6</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #00776c" x="436.141166" y="78.456735" transform="rotate(-0 436.141166 78.456735)">8</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #00776c" x="509.236686" y="78.456735" transform="rotate(-0 509.236686 78.456735)">12</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #00776c" x="582.332205" y="78.456735" transform="rotate(-0 582.332205 78.456735)">13</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #192d3e" x="24.978868" y="78.456735" transform="rotate(-0 24.978868 78.456735)">prefix P</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #192d3e" x="24.978868" y="145.460961" transform="rotate(-0 24.978868 145.460961)">array a</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 219.900254 234.83054 
+Q 219.900254 203.330144 219.900254 173.84221 
+" style="fill: none; stroke: #b94b00; stroke-width: 1.8; stroke-linecap: round"/>
+    <path d="M 217.900254 177.84221 
+L 219.900254 173.84221 
+L 221.900254 177.84221 
+" style="fill: none; stroke: #b94b00; stroke-width: 1.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #b94b00" x="219.900254" y="193.582178" transform="rotate(-0 219.900254 193.582178)">l=1</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 439.186813 234.83054 
+Q 439.186813 203.330144 439.186813 173.84221 
+" style="fill: none; stroke: #b94b00; stroke-width: 1.8; stroke-linecap: round"/>
+    <path d="M 437.186813 177.84221 
+L 439.186813 173.84221 
+L 441.186813 177.84221 
+" style="fill: none; stroke: #b94b00; stroke-width: 1.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #b94b00" x="439.186813" y="193.582178" transform="rotate(-0 439.186813 193.582178)">r=4</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="360" y="273.37812" transform="rotate(-0 360 273.37812)">sum a[1:4] = P[4] − P[1] = 8 − 2 = 6</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="360" y="312.971527" transform="rotate(-0 360 312.971527)">Prefix sums permit negative values; monotone sum windows usually do not</text>
+   </g>
+  </g>
+  <g id="text_20">
+   <text style="font-weight: 700; font-size: 15px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="360" y="14.397896" transform="rotate(-0 360 14.397896)">Prefix sums and sliding windows: track exactly what is included</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p2fc433c8f2">
+   <rect x="24.978868" y="23.635095" width="670.042263" height="304.564665"/>
+  </clipPath>
+ </defs>
+</svg>

@@ -322,7 +322,7 @@ def _heading_ids(ast: dict[str, Any], slots: dict[str, _Math], warnings: list[st
         attr[0] = identifier
 
 
-def _image_path(reference: str, source: Path, image_dir: Path) -> Path:
+def _image_path(reference: str, source: Path, image_dir: Path, source_root: Path | None = None) -> Path:
     url = urlsplit(reference)
     if url.scheme or url.netloc or url.query or url.fragment:
         raise ValueError(f"Image {reference!r} must be a local file under {image_dir}.")
@@ -330,6 +330,8 @@ def _image_path(reference: str, source: Path, image_dir: Path) -> Path:
     if relative.is_absolute() or ".." in relative.parts:
         raise ValueError(f"Unsafe image path {reference!r}; use a path inside {image_dir}.")
     candidates = [image_dir / relative, source.parent / relative]
+    if source_root is not None:
+        candidates.append(source_root / relative)
     if not relative.suffix:
         candidates = [path.with_suffix(suffix) for path in candidates for suffix in _IMAGE_SUFFIXES]
     for candidate in candidates:
@@ -376,7 +378,8 @@ def _toc_and_headings(body: BeautifulSoup) -> tuple[str, list[dict[str, Any]]]:
     return str(toc), headings
 
 
-def convert_document(source: Path, image_dir: Path, asset_dir: Path, asset_url: str) -> dict:
+def convert_document(source: Path, image_dir: Path, asset_dir: Path, asset_url: str,
+                     *, source_root: Path | None = None) -> dict:
     """Return body/TOC fragments and metadata; copy source and referenced images.
 
     Raises FileNotFoundError for absent inputs/images, ValueError for malformed
@@ -384,6 +387,8 @@ def convert_document(source: Path, image_dir: Path, asset_dir: Path, asset_url: 
     Pandoc binary. No output is copied until parsing and image preflight pass.
     asset_url must be a browser-relative directory URL, e.g.
     '../assets/documents/mental-map'. Image extensions may be omitted in TeX.
+    source_root optionally resolves root-prefixed references in body fragments;
+    the resolved image must still remain inside image_dir.
     """
     source, image_dir, asset_dir = source.resolve(), image_dir.resolve(), asset_dir.resolve()
     prefix = urlsplit(asset_url)
@@ -404,7 +409,7 @@ def convert_document(source: Path, image_dir: Path, asset_dir: Path, asset_url: 
     copies: dict[Path, Path] = {}
     image_manifest = []
     for image in images:
-        original = _image_path(image["c"][2][0], source, image_dir)
+        original = _image_path(image["c"][2][0], source, image_dir, source_root)
         relative = original.relative_to(image_dir)
         reference = Path(unquote(image["c"][2][0]))
         if not reference.suffix:

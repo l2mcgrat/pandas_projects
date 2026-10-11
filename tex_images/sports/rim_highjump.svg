@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="504pt" viewBox="0 0 864 504" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <title>RIM / HIGH JUMP RULES</title>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>RIM / HIGH JUMP RULES</dc:title>
+    <dc:description>Compare actual attempts at the previous successful shot, not invented points</dc:description>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>First to Four original diagrams</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 504 
+L 864 504 
+L 864 0 
+L 0 0 
+z
+" style="fill: #fffdf7"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 58.0284 222.5232 
+L 270.2916 222.5232 
+Q 278.3268 222.5232 278.3268 214.5744 
+L 278.3268 117.2016 
+Q 278.3268 109.2528 270.2916 109.2528 
+L 58.0284 109.2528 
+Q 49.9932 109.2528 49.9932 117.2016 
+L 49.9932 214.5744 
+Q 49.9932 222.5232 58.0284 222.5232 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 325.8684 222.5232 
+L 538.1316 222.5232 
+Q 546.1668 222.5232 546.1668 214.5744 
+L 546.1668 117.2016 
+Q 546.1668 109.2528 538.1316 109.2528 
+L 325.8684 109.2528 
+Q 317.8332 109.2528 317.8332 117.2016 
+L 317.8332 214.5744 
+Q 317.8332 222.5232 325.8684 222.5232 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 593.7084 222.5232 
+L 805.9716 222.5232 
+Q 814.0068 222.5232 814.0068 214.5744 
+L 814.0068 117.2016 
+Q 814.0068 109.2528 805.9716 109.2528 
+L 593.7084 109.2528 
+Q 585.6732 109.2528 585.6732 117.2016 
+L 585.6732 214.5744 
+Q 585.6732 222.5232 593.7084 222.5232 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 448.0704 384.8112 
+L 777.5136 384.8112 
+Q 785.5488 384.8112 785.5488 376.8624 
+L 785.5488 259.6176 
+Q 785.5488 251.6688 777.5136 251.6688 
+L 448.0704 251.6688 
+Q 440.0352 251.6688 440.0352 259.6176 
+L 440.0352 376.8624 
+Q 440.0352 384.8112 448.0704 384.8112 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 36.936 91.0368 
+L 827.064 91.0368 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 283.338501 165.888 
+Q 298.07816 165.888 310.581752 165.888 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 304.181752 162.688 
+L 310.581752 165.888 
+L 304.181752 169.088 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 551.178501 165.888 
+Q 565.91816 165.888 578.421752 165.888 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 572.021752 162.688 
+L 578.421752 165.888 
+L 572.021752 169.088 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 147.42 320.8896 
+C 150.79402 320.8896 154.030303 319.563502 156.416095 317.203363 
+C 158.801888 314.843224 160.1424 311.64174 160.1424 308.304 
+C 160.1424 304.96626 158.801888 301.764776 156.416095 299.404637 
+C 154.030303 297.044498 150.79402 295.7184 147.42 295.7184 
+C 144.04598 295.7184 140.809697 297.044498 138.423905 299.404637 
+C 136.038112 301.764776 134.6976 304.96626 134.6976 308.304 
+C 134.6976 311.64174 136.038112 314.843224 138.423905 317.203363 
+C 140.809697 319.563502 144.04598 320.8896 147.42 320.8896 
+z
+" clip-path="url(#p825037869d)" style="fill: #fffdf7; stroke: #b75016; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 134.6976 308.304 
+L 160.1424 308.304 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 147.42 320.8896 
+L 147.42 295.7184 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 147.42 367.2576 
+C 150.79402 367.2576 154.030303 365.931502 156.416095 363.571363 
+C 158.801888 361.211224 160.1424 358.00974 160.1424 354.672 
+C 160.1424 351.33426 158.801888 348.132776 156.416095 345.772637 
+C 154.030303 343.412498 150.79402 342.0864 147.42 342.0864 
+C 144.04598 342.0864 140.809697 343.412498 138.423905 345.772637 
+C 136.038112 348.132776 134.6976 351.33426 134.6976 354.672 
+C 134.6976 358.00974 136.038112 361.211224 138.423905 363.571363 
+C 140.809697 365.931502 144.04598 367.2576 147.42 367.2576 
+z
+" clip-path="url(#p825037869d)" style="fill: #fffdf7; stroke: #b75016; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 134.6976 354.672 
+L 160.1424 354.672 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 147.42 367.2576 
+L 147.42 342.0864 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 187.596 367.2576 
+C 190.97002 367.2576 194.206303 365.931502 196.592095 363.571363 
+C 198.977888 361.211224 200.3184 358.00974 200.3184 354.672 
+C 200.3184 351.33426 198.977888 348.132776 196.592095 345.772637 
+C 194.206303 343.412498 190.97002 342.0864 187.596 342.0864 
+C 184.22198 342.0864 180.985697 343.412498 178.599905 345.772637 
+C 176.214112 348.132776 174.8736 351.33426 174.8736 354.672 
+C 174.8736 358.00974 176.214112 361.211224 178.599905 363.571363 
+C 180.985697 365.931502 184.22198 367.2576 187.596 367.2576 
+z
+" clip-path="url(#p825037869d)" style="fill: #fffdf7; stroke: #b75016; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_6">
+    <path d="M 174.8736 354.672 
+L 200.3184 354.672 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_7">
+    <path d="M 187.596 367.2576 
+L 187.596 342.0864 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 227.772 367.2576 
+C 231.14602 367.2576 234.382303 365.931502 236.768095 363.571363 
+C 239.153888 361.211224 240.4944 358.00974 240.4944 354.672 
+C 240.4944 351.33426 239.153888 348.132776 236.768095 345.772637 
+C 234.382303 343.412498 231.14602 342.0864 227.772 342.0864 
+C 224.39798 342.0864 221.161697 343.412498 218.775905 345.772637 
+C 216.390112 348.132776 215.0496 351.33426 215.0496 354.672 
+C 215.0496 358.00974 216.390112 361.211224 218.775905 363.571363 
+C 221.161697 365.931502 224.39798 367.2576 227.772 367.2576 
+z
+" clip-path="url(#p825037869d)" style="fill: #fffdf7; stroke: #b75016; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_8">
+    <path d="M 215.0496 354.672 
+L 240.4944 354.672 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_9">
+    <path d="M 227.772 367.2576 
+L 227.772 342.0864 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #183047" x="36.936" y="43.950013" transform="rotate(-0 36.936 43.950013)">RIM / HIGH JUMP RULES</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536775" x="36.936" y="72.875313" transform="rotate(-0 36.936 72.875313)">Compare actual attempts at the previous successful shot, not invented points</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536775" x="36.936" y="481.024238" transform="rotate(-0 36.936 481.024238)">FIRST TO FOUR  /  Original house-rule illustration  /  Schematic, not official court dimensions</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="164.16" y="142.50453" transform="rotate(-0 164.16 142.50453)">BOTH FAIL</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(90.188438 174.96773)">Agree any mutual amount;</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(126.149844 189.374895)">two is typical.</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="432" y="142.50453" transform="rotate(-0 432 142.50453)">HONOR SYSTEM</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(360.280859 174.96773)">Accept a mercy or decline</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(372.153984 189.374895)">if the game feels lost.</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="699.84" y="142.50453" transform="rotate(-0 699.84 142.50453)">NO MERCIES LEFT</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(623.48625 174.96773)">HIGH JUMP RULES: previous</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(635.878438 189.374895)">successful shot counts.</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536775" x="237.816" y="271.87125" transform="rotate(-0 237.816 271.87125)">Illustration, not a recorded game</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="97.2" y="311.891188" transform="rotate(-0 97.2 311.891188)">A</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="304.776" y="311.61525" transform="rotate(-0 304.776 311.61525)">1 attempt</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="97.2" y="358.259188" transform="rotate(-0 97.2 358.259188)">B</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="304.776" y="357.98325" transform="rotate(-0 304.776 357.98325)">3 attempts</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="612.792" y="289.68981" transform="rotate(-0 612.792 289.68981)">FEWER ATTEMPTS WINS</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(524.584031 320.116148)">Example: A wins the countback.</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(525.997703 334.523313)">Tied? Compare the shot before,</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(505.804109 348.930477)">back to the first; then SUDDEN DEATH.</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="432" y="440.507313" transform="rotate(-0 432 440.507313)">Why HIGH JUMP RULES? Both creators competed in high jump; this is their owner-supplied rule.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p825037869d">
+   <rect x="30.24" y="20.16" width="803.52" height="463.68"/>
+  </clipPath>
+ </defs>
+</svg>

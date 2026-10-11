@@ -1,0 +1,658 @@
+{
+  "schemaVersion": 1,
+  "input": {
+    "path": "notebook_sources/merged/mental_map.merged.tex",
+    "sha256": "3aa01bdcf25cbd265aadbdc4f5f3fff765b75c4722e652dc089f47726ada9b65"
+  },
+  "outline": {
+    "fields": 6,
+    "topics": 36,
+    "destinations": 216
+  },
+  "destinationsWithNotes": 39,
+  "openDestinations": 177,
+  "placements": [
+    {
+      "from": "Introductory Summary",
+      "to": "front",
+      "mode": "merge"
+    },
+    {
+      "from": "Philosophy",
+      "to": "front",
+      "mode": "child"
+    },
+    {
+      "from": "Sciences",
+      "to": "Science-and-Engineering",
+      "mode": "merge"
+    },
+    {
+      "from": "Sciences > Formal Sciences (Basically Math, Computer Science)",
+      "to": "Language-and-Programming/Learning-Progress/Formal-Sciences",
+      "mode": "merge"
+    },
+    {
+      "from": "Sciences > Natural Sciences",
+      "to": "Language-and-Programming/Learning-Progress/Natural-Sciences",
+      "mode": "merge"
+    },
+    {
+      "from": "Sciences > Social Sciences",
+      "to": "Language-and-Programming/Learning-Progress/Social-Sciences",
+      "mode": "merge"
+    },
+    {
+      "from": "Math",
+      "to": "Science-and-Engineering/Mathematics",
+      "mode": "merge"
+    },
+    {
+      "from": "Math > Linear structure, numerical reasoning, and uncertainty -- study additions",
+      "to": "Science-and-Engineering/Mathematics/Linear-Algebra",
+      "mode": "child"
+    },
+    {
+      "from": "Math > Calculus",
+      "to": "Science-and-Engineering/Mathematics/Calculus-and-Vectors",
+      "mode": "merge"
+    },
+    {
+      "from": "Math > Linear Algebra",
+      "to": "Science-and-Engineering/Mathematics/Linear-Algebra",
+      "mode": "merge"
+    },
+    {
+      "from": "Math > Probability and Statistics",
+      "to": "Science-and-Engineering/Mathematics/Probability-and-Statistics",
+      "mode": "merge"
+    },
+    {
+      "from": "Physics",
+      "to": "Science-and-Engineering/Physics",
+      "mode": "merge"
+    },
+    {
+      "from": "Physics > Conservation, fields, and physical models across scales -- study additions",
+      "to": "Science-and-Engineering/Physics/Classical-Mechanics",
+      "mode": "child"
+    },
+    {
+      "from": "Physics > Conservation, fields, and physical models across scales -- study additions > Waves and optics",
+      "to": "Science-and-Engineering/Physics/Optics",
+      "mode": "child"
+    },
+    {
+      "from": "Physics > Conservation, fields, and physical models across scales -- study additions > Maxwell fields, circuits, and carriers",
+      "to": "Science-and-Engineering/Physics/Electromagnetism",
+      "mode": "child"
+    },
+    {
+      "from": "Physics > Conservation, fields, and physical models across scales -- study additions > Quantum states, ensembles, and relativity bridges",
+      "to": "Science-and-Engineering/Physics/Quantum-Mechanics",
+      "mode": "child"
+    },
+    {
+      "from": "Physics > Classical Mechanics",
+      "to": "Science-and-Engineering/Physics/Classical-Mechanics",
+      "mode": "merge"
+    },
+    {
+      "from": "Physics > Continuum Mechanics",
+      "to": "Career-and-Education/Educational-Favourites/Continuum-Mechanics",
+      "mode": "merge"
+    },
+    {
+      "from": "Physics > Electromagnetism",
+      "to": "Science-and-Engineering/Physics/Electromagnetism",
+      "mode": "merge"
+    },
+    {
+      "from": "Physics > Quantum Mechanics",
+      "to": "Science-and-Engineering/Physics/Quantum-Mechanics",
+      "mode": "merge"
+    },
+    {
+      "from": "Physics > Statistical Thermodynamics",
+      "to": "Science-and-Engineering/Physics/Thermodynamics",
+      "mode": "merge"
+    },
+    {
+      "from": "Physics > Solid State Physics",
+      "to": "Career-and-Education/Educational-Favourites/Semiconductor-Physics",
+      "mode": "child"
+    },
+    {
+      "from": "Physics > Relativity",
+      "to": "Science-and-Engineering/Physics/General-and-Special-Relativity",
+      "mode": "merge"
+    },
+    {
+      "from": "Physics > Theory of Everything",
+      "to": "Science-and-Engineering/Physics/General-and-Special-Relativity",
+      "mode": "child"
+    },
+    {
+      "from": "Physics > Perturbed linear rotor -- companion draft",
+      "to": "Science-and-Engineering/Physics/Thermodynamics",
+      "mode": "child"
+    },
+    {
+      "from": "Chemistry",
+      "to": "Science-and-Engineering/Chemistry",
+      "mode": "merge"
+    },
+    {
+      "from": "Chemistry > Chemical balance, molecular structure, and measurement -- study additions",
+      "to": "Science-and-Engineering/Chemistry/Physical-Chemistry",
+      "mode": "child"
+    },
+    {
+      "from": "Chemistry > Chemical balance, molecular structure, and measurement -- study additions > Polymers and biochemical function",
+      "to": "Science-and-Engineering/Chemistry/Materials-Chemistry",
+      "mode": "child"
+    },
+    {
+      "from": "Chemistry > Chemical balance, molecular structure, and measurement -- study additions > Characterization, uncertainty, and safety",
+      "to": "Science-and-Engineering/Chemistry/Analytical-Chemistry",
+      "mode": "child"
+    },
+    {
+      "from": "Biology",
+      "to": "Science-and-Engineering/Biology",
+      "mode": "merge"
+    },
+    {
+      "from": "Biology > Cell Biology",
+      "to": "Science-and-Engineering/Biology/Cellular-Biology",
+      "mode": "merge"
+    },
+    {
+      "from": "Biology > Human Body",
+      "to": "Science-and-Engineering/Biology/Neuroscience",
+      "mode": "child"
+    },
+    {
+      "from": "Psychology",
+      "to": "Science-and-Engineering/Psychology",
+      "mode": "merge"
+    },
+    {
+      "from": "Psychology > The Big 5",
+      "to": "Science-and-Engineering/Psychology/Personality-Psychology",
+      "mode": "child"
+    },
+    {
+      "from": "Psychology > Theory of Multiple Intelligence's",
+      "to": "Science-and-Engineering/Psychology/Developmental-Psychology",
+      "mode": "child"
+    },
+    {
+      "from": "Psychology > Cognitive Science",
+      "to": "Science-and-Engineering/Psychology/Cognitive-Psychology",
+      "mode": "child"
+    },
+    {
+      "from": "Computation",
+      "to": "Science-and-Engineering/Computer-Science",
+      "mode": "merge"
+    },
+    {
+      "from": "Computation > Self-taught DSA and LeetCode problem-solving patterns -- study additions",
+      "to": "Science-and-Engineering/Computer-Science/Data-Structures-and-Algorithms",
+      "mode": "child"
+    },
+    {
+      "from": "Computation > Fundamentals of Computation",
+      "to": "Science-and-Engineering/Computer-Science/Computer-Architecture",
+      "mode": "child"
+    },
+    {
+      "from": "Computation > LINUX",
+      "to": "Science-and-Engineering/Computer-Science/Operating-Systems",
+      "mode": "merge"
+    },
+    {
+      "from": "Computation > python",
+      "to": "Science-and-Engineering/Computer-Science/Programming-Languages",
+      "mode": "child"
+    },
+    {
+      "from": "Computation > C++",
+      "to": "Science-and-Engineering/Computer-Science/Programming-Languages",
+      "mode": "child"
+    },
+    {
+      "from": "Computation > Other Peoples Programs",
+      "to": "Science-and-Engineering/Computer-Science/Simulations",
+      "mode": "merge"
+    },
+    {
+      "from": "Computation > Other Peoples Programs > Coop Project Using MMTK",
+      "to": "Career-and-Education/Job-Experiences/Quantum-Molecular-Dynamics-Simulations",
+      "mode": "merge"
+    },
+    {
+      "from": "Machine Learning/Data Science/Artificial Intelligence",
+      "to": "Science-and-Engineering/Computer-Science/Artificial-Intelligence",
+      "mode": "merge"
+    },
+    {
+      "from": "Machine Learning/Data Science/Artificial Intelligence > Machine Learning",
+      "to": "Science-and-Engineering/Computer-Science/Artificial-Intelligence",
+      "mode": "merge"
+    },
+    {
+      "from": "Machine Learning/Data Science/Artificial Intelligence > Artificial Intelligence",
+      "to": "Science-and-Engineering/Computer-Science/Artificial-Intelligence",
+      "mode": "merge"
+    },
+    {
+      "from": "Machine Learning/Data Science/Artificial Intelligence > Artificial Intelligence > Natural Language Processing",
+      "to": "Language-and-Programming/Linguistics/Mathematical-Linguistics",
+      "mode": "merge"
+    },
+    {
+      "from": "Machine Learning/Data Science/Artificial Intelligence > Artificial Intelligence > AI Business Reports",
+      "to": "Business-and-Economics/Emerging-Industries/Artificial-Intelligence",
+      "mode": "child"
+    },
+    {
+      "from": "Nanotechnology",
+      "to": "Career-and-Education/Educational-Favourites",
+      "mode": "merge"
+    },
+    {
+      "from": "Nanotechnology > Nanodevices, photonics, and engineered interfaces -- study additions",
+      "to": "Career-and-Education/Educational-Favourites/Nanofabrication",
+      "mode": "child"
+    },
+    {
+      "from": "Nanotechnology > Nanodevices, photonics, and engineered interfaces -- study additions > From energy bands to a p--n junction",
+      "to": "Career-and-Education/Educational-Favourites/Semiconductor-Physics",
+      "mode": "child"
+    },
+    {
+      "from": "Nanotechnology > Nanodevices, photonics, and engineered interfaces -- study additions > Photonics and confinement",
+      "to": "Science-and-Engineering/Physics/Optics",
+      "mode": "child"
+    },
+    {
+      "from": "Nanotechnology > Nanodevices, photonics, and engineered interfaces -- study additions > Surfaces and electrochemical energy",
+      "to": "Science-and-Engineering/Chemistry/Electrochemistry",
+      "mode": "child"
+    },
+    {
+      "from": "Nanotechnology > Nanoelectronics",
+      "to": "Career-and-Education/Educational-Favourites/Integrated-Circuits",
+      "mode": "merge"
+    },
+    {
+      "from": "Engineering",
+      "to": "Science-and-Engineering/Physics/Classical-Mechanics",
+      "mode": "drop"
+    },
+    {
+      "from": "Engineering > Completed SYDE 352: feedback analysis and controller design -- study additions",
+      "to": "Science-and-Engineering/Physics/Classical-Mechanics",
+      "mode": "child"
+    },
+    {
+      "from": "Business",
+      "to": "Business-and-Economics",
+      "mode": "merge"
+    },
+    {
+      "from": "Economics",
+      "to": "Business-and-Economics",
+      "mode": "merge"
+    },
+    {
+      "from": "Economics > Macroeconomics",
+      "to": "Business-and-Economics/Macroeconomics",
+      "mode": "merge"
+    },
+    {
+      "from": "Economics > Microeconomics",
+      "to": "Business-and-Economics/Microeconomics",
+      "mode": "merge"
+    },
+    {
+      "from": "Economics > Industries",
+      "to": "Business-and-Economics/Macroeconomics/Development-Economics",
+      "mode": "merge"
+    },
+    {
+      "from": "History",
+      "to": "Language-and-Programming/Learning-Progress/Economics-and-History",
+      "mode": "merge"
+    },
+    {
+      "from": "Sociology",
+      "to": "Language-and-Programming/Learning-Progress/Social-Sciences",
+      "mode": "child"
+    },
+    {
+      "from": "Theology",
+      "to": "Language-and-Programming/Rap/Seven-Deadly-Sins",
+      "mode": "merge"
+    },
+    {
+      "from": "Theology > Seven Deadly Sins/Heavenly Virtues",
+      "to": "Language-and-Programming/Rap/Seven-Deadly-Sins",
+      "mode": "merge"
+    },
+    {
+      "from": "Job Related Endeavors",
+      "to": "Career-and-Education",
+      "mode": "merge"
+    },
+    {
+      "from": "Job Related Endeavors > Data Scientist/Analyst Type Positions",
+      "to": "Career-and-Education/Career-Paths/Liam",
+      "mode": "merge"
+    },
+    {
+      "from": "Job Related Endeavors > Chemical, Material, Nanotechnology Engineering Type Jobs",
+      "to": "Career-and-Education/Job-Experiences/Materials-Engineer",
+      "mode": "child"
+    },
+    {
+      "from": "Job Related Endeavors > Service/Retail Type Work",
+      "to": "Career-and-Education/Job-Experiences/Lifeguarding-Days",
+      "mode": "child"
+    },
+    {
+      "from": "Job Related Endeavors > Employment",
+      "to": "Career-and-Education/Job-Experiences",
+      "mode": "merge"
+    },
+    {
+      "from": "Things I understand at a High Level, but I don't understand at a Low enough Level",
+      "to": "Language-and-Programming/Learning-Progress/Natural-Sciences",
+      "mode": "child"
+    },
+    {
+      "from": "Things I understand at a High Level, but I don't understand at a Low enough Level > Physics",
+      "to": "Language-and-Programming/Learning-Progress/Natural-Sciences",
+      "mode": "drop"
+    },
+    {
+      "from": "Things I understand at a High Level, but I don't understand at a Low enough Level > Physics > PN Junctions",
+      "to": "Career-and-Education/Educational-Favourites/Semiconductor-Physics",
+      "mode": "child"
+    },
+    {
+      "from": "YouTube Videos",
+      "to": "Sports-and-Entertainment/YouTube",
+      "mode": "merge"
+    },
+    {
+      "from": "Imported image archive",
+      "to": "back",
+      "mode": "child"
+    }
+  ],
+  "labels": {
+    "Science-and-Engineering": "sec:science-and-engineering",
+    "Science-and-Engineering/Mathematics": "sec:mathematics",
+    "Science-and-Engineering/Mathematics/Calculus-and-Vectors": "sec:calculus-and-vectors",
+    "Science-and-Engineering/Mathematics/Probability-and-Statistics": "sec:probability-and-statistics",
+    "Science-and-Engineering/Mathematics/Linear-Algebra": "sec:linear-algebra",
+    "Science-and-Engineering/Mathematics/Number-Theory": "sec:number-theory",
+    "Science-and-Engineering/Mathematics/Set-Theory": "sec:set-theory",
+    "Science-and-Engineering/Mathematics/Abstract-Algebra": "sec:abstract-algebra",
+    "Science-and-Engineering/Physics": "sec:physics",
+    "Science-and-Engineering/Physics/Classical-Mechanics": "sec:classical-mechanics",
+    "Science-and-Engineering/Physics/Quantum-Mechanics": "sec:quantum-mechanics",
+    "Science-and-Engineering/Physics/General-and-Special-Relativity": "sec:general-and-special-relativity",
+    "Science-and-Engineering/Physics/Electromagnetism": "sec:electromagnetism",
+    "Science-and-Engineering/Physics/Optics": "sec:optics",
+    "Science-and-Engineering/Physics/Thermodynamics": "sec:thermodynamics",
+    "Science-and-Engineering/Chemistry": "sec:chemistry",
+    "Science-and-Engineering/Chemistry/Organic-Chemistry": "sec:organic-chemistry",
+    "Science-and-Engineering/Chemistry/Inorganic-Chemistry": "sec:inorganic-chemistry",
+    "Science-and-Engineering/Chemistry/Electrochemistry": "sec:electrochemistry",
+    "Science-and-Engineering/Chemistry/Physical-Chemistry": "sec:physical-chemistry",
+    "Science-and-Engineering/Chemistry/Analytical-Chemistry": "sec:analytical-chemistry",
+    "Science-and-Engineering/Chemistry/Materials-Chemistry": "sec:materials-chemistry",
+    "Science-and-Engineering/Biology": "sec:biology",
+    "Science-and-Engineering/Biology/Quantum-Biology": "sec:quantum-biology",
+    "Science-and-Engineering/Biology/Biochemistry": "sec:biochemistry",
+    "Science-and-Engineering/Biology/Genetics": "sec:genetics",
+    "Science-and-Engineering/Biology/Cellular-Biology": "sec:cellular-biology",
+    "Science-and-Engineering/Biology/Neuroscience": "sec:neuroscience",
+    "Science-and-Engineering/Biology/Evolutionary-Biology": "sec:evolutionary-biology",
+    "Science-and-Engineering/Psychology": "sec:psychology",
+    "Science-and-Engineering/Psychology/Biological-Psychology": "sec:biological-psychology",
+    "Science-and-Engineering/Psychology/Cognitive-Psychology": "sec:cognitive-psychology",
+    "Science-and-Engineering/Psychology/Personality-Psychology": "sec:personality-psychology",
+    "Science-and-Engineering/Psychology/Developmental-Psychology": "sec:developmental-psychology",
+    "Science-and-Engineering/Psychology/Clinical-Psychology": "sec:clinical-psychology",
+    "Science-and-Engineering/Psychology/Social-Psychology": "sec:social-psychology",
+    "Science-and-Engineering/Computer-Science": "sec:computer-science",
+    "Science-and-Engineering/Computer-Science/Artificial-Intelligence": "sec:computer-science-artificial-intelligence",
+    "Science-and-Engineering/Computer-Science/Simulations": "sec:computer-science-simulations",
+    "Science-and-Engineering/Computer-Science/Data-Structures-and-Algorithms": "sec:data-structures-and-algorithms",
+    "Science-and-Engineering/Computer-Science/Computer-Architecture": "sec:computer-architecture",
+    "Science-and-Engineering/Computer-Science/Operating-Systems": "sec:operating-systems",
+    "Science-and-Engineering/Computer-Science/Programming-Languages": "sec:programming-languages",
+    "Business-and-Economics": "sec:business-and-economics",
+    "Business-and-Economics/Law-and-Policy": "sec:law-and-policy",
+    "Business-and-Economics/Law-and-Policy/Constitutional-Law": "sec:constitutional-law",
+    "Business-and-Economics/Law-and-Policy/Corporate-Law": "sec:corporate-law",
+    "Business-and-Economics/Law-and-Policy/Criminal-Law": "sec:criminal-law",
+    "Business-and-Economics/Law-and-Policy/International-Law": "sec:international-law",
+    "Business-and-Economics/Law-and-Policy/Public-Policy": "sec:public-policy",
+    "Business-and-Economics/Law-and-Policy/Regulatory-Frameworks": "sec:regulatory-frameworks",
+    "Business-and-Economics/Microeconomics": "sec:microeconomics",
+    "Business-and-Economics/Microeconomics/Consumer-Theory": "sec:consumer-theory",
+    "Business-and-Economics/Microeconomics/Producer-Theory": "sec:producer-theory",
+    "Business-and-Economics/Microeconomics/Market-Structures": "sec:market-structures",
+    "Business-and-Economics/Microeconomics/Game-Theory": "sec:game-theory",
+    "Business-and-Economics/Microeconomics/Behavioral-Economics": "sec:behavioral-economics",
+    "Business-and-Economics/Microeconomics/Information-Economics": "sec:information-economics",
+    "Business-and-Economics/Macroeconomics": "sec:macroeconomics",
+    "Business-and-Economics/Macroeconomics/Economic-Growth": "sec:economic-growth",
+    "Business-and-Economics/Macroeconomics/Monetary-Policy": "sec:monetary-policy",
+    "Business-and-Economics/Macroeconomics/Fiscal-Policy": "sec:fiscal-policy",
+    "Business-and-Economics/Macroeconomics/International-Trade": "sec:international-trade",
+    "Business-and-Economics/Macroeconomics/Business-Cycles": "sec:business-cycles",
+    "Business-and-Economics/Macroeconomics/Development-Economics": "sec:development-economics",
+    "Business-and-Economics/Key-Performance-Indicators": "sec:key-performance-indicators",
+    "Business-and-Economics/Key-Performance-Indicators/Profitability-Metrics": "sec:profitability-metrics",
+    "Business-and-Economics/Key-Performance-Indicators/Liquidity-Metrics": "sec:liquidity-metrics",
+    "Business-and-Economics/Key-Performance-Indicators/Efficiency-Metrics": "sec:efficiency-metrics",
+    "Business-and-Economics/Key-Performance-Indicators/Growth-Metrics": "sec:growth-metrics",
+    "Business-and-Economics/Key-Performance-Indicators/Customer-Metrics": "sec:customer-metrics",
+    "Business-and-Economics/Key-Performance-Indicators/Operational-Metrics": "sec:operational-metrics",
+    "Business-and-Economics/Emerging-Industries": "sec:emerging-industries",
+    "Business-and-Economics/Emerging-Industries/Artificial-Intelligence": "sec:emerging-industries-artificial-intelligence",
+    "Business-and-Economics/Emerging-Industries/Biotechnology": "sec:biotechnology",
+    "Business-and-Economics/Emerging-Industries/Renewable-Energy": "sec:renewable-energy",
+    "Business-and-Economics/Emerging-Industries/Space-Industry": "sec:space-industry",
+    "Business-and-Economics/Emerging-Industries/Robotics-and-Automation": "sec:robotics-and-automation",
+    "Business-and-Economics/Emerging-Industries/Quantum-Technologies": "sec:quantum-technologies",
+    "Business-and-Economics/Best-Practices-and-Success-Stories": "sec:best-practices-and-success-stories",
+    "Business-and-Economics/Best-Practices-and-Success-Stories/Honda": "sec:honda",
+    "Business-and-Economics/Best-Practices-and-Success-Stories/Costco": "sec:costco",
+    "Business-and-Economics/Best-Practices-and-Success-Stories/Berkshire-Hathaway": "sec:berkshire-hathaway",
+    "Business-and-Economics/Best-Practices-and-Success-Stories/Microsoft": "sec:microsoft",
+    "Business-and-Economics/Best-Practices-and-Success-Stories/NVIDIA": "sec:nvidia",
+    "Business-and-Economics/Best-Practices-and-Success-Stories/Amazon": "sec:amazon",
+    "Career-and-Education": "sec:career-and-education",
+    "Career-and-Education/Job-Experiences": "sec:job-experiences",
+    "Career-and-Education/Job-Experiences/Quantum-Molecular-Dynamics-Simulations": "sec:quantum-molecular-dynamics-simulations",
+    "Career-and-Education/Job-Experiences/Process-Engineering": "sec:process-engineering",
+    "Career-and-Education/Job-Experiences/Business-Intelligence": "sec:business-intelligence",
+    "Career-and-Education/Job-Experiences/Corporate-Research-and-Development": "sec:corporate-research-and-development",
+    "Career-and-Education/Job-Experiences/Materials-Engineer": "sec:materials-engineer",
+    "Career-and-Education/Job-Experiences/Lifeguarding-Days": "sec:lifeguarding-days",
+    "Career-and-Education/Educational-Favourites": "sec:educational-favourites",
+    "Career-and-Education/Educational-Favourites/Statistical-Thermodynamics": "sec:statistical-thermodynamics",
+    "Career-and-Education/Educational-Favourites/Continuum-Mechanics": "sec:continuum-mechanics",
+    "Career-and-Education/Educational-Favourites/Vector-Calculus": "sec:vector-calculus",
+    "Career-and-Education/Educational-Favourites/Nanofabrication": "sec:nanofabrication",
+    "Career-and-Education/Educational-Favourites/Integrated-Circuits": "sec:integrated-circuits",
+    "Career-and-Education/Educational-Favourites/Semiconductor-Physics": "sec:semiconductor-physics",
+    "Career-and-Education/Waterloo-Highlights": "sec:waterloo-highlights",
+    "Career-and-Education/Waterloo-Highlights/Varsity-Cheerleading": "sec:varsity-cheerleading",
+    "Career-and-Education/Waterloo-Highlights/Shenanigans": "sec:waterloo-highlights-shenanigans",
+    "Career-and-Education/Waterloo-Highlights/Relationships": "sec:relationships",
+    "Career-and-Education/Waterloo-Highlights/Adventures-and-Highlights": "sec:adventures-and-highlights",
+    "Career-and-Education/Waterloo-Highlights/Academic-Excellence": "sec:academic-excellence",
+    "Career-and-Education/Waterloo-Highlights/Little-Things": "sec:little-things",
+    "Career-and-Education/Projects": "sec:projects",
+    "Career-and-Education/Projects/KUBO-NO2-Sensor": "sec:kubo-no2-sensor",
+    "Career-and-Education/Projects/Pandas-Projects": "sec:pandas-projects",
+    "Career-and-Education/Projects/WebDev-Consulting": "sec:projects-webdev-consulting",
+    "Career-and-Education/Projects/Raspberry-Pi": "sec:raspberry-pi",
+    "Career-and-Education/Projects/Mental-Map": "sec:mental-map",
+    "Career-and-Education/Projects/Future-Plans": "sec:future-plans",
+    "Career-and-Education/Future-Planning": "sec:future-planning",
+    "Career-and-Education/Future-Planning/E-Learning": "sec:e-learning",
+    "Career-and-Education/Future-Planning/Europe-Migration": "sec:europe-migration",
+    "Career-and-Education/Future-Planning/Networking-and-Connections": "sec:networking-and-connections",
+    "Career-and-Education/Future-Planning/Creative-Endeavours": "sec:creative-endeavours",
+    "Career-and-Education/Future-Planning/New-Age-Promotion": "sec:new-age-promotion",
+    "Career-and-Education/Future-Planning/Roadmap-to-Logan": "sec:roadmap-to-logan",
+    "Career-and-Education/Career-Paths": "sec:career-paths",
+    "Career-and-Education/Career-Paths/Logan": "sec:logan",
+    "Career-and-Education/Career-Paths/Amar": "sec:amar",
+    "Career-and-Education/Career-Paths/Rhema": "sec:rhema",
+    "Career-and-Education/Career-Paths/Owen": "sec:owen",
+    "Career-and-Education/Career-Paths/Liam": "sec:liam",
+    "Career-and-Education/Career-Paths/Calena": "sec:calena",
+    "Sports-and-Entertainment": "sec:sports-and-entertainment",
+    "Sports-and-Entertainment/Anime-and-Manga": "sec:anime-and-manga",
+    "Sports-and-Entertainment/Anime-and-Manga/SeriesGraph-Top-50": "sec:anime-and-manga-seriesgraph-top-50",
+    "Sports-and-Entertainment/Anime-and-Manga/Anime-Studios": "sec:anime-studios",
+    "Sports-and-Entertainment/Anime-and-Manga/Legendary-Authors": "sec:legendary-authors",
+    "Sports-and-Entertainment/Anime-and-Manga/Production-Process": "sec:anime-and-manga-production-process",
+    "Sports-and-Entertainment/Anime-and-Manga/Sakuga-and-Artstyles": "sec:sakuga-and-artstyles",
+    "Sports-and-Entertainment/Anime-and-Manga/Upcoming-Greatness": "sec:upcoming-greatness",
+    "Sports-and-Entertainment/Western-Productions": "sec:western-productions",
+    "Sports-and-Entertainment/Western-Productions/SeriesGraph-Top-50": "sec:western-productions-seriesgraph-top-50",
+    "Sports-and-Entertainment/Western-Productions/Adult-Animation": "sec:adult-animation",
+    "Sports-and-Entertainment/Western-Productions/Comedians": "sec:comedians",
+    "Sports-and-Entertainment/Western-Productions/Production-Process": "sec:western-productions-production-process",
+    "Sports-and-Entertainment/Western-Productions/History-of-Film": "sec:history-of-film",
+    "Sports-and-Entertainment/Western-Productions/Controversies": "sec:western-productions-controversies",
+    "Sports-and-Entertainment/Big-Brother-and-Survivor": "sec:big-brother-and-survivor",
+    "Sports-and-Entertainment/Big-Brother-and-Survivor/All-Time-Greats": "sec:big-brother-and-survivor-all-time-greats",
+    "Sports-and-Entertainment/Big-Brother-and-Survivor/Starter-Seasons": "sec:starter-seasons",
+    "Sports-and-Entertainment/Big-Brother-and-Survivor/Roadmaps-to-Victory": "sec:roadmaps-to-victory",
+    "Sports-and-Entertainment/Big-Brother-and-Survivor/Greatest-Moments": "sec:greatest-moments",
+    "Sports-and-Entertainment/Big-Brother-and-Survivor/Predictions-and-Analytics": "sec:predictions-and-analytics",
+    "Sports-and-Entertainment/Big-Brother-and-Survivor/Controversies": "sec:big-brother-and-survivor-controversies",
+    "Sports-and-Entertainment/YouTube": "sec:youtube",
+    "Sports-and-Entertainment/YouTube/Educational": "sec:educational",
+    "Sports-and-Entertainment/YouTube/Parasocial": "sec:parasocial",
+    "Sports-and-Entertainment/YouTube/Documentary": "sec:documentary",
+    "Sports-and-Entertainment/YouTube/Data-Analytics": "sec:data-analytics",
+    "Sports-and-Entertainment/YouTube/History": "sec:youtube-history",
+    "Sports-and-Entertainment/YouTube/Personal": "sec:personal",
+    "Sports-and-Entertainment/Series-Hub": "sec:series-hub",
+    "Sports-and-Entertainment/Series-Hub/Videos": "sec:videos",
+    "Sports-and-Entertainment/Series-Hub/Rules": "sec:rules",
+    "Sports-and-Entertainment/Series-Hub/Analytics": "sec:series-hub-analytics",
+    "Sports-and-Entertainment/Series-Hub/History": "sec:series-hub-history",
+    "Sports-and-Entertainment/Series-Hub/Records": "sec:records",
+    "Sports-and-Entertainment/Series-Hub/Creator-Petition": "sec:creator-petition",
+    "Sports-and-Entertainment/Sports-Analytics": "sec:sports-analytics",
+    "Sports-and-Entertainment/Sports-Analytics/Player-Rankings": "sec:player-rankings",
+    "Sports-and-Entertainment/Sports-Analytics/Metric-Overview": "sec:metric-overview",
+    "Sports-and-Entertainment/Sports-Analytics/Statistics": "sec:statistics",
+    "Sports-and-Entertainment/Sports-Analytics/Predictions-and-Results": "sec:predictions-and-results",
+    "Sports-and-Entertainment/Sports-Analytics/Conditioning": "sec:conditioning",
+    "Sports-and-Entertainment/Sports-Analytics/Shenanigans": "sec:sports-analytics-shenanigans",
+    "Gaming-and-Performance-Log": "sec:gaming-and-performance-log",
+    "Gaming-and-Performance-Log/Smash-Bros": "sec:smash-bros",
+    "Gaming-and-Performance-Log/Smash-Bros/New-Smash-Mains": "sec:new-smash-mains",
+    "Gaming-and-Performance-Log/Smash-Bros/Next-Smash-Mains": "sec:next-smash-mains",
+    "Gaming-and-Performance-Log/Smash-Bros/Mechanics-History": "sec:mechanics-history",
+    "Gaming-and-Performance-Log/Smash-Bros/Player-Statistics": "sec:player-statistics",
+    "Gaming-and-Performance-Log/Smash-Bros/Character-Origins": "sec:character-origins",
+    "Gaming-and-Performance-Log/Smash-Bros/Highlights": "sec:highlights",
+    "Gaming-and-Performance-Log/Steam": "sec:steam",
+    "Gaming-and-Performance-Log/Steam/Favourites": "sec:favourites",
+    "Gaming-and-Performance-Log/Steam/Achievements-History": "sec:achievements-history",
+    "Gaming-and-Performance-Log/Steam/Combat-Platformers": "sec:combat-platformers",
+    "Gaming-and-Performance-Log/Steam/Strategy": "sec:strategy",
+    "Gaming-and-Performance-Log/Steam/History": "sec:steam-history",
+    "Gaming-and-Performance-Log/Steam/Shopping-Cart": "sec:shopping-cart",
+    "Gaming-and-Performance-Log/Nintendo": "sec:nintendo",
+    "Gaming-and-Performance-Log/Nintendo/All-Time-Greats": "sec:nintendo-all-time-greats",
+    "Gaming-and-Performance-Log/Nintendo/Mario-Sports": "sec:mario-sports",
+    "Gaming-and-Performance-Log/Nintendo/Console-Comparison": "sec:console-comparison",
+    "Gaming-and-Performance-Log/Nintendo/Controversy": "sec:controversy",
+    "Gaming-and-Performance-Log/Nintendo/History": "sec:nintendo-history",
+    "Gaming-and-Performance-Log/Nintendo/Upcoming-Greats": "sec:upcoming-greats",
+    "Gaming-and-Performance-Log/Athletics": "sec:athletics",
+    "Gaming-and-Performance-Log/Athletics/Running": "sec:running",
+    "Gaming-and-Performance-Log/Athletics/Swimming": "sec:swimming",
+    "Gaming-and-Performance-Log/Athletics/Weightlifting": "sec:weightlifting",
+    "Gaming-and-Performance-Log/Athletics/Training-Schedule": "sec:training-schedule",
+    "Gaming-and-Performance-Log/Athletics/History": "sec:athletics-history",
+    "Gaming-and-Performance-Log/Athletics/Future-Events": "sec:future-events",
+    "Gaming-and-Performance-Log/Memory": "sec:memory",
+    "Gaming-and-Performance-Log/Memory/Names-and-Places": "sec:names-and-places",
+    "Gaming-and-Performance-Log/Memory/Scientific-Concepts": "sec:scientific-concepts",
+    "Gaming-and-Performance-Log/Memory/Techniques": "sec:techniques",
+    "Gaming-and-Performance-Log/Memory/Meditation-Study": "sec:meditation-study",
+    "Gaming-and-Performance-Log/Memory/Quiz-Analytics": "sec:quiz-analytics",
+    "Gaming-and-Performance-Log/Memory/Information-Theory": "sec:information-theory",
+    "Gaming-and-Performance-Log/Health": "sec:health",
+    "Gaming-and-Performance-Log/Health/Sleep": "sec:sleep",
+    "Gaming-and-Performance-Log/Health/Diet": "sec:diet",
+    "Gaming-and-Performance-Log/Health/Mentality": "sec:mentality",
+    "Gaming-and-Performance-Log/Health/Information-Consumption": "sec:information-consumption",
+    "Gaming-and-Performance-Log/Health/Analytics": "sec:health-analytics",
+    "Gaming-and-Performance-Log/Health/Struggles-and-Setbacks": "sec:struggles-and-setbacks",
+    "Language-and-Programming": "sec:language-and-programming",
+    "Language-and-Programming/Rap": "sec:rap",
+    "Language-and-Programming/Rap/Seven-Deadly-Sins": "sec:seven-deadly-sins",
+    "Language-and-Programming/Rap/Homewood-and-Trafalgar": "sec:homewood-and-trafalgar",
+    "Language-and-Programming/Rap/Made-in-Abyss": "sec:made-in-abyss",
+    "Language-and-Programming/Rap/Vagabond": "sec:vagabond",
+    "Language-and-Programming/Rap/NanoFtheAbove": "sec:nanoftheabove",
+    "Language-and-Programming/Rap/Future-Projects": "sec:future-projects",
+    "Language-and-Programming/Linguistics": "sec:linguistics",
+    "Language-and-Programming/Linguistics/Semantics": "sec:semantics",
+    "Language-and-Programming/Linguistics/Etymology": "sec:etymology",
+    "Language-and-Programming/Linguistics/Morphology": "sec:morphology",
+    "Language-and-Programming/Linguistics/Mathematical-Linguistics": "sec:mathematical-linguistics",
+    "Language-and-Programming/Linguistics/Applied-Linguistics": "sec:applied-linguistics",
+    "Language-and-Programming/Linguistics/Second-Language-Acquisition": "sec:second-language-acquisition",
+    "Language-and-Programming/Text-Analysis": "sec:text-analysis",
+    "Language-and-Programming/Text-Analysis/Sentiment": "sec:sentiment",
+    "Language-and-Programming/Text-Analysis/Word-Frequency": "sec:word-frequency",
+    "Language-and-Programming/Text-Analysis/Speech-Patterns": "sec:speech-patterns",
+    "Language-and-Programming/Text-Analysis/Lexicon": "sec:lexicon",
+    "Language-and-Programming/Text-Analysis/Themes": "sec:themes",
+    "Language-and-Programming/Text-Analysis/Journal-Psychoanalysis": "sec:journal-psychoanalysis",
+    "Language-and-Programming/LeetCode": "sec:leetcode",
+    "Language-and-Programming/LeetCode/Lists-and-Arrays": "sec:lists-and-arrays",
+    "Language-and-Programming/LeetCode/Trees-and-Tries": "sec:trees-and-tries",
+    "Language-and-Programming/LeetCode/Graphs": "sec:graphs",
+    "Language-and-Programming/LeetCode/Dynamic-Programming": "sec:dynamic-programming",
+    "Language-and-Programming/LeetCode/Recursion": "sec:recursion",
+    "Language-and-Programming/LeetCode/Hard-Problems": "sec:hard-problems",
+    "Language-and-Programming/Learning-Progress": "sec:learning-progress",
+    "Language-and-Programming/Learning-Progress/Formal-Sciences": "sec:formal-sciences",
+    "Language-and-Programming/Learning-Progress/Natural-Sciences": "sec:natural-sciences",
+    "Language-and-Programming/Learning-Progress/Social-Sciences": "sec:social-sciences",
+    "Language-and-Programming/Learning-Progress/Business-and-Finance": "sec:business-and-finance",
+    "Language-and-Programming/Learning-Progress/Economics-and-History": "sec:economics-and-history",
+    "Language-and-Programming/Learning-Progress/Coursera-and-LeetCode": "sec:coursera-and-leetcode",
+    "Language-and-Programming/Coding-Projects": "sec:coding-projects",
+    "Language-and-Programming/Coding-Projects/Database-Exploration": "sec:database-exploration",
+    "Language-and-Programming/Coding-Projects/Simulations": "sec:coding-projects-simulations",
+    "Language-and-Programming/Coding-Projects/WebDev-Consulting": "sec:coding-projects-webdev-consulting",
+    "Language-and-Programming/Coding-Projects/Relational-Database-Development": "sec:relational-database-development",
+    "Language-and-Programming/Coding-Projects/Miscellaneous": "sec:miscellaneous",
+    "Language-and-Programming/Coding-Projects/Website-Changes": "sec:website-changes"
+  },
+  "policy": "Prose, math, labels and images moved unchanged; merged headings are named in a short note; two assembly signposts (chapter comments and 'Historical notes follow') were removed.",
+  "outputSha256": "b529d832e1268ff9bfc0e65921a991595a71a1605c3913c1a6b5552ceec275e9"
+}

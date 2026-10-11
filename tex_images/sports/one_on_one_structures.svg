@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="504pt" viewBox="0 0 864 504" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <title>1v1 / MORE PLAYERS, THREE OPTIONS</title>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>1v1 / MORE PLAYERS, THREE OPTIONS</dc:title>
+    <dc:description>Choose one structure before starting; these are not simultaneous rules</dc:description>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>First to Four original diagrams</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 504 
+L 864 504 
+L 864 0 
+L 0 0 
+z
+" style="fill: #fffdf7"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 58.0284 253.9872 
+L 270.2916 253.9872 
+Q 278.3268 253.9872 278.3268 246.0384 
+L 278.3268 125.4816 
+Q 278.3268 117.5328 270.2916 117.5328 
+L 58.0284 117.5328 
+Q 49.9932 117.5328 49.9932 125.4816 
+L 49.9932 246.0384 
+Q 49.9932 253.9872 58.0284 253.9872 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 325.8684 253.9872 
+L 538.1316 253.9872 
+Q 546.1668 253.9872 546.1668 246.0384 
+L 546.1668 125.4816 
+Q 546.1668 117.5328 538.1316 117.5328 
+L 325.8684 117.5328 
+Q 317.8332 117.5328 317.8332 125.4816 
+L 317.8332 246.0384 
+Q 317.8332 253.9872 325.8684 253.9872 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 593.7084 253.9872 
+L 805.9716 253.9872 
+Q 814.0068 253.9872 814.0068 246.0384 
+L 814.0068 125.4816 
+Q 814.0068 117.5328 805.9716 117.5328 
+L 593.7084 117.5328 
+Q 585.6732 117.5328 585.6732 125.4816 
+L 585.6732 246.0384 
+Q 585.6732 253.9872 593.7084 253.9872 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 36.936 91.0368 
+L 827.064 91.0368 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 102.545275 331.488 
+Q 115.611506 331.488 126.441668 331.488 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 120.041668 328.288 
+L 126.441668 331.488 
+L 120.041668 334.688 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 156.113275 331.488 
+Q 169.179506 331.488 180.009668 331.488 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 173.609668 328.288 
+L 180.009668 331.488 
+L 173.609668 334.688 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 209.681275 331.488 
+Q 222.747506 331.488 233.577668 331.488 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 227.177668 328.288 
+L 233.577668 331.488 
+L 227.177668 334.688 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 397.169275 331.488 
+Q 410.235506 331.488 421.065668 331.488 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 414.665668 328.288 
+L 421.065668 331.488 
+L 414.665668 334.688 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 477.521275 331.488 
+Q 490.587506 331.488 501.417668 331.488 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 495.017668 328.288 
+L 501.417668 331.488 
+L 495.017668 334.688 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 694.886251 292.728867 
+Q 716.579326 304.991619 736.325819 316.153999 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 732.3291 310.218829 
+L 736.325819 316.153999 
+L 729.179652 315.790272 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 694.77754 350.205732 
+Q 716.580854 334.799397 736.557995 320.683445 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 729.484534 321.763332 
+L 736.557995 320.683445 
+L 733.177828 326.990145 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #183047" x="36.936" y="43.950013" transform="rotate(-0 36.936 43.950013)">1v1 / MORE PLAYERS, THREE OPTIONS</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536775" x="36.936" y="72.875313" transform="rotate(-0 36.936 72.875313)">Choose one structure before starting; these are not simultaneous rules</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536775" x="36.936" y="481.024238" transform="rotate(-0 36.936 481.024238)">FIRST TO FOUR  /  Original house-rule illustration  /  Schematic, not official court dimensions</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="164.16" y="156.34869" transform="rotate(-0 164.16 156.34869)">ALTERNATE</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(101.902578 194.83973)">Predetermine an EVEN</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(99.203281 209.246895)">number of possessions.</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="432" y="156.34869" transform="rotate(-0 432 156.34869)">KING OF THE HILL</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(362.039141 194.83973)">A new player enters after</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(375.316484 209.246895)">possession changes.</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="699.84" y="156.34869" transform="rotate(-0 699.84 156.34869)">FOUR-PLAYER BRACKET</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(639.922656 194.83973)">Two opening pairings;</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(622.739453 209.246895)">agree advancement details.</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="83.808" y="304.715312" transform="rotate(-0 83.808 304.715312)">A</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="137.376" y="304.715312" transform="rotate(-0 137.376 304.715312)">B</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="190.944" y="304.715312" transform="rotate(-0 190.944 304.715312)">A</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="244.512" y="304.715312" transform="rotate(-0 244.512 304.715312)">B</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="351.648" y="304.715312" transform="rotate(-0 351.648 304.715312)">A/B</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="432" y="304.715312" transform="rotate(-0 432 304.715312)">C in</text>
+   </g>
+   <g id="text_16">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="512.352" y="304.715312" transform="rotate(-0 512.352 304.715312)">Next</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="646.272" y="294.779313" transform="rotate(-0 646.272 294.779313)">A vs B</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="646.272" y="354.395313" transform="rotate(-0 646.272 354.395313)">C vs D</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="766.8" y="321.275313" transform="rotate(-0 766.8 321.275313)">Final</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(179.779688 416.364797)">These are the supplied options for extra players, not an invented universal rotation.</text>
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(208.60125 432.081703)">Choose the target, pairings, substitutions and tie handling before starting.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p825037869d">
+   <rect x="30.24" y="20.16" width="803.52" height="463.68"/>
+  </clipPath>
+ </defs>
+</svg>

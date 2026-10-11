@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="504pt" viewBox="0 0 864 504" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <title>BACKBOARD / THREE ATTEMPTS</title>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>BACKBOARD / THREE ATTEMPTS</dc:title>
+    <dc:description>Each location uses the same distance progression as Shooting</dc:description>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>First to Four original diagrams</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 504 
+L 864 504 
+L 864 0 
+L 0 0 
+z
+" style="fill: #fffdf7"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 64.7244 374.8752 
+L 276.9876 374.8752 
+Q 285.0228 374.8752 285.0228 366.9264 
+L 285.0228 269.5536 
+Q 285.0228 261.6048 276.9876 261.6048 
+L 64.7244 261.6048 
+Q 56.6892 261.6048 56.6892 269.5536 
+L 56.6892 366.9264 
+Q 56.6892 374.8752 64.7244 374.8752 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 325.8684 374.8752 
+L 538.1316 374.8752 
+Q 546.1668 374.8752 546.1668 366.9264 
+L 546.1668 269.5536 
+Q 546.1668 261.6048 538.1316 261.6048 
+L 325.8684 261.6048 
+Q 317.8332 261.6048 317.8332 269.5536 
+L 317.8332 366.9264 
+Q 317.8332 374.8752 325.8684 374.8752 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 587.0124 374.8752 
+L 799.2756 374.8752 
+Q 807.3108 374.8752 807.3108 366.9264 
+L 807.3108 269.5536 
+Q 807.3108 261.6048 799.2756 261.6048 
+L 587.0124 261.6048 
+Q 578.9772 261.6048 578.9772 269.5536 
+L 578.9772 366.9264 
+Q 578.9772 374.8752 587.0124 374.8752 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 36.936 91.0368 
+L 827.064 91.0368 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 349.664518 235.694353 
+Q 261.252033 247.031996 175.057454 258.085223 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 181.812494 260.445189 
+L 175.057454 258.085223 
+L 180.998451 254.097171 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 432 237.440865 
+Q 432 247.033009 432 254.389084 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 435.2 247.989084 
+L 432 254.389084 
+L 428.8 247.989084 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 514.335482 235.694353 
+Q 602.747967 247.031996 688.942546 258.085223 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 683.001549 254.097171 
+L 688.942546 258.085223 
+L 682.187506 260.445189 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 334.908 226.1664 
+C 341.83362 226.1664 348.476517 223.444409 353.373669 218.599914 
+C 358.270822 213.755419 361.0224 207.183951 361.0224 200.3328 
+C 361.0224 193.481649 358.270822 186.910181 353.373669 182.065686 
+C 348.476517 177.221191 341.83362 174.4992 334.908 174.4992 
+C 327.98238 174.4992 321.339483 177.221191 316.442331 182.065686 
+C 311.545178 186.910181 308.7936 193.481649 308.7936 200.3328 
+C 308.7936 207.183951 311.545178 213.755419 316.442331 218.599914 
+C 321.339483 223.444409 327.98238 226.1664 334.908 226.1664 
+z
+" clip-path="url(#p825037869d)" style="fill: #fffdf7; stroke: #b75016; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 308.7936 200.3328 
+L 361.0224 200.3328 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 334.908 226.1664 
+L 334.908 174.4992 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 432 226.1664 
+C 438.92562 226.1664 445.568517 223.444409 450.465669 218.599914 
+C 455.362822 213.755419 458.1144 207.183951 458.1144 200.3328 
+C 458.1144 193.481649 455.362822 186.910181 450.465669 182.065686 
+C 445.568517 177.221191 438.92562 174.4992 432 174.4992 
+C 425.07438 174.4992 418.431483 177.221191 413.534331 182.065686 
+C 408.637178 186.910181 405.8856 193.481649 405.8856 200.3328 
+C 405.8856 207.183951 408.637178 213.755419 413.534331 218.599914 
+C 418.431483 223.444409 425.07438 226.1664 432 226.1664 
+z
+" clip-path="url(#p825037869d)" style="fill: #fffdf7; stroke: #b75016; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 405.8856 200.3328 
+L 458.1144 200.3328 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 432 226.1664 
+L 432 174.4992 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 529.092 226.1664 
+C 536.01762 226.1664 542.660517 223.444409 547.557669 218.599914 
+C 552.454822 213.755419 555.2064 207.183951 555.2064 200.3328 
+C 555.2064 193.481649 552.454822 186.910181 547.557669 182.065686 
+C 542.660517 177.221191 536.01762 174.4992 529.092 174.4992 
+C 522.16638 174.4992 515.523483 177.221191 510.626331 182.065686 
+C 505.729178 186.910181 502.9776 193.481649 502.9776 200.3328 
+C 502.9776 207.183951 505.729178 213.755419 510.626331 218.599914 
+C 515.523483 223.444409 522.16638 226.1664 529.092 226.1664 
+z
+" clip-path="url(#p825037869d)" style="fill: #fffdf7; stroke: #b75016; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_6">
+    <path d="M 502.9776 200.3328 
+L 555.2064 200.3328 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_7">
+    <path d="M 529.092 226.1664 
+L 529.092 174.4992 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #183047" x="36.936" y="43.950013" transform="rotate(-0 36.936 43.950013)">BACKBOARD / THREE ATTEMPTS</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536775" x="36.936" y="72.875313" transform="rotate(-0 36.936 72.875313)">Each location uses the same distance progression as Shooting</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536775" x="36.936" y="481.024238" transform="rotate(-0 36.936 481.024238)">FIRST TO FOUR  /  Original house-rule illustration  /  Schematic, not official court dimensions</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="432" y="142.691731" transform="rotate(-0 432 142.691731)">3 attempts per player at each Backboard location</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="334.908" y="204.195925" transform="rotate(-0 334.908 204.195925)">1</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="432" y="204.195925" transform="rotate(-0 432 204.195925)">2</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="529.092" y="204.195925" transform="rotate(-0 529.092 204.195925)">3</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="170.856" y="294.85653" transform="rotate(-0 170.856 294.85653)">MAKE</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(101.337719 327.31973)">Wait for the other player;</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(107.550141 341.726895)">all make → move back.</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="432" y="294.85653" transform="rotate(-0 432 294.85653)">BUDGET USED</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(369.862891 327.31973)">Mercy may be offered;</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(374.691719 341.726895)">receiver can decline.</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="693.144" y="294.85653" transform="rotate(-0 693.144 294.85653)">BOTH FAIL</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(630.572047 327.31973)">Agree mutual mercies;</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(627.235953 341.726895)">typically two, not a cap.</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(165.135703 416.74373)">No accepted mercies left? HIGH JUMP RULES compares attempts at the previous successful shot.</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(173.467344 431.150895)">Unlimited mercy offers are hospitality, not extra attempts automatically added to the budget.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p825037869d">
+   <rect x="30.24" y="20.16" width="803.52" height="463.68"/>
+  </clipPath>
+ </defs>
+</svg>

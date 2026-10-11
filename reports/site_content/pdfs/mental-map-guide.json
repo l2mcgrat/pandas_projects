@@ -1,0 +1,24 @@
+{
+  "compiler": {
+    "flags": [
+      "--untrusted",
+      "--keep-logs",
+      "--keep-intermediates",
+      "--outdir",
+      "output"
+    ],
+    "name": "tectonic",
+    "sourceDateEpoch": "946684800",
+    "version": "Tectonic 0.17.0"
+  },
+  "inputs": {
+    "images": [],
+    "source": {
+      "path": "notebook_sources/guides/mental_map_guide.tex",
+      "sha256": "ac77455e9ba96a2bcfe4a71fda6cb0560b1c1d4f99414de2c420fbb03d1acb2f"
+    }
+  },
+  "key": "mental-map-guide",
+  "pdfSha256": "ac01b7a73bfbcf6202741ea150901ef52e73d1a09e322f42598bf8ad9d6b4d0f",
+  "schemaVersion": 1
+}

@@ -1,0 +1,209 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\linespread{2.0}
+
+\title{External Brain}
+\author{Liam McGrath}
+\date{May 2018}
+
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{esint}
+\usepackage{braket}
+\usepackage{cancel}
+\DeclareMathOperator{\Tr}{Tr}
+
+\usepackage{titlesec}
+\usepackage{hyperref}
+
+\begin{document}
+
+\textbf{Perturbed Linear Rotor}
+
+We want to find a diagonalized Hamiltonian representing a linear rotor (HF) in an electric field using perturbation theory. 
+
+The Hamiltonian is as follows;
+
+\begin{equation} \label{eq:252}
+\hat{H} \hspace{0.125cm} = \hspace{0.125cm} \hat{T}_{rot} + \vec\mu\cdot\vec{E} \hspace{0.0125cm} , 
+\end{equation}
+
+and we are evaluating ; 
+
+\begin{equation} \label{eq:253}
+\bra{l m}\hat{H}\ket{l' m'} \hspace{0.125cm} = \hspace{0.125cm} \bra{l m} \hat{T}_{rot} + \vec\mu\cdot\vec{E}\ket{l' m'} . 
+\end{equation}
+
+We know that;
+
+\begin{equation} \label{eq:254}
+\bra{l m}\hat{T}_{rot}\ket{l' m'} \hspace{0.125cm} = \hspace{0.125cm} \bra{l m}B\hat{L}^{2}\ket{l' m'} \hspace{0.125cm} .
+\end{equation}
+
+\begin{equation} \label{eq:255}
+\bra{l m}B\hat{L}^{2}\ket{l' m'} \hspace{0.125cm} = \hspace{0.125cm} Bl(l+1) \delta_{l l'}\delta_{m m'} \hspace{0.125cm} ; \hspace{0.125cm} B \hspace{0.125cm} = \hspace{0.125cm} \frac{\hbar^{2}}{2I} .
+\end{equation}
+
+We also know;
+
+\begin{equation} \label{eq:256}
+\bra{l m}\vec{\mu}\cdot\vec{E}\ket{l' m'} \hspace{0.125cm} = \hspace{0.125cm} \bra{l m}\mu E\cos\theta\ket{l' m'} \hspace{0.125cm} = \hspace{0.125cm} \mu E\bra{l m}\cos\theta\ket{l' m'} \hspace{0.125cm}.
+\end{equation}
+
+Expanding this into its true form we obtain; 
+
+\begin{equation} \label{eq:257}
+\mu E\bra{l m}\cos(\theta)\ket{l' m'} \hspace{0.125cm} = \hspace{0.125cm} \mu E \int_{0}^{\pi} \int_{0}^{2\pi} Y_{l}^{m \ast}(\theta, \phi) cos\theta Y_{l'}^{m'}(\theta, \phi) \sin\theta d\theta d\phi \hspace{0.125cm} . 
+\end{equation}
+
+We use the trick that \begin{math} Y_{1}^{0}(\theta, \phi)  = \frac{1}{2}\sqrt{\frac{3}{\pi}}\cos(\theta) \end{math}, so \begin{math} \cos(\theta) = {2}\sqrt{\frac{\pi}{3}} Y_{1}^{0}(\theta, \phi)  \end{math}, and equation \ref{eq:257} becomes; 
+
+\begin{equation} \label{eq:258}
+= \hspace{0.125cm} \mu E \int_{0}^{\pi} \int_{0}^{2\pi} Y_{l}^{m \ast}(\theta, \phi) {2}\sqrt{\frac{\pi}{3}} Y_{1}^{0}(\theta, \phi) Y_{l'}^{m'}(\theta, \phi) \sin\theta d\theta d\phi \hspace{0.125cm} . 
+\end{equation}
+
+\begin{equation} \label{eq:259}
+= \hspace{0.125cm} 2 \mu E \sqrt{\frac{\pi}{3}} \int_{0}^{\pi} \int_{0}^{2\pi} Y_{l}^{m \ast}(\theta, \phi) Y_{1}^{0}(\theta, \phi) Y_{l'}^{m'}(\theta, \phi) \sin\theta d\theta d\phi \hspace{0.125cm} . 
+\end{equation}
+
+Remembering that \begin{math} Y_{l}^{m \ast}(\theta, \phi)  =  (-1)^{m} Y_{l}^{-m}(\theta, \phi)  \end{math}, equation \ref{eq:259} becomes;
+
+\begin{equation} \label{eq:260}
+= \hspace{0.125cm} 2 \mu E \sqrt{\frac{\pi}{3}} \int_{0}^{\pi} \int_{0}^{2\pi} (-1)^{m} Y_{l}^{-m}(\theta, \phi) Y_{1}^{0}(\theta, \phi) Y_{l'}^{m'}(\theta, \phi) \sin\theta d\theta d\phi \hspace{0.125cm} . 
+\end{equation}
+
+\begin{equation} \label{eq:261}
+= \hspace{0.125cm} 2 \mu E \sqrt{\frac{\pi}{3}} (-1)^{m} \int_{0}^{\pi} \int_{0}^{2\pi} Y_{l}^{-m}(\theta, \phi) Y_{1}^{0}(\theta, \phi) Y_{l'}^{m'}(\theta, \phi) \sin\theta d\theta d\phi \hspace{0.125cm} . 
+\end{equation}
+
+If we use Wigner 3j matrices we can solve this for all possibilities of l and m, remember \begin{math} l \ge \big| m \big| \end{math};
+
+\begin{equation} \label{eq:262}
+\int_{0}^{\pi} \int_{0}^{2\pi} Y_{l_{3}}^{m_{3}}(\theta, \phi) Y_{l_{2}}^{m_{2}}(\theta, \phi) Y_{l_{1}}^{m_{1}}(\theta, \phi) \sin\theta d\theta d\phi \hspace{0.125cm} 
+\end{equation}
+
+\begin{equation} \label{eq:263}
+= \hspace{0.125cm} \bigg[\frac{(2 l_1 + 1)(2 l_2 + 1`)(2 l_3 + 1)}{4\pi}]\bigg]^{\frac{1}{2}}\begin{pmatrix} l_1 & l_2 & l_3 \\ 0 & 0 & 0 \end{pmatrix}\begin{pmatrix} l_1 & l_2 & l_3 \\ m_1 & m_2 & m_3 \end{pmatrix}
+\end{equation}
+
+so that means;
+
+\begin{equation} \label{eq:264}
+\int_{0}^{\pi} \int_{0}^{2\pi} Y_{l}^{-m}(\theta, \phi) Y_{1}^{0}(\theta, \phi) Y_{l'}^{m'}(\theta, \phi) \sin\theta d\theta d\phi \hspace{0.125cm} 
+\end{equation}
+
+\begin{equation} \label{eq:265}
+= \hspace{0.125cm} 2 \mu E \sqrt{\frac{\pi}{3}} (-1)^{m} \bigg[\frac{(2 l_1 + 1)(2 l_2 + 1)(2 l_3 + 1)}{4\pi}]\bigg]^{\frac{1}{2}}\begin{pmatrix} l' & 1 & l \\ 0 & 0 & 0 \end{pmatrix}\begin{pmatrix} l' & 1 & l \\ m' & 0 & m \end{pmatrix}
+\end{equation}
+
+We set a maximum value of azimuthal quantum number l, which dictates the size of the \begin{math} \hat{T}_{rot} \end{math} and \begin{math} \hat{V} \end{math}, where \begin{math} dim(\hat{T}_{rot}) \end{math} and \begin{math} dim(\hat{V} \end{math}) are \begin{math} \sum_{0}^{l_{max}} 2l + 1 \end{math}. 
+
+We present an example \begin{math} \hat{T}_{rot} \end{math} with \begin{math} l_{max} = 1 \end{math} as;
+
+\begin{equation} \label{eq:266}
+\hat{T}_{rot} \hspace{0.125cm} = \hspace{0.125cm} \begin{pmatrix} \bra{0,0}\hat{T}_{rot}\ket{0,0} & \bra{0,0}\hat{T}_{rot}\ket{1,-1} & \bra{0,0}\hat{T}_{rot}\ket{1,0} & \bra{0,0}\hat{T}_{rot}\ket{1,1} \\ \bra{1,-1}\hat{T}_{rot}\ket{0,0} & \bra{1,-1}\hat{T}_{rot}\ket{1,-1} & \bra{1,-1}\hat{T}_{rot}\ket{1,0} & \bra{1,-1}\hat{T}_{rot}\ket{1,1} \\ \bra{1,0}\hat{T}_{rot}\ket{0,0} & \bra{1,0}\hat{T}_{rot}\ket{1,-1} & \bra{1,0}\hat{T}_{rot}\ket{1,0} & \bra{1,0}\hat{T}_{rot}\ket{1,1} \\ \bra{1,1}\hat{T}_{rot}\ket{0,0} & \bra{1,1}\hat{T}_{rot}\ket{1,-1} & \bra{1,1}\hat{T}_{rot}\ket{1,0} & \bra{1,1}\hat{T}_{rot}\ket{1,1}
+\end{pmatrix} \hspace{0.125cm} ,
+\end{equation} 
+
+Using equation \ref{eq:255} we can restate \begin{math} \hat{T}_{rot} \end{math} as;
+
+\cancelto{1}
+
+\begin{equation} \label{eq:267}
+\hat{T}_{rot} \hspace{0.125cm} = \hspace{0.125cm} \frac{\hbar^2 l(l + 1)}{2I} \begin{pmatrix} \cancelto{1}{\delta_{00}\delta_{00}} & \cancelto{0}{\delta_{01}\delta_{0 -1}} & \cancelto{0}{\delta_{01}\delta_{00}} & \cancelto{0}{\delta_{01}\delta_{01}} \\ \cancelto{0}{\delta_{10}\delta_{-1 0}} & \cancelto{1}{\delta_{11}\delta_{-1 -1}} & \cancelto{0}{\delta_{11}\delta_{-10}} & \cancelto{0}{\delta_{11}\delta_{-11}} \\ \cancelto{0}{\delta_{10}\delta_{00}} & \cancelto{0}{\delta_{11}\delta_{0 -1}} & \cancelto{1}{\delta_{11}\delta_{00}} & \cancelto{0}{\delta_{11}\delta_{01}} \\ \cancelto{0}{\delta_{00}\delta_{00}} & \cancelto{0}{\delta_{01}\delta_{0 -1}} & \cancelto{0}{\delta_{01}\delta_{00}} & \cancelto{1}{\delta_{01}\delta_{01}}  \end{pmatrix} \hspace{0.125cm},
+\end{equation} 
+
+which reduces to; 
+
+\begin{equation} \label{eq:268}
+\hat{T}_{rot} \hspace{0.125cm} = \hspace{0.125cm} \frac{\hbar^2 l(l + 1)}{2I} \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1
+\end{pmatrix} \hspace{0.125cm} = \hspace{0.125cm} \frac{\hbar^2 l(l + 1)}{2I}\vec{\vec{\delta}}
+\end{equation} 
+
+Similarly; 
+
+\begin{equation} \label{eq:269}
+\hat{V} \hspace{0.125cm} = \hspace{0.125cm} \mu E \cos\theta \hspace{0.125cm} = \hspace{0.125cm} \mu E \begin{pmatrix} \bra{0,0}\cos\theta\ket{0,0} & \bra{0,0}\cos\theta\ket{1,-1} & \bra{0,0}\cos\theta\ket{1,0} & \bra{0,0}\cos\theta\ket{1,1} \\ \bra{1,-1}\cos\theta\ket{0,0} & \bra{1,-1}\cos\theta\ket{1,-1} & \bra{1,-1}\cos\theta\ket{1,0} & \bra{1,-1}\cos\theta\ket{1,1} \\ \bra{1,0}\cos\theta\ket{0,0} & \bra{1,0}\cos\theta\ket{1,-1} & \bra{1,0}\cos\theta\ket{1,0} & \bra{1,0}\cos\theta\ket{1,1} \\ \bra{1,1}\cos\theta\ket{0,0} & \bra{1,1}\cos\theta\ket{1,-1} & \bra{1,1}\cos\theta\ket{1,0} & \bra{1,1}\cos\theta\ket{1,1}
+\end{pmatrix} \hspace{0.125cm} ,
+\end{equation} 
+
+Remembering equation \ref{eq:257};
+
+\begin{equation} \label{eq:270}
+\mu E\bra{l m}\cos(\theta)\ket{l' m'} \hspace{0.125cm} = \hspace{0.125cm} \mu E \int_{0}^{\pi} \int_{0}^{2\pi} Y_{l}^{m \ast}(\theta, \phi) cos\theta Y_{l'}^{m'}(\theta, \phi) \sin\theta d\theta d\phi \hspace{0.125cm} . 
+\end{equation}
+
+and equation \ref{eq:262} and \ref{eq:263}
+
+\begin{equation} \label{eq:271}
+\int_{0}^{\pi} \int_{0}^{2\pi} Y_{l_{3}}^{m_{3}}(\theta, \phi) Y_{l_{2}}^{m_{2}}(\theta, \phi) Y_{l_{1}}^{m_{1}}(\theta, \phi) \sin\theta d\theta d\phi \hspace{0.125cm} 
+\end{equation}
+
+\begin{equation} \label{eq:272}
+= \hspace{0.125cm} \bigg[\frac{(2 l_1 + 1)(2 l_2 + 1`)(2 l_3 + 1)}{4\pi}]\bigg]^{\frac{1}{2}}\begin{pmatrix} l_1 & l_2 & l_3 \\ 0 & 0 & 0 \end{pmatrix}\begin{pmatrix} l_1 & l_2 & l_3 \\ m_1 & m_2 & m_3 \end{pmatrix}
+\end{equation}
+
+We can obtain numerical values for this matrix before diagonalization by evaluating these Wigner 3j matricies. They follow the rules such that, which was coded by someone so WE DON'T HAVE TO; 
+
+\begin{equation} \label{eq:273}
+\begin{pmatrix} l_1 & l_2 & l_3 \\ m_1 & m_2 & m_3 \end{pmatrix}
+\begin{aligned}
+= \hspace{0.125cm} (-1)^{l_1 - l_2 - m_3} \sqrt{\frac{(l_1 + l_2 - l_3)!(l_1 - l_2 + l_3)!(-l_1 + l_2 + l_3)!}{(l_1 + l_2 + l_3 + 1)}}  \\ \cdot \sqrt{(l_1 + m_1)!(l_1 - m_1)!(l_2 + m_2)!(l_2 - m_2)!(l_2 + m_2)!(l_2 - m_2)!} \\  \cdot \sum_{t} \Bigg( \frac{(-1)^{t}}{t!(l_3 - l_2 + t + m_1)!(l_3 - l_1 + t - m_2)!} \\ \frac{1}{
+(l_1 + l_2 - l_3 - t)!(l_1 - t - m_1)!(l_2 - t + m_2)!} \Bigg)
+\end{aligned}
+\end{equation}
+
+The result of the code for this specific \begin{math} l_{max} = 1 \end{math} example is;
+
+\begin{equation} \label{eq:274}
+\hat{T} \hspace{0.125cm}  + \hspace{0.125cm} \hat{V} \hspace{0.125cm} = \hspace{0.125cm} \begin{pmatrix} 0 & 0 & 0.131 & 0 \\ 0 & 59.165 & 0 & 0 \\ 0.131 & 0 & 59.165 & 0 \\ 0 & 0 & 0 & 59.165 \end{pmatrix} \hspace{0.125cm} ,
+\end{equation} 
+
+where the energy is in units of Kelvin.
+
+After diagonalization this matrix, equation \ref{eq:274} unsurprisingly becomes;
+
+\begin{equation} \label{eq:275}
+\hat{H} \hspace{0.125cm} = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 59.165 & 0 & 0 \\ 0 & 0 & 59.165 & 0 \\ 0 & 0 & 0 & 59.165 \end{pmatrix} \hspace{0.125cm} ,
+\end{equation} 
+
+and the net result of \begin{math} \bra{l m}\hat{H}_{rot}\ket{l' m'} \end{math} is \begin{math} U = 39.62 K \end{math} which was obtained using \begin{math} T = 50 K \end{math} and \begin{math} E = 1 \frac{N}{C} \end{math};
+
+The code which calculate the exact diagonalization of \begin{math} \hat{V} \end{math} along with the additional code to calculate the internal energy (\begin{math} U  = -\frac{\partial{Z_{rot,pot}}}{\partial{\beta}} \end{math})  using principles from statistical mechanics is found on
+github. To quickly summarize; 
+
+\begin{equation} \label{eq:276}
+Z \hspace{0.125cm} = \hspace{0.125cm} \sum_{l=0}^{\infty} g_{l} e^{-\beta E_{l}} \hspace{0.125cm} , 
+\end{equation} 
+
+and for this problem we set \begin{math} g_{l} = 1 \end{math} for all l.
+
+We propose that;
+
+\begin{equation} \label{eq:277}
+U \hspace{0.125cm} = \hspace{0.125cm} \sum_{l=0}^{\infty} p_{l}(E_{l}) E_{l} \hspace{0.125cm} , \hspace{0.125cm} p_{l} \hspace{0.125cm} = \hspace{0.125cm} \frac{e^{-\beta E_{l}}}{Z}
+\end{equation} 
+
+so that means;
+
+\begin{equation} \label{eq:278}
+U \hspace{0.125cm} = \hspace{0.125cm} -\frac{1}{Z}\frac{\partial}{\partial{\beta}} Z \hspace{0.125cm} = \hspace{0.125cm} - \sum_{l=0}^{\infty} (-E_{l}) \frac{e^{-\beta E_{l}}}{Z}  \hspace{0.125cm} = \hspace{0.125cm} \sum_{l=0}^{\infty} p_{l}(E_{l}) E_{l} \hspace{0.125cm}, 
+\end{equation} 
+
+
+which is what we used to obtain 39.62;
+ 
+\begin{equation} \label{eq:279}
+\sum_{l=0}^{\infty} p_{l}(E_{l}) E_{l} \hspace{0.125cm} \Longrightarrow \hspace{0.125cm} \sum_{i=0}^{3} p_{l}(E_{i}) E_{i} \hspace{0.125cm} ,
+\end{equation}
+
+\begin{equation} \label{eq:280}
+\hat{H} \ket{l m} \hspace{0.125cm} = \hspace{0.125cm} E_{i} \ket{l m} \hspace{0.125cm} ,
+\end{equation}
+
+\begin{equation} \label{eq:281}
+\frac{0 + \hspace{0.125cm} 59.165 e^{-\frac{59.165}{50.0} + 59.165 e^{-\frac{59.165}{50.0}}  + 59.165 e^{-\frac{59.165}{50.0}}}}{1 + e^{-\frac{59.165}{50.0}} + e^{-\frac{59.165}{50.0}} + e^{-\frac{59.165}{50.0}}} \hspace{0.125cm} = \hspace{0.125cm} \frac{54.360}{1.919} \hspace{0.125cm} = \hspace{0.125cm} 28.33 \hspace{0.125cm} .
+\end{equation} 
+
+\end{document}

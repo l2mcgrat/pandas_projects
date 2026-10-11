@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="504pt" viewBox="0 0 864 504" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <title>HORSE / LETTERS ARE LIVES</title>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>HORSE / LETTERS ARE LIVES</dc:title>
+    <dc:description>A missed replication adds one letter; E eliminates, unless a mercy is agreed</dc:description>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>First to Four original diagrams</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 504 
+L 864 504 
+L 864 0 
+L 0 0 
+z
+" style="fill: #fffdf7"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 59.7024 253.9872 
+L 174.8736 253.9872 
+Q 182.9088 253.9872 182.9088 246.0384 
+L 182.9088 132.1056 
+Q 182.9088 124.1568 174.8736 124.1568 
+L 59.7024 124.1568 
+Q 51.6672 124.1568 51.6672 132.1056 
+L 51.6672 246.0384 
+Q 51.6672 253.9872 59.7024 253.9872 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 217.0584 253.9872 
+L 332.2296 253.9872 
+Q 340.2648 253.9872 340.2648 246.0384 
+L 340.2648 132.1056 
+Q 340.2648 124.1568 332.2296 124.1568 
+L 217.0584 124.1568 
+Q 209.0232 124.1568 209.0232 132.1056 
+L 209.0232 246.0384 
+Q 209.0232 253.9872 217.0584 253.9872 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 374.4144 253.9872 
+L 489.5856 253.9872 
+Q 497.6208 253.9872 497.6208 246.0384 
+L 497.6208 132.1056 
+Q 497.6208 124.1568 489.5856 124.1568 
+L 374.4144 124.1568 
+Q 366.3792 124.1568 366.3792 132.1056 
+L 366.3792 246.0384 
+Q 366.3792 253.9872 374.4144 253.9872 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 531.7704 253.9872 
+L 646.9416 253.9872 
+Q 654.9768 253.9872 654.9768 246.0384 
+L 654.9768 132.1056 
+Q 654.9768 124.1568 646.9416 124.1568 
+L 531.7704 124.1568 
+Q 523.7352 124.1568 523.7352 132.1056 
+L 523.7352 246.0384 
+Q 523.7352 253.9872 531.7704 253.9872 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 689.1264 253.9872 
+L 804.2976 253.9872 
+Q 812.3328 253.9872 812.3328 246.0384 
+L 812.3328 132.1056 
+Q 812.3328 124.1568 804.2976 124.1568 
+L 689.1264 124.1568 
+Q 681.0912 124.1568 681.0912 132.1056 
+L 681.0912 246.0384 
+Q 681.0912 253.9872 689.1264 253.9872 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #b75016; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 73.0944 401.3712 
+L 389.1456 401.3712 
+Q 397.1808 401.3712 397.1808 393.4224 
+L 397.1808 296.0496 
+Q 397.1808 288.1008 389.1456 288.1008 
+L 73.0944 288.1008 
+Q 65.0592 288.1008 65.0592 296.0496 
+L 65.0592 393.4224 
+Q 65.0592 401.3712 73.0944 401.3712 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 474.8544 401.3712 
+L 790.9056 401.3712 
+Q 798.9408 401.3712 798.9408 393.4224 
+L 798.9408 296.0496 
+Q 798.9408 288.1008 790.9056 288.1008 
+L 474.8544 288.1008 
+Q 466.8192 288.1008 466.8192 296.0496 
+L 466.8192 393.4224 
+Q 466.8192 401.3712 474.8544 401.3712 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 36.936 91.0368 
+L 827.064 91.0368 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 186.247727 189.072 
+Q 195.964963 189.072 203.446132 189.072 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 197.046132 185.872 
+L 203.446132 189.072 
+L 197.046132 192.272 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 343.603727 189.072 
+Q 353.320963 189.072 360.802132 189.072 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 354.402132 185.872 
+L 360.802132 189.072 
+L 354.402132 192.272 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 500.959727 189.072 
+Q 510.676963 189.072 518.158132 189.072 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 511.758132 185.872 
+L 518.158132 189.072 
+L 511.758132 192.272 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 658.315727 189.072 
+Q 668.032963 189.072 675.514132 189.072 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 669.114132 185.872 
+L 675.514132 189.072 
+L 669.114132 192.272 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #183047" x="36.936" y="43.950013" transform="rotate(-0 36.936 43.950013)">HORSE / LETTERS ARE LIVES</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536775" x="36.936" y="72.875313" transform="rotate(-0 36.936 72.875313)">A missed replication adds one letter; E eliminates, unless a mercy is agreed</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536775" x="36.936" y="481.024238" transform="rotate(-0 36.936 481.024238)">FIRST TO FOUR  /  Original house-rule illustration  /  Schematic, not official court dimensions</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="117.288" y="161.38293" transform="rotate(-0 117.288 161.38293)">H</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="117.288" y="205.355312" transform="rotate(-0 117.288 205.355312)">Missed replica 1</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="274.644" y="161.38293" transform="rotate(-0 274.644 161.38293)">O</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="274.644" y="205.355312" transform="rotate(-0 274.644 205.355312)">Missed replica 2</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="432" y="161.38293" transform="rotate(-0 432 161.38293)">R</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="432" y="205.355312" transform="rotate(-0 432 205.355312)">Missed replica 3</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="589.356" y="161.38293" transform="rotate(-0 589.356 161.38293)">S</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="589.356" y="205.355312" transform="rotate(-0 589.356 205.355312)">Missed replica 4</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #b75016" x="746.712" y="161.38293" transform="rotate(-0 746.712 161.38293)">E</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="746.712" y="205.355312" transform="rotate(-0 746.712 205.355312)">Missed replica 5</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="231.12" y="321.35253" transform="rotate(-0 231.12 321.35253)">MAKE THE REPLICA</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(186.296719 353.81573)">No letter added.</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(149.547266 368.222895)">Continue the agreed rotation.</text>
+   </g>
+   <g id="text_16">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="632.88" y="321.35253" transform="rotate(-0 632.88 321.35253)">FINAL E</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(542.118828 353.81573)">Generous mercy may be offered.</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(545.80125 368.222895)">Otherwise out; last player wins.</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="432" y="444.09525" transform="rotate(-0 432 444.09525)">H → HO → HOR → HORS → HORSE. Historical ‘5-x’ strings are not decoded here.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p825037869d">
+   <rect x="30.24" y="20.16" width="803.52" height="463.68"/>
+  </clipPath>
+ </defs>
+</svg>

@@ -1,0 +1,60 @@
+{
+  "compiler": {
+    "flags": [
+      "--untrusted",
+      "--keep-logs",
+      "--keep-intermediates",
+      "--outdir",
+      "output"
+    ],
+    "name": "tectonic",
+    "sourceDateEpoch": "946684800",
+    "version": "Tectonic 0.17.0"
+  },
+  "inputs": {
+    "images": [
+      {
+        "archive": "LawofLargeNumbers.png",
+        "path": "WKRPT400/LawofLargeNumbers.png",
+        "sha256": "b79ef73c9cc5bda3fff7ac800477ded3efb2f1fbca1f41b2d2d14c88415f6a77"
+      },
+      {
+        "archive": "eq1.png",
+        "path": "WKRPT400/eq1.png",
+        "sha256": "5d4a34c0d63132b748f226633d5a75b1013eedbf754739abea19c2a7f2580615"
+      },
+      {
+        "archive": "LJpotential.png",
+        "path": "WKRPT400/LJpotential.png",
+        "sha256": "3b4e638aa046d16d0b5804451805182b2f5311e22c155437a688bcc49774d959"
+      },
+      {
+        "archive": "GOODErotvsT.png",
+        "path": "WKRPT400/GOODErotvsT.png",
+        "sha256": "dfb7c84d198be6b52fa1616fadb8921aeeff5c49a35d0ec5ed95d47c78337ca5"
+      },
+      {
+        "archive": "EnergiesvsLatticeSpacing.png",
+        "path": "WKRPT400/EnergiesvsLatticeSpacing.png",
+        "sha256": "32e324320816f860f05205756a8f65067cb3fbbf211cd16439cd9fa8ac968a1a"
+      },
+      {
+        "archive": "OrderingParametervsTemperature.png",
+        "path": "WKRPT400/OrderingParametervsTemperature.png",
+        "sha256": "e7a4904f56749405ee5600bd70fd1d8c3136bb4e014786941be8416a4925613a"
+      },
+      {
+        "archive": "OrderingParametervsLatticeSpacing.png",
+        "path": "WKRPT400/OrderingParametervsLatticeSpacing.png",
+        "sha256": "19e14212d9a5ca5026d8b1d60490a8cdc03e16338b2da18ee5b5bc20a9f61a22"
+      }
+    ],
+    "source": {
+      "path": "notebook_sources/work-report/work_term_report.tex",
+      "sha256": "610b7d3eb72c473752089859f0c5848029e1cf9b8bc458f263057f3dd1d3f979"
+    }
+  },
+  "key": "work-term-report",
+  "pdfSha256": "d913adfc674627c79bac9510d56e69bc188fd88c8d639f84be64a21139bad37e",
+  "schemaVersion": 1
+}

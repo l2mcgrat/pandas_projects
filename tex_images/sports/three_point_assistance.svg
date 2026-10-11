@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="504pt" viewBox="0 0 864 504" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <title>3 POINT / RETURN, DO NOT INTERFERE</title>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>3 POINT / RETURN, DO NOT INTERFERE</dc:title>
+    <dc:description>Help is allowed, not required; without help each player self-rebounds</dc:description>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>First to Four original diagrams</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 504 
+L 864 504 
+L 864 0 
+L 0 0 
+z
+" style="fill: #fffdf7"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 80.46 410.976 
+L 381.78 410.976 
+L 381.78 116.208 
+L 80.46 116.208 
+L 80.46 410.976 
+z
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #536775; stroke-width: 1.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 231.12 382.4928 
+C 233.25096 382.4928 235.294928 381.655264 236.801744 380.16465 
+C 238.308561 378.674036 239.1552 376.652046 239.1552 374.544 
+C 239.1552 372.435954 238.308561 370.413964 236.801744 368.92335 
+C 235.294928 367.432736 233.25096 366.5952 231.12 366.5952 
+C 228.98904 366.5952 226.945072 367.432736 225.438256 368.92335 
+C 223.931439 370.413964 223.0848 372.435954 223.0848 374.544 
+C 223.0848 376.652046 223.931439 378.674036 225.438256 380.16465 
+C 226.945072 381.655264 228.98904 382.4928 231.12 382.4928 
+L 231.12 382.4928 
+z
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 177.552 410.976 
+L 284.688 410.976 
+L 284.688 281.808 
+L 177.552 281.808 
+L 177.552 410.976 
+z
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #536775; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 376.758 374.544 
+C 376.758 326.250693 361.403566 279.885954 334.101617 245.737429 
+C 306.799669 211.588904 269.730785 192.384 231.12 192.384 
+C 192.509215 192.384 155.440331 211.588904 128.138383 245.737429 
+C 100.836434 279.885954 85.482 326.250693 85.482 374.544 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #536775; stroke-width: 1.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 434.6784 225.8352 
+L 790.9056 225.8352 
+Q 798.9408 225.8352 798.9408 217.8864 
+L 798.9408 120.5136 
+Q 798.9408 112.5648 790.9056 112.5648 
+L 434.6784 112.5648 
+Q 426.6432 112.5648 426.6432 120.5136 
+L 426.6432 217.8864 
+Q 426.6432 225.8352 434.6784 225.8352 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 434.6784 383.1552 
+L 790.9056 383.1552 
+Q 798.9408 383.1552 798.9408 375.2064 
+L 798.9408 254.6496 
+Q 798.9408 246.7008 790.9056 246.7008 
+L 434.6784 246.7008 
+Q 426.6432 246.7008 426.6432 254.6496 
+L 426.6432 375.2064 
+Q 426.6432 383.1552 434.6784 383.1552 
+z
+" clip-path="url(#p825037869d)" style="fill: #e9f3ef; stroke: #087f83; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 36.936 91.0368 
+L 827.064 91.0368 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 204.336 387.792 
+L 257.904 387.792 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #183047; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 80.46 134.7552 
+L 381.78 134.7552 
+" clip-path="url(#p825037869d)" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #536775; stroke-width: 1.5"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 313.205567 317.059554 
+Q 276.317181 290.087401 241.233821 264.435052 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 244.511357 270.795694 
+L 241.233821 264.435052 
+L 248.288856 265.629408 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 224.424 257.2992 
+C 227.62044 257.2992 230.686392 256.042896 232.946617 253.806976 
+C 235.206841 251.571055 236.4768 248.53807 236.4768 245.376 
+C 236.4768 242.21393 235.206841 239.180945 232.946617 236.945024 
+C 230.686392 234.709104 227.62044 233.4528 224.424 233.4528 
+C 221.22756 233.4528 218.161608 234.709104 215.901383 236.945024 
+C 213.641159 239.180945 212.3712 242.21393 212.3712 245.376 
+C 212.3712 248.53807 213.641159 251.571055 215.901383 253.806976 
+C 218.161608 256.042896 221.22756 257.2992 224.424 257.2992 
+z
+" clip-path="url(#p825037869d)" style="fill: #fffdf7; stroke: #b75016; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 212.3712 245.376 
+L 236.4768 245.376 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 224.424 257.2992 
+L 224.424 233.4528 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #183047" x="36.936" y="43.950013" transform="rotate(-0 36.936 43.950013)">3 POINT / RETURN, DO NOT INTERFERE</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536775" x="36.936" y="72.875313" transform="rotate(-0 36.936 72.875313)">Help is allowed, not required; without help each player self-rebounds</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536775" x="36.936" y="481.024238" transform="rotate(-0 36.936 481.024238)">FIRST TO FOUR  /  Original house-rule illustration  /  Schematic, not official court dimensions</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="224.424" y="213.966512" transform="rotate(-0 224.424 213.966512)">Shooter</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="321.516" y="344.459313" transform="rotate(-0 321.516 344.459313)">Helper</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #087f83" transform="translate(122.473453 333.94373)">Return</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #087f83" transform="translate(129.089781 348.350895)">only</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="612.792" y="145.81653" transform="rotate(-0 612.792 145.81653)">OPTIONAL ASSISTANCE</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(548.035516 178.27973)">Return rebounds safely.</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(535.129422 192.686895)">Do not interfere with a shot.</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #087f83" x="612.792" y="285.51669" transform="rotate(-0 612.792 285.51669)">NO HELPER?</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(533.945203 316.804148)">Self-rebound. Log assistance</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(526.984266 331.211313)">if comparing completion times.</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(543.767 345.618477)">Help is never mandatory.</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="432" y="450.443312" transform="rotate(-0 432 450.443312)">This positioning is illustrative: keep the return lane and all bystanders clear.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p825037869d">
+   <rect x="30.24" y="20.16" width="803.52" height="463.68"/>
+  </clipPath>
+ </defs>
+</svg>

@@ -57,13 +57,13 @@ def _line_url(song: dict, number: int) -> str | None:
     return f'{url.split("#", 1)[0]}#{anchor}{number}'
 
 
-def _intro(section: str, title: str, description: str) -> str:
+def _intro(section: str, title: str, description: str, root: str = "../../") -> str:
     return f'''<div class="page-intro">
       <p class="eyebrow">{_e(section)} / Source notebook</p>
       <h1>{_e(title)}</h1><p class="lede">{_e(description)}</p>
       <nav class="toolbar" aria-label="Collection navigation">
         <a class="button ghost" href="../index.html">Back to {_e(section)}</a>
-        <a class="button ghost" href="../../Mental-Map/index.html">Mental map</a>
+        <a class="button ghost" href="{root}Mental-Map/index.html">Mental map</a>
       </nav></div>'''
 
 
@@ -84,12 +84,12 @@ def _music_metrics(music: dict) -> str:
     ]) + "</div>"
 
 
-def _downloads() -> str:
-    return '''<nav class="toolbar analysis-downloads" aria-label="Download music analysis">
-      <a class="button ghost" href="../../assets/data/music-frequencies.csv" download>Word frequencies · CSV</a>
-      <a class="button ghost" href="../../assets/data/music-songs.csv" download>Song metrics · CSV</a>
-      <a class="button ghost" href="../../assets/data/music-lines.csv" download>Line results · CSV</a>
-      <a class="button ghost" href="../../assets/data/music-analysis.json" download>Full evidence · JSON (large)</a>
+def _downloads(root: str = "../../") -> str:
+    return f'''<nav class="toolbar analysis-downloads" aria-label="Download music analysis">
+      <a class="button ghost" href="{root}assets/data/music-frequencies.csv" download>Word frequencies · CSV</a>
+      <a class="button ghost" href="{root}assets/data/music-songs.csv" download>Song metrics · CSV</a>
+      <a class="button ghost" href="{root}assets/data/music-lines.csv" download>Line results · CSV</a>
+      <a class="button ghost" href="{root}assets/data/music-analysis.json" download>Full evidence · JSON (large)</a>
     </nav>'''
 
 
@@ -100,7 +100,7 @@ def _provenance(url: Any, commit: Any) -> str:
       proof of a clean checkout; linked source may differ from the analyzed text.</p>'''
 
 
-def _music_method(music: dict, feelings: bool = False) -> str:
+def _music_method(music: dict, feelings: bool = False, root: str = "../../") -> str:
     source = music["source"]
     counts = source["counts"]
     keys = ["input", "tokenization", "lines", "deduplication", "versionBias"]
@@ -113,7 +113,7 @@ def _music_method(music: dict, feelings: bool = False) -> str:
       {_number(counts.get("duplicateFiles"))} normalized duplicate files are aliases, not extra observations.
       <strong>All versions with differing text are kept.</strong> Repeated verses remain counted.</p>
       <details><summary>Read the exact analysis rules</summary>{notes}</details>
-      {_downloads()}</section>'''
+      {_downloads(root)}</section>'''
 
 
 def _song_options(music: dict) -> str:
@@ -142,7 +142,7 @@ def _bars(rows: list[dict], key: str = "word") -> str:
     ) or '<p class="empty-state">No word forms in this scope.</p>'
 
 
-def vocabulary_body(music: dict) -> str:
+def vocabulary_body(music: dict, *, section: str = "Language", root: str = "../../") -> str:
     """Return a vocabulary reader; metrics always include all word forms."""
     frequencies = music["frequencies"]
     rows = "".join(
@@ -151,7 +151,7 @@ def vocabulary_body(music: dict) -> str:
         for index, row in enumerate(frequencies[:PAGE_SIZE], 1)
     ) or '<tr><td colspan="5" class="empty-state">No word forms available.</td></tr>'
     return f'''<main id="main-content" class="collection-page"><div id="vocabulary-app">
-      {_intro("Language", "A vocabulary in songs", "Explore the words on the page: repetitions, rare forms and the changing texture of each song version.")}
+      {_intro(section, "A vocabulary in songs", "Explore the words on the page: repetitions, rare forms and the changing texture of each song version.", root)}
       <p class="analysis-summary">{_number(len(music['songs']))} retained song versions ·
       {_number(music['source']['counts']['retainedLines'])} lyric lines. These describe this corpus, not a person's language ability.</p>
       <section aria-labelledby="vocab-scope"><h2 id="vocab-scope">Corpus · all song versions</h2>
@@ -175,7 +175,7 @@ def vocabulary_body(music: dict) -> str:
         <th scope="col" data-sort-header="songCount" aria-sort="none"><button type="button" data-vocab-sort="songCount" disabled>Song spread ↕</button></th><th scope="col">Stopword</th></tr></thead>
         <tbody id="vocab-rows">{rows}</tbody></table></div>{_pager('vocab', len(frequencies), 'word forms')}
       </section><noscript><p class="method-note">Showing the first 40 corpus word forms and top 20 chart. Download the complete CSV or JSON below for the full index.</p></noscript>
-      {_music_method(music)}</div></main>'''
+      {_music_method(music, root=root)}</div></main>'''
 
 
 def _color(value: Any) -> str:
@@ -274,7 +274,7 @@ def _line_card(song: dict, line: dict) -> str:
       </details></article>'''
 
 
-def feelings_body(music: dict) -> str:
+def feelings_body(music: dict, *, section: str = "Language", root: str = "../../") -> str:
     """Return an evidence-first lyric reader with a keyboard-operable SVG wheel."""
     lines = [(song, line) for song in music["songs"] for line in song["lines"]]
     families = music["emotions"]
@@ -291,7 +291,7 @@ def feelings_body(music: dict) -> str:
     chart = [{"word": family["name"], "count": active_counts[family["name"]]} for family in families]
     chart.append({"word": "Unclassified", "count": primary_counts["Unclassified"]})
     return f'''<main id="main-content" class="collection-page"><div id="feelings-app">
-      {_intro("Language", "Feelings, read line by line", "Follow textual cues through the songs, then inspect the words behind every label.")}
+      {_intro(section, "Feelings, read line by line", "Follow textual cues through the songs, then inspect the words behind every label.", root)}
       <p class="method-note"><strong>Exploratory text heuristics, not mental states or diagnoses.</strong>
       Family names, including “Depressed”, label lexicon cues only. Scores are occurrence counts, never confidence probabilities.
       Sarcasm, narrative voice, quotations and metaphor are not resolved.</p>
@@ -332,14 +332,14 @@ def feelings_body(music: dict) -> str:
         <div id="feelings-results">{''.join(_line_card(song, line) for song, line in lines[:PAGE_SIZE]) or '<p class="empty-state">No retained lyric lines.</p>'}</div>
         {_pager('feelings', len(lines), 'lines')}
       </section><noscript><p class="method-note">Showing the first 40 retained lines in source order. All lines and evidence are available in the downloads below.</p></noscript>
-      {_music_method(music, feelings=True)}</div></main>'''
+      {_music_method(music, feelings=True, root=root)}</div></main>'''
 
 
 def _routine(item: dict, kind: str) -> str:
     return f'<li class="code-symbol">{_link(item.get("url"), item["name"])} <span class="line-meta">{_e(kind)} · source line {_e(item["line"])}</span></li>'
 
 
-def leetcode_body(code: dict) -> str:
+def leetcode_body(code: dict, *, section: str = "Miscellaneous", root: str = "../../") -> str:
     """Return a static AST inventory with progressively enhanced local search."""
     modules = []
     for index, module in enumerate(code["modules"]):
@@ -367,7 +367,7 @@ def leetcode_body(code: dict) -> str:
           {'' if functions else '<p>No top-level functions indexed.</p>'}
           <h3>Classes &amp; direct methods</h3>{class_blocks or '<p>No top-level classes indexed.</p>'}</details></article>''')
     return f'''<main id="main-content" class="collection-page"><div id="code-app">
-      {_intro("Miscellaneous", "LeetCode & algorithm practice", "A source-linked inventory of Python exercises: inspect the modules, topics and definition sites without running their code.")}
+      {_intro(section, "LeetCode & algorithm practice", "A source-linked inventory of Python exercises: inspect the modules, topics and definition sites without running their code.", root)}
       <div class="metric-grid">{_metric('Python modules', _number(code['moduleCount']), 'Files indexed statically.')}
       {_metric('Top-level functions', _number(code['functionCount']), 'Includes async and repeated definitions.')}
       {_metric('Classes', _number(code['classCount']), 'Immediate top-level class definitions.')}

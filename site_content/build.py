@@ -3,6 +3,7 @@ import argparse
 from pathlib import Path
 
 from .analysis import analyze_code, analyze_music
+from .catalog import leetcode_catalog, rap_catalog
 from .publishing import load_analysis, publish_portfolio
 
 
@@ -17,10 +18,12 @@ def main() -> None:
     args = parser.parse_args()
     music = load_analysis(root, 'music-analysis', analyze_music, args.music_repo)
     code = load_analysis(root, 'code-analysis', analyze_code, args.code_repo)
-    publish_portfolio(root, args.site_dir, music, code)
+    catalogs = {'leetcode': load_analysis(root, 'leetcode-catalog', leetcode_catalog, args.code_repo),
+                'rap': load_analysis(root, 'rap-catalog', rap_catalog, args.music_repo)}
+    publish_portfolio(root, args.site_dir, music, code, **catalogs)
     local = root / 'LiamMs_PandasProjects'
     if args.also_local and local.resolve() != args.site_dir.resolve():
-        publish_portfolio(root, local, music, code)
+        publish_portfolio(root, local, music, code, **catalogs)
 
 
 if __name__ == '__main__':

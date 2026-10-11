@@ -1,0 +1,568 @@
+Website Changes
+
+Oct 1st AI Prompt - Portfolio Site Major Overhaul (Continued)
+
+So my next large batch of changes cover adjustments/corrections to Sports, Gaming, Business & Economics, Language & Programming, Entertainment, and obviously these changes will follow an overhaul to the main site. IMPORTANT NOTE: Anything in Brackets [] are notes I left for myself which are not to be included in your instructions.
+
+Main Site:
+
+1) We are going back to the truly Hexagonal Structure by changing the categories from; Gaming, Sports, Economics, Miscellaneous, Business, Language, Physics to; Science & Engineering (Top Middle), Business & Economics (Upper Diag Left), Career & Education (Upper Diag Right), Sports & Entertainment (Lower Diag Left), Gaming & Perfomance Log (Bottom Middle), Language & Programming (Lower Diag Right). I will need this to look clean on both the web and mobile version, animations for each symbol while hovering over, I noticed that previously Sports had no animation while all the other options did. Mental Map looked wonky on the Mobile Version but did look good on the main site.
+
+Again to re-iterate the new layout will be; 
+
+Science & Engineering (Top Middle), Business & Economics (Upper Diag Left), Career & Education (Upper Diag Right), Sports & Entertainment (Lower Diag Left), Gaming & Perfomance Log (Bottom Middle), Language & Programming (Lower Diag Right)
+
+Physics Info will be a selectable item inside Science and all info inside of Physics will be redirected into that subpage. It will be constructed with a similar format; Haxagonal with 6 options that I will describe below later on in this prompt, and it will have Mental Map in the middle that redirects you the the physics section inside of Mental Map immediately. Finally the 6 Selectable Fields in Science will itself have 6 subsubpages inside of them too with the same format which will describe later. I also want a part of the main page to have a hyperlink to a new massive denrimer page that gives an outline of the overall structure with hyperlinks on each parent node and all the leaf nodes acting as a shortcut for anyone who wants to jump directly a subpage or a subsubpage. This image gives a rough outline of what it would look like but is visually incorrect C:\Users\anime\OneDrive\Desktop\coding_projects\pandas_projects\LiamMs_PandasProjects\Dendrimer_Example.png. I used this prompt to generate it so maybe you can use this to make the more accurate depiction of what i'm looking for; A trie/tree structure but circular for visual cleanliness but with the parent node each having 6 child nodes, going from a center node being the parent node to 6 child nodes each being a parent node to 6 child nodes leading to a total of 216 leaf nodes. Thats all for this subrequest.
+
+I was recommeded to add this statement;
+
+"Do not hardcode a massive 259-node JSON object. Write a dynamic recursive generator function (using D3.js, SVG, or HTML Canvas) that builds the circular tree programmatically from a nested schema array, rendering 6 children per node outward across 3 concentric radial tiers."
+
+2) I want to make the page scrollable to previews of other sites made by, with or for friends or creators I feel fond of so I can outline my collaborators and interests on my main page. I want each section to be as large as my main page, with one massive main hyperlink with the object being either a direct preview of their main website or a nicely picked image of their face. There will be text I will specially craft for each individual and additional hyperlinks with nicely designed symbols to sections of their page I value. The symbols will be to the right of descriptions of I craft highlighting their main page subsections that I deem valueable. For now the main ones will be [Owen Pages Website], [Camille Pages Website], [3Blue1Brown Website --> https://www.3blue1brown.com/], [Hank Greens Website --> https://complexly.org/], and I will come up with more as I research more creators stuff [TO BE RESEARCHED]. To be clear I want snap-scrolling, and hover states to be features of this site.
+
+They can provide writen consent if they are a friend and if they are a public figure like a YouTuber I'm assuming I can avoid doing this, none of the hyperlinks provided will bring anyone to a merch store or anything like that. This will simply be to highlight the creative expressions and efforts of people I hold in high enough regard to put on my website. 
+
+The main page will still be my site but there will be an obvious indicator that says "Scroll To See Other Respected Creators" or something and the site will have that feature where scrolling up on web or mobile elegantly drifts the UI to show only the next creator. 
+
+Lastly it ws recommended I include this;
+
+"For any sub-subpage slot left blank in this outline (e.g., under Psychology or Engineering), automatically assign placeholder labels (e.g., 'Psychology Subtopic 1') and generate active placeholder routes/files. Every parent node MUST have exactly 6 child nodes so the 216-leaf routing array is 100% complete."
+
+If i happen to fill all the empty nodes with a topic disregard this statement. 
+
+3) Science & Engineering
+
+The 6 Options for this will be as follows;
+
+Layout Same as Main Page: 
+
+Mathematics (Top Middle) --> a) and i)
+Physics (Upper Diag Left) --> b) and ii)
+Chemistry (Upper Diag Right) --> c) and iii)
+Biology (Lower Diag Left) --> d) and iv)
+Psychology (Bottom Middle) --> e) and v)
+Computer Science (Lower Diag Right) --> f) and vi)
+
+Subpages and Subpages will have the same Structure
+
+a) Mathematics [Research Wikipedia Subfields More]
+
+i) Calculus & Vectors
+ii) Probability & Statistics
+iii) Linear Algebra
+iv) Number Theory
+v) Set Theory
+vi) Abstract Algebra
+
+b) Physics [Research Wikipedia Subfields More]
+
+i) Classical Mechanics
+ii) Quantum Mechanics
+iii) General & Special Relativity (include Space Travel Simulation)
+iv) Electromagnetism
+v) Optics
+vi) Thermodynamics
+
+c) Chemistry [Research Wikipedia Subfields More]
+
+i) Organic Chemistry
+ii) Inorganic Chemisty
+iii) Electrochemistry
+iv) Physical Chemistry
+v) Analytical Chemistry
+vi) Materials Chemistry
+
+d) Biology
+
+i) Quantum Biolgy
+ii) Biochemisty
+iii) Genetics
+iv) Cellular Biology
+v) Neuroscience
+vi) Evolutionary Biology
+
+e) Psychology 
+
+i) Biological Psychology
+ii) Cognitive Psychology
+iii) Personality Psychology
+iv) Developmental Psychology
+v) Clinical Psychology
+vi) Social Psychology
+
+f) Computer Science
+
+i) Artificial Intelligence
+ii) Simulations 
+iii) Data Structures and Algorithms 
+iv) Computer Architechture
+v) Operating Systems
+vi) Programming Languages
+
+4) Business & Economics
+
+a) Law and Policy
+
+i) Constitutional Law
+ii) Corporate Law
+iii) Criminal Law
+iv) International Law
+v) Public Policy
+vi) Regulatory Frameworks
+
+b) Microeconomics
+
+i) Consumer Theory
+ii) Producer Theory
+iii) Market Structures
+iv) Game Theory
+v) Behavioral Economics
+vi) Information Economics
+
+c) Macroeconomics
+
+i) Economic Growth 
+ii) Monetary Policy
+iii) Fiscal Policy
+iv) International Trade
+v) Business Cycles
+vi) Development Economics
+
+d) Key Performance Indicators
+
+i) Profitability Metrics
+ii) Liquidity Metrics
+iii) Efficiency Metrics
+iv) Growth Metrics
+v) Customer Metrics
+vi) Operational Metrics
+
+e) Emerging Industries
+
+i) Artificial Intelligence
+ii) Biotechnology
+iii) Renewable Energy
+iv) Space Industry
+v) Robotics & Automation
+vi) Quantum Technologies
+
+f) Best Practices & Success Stories
+
+i) Honda
+ii) Costco
+iii) Berkshire Hathaway
+iv) Microsoft
+v) NVIDIA 
+vi) Amazon
+
+5) Career & Education
+
+a) Job Experiences
+
+i) Quantum Molecular Dynamics Simulations
+ii) Process Engineering
+iii) Business Intelligence
+iv) Corportate Research and Development
+v) Materials Engineer
+vi) Lifeguarding Days
+
+b) Educational Favourites
+
+i) Statistical Thermodynamics
+ii) Continuum Mechanics
+iii) Vector Calculus
+iv) Nanofabrication 
+v) Integrated Circuits
+vi) Semiconductor Physics
+
+c) Waterloo Highlights
+
+i) Varisty Cheerleading
+ii) Schenanigans
+iii) Relationships
+iv) Adventures and Highlights
+v) Academic Excellence
+vi) Little Things
+
+d) Projects
+
+i) KUBO - NO2 Sensor
+ii) Pandas Projects
+iii) WebDev Consulting
+iv) Rasberry Pi
+v) Mental Map
+vi) Future Plans
+
+e) Future Planning
+
+i) E-Learning 
+ii) Europe Migration
+iii) Networking and Connections
+iv) Creative Endeavours
+v) New Age Promotion
+vi) Roadmap to Logan
+
+f) Career Paths
+
+i) Logan 
+ii) Amar
+iii) Rhema
+iv) Owen
+v) Liam
+vi) Calena
+
+6) Sports & Entertainment
+
+a) Anime and Manga
+
+i) SeriesGraph Top 50
+ii) Anime Studios
+iii) Legendary Authors
+iv) Production Process
+v) Sakuga and Artstyles
+vi) Upcoming Greatness
+
+b) Western Produtions
+
+i) SeriesGraph Top 50
+ii) Adult Animation
+iii) Comedians
+iv) Production Process  
+v) History of Film
+vi) Controversies
+
+c) Big Brother & Survivor
+
+i) All Time Greats
+ii) Starter Seasons
+iii) Roadmaps to Victory
+iv) Greatest Moments
+v) Predictions and Analytics
+vi) Controversies
+
+d) YouTube
+
+i) Educational
+ii) Parasocial 
+iii) Documentary 
+iv) Data Analtyics 
+v) History 
+vi) Personal
+
+e) Series Hub
+
+i) Videos
+ii) Rules 
+iii) Analytics
+iv) History
+v) Records
+vi) Creator Petition
+
+f) NBA Analytics
+
+i) Player Rankings
+ii) Metric Overview
+iii) Statisctics
+iv) Predictions and Results
+v) Conditioning
+vi) Schenanigans
+
+7) Gaming & Perfomance
+
+a) Smash Bros
+
+i) New Smash Mains
+ii) Next Smash Mains
+iii) Mechanics History
+iv) Player Statistics
+v) Character Origins
+vi) Highlights
+
+b) Steam
+
+i) Favourites
+ii) Achievements History
+iii) Combat-Platformers 
+iv) Strategy
+v) History
+vi) Shopping Cart
+
+c) Nintendo
+
+i) Alltime Greats
+ii) Mario Sports
+iii) Console Comparison
+iv) Contoversy
+v) History
+vi) Upcoming Greats
+
+d) Atheletics
+
+i) Running 
+ii) Swimming
+iii) Weightlifting
+iv) Training Schedule
+v) History
+vi) Future Events
+
+e) Memory 
+
+i) Names and Places
+ii) Scientific Concepts
+iii) Techniques
+iv) Mediation Study
+v) Quiz Analytics
+vi) Information Theory
+
+f) Health
+
+i) Sleep
+ii) Diet
+iii) Mentality
+iv) Information Consumption
+v) Analytics
+vi) Struggles and Setbacks
+
+8) Language & Programming 
+
+a) Rap
+
+i) Seven Deadly Sins
+ii) Homewood & Trafalgar
+iii) Made in Abyss
+iv) Vagabond
+v) NanoFtheAbove
+vi) Future Projects
+
+b) Linguistics
+
+i) Semantics
+ii) Etymology
+iii) Morphology
+iv) Mathematical Linguistics
+v) Applied Linguistics
+vi) Second Language Acquisition
+
+c) Text Analysis
+
+i) Sentiment
+ii) Word Frequency
+iii) Speech Patterns
+iv) Lexicon
+v) Themes
+vi) Journal Psychoanalysis
+
+d) Leetcode
+
+i) Lists and Arrays
+ii) Trees and Tries
+iii) Graphs
+iv) Dynamic Programming
+v) Recursion
+vi) Hard Problems
+
+e) Learning Progress
+
+i) Formal Sciences
+ii) Natural Sciences
+iii) Social Sciences
+iv) Business & Finance
+v) Economics & History
+vi) Coursera & Leetcode
+
+f) Coding Projects
+
+i)  Database Exploration
+ii) Simulations
+iii) WebDev Consulting
+iv) Relation Database Development
+v) Miscellaneous
+vi) WebSite Changes
+
+This is the main structure I want you to implement. My following prompts will be shorter and specific to which subsubsubsection (out of 216) I want to be editted.
+
+My challenge for you is to come up with the unique 251 new Icons (the main one and existing 1 + 7 are already covered, so 259 - 8 = 251) each with a unique animation to them.
+
+########################################################################################################################################################################
+########################################################################################################################################################################
+
+Oct 4th AI Prompt - Portfolio Site Major Overhaul - Continued - Subsection Updates and Creators Snapscrolling Update
+
+Copyright
+
+Add a copyright notice in the footer of my website and a license file all rights reserved to make it clear my repo cannot be directly cloned and replicated by anyone.
+
+Creators Snapscrolling Update
+
+--> Owen and Camille: their sections stay hidden until you add each site's URL and set consent=True in creators.py. 
+so Owen gave me permission now, and his website url information is shown below; I pasted an image of him in;
+
+C:\Users\anime\OneDrive\Desktop\coding_projects\pandas_projects\LiamMs_PandasProjects\Owen_Paget\Profile_Image.png
+
+his three main sites I want to illustrate are;
+
+What to Eat --> https://wwhattoeat.com/ (currently live)
+Creator Hub --> To Be Added
+Stock Monitoring --> To Be Added
+
+Mental Map Updates
+
+I want to restructure mental map so it fits the format of the website.
+
+- Update the section, subsection and subsubsection structure to fit the current mental map. I will be updating the underlying .tex file over time for each subsubsection.
+- I also want to add a feature where people can request to make their own changes to a subsection, which can be as an simple emailling tool to l2mcgrat@uwaterloo.ca, or later if I start to get many requests, as complex as adding the request to a database with columns, name (text), date (selection), section (selection), subsection (selection based on section selection), subsubsection (selection based on subsection selection), content. For the temporary email option (I don't want to do the database setup just yet), I want a selection popup screen to appear here; with the name (text), date (selection), section (selection), subsection (selection based on section selection), subsubsection (selection based on subsection selection), content (say paste text or .tex content here) with the options and UI setup and for the submit button at the bottom to have their email pop up with the autogenerated content in the email.
+- I'll want notes for the database integration steps posted in http://liammspandasprojects.org/Language-and-Programming/Coding-Projects/Website-Changes
+
+Subsection Updates
+
+Language-and-Programming f) Coding-Projects iv) Website-Changes
+
+I want all of the notes from previous and upcoming changes stored in seperate .tex files in this subsubsection, seperated by date in each .tex file (Change Log and Upcoming Changes).
+This will further be broken down into requested changes and implemented changes based on the history from this chat. Use this .txt file as a reference too.
+C:\Users\anime\OneDrive\Desktop\coding_projects\pandas_projects\LiamMs_PandasProjects\Website_Change_Log.txt
+I do really like what you did with the formatting under; Already in this destination. Maybe adding a date to the right of it and shortening the length of the hyperlink icon would be cool.
+
+Gaming & Perforance d) Atheletics i) Running 
+
+I put some of my running data for interval training here;
+C:\Users\anime\OneDrive\Desktop\coding_projects\pandas_projects\LiamMs_PandasProjects\Gaming-and-Performance-Log\Athletics\Running
+
+Unstructured Data; C:\Users\anime\OneDrive\Desktop\coding_projects\pandas_projects\LiamMs_PandasProjects\Gaming-and-Performance-Log\Athletics\Running\Interval_Data.txt
+Map of I1, or interval training map 1; C:\Users\anime\OneDrive\Desktop\coding_projects\pandas_projects\LiamMs_PandasProjects\Gaming-and-Performance-Log\Athletics\Running\Interval_Track_1.png
+
+I want some analytics and visuals similar to what you did for the Series Hub section. There will be more added in the future.
+
+The Latex Overview for this will be as follows;
+
+Training is intented to improve overall running pacing and VO2 max. This training method was adopted by Liam McGrath in 2013 during his marathon training as part of his Cross Country coaces training plan as they were training for a marathon themselves. Previous history is missing but a rough estimate of best times for 400x12, 800x8 and 1600x4 training sessions during 2013 and 2017 major training; 2013; 400x12, 1:08, 2017; 8x800; 2:42, 4x1600, 2017, 5:38. Alternate routes have been done between 2013 and 2026, like I1 (show image in .tex file) recently with a non-track length roote around neighbourhoods and such, but those times have been lost to old cell phones. 
+
+Gaming & Perforance d) Atheletics ii) Swimming
+
+Very bare bones recording of my swimming total distances starting two weeks ago.
+
+Info is stored here; C:\Users\anime\OneDrive\Desktop\coding_projects\pandas_projects\LiamMs_PandasProjects\Gaming-and-Performance-Log\Athletics\Swimming\Swimming_Log.txt
+
+The Latex Overview for this will be as follows;
+
+Swimming for ages has been used as a low impact warmup workout prior to weight training, as well as a stand alone workout during rest days. Typically every stroke is during as equally as possible to balance out use of each muscle group. In the future, when a proper aquatic safe watch is purchased, set data will be recorded with 5X50m, 10X50m and 5X100m data, where each set of laps is to be completed within a pre-set time window (e.g. 48s to complete each 50m) with the remaining time to be used for rest. This training was used frequently using high school training where Liam and Owen were rivals who competed in 50m Freestyle and 50m Butterfly with best times of 27.09/26.99 and 32.60/33.80 respectively for Liam/Owen. 
+
+Gaming & Perforance d) Atheletics iii) Weightlifting
+
+Very bare bones recording of my lifting capabilities spanning 3 weeks.
+
+I want some analytics and visuals similar to what you did for the Series Hub section. There will be more added in the future.
+
+Location; C:\Users\anime\OneDrive\Desktop\coding_projects\pandas_projects\LiamMs_PandasProjects\Gaming-and-Performance-Log\Athletics\Weightlifting\Weightlifting_Log.txt
+
+The Latex Overview for this will be as follows;
+
+Weightlifting since 2012 has been an outlet for getting swole, feeling peak and getting endorphins. At the 1st peak a 315lbs squat and deadlift could be performed, and at the 2nd peak a 205lbs barbell press could be performed. 65lbs for 6reps could be performed for both chest and shoulder press at another peak... I know pretty lame. These peaks will be surpassed.
+
+Sports & Entertainment --> Edit Basketball Analytics to Sports Analystics
+
+Premake a page/tab/hyperlink rectangle within the Predictions subsubsection called UFC Predicitons vs. Outcomes (kinda like how in the simulations subsubsection has its own internal branches that aren't part of the hexagonal structure, or at least will soon, I'm gonna be trying to do some Primer, the YouTuber type simulation design this month) and NBA Predictions vs. Outcomes. 
+
+Sports & Entertainment --> e) Series Hub --> ii) Rules 
+
+So I want to make one clarification about the HIGH JUMP RULES; 
+If there is a tie for least attempts in the previous shot, then the shot before is considered to see who wins according to high jump rules, and if there is a tie here this continues all the way up until the very first shot. In the event it is tied all the way back to the beginning a SUDDEN DEATH is initiated at the shot missed (5,4,3 for Shooting, Rim and Backboard Games respectively) until a player makes that shot. If this goes on too long the players can mutually agree to precced to a closer shot.
+
+########################################################################################################################################################################
+########################################################################################################################################################################
+
+Oct 10th AI Prompt - Portfolio Site Major Overhaul - Continued - Minor* Changes
+
+Language & Programming - d) Leetcode
+
+Incorporate code from; https://github.com/l2mcgrat/leetcode_problems.git, into these subsubsections
+
+Language & Programming - a) Rap
+
+Incorporate code from; https://github.com/l2mcgrat/music_work.git
+
+Gaming & Perforance d) Atheletics iii) Weightlifting
+
+Add a secondary axis for number of reps, and on the primary axis include the weight that I was able to do for at least 10 reps, and another for at least 12 reps.
+File updated as well with changes. Same with Swimming Data. If the datasource is .csv add that to notes I can easiy find in the site so I can save on tokens.
+
+* Minor Changes speaking relatively
+
+########################################################################################################################################################################
+########################################################################################################################################################################
+
+Oct 6th AI Prompt - [WHATEVER THE SMASH CHAT IS CALLED] - Continued - New Smash Mains Code Restructuring and Health Subsection Additions
+
+
+
+Science & Engineering - Computer Science - Artificial Intelligence
+
+[3 Blue 1 Brown Videos Time to Take some Latex notes babbyyy]
+
+Science & Engineering - GENERAL
+
+- See what exported chats can be added to various sections
+
+
+
+Gaming & Perfomance - a) Smash Bros - New Smash Mains
+
+-Restructure the New_Smash_Mains_Discovery format to work like Next_Smash_Mains_Discovery.py
+-Build a site as similar as possible to the current Smash Site but accessible through a new tab
+
+Gaming & Perfomance - f) Health - i) Sleep
+
+[Start Tracking Sleep Duration Quality and do a basic dream log, so like wake up a bit earlier going forward and take a shit and record this stuff]
+
+Gaming & Perfomance - f) Health - ii) Diet
+
+[Start tracking caloric intake, approximately, and record meal history]
+
+
+
+Business & Economics / Macroeconomics · Destination 1 of 6
+
+Economic Growth
+
+Explain what Bond Yields are, how interest rates affect stock markets, the Yen Currency loophole thing that let people borrow at 0% to get great returns, and overall economic concerns
+- more than likely ask questions through Gemini then export the chat
+
+
+
+Career & Education - d) Projects - WebDev Consulting
+
+Idea Generation for Owen Paget WebSite and Technical Help
+
+-Helped with creating and linking domain name, adjusting DSN settings, explained background knowledge of what HTML, CSS and JS are. 
+-Assisted with GitHub repo setting and explained how to commit changes for future uploads
+-Recommended to add Snake game to what to eat as option on main page and default page when site is down for maintenance
+-Outlined prompt for AI editing and data collection for series videos. 
+
+
+
+Sports & Entertainment --> e) Series Hub --> i) Videos
+
+[Push Owen to get this done]
+
+Sports & Entertainment --> e) Series Hub --> iii) Analytics
+
+[Look at current visuals and suggest improvements]
+
+Sports & Entertainment --> e) Series Hub --> iv) History
+
+[Outline origin story of the series from highschool to present, include soppy moment where Owen was as sad an unfit or unsober (if i'm willing to put that online) Liam wouldn't be a rival]
+
+Sports & Entertainment --> e) Series Hub --> v) Records
+
+Add 3pt Game Records and Make Visuals
+Data to be collected via Computer Vision software to assess shot percentage
+
+Sports & Entertainment --> e) Series Hub --> vi) Creator Petition
+
+[CHANGES]
+
+
+Language & Programming - a) Rap
+
+add a section called "Off the Dome" that can capture and store bars I thought of on the go in a database somewhere... 
+so I'll have to integrate a database into this which will be another big change, likely MongoDB
+

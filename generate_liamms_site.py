@@ -6,7 +6,7 @@ import shutil
 from pathlib import Path
 
 from phase_lab.publishing import publish_available_runs
-from site_content.publishing import collection_html, home_html, publish_portfolio, shell
+from site_content.publishing import home_html, publish_portfolio, shell
 
 from next_smash_mains_profiles import (
     MATCHUP_DF,
@@ -395,22 +395,8 @@ def page_shell(title: str, body: str, depth: int = 0, data_file: str | None = No
     return shell(title, body, depth, data_file, brand_text)
 
 
-CATEGORY_PAGES = [
-  ("Gaming", "Gaming", "[+]"),
-  ("Economics", "Economics", "Σ$"),
-  ("Business", "Business", "∆%"),
-  ("Physics", "Physics", "⚛"),
-  ("Language", "Language", "Aβ"),
-  ("Miscellaneous", "Miscellaneous", "◇"),
-]
-
-
 def home_page() -> str:
     return home_html()
-
-
-def category_page(label: str) -> str:
-    return collection_html(label, SITE_DIR)
 
 
 def smash_page(characters: list[dict[str, object]]) -> str:
@@ -1624,8 +1610,6 @@ def main() -> None:
     write_styles()
     write_script()
     write_text(SITE_DIR / "index.html", home_page())
-    for slug, label, _symbol in CATEGORY_PAGES:
-      write_text(SITE_DIR / slug / "index.html", category_page(label))
     write_text(SMASH_DIR / "index.html", smash_page(characters))
     write_text(SMASH_DIR / "Rank-Atlas" / "index.html", rank_atlas_page(characters))
     write_text(SMASH_DIR / "Score-Atlas" / "index.html", score_atlas_page(characters))

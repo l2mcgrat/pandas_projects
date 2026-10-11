@@ -1,0 +1,1714 @@
+{
+  "schemaVersion": 1,
+  "sources": {
+    "notebook_sources/originals/External_Brain/BADErotvsT.png": "f2b984224ae7696c5fc3c8b26bbdcaa208e12758b08f1ac42d3db05584b00e00",
+    "notebook_sources/originals/External_Brain/ExternalBrain.jpg": "9756edd3735d3f2cdd6599ff8fe365aa1f5fdffc8fac12b3eba4688ffb199d44",
+    "notebook_sources/originals/External_Brain/GOODErotvsT.png": "dfb7c84d198be6b52fa1616fadb8921aeeff5c49a35d0ec5ed95d47c78337ca5",
+    "notebook_sources/originals/External_Brain/main.tex": "31952fb04a070f3f53838e52342008e027b766d5a4042800abfc04ca74dab8cc",
+    "notebook_sources/originals/External_Brain/Oblate.jpg": "ed898f3aea40714bc8f595b50b6cc2725023b7a0688bf6e59a3498c601cdb14d",
+    "notebook_sources/originals/External_Brain/Perturbed Linear Rotor.tex": "6f137ac9ec6fcee5cf96afc273eb65f35bc498bb3c64ac12c51cea738da2737d",
+    "notebook_sources/originals/External_Brain/references.bib": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "notebook_sources/originals/External_Brain/universe.jpg": "373dc26790be2759303971de2ec1ca8358e3cd83d7ef6efda21608cf50369c04",
+    "notebook_sources/originals/mental_map.pre-merge.tex": "c3b0a62bbc147292006c282d4c6394b80f3d403f3cf9b0bdb2008d56d6772ec3",
+    "notebook_sources/originals/Quantum_Mechanics.original.tex": "7cf89dfe81f0072dc4cd72dc828c16cf75d7daa422febaf1eee05dd3c67b9243"
+  },
+  "retainedEarlierSections": [
+    {
+      "sourceSection": "Introduction",
+      "destinationSection": "Introductory Summary"
+    },
+    {
+      "sourceSection": "Sciences",
+      "destinationSection": "Sciences"
+    },
+    {
+      "sourceSection": "Psychology",
+      "destinationSection": "Psychology"
+    },
+    {
+      "sourceSection": "Machine Learning/Data Science/Artificial Intelligence",
+      "destinationSection": "Machine Learning/Data Science/Artificial Intelligence"
+    },
+    {
+      "sourceSection": "Nanotechnology",
+      "destinationSection": "Nanotechnology"
+    },
+    {
+      "sourceSection": "Economics",
+      "destinationSection": "Economics"
+    },
+    {
+      "sourceSection": "Theology",
+      "destinationSection": "Theology"
+    },
+    {
+      "sourceSection": "Job Related Endeavors",
+      "destinationSection": "Job Related Endeavors"
+    }
+  ],
+  "archivedOutlineSections": [
+    "Philosophy",
+    "Mathematics",
+    "Physics",
+    "Chemistry",
+    "Biology",
+    "Engineering",
+    "Business",
+    "History",
+    "Sociology",
+    "YouTube Videos"
+  ],
+  "externalBrain": {
+    "labels": {
+      "eq:301": [
+        "eb-eq-301-1"
+      ],
+      "eq:302": [
+        "eb-eq-302-1"
+      ],
+      "eq:303": [
+        "eb-eq-303-1"
+      ],
+      "eq:304": [
+        "eb-eq-304-1"
+      ],
+      "eq:305": [
+        "eb-eq-305-1"
+      ],
+      "eq:306": [
+        "eb-eq-306-1"
+      ],
+      "eq:307": [
+        "eb-eq-307-1"
+      ],
+      "eq:308": [
+        "eb-eq-308-1"
+      ],
+      "eq:309": [
+        "eb-eq-309-1"
+      ],
+      "eq:310": [
+        "eb-eq-310-1"
+      ],
+      "eq:311": [
+        "eb-eq-311-1"
+      ],
+      "eq:312": [
+        "eb-eq-312-1"
+      ],
+      "eq:313": [
+        "eb-eq-313-1"
+      ],
+      "eq:314": [
+        "eb-eq-314-1"
+      ],
+      "eq:315": [
+        "eb-eq-315-1"
+      ],
+      "eq:316": [
+        "eb-eq-316-1"
+      ],
+      "eq:317": [
+        "eb-eq-317-1"
+      ],
+      "eq:318": [
+        "eb-eq-318-1"
+      ],
+      "eq:319": [
+        "eb-eq-319-1"
+      ],
+      "eq:320": [
+        "eb-eq-320-1"
+      ],
+      "eq:321": [
+        "eb-eq-321-1"
+      ],
+      "eq:322": [
+        "eb-eq-322-1"
+      ],
+      "eq:323": [
+        "eb-eq-323-1"
+      ],
+      "eq:324": [
+        "eb-eq-324-1"
+      ],
+      "eq:325": [
+        "eb-eq-325-1"
+      ],
+      "eq:326": [
+        "eb-eq-326-1"
+      ],
+      "eq:327": [
+        "eb-eq-327-1",
+        "eb-eq-327-2"
+      ],
+      "eq:328": [
+        "eb-eq-328-1"
+      ],
+      "eq:329": [
+        "eb-eq-329-1"
+      ],
+      "eq:330": [
+        "eb-eq-330-1"
+      ],
+      "eq:331": [
+        "eb-eq-331-1"
+      ],
+      "eq:1": [
+        "eb-eq-1-1",
+        "eb-eq-1-2",
+        "eb-eq-1-3",
+        "eb-eq-1-4",
+        "eb-eq-1-5",
+        "eb-eq-1-6",
+        "eb-eq-1-7",
+        "eb-eq-1-8",
+        "eb-eq-1-9",
+        "eb-eq-1-10",
+        "eb-eq-1-11",
+        "eb-eq-1-12",
+        "eb-eq-1-13",
+        "eb-eq-1-14",
+        "eb-eq-1-15",
+        "eb-eq-1-16",
+        "eb-eq-1-17",
+        "eb-eq-1-18",
+        "eb-eq-1-19",
+        "eb-eq-1-20",
+        "eb-eq-1-21",
+        "eb-eq-1-22",
+        "eb-eq-1-23",
+        "eb-eq-1-24",
+        "eb-eq-1-25",
+        "eb-eq-1-26",
+        "eb-eq-1-27",
+        "eb-eq-1-28",
+        "eb-eq-1-29",
+        "eb-eq-1-30",
+        "eb-eq-1-31",
+        "eb-eq-1-32",
+        "eb-eq-1-33",
+        "eb-eq-1-34",
+        "eb-eq-1-35",
+        "eb-eq-1-36",
+        "eb-eq-1-37",
+        "eb-eq-1-38",
+        "eb-eq-1-39",
+        "eb-eq-1-40",
+        "eb-eq-1-41",
+        "eb-eq-1-42",
+        "eb-eq-1-43",
+        "eb-eq-1-44",
+        "eb-eq-1-45",
+        "eb-eq-1-46",
+        "eb-eq-1-47",
+        "eb-eq-1-48",
+        "eb-eq-1-49",
+        "eb-eq-1-50",
+        "eb-eq-1-51",
+        "eb-eq-1-52",
+        "eb-eq-1-53",
+        "eb-eq-1-54",
+        "eb-eq-1-55",
+        "eb-eq-1-56",
+        "eb-eq-1-57",
+        "eb-eq-1-58",
+        "eb-eq-1-59",
+        "eb-eq-1-60",
+        "eb-eq-1-61",
+        "eb-eq-1-62",
+        "eb-eq-1-63",
+        "eb-eq-1-64",
+        "eb-eq-1-65",
+        "eb-eq-1-66",
+        "eb-eq-1-67",
+        "eb-eq-1-68",
+        "eb-eq-1-69",
+        "eb-eq-1-70",
+        "eb-eq-1-71",
+        "eb-eq-1-72",
+        "eb-eq-1-73",
+        "eb-eq-1-74",
+        "eb-eq-1-75",
+        "eb-eq-1-76",
+        "eb-eq-1-77",
+        "eb-eq-1-78",
+        "eb-eq-1-79",
+        "eb-eq-1-80",
+        "eb-eq-1-81",
+        "eb-eq-1-82",
+        "eb-eq-1-83",
+        "eb-eq-1-84",
+        "eb-eq-1-85",
+        "eb-eq-1-86",
+        "eb-eq-1-87",
+        "eb-eq-1-88",
+        "eb-eq-1-89",
+        "eb-eq-1-90",
+        "eb-eq-1-91",
+        "eb-eq-1-92",
+        "eb-eq-1-93",
+        "eb-eq-1-94",
+        "eb-eq-1-95",
+        "eb-eq-1-96",
+        "eb-eq-1-97",
+        "eb-eq-1-98",
+        "eb-eq-1-99",
+        "eb-eq-1-100",
+        "eb-eq-1-101",
+        "eb-eq-1-102",
+        "eb-eq-1-103",
+        "eb-eq-1-104",
+        "eb-eq-1-105",
+        "eb-eq-1-106",
+        "eb-eq-1-107",
+        "eb-eq-1-108",
+        "eb-eq-1-109",
+        "eb-eq-1-110",
+        "eb-eq-1-111",
+        "eb-eq-1-112",
+        "eb-eq-1-113",
+        "eb-eq-1-114",
+        "eb-eq-1-115",
+        "eb-eq-1-116",
+        "eb-eq-1-117",
+        "eb-eq-1-118",
+        "eb-eq-1-119",
+        "eb-eq-1-120",
+        "eb-eq-1-121",
+        "eb-eq-1-122",
+        "eb-eq-1-123",
+        "eb-eq-1-124",
+        "eb-eq-1-125",
+        "eb-eq-1-126",
+        "eb-eq-1-127",
+        "eb-eq-1-128",
+        "eb-eq-1-129",
+        "eb-eq-1-130",
+        "eb-eq-1-131",
+        "eb-eq-1-132",
+        "eb-eq-1-133",
+        "eb-eq-1-134",
+        "eb-eq-1-135",
+        "eb-eq-1-136",
+        "eb-eq-1-137",
+        "eb-eq-1-138",
+        "eb-eq-1-139",
+        "eb-eq-1-140",
+        "eb-eq-1-141",
+        "eb-eq-1-142",
+        "eb-eq-1-143",
+        "eb-eq-1-144",
+        "eb-eq-1-145",
+        "eb-eq-1-146",
+        "eb-eq-1-147",
+        "eb-eq-1-148",
+        "eb-eq-1-149",
+        "eb-eq-1-150",
+        "eb-eq-1-151",
+        "eb-eq-1-152",
+        "eb-eq-1-153",
+        "eb-eq-1-154",
+        "eb-eq-1-155",
+        "eb-eq-1-156",
+        "eb-eq-1-157",
+        "eb-eq-1-158",
+        "eb-eq-1-159",
+        "eb-eq-1-160",
+        "eb-eq-1-161",
+        "eb-eq-1-162",
+        "eb-eq-1-163",
+        "eb-eq-1-164",
+        "eb-eq-1-165",
+        "eb-eq-1-166",
+        "eb-eq-1-167",
+        "eb-eq-1-168",
+        "eb-eq-1-169",
+        "eb-eq-1-170",
+        "eb-eq-1-171",
+        "eb-eq-1-172",
+        "eb-eq-1-173",
+        "eb-eq-1-174",
+        "eb-eq-1-175",
+        "eb-eq-1-176",
+        "eb-eq-1-177",
+        "eb-eq-1-178",
+        "eb-eq-1-179",
+        "eb-eq-1-180",
+        "eb-eq-1-181",
+        "eb-eq-1-182",
+        "eb-eq-1-183",
+        "eb-eq-1-184",
+        "eb-eq-1-185",
+        "eb-eq-1-186",
+        "eb-eq-1-187",
+        "eb-eq-1-188",
+        "eb-eq-1-189",
+        "eb-eq-1-190",
+        "eb-eq-1-191",
+        "eb-eq-1-192",
+        "eb-eq-1-193",
+        "eb-eq-1-194",
+        "eb-eq-1-195",
+        "eb-eq-1-196",
+        "eb-eq-1-197",
+        "eb-eq-1-198",
+        "eb-eq-1-199",
+        "eb-eq-1-200",
+        "eb-eq-1-201",
+        "eb-eq-1-202",
+        "eb-eq-1-203",
+        "eb-eq-1-204",
+        "eb-eq-1-205",
+        "eb-eq-1-206",
+        "eb-eq-1-207",
+        "eb-eq-1-208",
+        "eb-eq-1-209",
+        "eb-eq-1-210",
+        "eb-eq-1-211",
+        "eb-eq-1-212",
+        "eb-eq-1-213",
+        "eb-eq-1-214",
+        "eb-eq-1-215",
+        "eb-eq-1-216",
+        "eb-eq-1-217",
+        "eb-eq-1-218",
+        "eb-eq-1-219",
+        "eb-eq-1-220",
+        "eb-eq-1-221",
+        "eb-eq-1-222",
+        "eb-eq-1-223",
+        "eb-eq-1-224",
+        "eb-eq-1-225",
+        "eb-eq-1-226",
+        "eb-eq-1-227",
+        "eb-eq-1-228",
+        "eb-eq-1-229",
+        "eb-eq-1-230",
+        "eb-eq-1-231",
+        "eb-eq-1-232",
+        "eb-eq-1-233",
+        "eb-eq-1-234",
+        "eb-eq-1-235",
+        "eb-eq-1-236",
+        "eb-eq-1-237",
+        "eb-eq-1-238",
+        "eb-eq-1-239",
+        "eb-eq-1-240",
+        "eb-eq-1-241",
+        "eb-eq-1-242",
+        "eb-eq-1-243"
+      ],
+      "eq:266": [
+        "eb-eq-266-1",
+        "eb-eq-266-2"
+      ],
+      "eq:2": [
+        "eb-eq-2-1"
+      ],
+      "eq:3": [
+        "eb-eq-3-1",
+        "eb-eq-3-2",
+        "eb-eq-3-3",
+        "eb-eq-3-4",
+        "eb-eq-3-5",
+        "eb-eq-3-6",
+        "eb-eq-3-7"
+      ],
+      "eq:4": [
+        "eb-eq-4-1"
+      ],
+      "eq:5": [
+        "eb-eq-5-1"
+      ],
+      "eq:6": [
+        "eb-eq-6-1"
+      ],
+      "eq:7": [
+        "eb-eq-7-1"
+      ],
+      "eq:8": [
+        "eb-eq-8-1"
+      ],
+      "eq:9": [
+        "eb-eq-9-1"
+      ],
+      "eq:10": [
+        "eb-eq-10-1"
+      ],
+      "eq:11": [
+        "eb-eq-11-1"
+      ],
+      "eq:12": [
+        "eb-eq-12-1"
+      ],
+      "eq:13": [
+        "eb-eq-13-1"
+      ],
+      "eq:14": [
+        "eb-eq-14-1"
+      ],
+      "eq:15": [
+        "eb-eq-15-1"
+      ],
+      "eq:16": [
+        "eb-eq-16-1"
+      ],
+      "eq:17": [
+        "eb-eq-17-1"
+      ],
+      "eq:18": [
+        "eb-eq-18-1"
+      ],
+      "eq:19": [
+        "eb-eq-19-1"
+      ],
+      "eq:20": [
+        "eb-eq-20-1"
+      ],
+      "eq:22": [
+        "eb-eq-22-1"
+      ],
+      "eq:23": [
+        "eb-eq-23-1"
+      ],
+      "eq:24": [
+        "eb-eq-24-1"
+      ],
+      "eq:25": [
+        "eb-eq-25-1"
+      ],
+      "eq:26": [
+        "eb-eq-26-1"
+      ],
+      "eq:27": [
+        "eb-eq-27-1"
+      ],
+      "eq:28": [
+        "eb-eq-28-1"
+      ],
+      "eq:29": [
+        "eb-eq-29-1"
+      ],
+      "eq:30": [
+        "eb-eq-30-1"
+      ],
+      "eq:31": [
+        "eb-eq-31-1"
+      ],
+      "eq:32": [
+        "eb-eq-32-1"
+      ],
+      "eq:33": [
+        "eb-eq-33-1"
+      ],
+      "eq:34": [
+        "eb-eq-34-1"
+      ],
+      "eq:35": [
+        "eb-eq-35-1"
+      ],
+      "eq:36": [
+        "eb-eq-36-1"
+      ],
+      "eq:37": [
+        "eb-eq-37-1"
+      ],
+      "eq:38": [
+        "eb-eq-38-1"
+      ],
+      "eq:39": [
+        "eb-eq-39-1"
+      ],
+      "eq:40": [
+        "eb-eq-40-1"
+      ],
+      "eq:41": [
+        "eb-eq-41-1"
+      ],
+      "eq:42": [
+        "eb-eq-42-1"
+      ],
+      "eq:43": [
+        "eb-eq-43-1"
+      ],
+      "eq:44": [
+        "eb-eq-44-1"
+      ],
+      "eq:45": [
+        "eb-eq-45-1",
+        "eb-eq-45-2"
+      ],
+      "eq:46": [
+        "eb-eq-46-1",
+        "eb-eq-46-2"
+      ],
+      "eq:47": [
+        "eb-eq-47-1",
+        "eb-eq-47-2"
+      ],
+      "eq:48": [
+        "eb-eq-48-1"
+      ],
+      "eq:49": [
+        "eb-eq-49-1"
+      ],
+      "eq:50": [
+        "eb-eq-50-1"
+      ],
+      "eq:51": [
+        "eb-eq-51-1",
+        "eb-eq-51-2",
+        "eb-eq-51-3",
+        "eb-eq-51-4",
+        "eb-eq-51-5",
+        "eb-eq-51-6",
+        "eb-eq-51-7",
+        "eb-eq-51-8",
+        "eb-eq-51-9",
+        "eb-eq-51-10",
+        "eb-eq-51-11",
+        "eb-eq-51-12",
+        "eb-eq-51-13",
+        "eb-eq-51-14",
+        "eb-eq-51-15",
+        "eb-eq-51-16",
+        "eb-eq-51-17",
+        "eb-eq-51-18",
+        "eb-eq-51-19",
+        "eb-eq-51-20",
+        "eb-eq-51-21",
+        "eb-eq-51-22",
+        "eb-eq-51-23",
+        "eb-eq-51-24",
+        "eb-eq-51-25",
+        "eb-eq-51-26",
+        "eb-eq-51-27",
+        "eb-eq-51-28",
+        "eb-eq-51-29",
+        "eb-eq-51-30",
+        "eb-eq-51-31",
+        "eb-eq-51-32",
+        "eb-eq-51-33",
+        "eb-eq-51-34",
+        "eb-eq-51-35",
+        "eb-eq-51-36",
+        "eb-eq-51-37",
+        "eb-eq-51-38",
+        "eb-eq-51-39",
+        "eb-eq-51-40",
+        "eb-eq-51-41",
+        "eb-eq-51-42",
+        "eb-eq-51-43",
+        "eb-eq-51-44",
+        "eb-eq-51-45",
+        "eb-eq-51-46",
+        "eb-eq-51-47",
+        "eb-eq-51-48",
+        "eb-eq-51-49",
+        "eb-eq-51-50"
+      ],
+      "eq:1000": [
+        "eb-eq-1000-1"
+      ],
+      "eq:1001": [
+        "eb-eq-1001-1"
+      ],
+      "eq:1002": [
+        "eb-eq-1002-1",
+        "eb-eq-1002-2",
+        "eb-eq-1002-3",
+        "eb-eq-1002-4",
+        "eb-eq-1002-5",
+        "eb-eq-1002-6",
+        "eb-eq-1002-7",
+        "eb-eq-1002-8",
+        "eb-eq-1002-9",
+        "eb-eq-1002-10",
+        "eb-eq-1002-11",
+        "eb-eq-1002-12",
+        "eb-eq-1002-13",
+        "eb-eq-1002-14",
+        "eb-eq-1002-15",
+        "eb-eq-1002-16",
+        "eb-eq-1002-17",
+        "eb-eq-1002-18",
+        "eb-eq-1002-19",
+        "eb-eq-1002-20",
+        "eb-eq-1002-21",
+        "eb-eq-1002-22",
+        "eb-eq-1002-23",
+        "eb-eq-1002-24",
+        "eb-eq-1002-25",
+        "eb-eq-1002-26",
+        "eb-eq-1002-27",
+        "eb-eq-1002-28",
+        "eb-eq-1002-29",
+        "eb-eq-1002-30",
+        "eb-eq-1002-31",
+        "eb-eq-1002-32",
+        "eb-eq-1002-33",
+        "eb-eq-1002-34",
+        "eb-eq-1002-35",
+        "eb-eq-1002-36",
+        "eb-eq-1002-37",
+        "eb-eq-1002-38"
+      ],
+      "eq:1003": [
+        "eb-eq-1003-1"
+      ],
+      "eq:201": [
+        "eb-eq-201-1"
+      ],
+      "eq:202": [
+        "eb-eq-202-1"
+      ],
+      "eq:203": [
+        "eb-eq-203-1"
+      ],
+      "eq:204": [
+        "eb-eq-204-1"
+      ],
+      "eq:205": [
+        "eb-eq-205-1"
+      ],
+      "eq:206": [
+        "eb-eq-206-1"
+      ],
+      "eq:207": [
+        "eb-eq-207-1"
+      ],
+      "eq:208": [
+        "eb-eq-208-1"
+      ],
+      "eq:209": [
+        "eb-eq-209-1"
+      ],
+      "eq:210": [
+        "eb-eq-210-1"
+      ],
+      "eq:211": [
+        "eb-eq-211-1"
+      ],
+      "eq:212": [
+        "eb-eq-212-1"
+      ],
+      "eq:213": [
+        "eb-eq-213-1"
+      ],
+      "eq:214": [
+        "eb-eq-214-1"
+      ],
+      "eq:215": [
+        "eb-eq-215-1"
+      ],
+      "eq:216": [
+        "eb-eq-216-1"
+      ],
+      "eq:217": [
+        "eb-eq-217-1"
+      ],
+      "eq:218": [
+        "eb-eq-218-1"
+      ],
+      "eq:219": [
+        "eb-eq-219-1"
+      ],
+      "eq:220": [
+        "eb-eq-220-1"
+      ],
+      "eq:221": [
+        "eb-eq-221-1"
+      ],
+      "eq:222": [
+        "eb-eq-222-1"
+      ],
+      "eq:223": [
+        "eb-eq-223-1"
+      ],
+      "eq:224": [
+        "eb-eq-224-1"
+      ],
+      "eq:225": [
+        "eb-eq-225-1"
+      ],
+      "eq:226": [
+        "eb-eq-226-1"
+      ],
+      "eq:227": [
+        "eb-eq-227-1"
+      ],
+      "eq:228": [
+        "eb-eq-228-1"
+      ],
+      "eq:229": [
+        "eb-eq-229-1"
+      ],
+      "eq:230": [
+        "eb-eq-230-1"
+      ],
+      "eq:231": [
+        "eb-eq-231-1"
+      ],
+      "eq:232": [
+        "eb-eq-232-1"
+      ],
+      "eq:233": [
+        "eb-eq-233-1"
+      ],
+      "eq:234": [
+        "eb-eq-234-1"
+      ],
+      "eq:235": [
+        "eb-eq-235-1"
+      ],
+      "eq:236": [
+        "eb-eq-236-1"
+      ],
+      "eq:237": [
+        "eb-eq-237-1"
+      ],
+      "eq:238": [
+        "eb-eq-238-1"
+      ],
+      "eq:239": [
+        "eb-eq-239-1"
+      ],
+      "eq:240": [
+        "eb-eq-240-1"
+      ],
+      "eq:241": [
+        "eb-eq-241-1"
+      ],
+      "eq:242": [
+        "eb-eq-242-1"
+      ],
+      "eq:243": [
+        "eb-eq-243-1"
+      ],
+      "eq:244": [
+        "eb-eq-244-1"
+      ],
+      "eq:245": [
+        "eb-eq-245-1"
+      ],
+      "eq:246": [
+        "eb-eq-246-1"
+      ],
+      "eq:247": [
+        "eb-eq-247-1"
+      ],
+      "eq:248": [
+        "eb-eq-248-1"
+      ],
+      "eq:249": [
+        "eb-eq-249-1"
+      ],
+      "eq:250": [
+        "eb-eq-250-1"
+      ],
+      "eq:251": [
+        "eb-eq-251-1"
+      ],
+      "eq:252": [
+        "eb-eq-252-1",
+        "eb-eq-252-2"
+      ],
+      "eq:253": [
+        "eb-eq-253-1",
+        "eb-eq-253-2"
+      ],
+      "eq:254": [
+        "eb-eq-254-1",
+        "eb-eq-254-2",
+        "eb-eq-254-3",
+        "eb-eq-254-4",
+        "eb-eq-254-5",
+        "eb-eq-254-6",
+        "eb-eq-254-7"
+      ],
+      "eq:255": [
+        "eb-eq-255-1",
+        "eb-eq-255-2",
+        "eb-eq-255-3",
+        "eb-eq-255-4",
+        "eb-eq-255-5",
+        "eb-eq-255-6"
+      ],
+      "eq:256": [
+        "eb-eq-256-1",
+        "eb-eq-256-2",
+        "eb-eq-256-3",
+        "eb-eq-256-4",
+        "eb-eq-256-5",
+        "eb-eq-256-6",
+        "eb-eq-256-7",
+        "eb-eq-256-8",
+        "eb-eq-256-9",
+        "eb-eq-256-10",
+        "eb-eq-256-11",
+        "eb-eq-256-12",
+        "eb-eq-256-13",
+        "eb-eq-256-14",
+        "eb-eq-256-15",
+        "eb-eq-256-16",
+        "eb-eq-256-17",
+        "eb-eq-256-18",
+        "eb-eq-256-19",
+        "eb-eq-256-20",
+        "eb-eq-256-21",
+        "eb-eq-256-22",
+        "eb-eq-256-23",
+        "eb-eq-256-24",
+        "eb-eq-256-25",
+        "eb-eq-256-26",
+        "eb-eq-256-27",
+        "eb-eq-256-28",
+        "eb-eq-256-29",
+        "eb-eq-256-30",
+        "eb-eq-256-31",
+        "eb-eq-256-32",
+        "eb-eq-256-33",
+        "eb-eq-256-34",
+        "eb-eq-256-35",
+        "eb-eq-256-36",
+        "eb-eq-256-37",
+        "eb-eq-256-38",
+        "eb-eq-256-39",
+        "eb-eq-256-40",
+        "eb-eq-256-41",
+        "eb-eq-256-42",
+        "eb-eq-256-43",
+        "eb-eq-256-44",
+        "eb-eq-256-45",
+        "eb-eq-256-46",
+        "eb-eq-256-47",
+        "eb-eq-256-48",
+        "eb-eq-256-49",
+        "eb-eq-256-50",
+        "eb-eq-256-51",
+        "eb-eq-256-52",
+        "eb-eq-256-53",
+        "eb-eq-256-54",
+        "eb-eq-256-55",
+        "eb-eq-256-56",
+        "eb-eq-256-57",
+        "eb-eq-256-58",
+        "eb-eq-256-59",
+        "eb-eq-256-60",
+        "eb-eq-256-61",
+        "eb-eq-256-62",
+        "eb-eq-256-63",
+        "eb-eq-256-64",
+        "eb-eq-256-65",
+        "eb-eq-256-66",
+        "eb-eq-256-67",
+        "eb-eq-256-68",
+        "eb-eq-256-69",
+        "eb-eq-256-70",
+        "eb-eq-256-71",
+        "eb-eq-256-72",
+        "eb-eq-256-73",
+        "eb-eq-256-74",
+        "eb-eq-256-75",
+        "eb-eq-256-76",
+        "eb-eq-256-77",
+        "eb-eq-256-78",
+        "eb-eq-256-79",
+        "eb-eq-256-80",
+        "eb-eq-256-81",
+        "eb-eq-256-82",
+        "eb-eq-256-83",
+        "eb-eq-256-84",
+        "eb-eq-256-85",
+        "eb-eq-256-86",
+        "eb-eq-256-87",
+        "eb-eq-256-88",
+        "eb-eq-256-89",
+        "eb-eq-256-90",
+        "eb-eq-256-91",
+        "eb-eq-256-92",
+        "eb-eq-256-93",
+        "eb-eq-256-94",
+        "eb-eq-256-95",
+        "eb-eq-256-96",
+        "eb-eq-256-97",
+        "eb-eq-256-98",
+        "eb-eq-256-99",
+        "eb-eq-256-100",
+        "eb-eq-256-101",
+        "eb-eq-256-102",
+        "eb-eq-256-103",
+        "eb-eq-256-104",
+        "eb-eq-256-105",
+        "eb-eq-256-106",
+        "eb-eq-256-107",
+        "eb-eq-256-108",
+        "eb-eq-256-109",
+        "eb-eq-256-110",
+        "eb-eq-256-111"
+      ],
+      "eq:257": [
+        "eb-eq-257-1",
+        "eb-eq-257-2"
+      ],
+      "eq:258": [
+        "eb-eq-258-1"
+      ],
+      "eq:259": [
+        "eb-eq-259-1"
+      ],
+      "eq:260": [
+        "eb-eq-260-1"
+      ],
+      "eq:261": [
+        "eb-eq-261-1"
+      ],
+      "eq:262": [
+        "eb-eq-262-1",
+        "eb-eq-262-2"
+      ],
+      "eq:263": [
+        "eb-eq-263-1",
+        "eb-eq-263-2"
+      ],
+      "eq:264": [
+        "eb-eq-264-1",
+        "eb-eq-264-2"
+      ],
+      "eq:265": [
+        "eb-eq-265-1",
+        "eb-eq-265-2"
+      ],
+      "eq:267": [
+        "eb-eq-267-1"
+      ],
+      "eq:268": [
+        "eb-eq-268-1"
+      ],
+      "eq:269": [
+        "eb-eq-269-1"
+      ],
+      "eq:270": [
+        "eb-eq-270-1"
+      ],
+      "eq:271": [
+        "eb-eq-271-1"
+      ],
+      "eq:272": [
+        "eb-eq-272-1"
+      ],
+      "eq:273": [
+        "eb-eq-273-1"
+      ],
+      "eq:274": [
+        "eb-eq-274-1"
+      ],
+      "eq:275": [
+        "eb-eq-275-1"
+      ],
+      "eq:276": [
+        "eb-eq-276-1"
+      ],
+      "eq:277": [
+        "eb-eq-277-1"
+      ],
+      "eq:278": [
+        "eb-eq-278-1"
+      ],
+      "eq:279": [
+        "eb-eq-279-1"
+      ],
+      "eq:280": [
+        "eb-eq-280-1"
+      ],
+      "eq:281": [
+        "eb-eq-281-1"
+      ],
+      "eq:101": [
+        "eb-eq-101-1"
+      ],
+      "fig:label": [
+        "eb-fig-label-1"
+      ]
+    },
+    "referencesNeedingReview": [
+      {
+        "label": "eq:1",
+        "reason": "ambiguous",
+        "candidates": [
+          "eb-eq-1-1",
+          "eb-eq-1-2",
+          "eb-eq-1-3",
+          "eb-eq-1-4",
+          "eb-eq-1-5",
+          "eb-eq-1-6",
+          "eb-eq-1-7",
+          "eb-eq-1-8",
+          "eb-eq-1-9",
+          "eb-eq-1-10",
+          "eb-eq-1-11",
+          "eb-eq-1-12",
+          "eb-eq-1-13",
+          "eb-eq-1-14",
+          "eb-eq-1-15",
+          "eb-eq-1-16",
+          "eb-eq-1-17",
+          "eb-eq-1-18",
+          "eb-eq-1-19",
+          "eb-eq-1-20",
+          "eb-eq-1-21",
+          "eb-eq-1-22",
+          "eb-eq-1-23",
+          "eb-eq-1-24",
+          "eb-eq-1-25",
+          "eb-eq-1-26",
+          "eb-eq-1-27",
+          "eb-eq-1-28",
+          "eb-eq-1-29",
+          "eb-eq-1-30",
+          "eb-eq-1-31",
+          "eb-eq-1-32",
+          "eb-eq-1-33",
+          "eb-eq-1-34",
+          "eb-eq-1-35",
+          "eb-eq-1-36",
+          "eb-eq-1-37",
+          "eb-eq-1-38",
+          "eb-eq-1-39",
+          "eb-eq-1-40",
+          "eb-eq-1-41",
+          "eb-eq-1-42",
+          "eb-eq-1-43",
+          "eb-eq-1-44",
+          "eb-eq-1-45",
+          "eb-eq-1-46",
+          "eb-eq-1-47",
+          "eb-eq-1-48",
+          "eb-eq-1-49",
+          "eb-eq-1-50",
+          "eb-eq-1-51",
+          "eb-eq-1-52",
+          "eb-eq-1-53",
+          "eb-eq-1-54",
+          "eb-eq-1-55",
+          "eb-eq-1-56",
+          "eb-eq-1-57",
+          "eb-eq-1-58",
+          "eb-eq-1-59",
+          "eb-eq-1-60",
+          "eb-eq-1-61",
+          "eb-eq-1-62",
+          "eb-eq-1-63",
+          "eb-eq-1-64",
+          "eb-eq-1-65",
+          "eb-eq-1-66",
+          "eb-eq-1-67",
+          "eb-eq-1-68",
+          "eb-eq-1-69",
+          "eb-eq-1-70",
+          "eb-eq-1-71",
+          "eb-eq-1-72",
+          "eb-eq-1-73",
+          "eb-eq-1-74",
+          "eb-eq-1-75",
+          "eb-eq-1-76",
+          "eb-eq-1-77",
+          "eb-eq-1-78",
+          "eb-eq-1-79",
+          "eb-eq-1-80",
+          "eb-eq-1-81",
+          "eb-eq-1-82",
+          "eb-eq-1-83",
+          "eb-eq-1-84",
+          "eb-eq-1-85",
+          "eb-eq-1-86",
+          "eb-eq-1-87",
+          "eb-eq-1-88",
+          "eb-eq-1-89",
+          "eb-eq-1-90",
+          "eb-eq-1-91",
+          "eb-eq-1-92",
+          "eb-eq-1-93",
+          "eb-eq-1-94",
+          "eb-eq-1-95",
+          "eb-eq-1-96",
+          "eb-eq-1-97",
+          "eb-eq-1-98",
+          "eb-eq-1-99",
+          "eb-eq-1-100",
+          "eb-eq-1-101",
+          "eb-eq-1-102",
+          "eb-eq-1-103",
+          "eb-eq-1-104",
+          "eb-eq-1-105",
+          "eb-eq-1-106",
+          "eb-eq-1-107",
+          "eb-eq-1-108",
+          "eb-eq-1-109",
+          "eb-eq-1-110",
+          "eb-eq-1-111",
+          "eb-eq-1-112",
+          "eb-eq-1-113",
+          "eb-eq-1-114",
+          "eb-eq-1-115",
+          "eb-eq-1-116",
+          "eb-eq-1-117",
+          "eb-eq-1-118",
+          "eb-eq-1-119",
+          "eb-eq-1-120",
+          "eb-eq-1-121",
+          "eb-eq-1-122",
+          "eb-eq-1-123",
+          "eb-eq-1-124",
+          "eb-eq-1-125",
+          "eb-eq-1-126",
+          "eb-eq-1-127",
+          "eb-eq-1-128",
+          "eb-eq-1-129",
+          "eb-eq-1-130",
+          "eb-eq-1-131",
+          "eb-eq-1-132",
+          "eb-eq-1-133",
+          "eb-eq-1-134",
+          "eb-eq-1-135",
+          "eb-eq-1-136",
+          "eb-eq-1-137",
+          "eb-eq-1-138",
+          "eb-eq-1-139",
+          "eb-eq-1-140",
+          "eb-eq-1-141",
+          "eb-eq-1-142",
+          "eb-eq-1-143",
+          "eb-eq-1-144",
+          "eb-eq-1-145",
+          "eb-eq-1-146",
+          "eb-eq-1-147",
+          "eb-eq-1-148",
+          "eb-eq-1-149",
+          "eb-eq-1-150",
+          "eb-eq-1-151",
+          "eb-eq-1-152",
+          "eb-eq-1-153",
+          "eb-eq-1-154",
+          "eb-eq-1-155",
+          "eb-eq-1-156",
+          "eb-eq-1-157",
+          "eb-eq-1-158",
+          "eb-eq-1-159",
+          "eb-eq-1-160",
+          "eb-eq-1-161",
+          "eb-eq-1-162",
+          "eb-eq-1-163",
+          "eb-eq-1-164",
+          "eb-eq-1-165",
+          "eb-eq-1-166",
+          "eb-eq-1-167",
+          "eb-eq-1-168",
+          "eb-eq-1-169",
+          "eb-eq-1-170",
+          "eb-eq-1-171",
+          "eb-eq-1-172",
+          "eb-eq-1-173",
+          "eb-eq-1-174",
+          "eb-eq-1-175",
+          "eb-eq-1-176",
+          "eb-eq-1-177",
+          "eb-eq-1-178",
+          "eb-eq-1-179",
+          "eb-eq-1-180",
+          "eb-eq-1-181",
+          "eb-eq-1-182",
+          "eb-eq-1-183",
+          "eb-eq-1-184",
+          "eb-eq-1-185",
+          "eb-eq-1-186",
+          "eb-eq-1-187",
+          "eb-eq-1-188",
+          "eb-eq-1-189",
+          "eb-eq-1-190",
+          "eb-eq-1-191",
+          "eb-eq-1-192",
+          "eb-eq-1-193",
+          "eb-eq-1-194",
+          "eb-eq-1-195",
+          "eb-eq-1-196",
+          "eb-eq-1-197",
+          "eb-eq-1-198",
+          "eb-eq-1-199",
+          "eb-eq-1-200",
+          "eb-eq-1-201",
+          "eb-eq-1-202",
+          "eb-eq-1-203",
+          "eb-eq-1-204",
+          "eb-eq-1-205",
+          "eb-eq-1-206",
+          "eb-eq-1-207",
+          "eb-eq-1-208",
+          "eb-eq-1-209",
+          "eb-eq-1-210",
+          "eb-eq-1-211",
+          "eb-eq-1-212",
+          "eb-eq-1-213",
+          "eb-eq-1-214",
+          "eb-eq-1-215",
+          "eb-eq-1-216",
+          "eb-eq-1-217",
+          "eb-eq-1-218",
+          "eb-eq-1-219",
+          "eb-eq-1-220",
+          "eb-eq-1-221",
+          "eb-eq-1-222",
+          "eb-eq-1-223",
+          "eb-eq-1-224",
+          "eb-eq-1-225",
+          "eb-eq-1-226",
+          "eb-eq-1-227",
+          "eb-eq-1-228",
+          "eb-eq-1-229",
+          "eb-eq-1-230",
+          "eb-eq-1-231",
+          "eb-eq-1-232",
+          "eb-eq-1-233",
+          "eb-eq-1-234",
+          "eb-eq-1-235",
+          "eb-eq-1-236",
+          "eb-eq-1-237",
+          "eb-eq-1-238",
+          "eb-eq-1-239",
+          "eb-eq-1-240",
+          "eb-eq-1-241",
+          "eb-eq-1-242",
+          "eb-eq-1-243"
+        ]
+      },
+      {
+        "label": "eq:21",
+        "reason": "unresolved",
+        "candidates": []
+      },
+      {
+        "label": "eq:1",
+        "reason": "ambiguous",
+        "candidates": [
+          "eb-eq-1-1",
+          "eb-eq-1-2",
+          "eb-eq-1-3",
+          "eb-eq-1-4",
+          "eb-eq-1-5",
+          "eb-eq-1-6",
+          "eb-eq-1-7",
+          "eb-eq-1-8",
+          "eb-eq-1-9",
+          "eb-eq-1-10",
+          "eb-eq-1-11",
+          "eb-eq-1-12",
+          "eb-eq-1-13",
+          "eb-eq-1-14",
+          "eb-eq-1-15",
+          "eb-eq-1-16",
+          "eb-eq-1-17",
+          "eb-eq-1-18",
+          "eb-eq-1-19",
+          "eb-eq-1-20",
+          "eb-eq-1-21",
+          "eb-eq-1-22",
+          "eb-eq-1-23",
+          "eb-eq-1-24",
+          "eb-eq-1-25",
+          "eb-eq-1-26",
+          "eb-eq-1-27",
+          "eb-eq-1-28",
+          "eb-eq-1-29",
+          "eb-eq-1-30",
+          "eb-eq-1-31",
+          "eb-eq-1-32",
+          "eb-eq-1-33",
+          "eb-eq-1-34",
+          "eb-eq-1-35",
+          "eb-eq-1-36",
+          "eb-eq-1-37",
+          "eb-eq-1-38",
+          "eb-eq-1-39",
+          "eb-eq-1-40",
+          "eb-eq-1-41",
+          "eb-eq-1-42",
+          "eb-eq-1-43",
+          "eb-eq-1-44",
+          "eb-eq-1-45",
+          "eb-eq-1-46",
+          "eb-eq-1-47",
+          "eb-eq-1-48",
+          "eb-eq-1-49",
+          "eb-eq-1-50",
+          "eb-eq-1-51",
+          "eb-eq-1-52",
+          "eb-eq-1-53",
+          "eb-eq-1-54",
+          "eb-eq-1-55",
+          "eb-eq-1-56",
+          "eb-eq-1-57",
+          "eb-eq-1-58",
+          "eb-eq-1-59",
+          "eb-eq-1-60",
+          "eb-eq-1-61",
+          "eb-eq-1-62",
+          "eb-eq-1-63",
+          "eb-eq-1-64",
+          "eb-eq-1-65",
+          "eb-eq-1-66",
+          "eb-eq-1-67",
+          "eb-eq-1-68",
+          "eb-eq-1-69",
+          "eb-eq-1-70",
+          "eb-eq-1-71",
+          "eb-eq-1-72",
+          "eb-eq-1-73",
+          "eb-eq-1-74",
+          "eb-eq-1-75",
+          "eb-eq-1-76",
+          "eb-eq-1-77",
+          "eb-eq-1-78",
+          "eb-eq-1-79",
+          "eb-eq-1-80",
+          "eb-eq-1-81",
+          "eb-eq-1-82",
+          "eb-eq-1-83",
+          "eb-eq-1-84",
+          "eb-eq-1-85",
+          "eb-eq-1-86",
+          "eb-eq-1-87",
+          "eb-eq-1-88",
+          "eb-eq-1-89",
+          "eb-eq-1-90",
+          "eb-eq-1-91",
+          "eb-eq-1-92",
+          "eb-eq-1-93",
+          "eb-eq-1-94",
+          "eb-eq-1-95",
+          "eb-eq-1-96",
+          "eb-eq-1-97",
+          "eb-eq-1-98",
+          "eb-eq-1-99",
+          "eb-eq-1-100",
+          "eb-eq-1-101",
+          "eb-eq-1-102",
+          "eb-eq-1-103",
+          "eb-eq-1-104",
+          "eb-eq-1-105",
+          "eb-eq-1-106",
+          "eb-eq-1-107",
+          "eb-eq-1-108",
+          "eb-eq-1-109",
+          "eb-eq-1-110",
+          "eb-eq-1-111",
+          "eb-eq-1-112",
+          "eb-eq-1-113",
+          "eb-eq-1-114",
+          "eb-eq-1-115",
+          "eb-eq-1-116",
+          "eb-eq-1-117",
+          "eb-eq-1-118",
+          "eb-eq-1-119",
+          "eb-eq-1-120",
+          "eb-eq-1-121",
+          "eb-eq-1-122",
+          "eb-eq-1-123",
+          "eb-eq-1-124",
+          "eb-eq-1-125",
+          "eb-eq-1-126",
+          "eb-eq-1-127",
+          "eb-eq-1-128",
+          "eb-eq-1-129",
+          "eb-eq-1-130",
+          "eb-eq-1-131",
+          "eb-eq-1-132",
+          "eb-eq-1-133",
+          "eb-eq-1-134",
+          "eb-eq-1-135",
+          "eb-eq-1-136",
+          "eb-eq-1-137",
+          "eb-eq-1-138",
+          "eb-eq-1-139",
+          "eb-eq-1-140",
+          "eb-eq-1-141",
+          "eb-eq-1-142",
+          "eb-eq-1-143",
+          "eb-eq-1-144",
+          "eb-eq-1-145",
+          "eb-eq-1-146",
+          "eb-eq-1-147",
+          "eb-eq-1-148",
+          "eb-eq-1-149",
+          "eb-eq-1-150",
+          "eb-eq-1-151",
+          "eb-eq-1-152",
+          "eb-eq-1-153",
+          "eb-eq-1-154",
+          "eb-eq-1-155",
+          "eb-eq-1-156",
+          "eb-eq-1-157",
+          "eb-eq-1-158",
+          "eb-eq-1-159",
+          "eb-eq-1-160",
+          "eb-eq-1-161",
+          "eb-eq-1-162",
+          "eb-eq-1-163",
+          "eb-eq-1-164",
+          "eb-eq-1-165",
+          "eb-eq-1-166",
+          "eb-eq-1-167",
+          "eb-eq-1-168",
+          "eb-eq-1-169",
+          "eb-eq-1-170",
+          "eb-eq-1-171",
+          "eb-eq-1-172",
+          "eb-eq-1-173",
+          "eb-eq-1-174",
+          "eb-eq-1-175",
+          "eb-eq-1-176",
+          "eb-eq-1-177",
+          "eb-eq-1-178",
+          "eb-eq-1-179",
+          "eb-eq-1-180",
+          "eb-eq-1-181",
+          "eb-eq-1-182",
+          "eb-eq-1-183",
+          "eb-eq-1-184",
+          "eb-eq-1-185",
+          "eb-eq-1-186",
+          "eb-eq-1-187",
+          "eb-eq-1-188",
+          "eb-eq-1-189",
+          "eb-eq-1-190",
+          "eb-eq-1-191",
+          "eb-eq-1-192",
+          "eb-eq-1-193",
+          "eb-eq-1-194",
+          "eb-eq-1-195",
+          "eb-eq-1-196",
+          "eb-eq-1-197",
+          "eb-eq-1-198",
+          "eb-eq-1-199",
+          "eb-eq-1-200",
+          "eb-eq-1-201",
+          "eb-eq-1-202",
+          "eb-eq-1-203",
+          "eb-eq-1-204",
+          "eb-eq-1-205",
+          "eb-eq-1-206",
+          "eb-eq-1-207",
+          "eb-eq-1-208",
+          "eb-eq-1-209",
+          "eb-eq-1-210",
+          "eb-eq-1-211",
+          "eb-eq-1-212",
+          "eb-eq-1-213",
+          "eb-eq-1-214",
+          "eb-eq-1-215",
+          "eb-eq-1-216",
+          "eb-eq-1-217",
+          "eb-eq-1-218",
+          "eb-eq-1-219",
+          "eb-eq-1-220",
+          "eb-eq-1-221",
+          "eb-eq-1-222",
+          "eb-eq-1-223",
+          "eb-eq-1-224",
+          "eb-eq-1-225",
+          "eb-eq-1-226",
+          "eb-eq-1-227",
+          "eb-eq-1-228",
+          "eb-eq-1-229",
+          "eb-eq-1-230",
+          "eb-eq-1-231",
+          "eb-eq-1-232",
+          "eb-eq-1-233",
+          "eb-eq-1-234",
+          "eb-eq-1-235",
+          "eb-eq-1-236",
+          "eb-eq-1-237",
+          "eb-eq-1-238",
+          "eb-eq-1-239",
+          "eb-eq-1-240",
+          "eb-eq-1-241",
+          "eb-eq-1-242",
+          "eb-eq-1-243"
+        ]
+      },
+      {
+        "label": "eq:47",
+        "reason": "ambiguous",
+        "candidates": [
+          "eb-eq-47-1",
+          "eb-eq-47-2"
+        ]
+      },
+      {
+        "label": "eq:47",
+        "reason": "ambiguous",
+        "candidates": [
+          "eb-eq-47-1",
+          "eb-eq-47-2"
+        ]
+      },
+      {
+        "label": "eq:257",
+        "reason": "ambiguous",
+        "candidates": [
+          "eb-eq-257-1",
+          "eb-eq-257-2"
+        ]
+      },
+      {
+        "label": "eq:255",
+        "reason": "ambiguous",
+        "candidates": [
+          "eb-eq-255-1",
+          "eb-eq-255-2",
+          "eb-eq-255-3",
+          "eb-eq-255-4",
+          "eb-eq-255-5",
+          "eb-eq-255-6"
+        ]
+      },
+      {
+        "label": "eq:257",
+        "reason": "ambiguous",
+        "candidates": [
+          "eb-eq-257-1",
+          "eb-eq-257-2"
+        ]
+      },
+      {
+        "label": "eq:262",
+        "reason": "ambiguous",
+        "candidates": [
+          "eb-eq-262-1",
+          "eb-eq-262-2"
+        ]
+      },
+      {
+        "label": "eq:263",
+        "reason": "ambiguous",
+        "candidates": [
+          "eb-eq-263-1",
+          "eb-eq-263-2"
+        ]
+      }
+    ],
+    "formatCorrections": [
+      "Three pgfplots recreated as PNG with original expressions/points.",
+      "Invalid matrix row-ending \\i changed to \\\\.",
+      "Six unsupported in-math \\vspace{0.025cm} spacers removed; vector typo \\veq{q} corrected to \\vec{q}.",
+      "dirtytalk \\say{string} expanded to typographic quotation.",
+      "Unused original figure label removed; image retained.",
+      "Misspelled ep:209 reference linked to unique eq:209."
+    ]
+  },
+  "companionRotor": {
+    "labels": {
+      "eq:252": [
+        "rotor-eq-252-1"
+      ],
+      "eq:253": [
+        "rotor-eq-253-1"
+      ],
+      "eq:254": [
+        "rotor-eq-254-1"
+      ],
+      "eq:255": [
+        "rotor-eq-255-1"
+      ],
+      "eq:256": [
+        "rotor-eq-256-1"
+      ],
+      "eq:257": [
+        "rotor-eq-257-1"
+      ],
+      "eq:258": [
+        "rotor-eq-258-1"
+      ],
+      "eq:259": [
+        "rotor-eq-259-1"
+      ],
+      "eq:260": [
+        "rotor-eq-260-1"
+      ],
+      "eq:261": [
+        "rotor-eq-261-1"
+      ],
+      "eq:262": [
+        "rotor-eq-262-1"
+      ],
+      "eq:263": [
+        "rotor-eq-263-1"
+      ],
+      "eq:264": [
+        "rotor-eq-264-1"
+      ],
+      "eq:265": [
+        "rotor-eq-265-1"
+      ],
+      "eq:266": [
+        "rotor-eq-266-1"
+      ],
+      "eq:267": [
+        "rotor-eq-267-1"
+      ],
+      "eq:268": [
+        "rotor-eq-268-1"
+      ],
+      "eq:269": [
+        "rotor-eq-269-1"
+      ],
+      "eq:270": [
+        "rotor-eq-270-1"
+      ],
+      "eq:271": [
+        "rotor-eq-271-1"
+      ],
+      "eq:272": [
+        "rotor-eq-272-1"
+      ],
+      "eq:273": [
+        "rotor-eq-273-1"
+      ],
+      "eq:274": [
+        "rotor-eq-274-1"
+      ],
+      "eq:275": [
+        "rotor-eq-275-1"
+      ],
+      "eq:276": [
+        "rotor-eq-276-1"
+      ],
+      "eq:277": [
+        "rotor-eq-277-1"
+      ],
+      "eq:278": [
+        "rotor-eq-278-1"
+      ],
+      "eq:279": [
+        "rotor-eq-279-1"
+      ],
+      "eq:280": [
+        "rotor-eq-280-1"
+      ],
+      "eq:281": [
+        "rotor-eq-281-1"
+      ]
+    },
+    "referencesNeedingReview": []
+  },
+  "studyAdditions": {
+    "Math": "math",
+    "Physics": "physics",
+    "Chemistry": "chemistry",
+    "Computation": "computation",
+    "Engineering": "control",
+    "Nanotechnology": "nano"
+  },
+  "policy": "Historical prose retained; comments/preambles preserved in immutable originals. Ambiguous references are visible review notes, never guessed links.",
+  "outputSha256": "3aa01bdcf25cbd265aadbdc4f5f3fff765b75c4722e652dc089f47726ada9b65"
+}

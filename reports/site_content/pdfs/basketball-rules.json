@@ -1,0 +1,140 @@
+{
+  "compiler": {
+    "flags": [
+      "--untrusted",
+      "--keep-logs",
+      "--keep-intermediates",
+      "--outdir",
+      "output"
+    ],
+    "name": "tectonic",
+    "sourceDateEpoch": "946684800",
+    "version": "Tectonic 0.17.0"
+  },
+  "inputs": {
+    "images": [
+      {
+        "archive": "tex_images/sports/format_overview.png",
+        "path": "tex_images/sports/format_overview.png",
+        "sha256": "61a226af0165f0e61b3099b3f0a9e5eaf7dcc88b79db439f2b10db13ee49647f"
+      },
+      {
+        "archive": "tex_images/sports/shooting_progression.png",
+        "path": "tex_images/sports/shooting_progression.png",
+        "sha256": "91520d688595ae54d4c86f25a60cfe795cf2d81369ba253f800f092737bb3ad2"
+      },
+      {
+        "archive": "tex_images/sports/shooting_attempts.png",
+        "path": "tex_images/sports/shooting_attempts.png",
+        "sha256": "f737c86ea1f9147cf0594270c6d3f950958c84cccaf58e0294deadbeb2034c41"
+      },
+      {
+        "archive": "tex_images/sports/shooting_highjump.png",
+        "path": "tex_images/sports/shooting_highjump.png",
+        "sha256": "b48f667026ea9f27a8db2bc057af10cd83534204f2bd1cbb95be92813daeafcf"
+      },
+      {
+        "archive": "tex_images/sports/horse_cycle.png",
+        "path": "tex_images/sports/horse_cycle.png",
+        "sha256": "43bda73bb5152100a8e275aa0755ba0ec351705a21e750cd41d6fda01422e050"
+      },
+      {
+        "archive": "tex_images/sports/horse_letters.png",
+        "path": "tex_images/sports/horse_letters.png",
+        "sha256": "f3b0d8b917bbad5988c00701ae8f83218ffddadb721e42c9194978e4bda081ad"
+      },
+      {
+        "archive": "tex_images/sports/horse_outcomes.png",
+        "path": "tex_images/sports/horse_outcomes.png",
+        "sha256": "fa9eded551ba6f565f2d8488a4344b77df9a4f71b50899e50dc4aa6b16e560f2"
+      },
+      {
+        "archive": "tex_images/sports/one_on_one_scoring.png",
+        "path": "tex_images/sports/one_on_one_scoring.png",
+        "sha256": "023bb03894e6b4973320795618f2b97ebc93fd49ed1ef33a34745bd0fbb8a7fa"
+      },
+      {
+        "archive": "tex_images/sports/one_on_one_possessions.png",
+        "path": "tex_images/sports/one_on_one_possessions.png",
+        "sha256": "be9da9be9c54b4af35286f77a34de2e46e6073567cdfce5d0880be6d96a8aa3b"
+      },
+      {
+        "archive": "tex_images/sports/one_on_one_structures.png",
+        "path": "tex_images/sports/one_on_one_structures.png",
+        "sha256": "85ec0ae3aaab6e8b32d04892106a21e5950aad98ca99db92c1d292b85b233aac"
+      },
+      {
+        "archive": "tex_images/sports/backboard_airborne.png",
+        "path": "tex_images/sports/backboard_airborne.png",
+        "sha256": "372164bf6e3eafb8866ce9520d03c3c513f00403906710938deb5c5aaddbc179"
+      },
+      {
+        "archive": "tex_images/sports/backboard_attempts.png",
+        "path": "tex_images/sports/backboard_attempts.png",
+        "sha256": "f60eab5d0595f90baf27351851bcb890bd8cac3a1ab07c778489d718527a69fe"
+      },
+      {
+        "archive": "tex_images/sports/backboard_highjump.png",
+        "path": "tex_images/sports/backboard_highjump.png",
+        "sha256": "645697887153bf45fa1a6281becd762add318349697394d64db700f5540e2b21"
+      },
+      {
+        "archive": "tex_images/sports/three_point_route.png",
+        "path": "tex_images/sports/three_point_route.png",
+        "sha256": "0f848486ab3f2bbf4f5b6ef561a6fd4c59d9c02e6985b36cadbe2e7b79ce910b"
+      },
+      {
+        "archive": "tex_images/sports/three_point_assistance.png",
+        "path": "tex_images/sports/three_point_assistance.png",
+        "sha256": "4391acf205d2bd7ebae973c64a1136447ab590d855f7170b93f6cfa62399cb54"
+      },
+      {
+        "archive": "tex_images/sports/three_point_mercy.png",
+        "path": "tex_images/sports/three_point_mercy.png",
+        "sha256": "5096e6fef525f0a954c445eb3431c42f815fd1b1f1ef273b1be9232c2a51628d"
+      },
+      {
+        "archive": "tex_images/sports/rim_airborne.png",
+        "path": "tex_images/sports/rim_airborne.png",
+        "sha256": "00fb1209e80d09143553533897636f540e5a64949c319966e4d29d165135a61c"
+      },
+      {
+        "archive": "tex_images/sports/rim_attempts.png",
+        "path": "tex_images/sports/rim_attempts.png",
+        "sha256": "bd82af8a6107897e92624e3ac11518227a857325435b2136ca23197d6d02c1be"
+      },
+      {
+        "archive": "tex_images/sports/rim_highjump.png",
+        "path": "tex_images/sports/rim_highjump.png",
+        "sha256": "2ea1b6f3843aa81e078af8c0e60b2e514a04fca9965b8432526481867fc56f0a"
+      },
+      {
+        "archive": "tex_images/sports/bump_queue.png",
+        "path": "tex_images/sports/bump_queue.png",
+        "sha256": "f02d4466fa1e0b9c74fcc32d9f90f38bf831681f9480a36be7e2059ec7c8f331"
+      },
+      {
+        "archive": "tex_images/sports/bump_chase.png",
+        "path": "tex_images/sports/bump_chase.png",
+        "sha256": "710c51a8d7152f8572d6a0f9376fd9827b1d6e62042a5e4629610fe976bac3ab"
+      },
+      {
+        "archive": "tex_images/sports/bump_tactics.png",
+        "path": "tex_images/sports/bump_tactics.png",
+        "sha256": "ccea45b760675ff04cec20baa3801f3e2375962c1debbd5358f1b79da2561345"
+      },
+      {
+        "archive": "tex_images/sports/multiplayer_tiebreak.png",
+        "path": "tex_images/sports/multiplayer_tiebreak.png",
+        "sha256": "2841d1daa85a50e047691f19959449ec437e5f46e6931dbd4f9c7103ac929c47"
+      }
+    ],
+    "source": {
+      "path": "notebook_sources/sports/basketball_rules.tex",
+      "sha256": "9e47e52fae505dc4813343f5d21af571e4040f2144f51d1ea53b740481f06e36"
+    }
+  },
+  "key": "basketball-rules",
+  "pdfSha256": "0d55b7a1a98e2ce0d9e492bfc6efce955e0f764ecf10bb2325bae1e852375ae9",
+  "schemaVersion": 1
+}

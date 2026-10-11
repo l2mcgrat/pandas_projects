@@ -1,1 +1,18 @@
 *.mp3 filter=lfs diff=lfs merge=lfs -text
+
+# Preserve imported notebooks exactly; regression manifests hash their bytes.
+notebook_sources/originals/** -text
+External_Brain/** -text
+# Generated canonical text must match its reproducible assembly on all OSes.
+mental_map.tex text eol=lf
+Quantum_Mechanics.tex text eol=lf
+notebook_sources/additions/*.tex text eol=lf
+notebook_sources/editorial.tex text eol=lf
+notebook_sources/sports/*.tex -text
+notebook_sources/work-report/*.tex -text
+notebook_sources/work-report/*.json text eol=lf
+# Original report fingerprints and compiled-artifact hashes must survive checkout.
+WKRPT400/** -text
+reports/site_content/pdfs/*.json text eol=lf
+reports/site_content/pdfs/*.pdf -text
+LiamMs_PandasProjects/assets/documents/**/*.tex -text

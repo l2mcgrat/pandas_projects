@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="720pt" height="331.2pt" viewBox="0 0 720 331.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Original mental-map study diagrams</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 331.2 
+L 720 331.2 
+L 720 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 146.722703 285.544301 
+L 250.314533 285.544301 
+L 250.314533 245.93566 
+L 146.722703 245.93566 
+z
+" clip-path="url(#p0ad579ab06)" style="fill: #e5eef6; stroke: #192d3e; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 360 206.327019 
+L 433.123645 206.327019 
+L 433.123645 166.718378 
+L 360 166.718378 
+z
+" clip-path="url(#p0ad579ab06)" style="fill: #e5eef6; stroke: #192d3e; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 146.722703 239.842023 
+L 250.314533 239.842023 
+L 250.314533 200.233382 
+L 146.722703 200.233382 
+z
+" clip-path="url(#p0ad579ab06)" style="fill: #e5eef6; stroke: #192d3e; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 439.217282 206.327019 
+L 512.340926 206.327019 
+L 512.340926 166.718378 
+L 439.217282 166.718378 
+z
+" clip-path="url(#p0ad579ab06)" style="fill: #e5eef6; stroke: #192d3e; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 146.722703 194.139745 
+L 250.314533 194.139745 
+L 250.314533 154.531104 
+L 146.722703 154.531104 
+z
+" clip-path="url(#p0ad579ab06)" style="fill: #e5eef6; stroke: #192d3e; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 518.434563 206.327019 
+L 591.558208 206.327019 
+L 591.558208 166.718378 
+L 518.434563 166.718378 
+z
+" clip-path="url(#p0ad579ab06)" style="fill: #e5eef6; stroke: #192d3e; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="198.518618" y="268.499355" transform="rotate(-0 198.518618 268.499355)">A</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="396.561822" y="189.282074" transform="rotate(-0 396.561822 189.282074)">A</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="198.518618" y="222.797077" transform="rotate(-0 198.518618 222.797077)">B</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="475.779104" y="189.282074" transform="rotate(-0 475.779104 189.282074)">B</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="198.518618" y="177.094799" transform="rotate(-0 198.518618 177.094799)">C</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="554.996386" y="189.282074" transform="rotate(-0 554.996386 189.282074)">C</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 141.523548 86.243242 
+Q 155.863654 114.923453 169.303759 141.803663 
+" style="fill: none; stroke: #145da0; stroke-width: 1.8; stroke-linecap: round"/>
+    <path d="M 169.303759 137.331527 
+L 169.303759 141.803663 
+L 165.72605 139.120382 
+" style="fill: none; stroke: #145da0; stroke-width: 1.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #145da0" x="155.863159" y="105.172644" transform="rotate(-0 155.863159 105.172644)">push</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 227.088121 143.750454 
+Q 247.267966 114.922104 266.293741 87.742426 
+" style="fill: none; stroke: #b94b00; stroke-width: 1.8; stroke-linecap: round"/>
+    <path d="M 262.361427 89.872429 
+L 266.293741 87.742426 
+L 265.638355 92.166278 
+" style="fill: none; stroke: #b94b00; stroke-width: 1.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #b94b00" x="247.267715" y="105.172644" transform="rotate(-0 247.267715 105.172644)">pop C</text>
+   </g>
+   <g id="patch_10">
+    <path d="M 383.044541 220.010552 
+Q 359.999222 245.936535 338.29091 270.358386 
+" style="fill: none; stroke: #b94b00; stroke-width: 1.8; stroke-linecap: round"/>
+    <path d="M 342.443184 268.697476 
+L 338.29091 270.358386 
+L 339.453547 266.040021 
+" style="fill: none; stroke: #b94b00; stroke-width: 1.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #b94b00" x="360" y="236.185841" transform="rotate(-0 360 236.185841)">dequeue A</text>
+   </g>
+   <g id="patch_11">
+    <path d="M 615.121957 135.027672 
+Q 603.746379 160.622723 593.188138 184.378764 
+" style="fill: none; stroke: #145da0; stroke-width: 1.8; stroke-linecap: round"/>
+    <path d="M 596.640315 181.535795 
+L 593.188138 184.378764 
+L 592.985069 179.911241 
+" style="fill: none; stroke: #145da0; stroke-width: 1.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #145da0" x="603.745482" y="150.874922" transform="rotate(-0 603.745482 150.874922)">enqueue</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="198.518618" y="316.012486" transform="rotate(-0 198.518618 316.012486)">LIFO: last in, first out</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="481.872741" y="316.012486" transform="rotate(-0 481.872741 316.012486)">FIFO: first in, first out</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="481.872741" y="96.641552" transform="rotate(-0 481.872741 96.641552)">front                      back</text>
+   </g>
+  </g>
+  <g id="text_14">
+   <text style="font-weight: 700; font-size: 15px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192d3e" x="360" y="14.397896" transform="rotate(-0 360 14.397896)">Stack and queue expose different removal orders</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p0ad579ab06">
+   <rect x="55.318147" y="23.517907" width="609.363705" height="304.681852"/>
+  </clipPath>
+ </defs>
+</svg>

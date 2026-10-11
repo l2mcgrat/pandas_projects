@@ -12,25 +12,73 @@ import shutil
 import zipfile
 
 from .analysis import analyze_code, analyze_music, music_rows
+from .athletics import athletics_rows, load_athletics
+from .athletics_views import running_body, swimming_body, weightlifting_body
+from .atlas import ANCHORS, NODES, ROOT, walk
+from .atlas_tree import atlas_schema_script, atlas_tree_body
+from .atlas_views import (ALGORITHMS, ATLAS, CHANGE_LOG, CONTROL, DASHBOARD, FEELINGS, GUIDE, HOSTED, LEETCODE, LEETCODE_LEAVES, NBA, PITCH,
+                          PREDICTIONS, QUANTUM, RAP_LEAVES, REPORT, RULES, RUNNING, SWIMMING, UFC, UPCOMING, VOCABULARY, WEIGHTLIFTING,
+                          branch_body, branch_stage, home_hero, leaf_body, prefix, premade_body, strip)
+from .basketball import export_rows, load_basketball
+from .career import career_body, resume_body
+from .catalog import leetcode_catalog, rap_catalog
+from .catalog_views import leetcode_content, rap_content
+from .creators import FIRST_SECTION_ID, creators_html, scroll_cue_html
+from .icons import icon_svg, icons_css, require_complete
 from .latex import convert_document
+from .pdf import copy_verified_pdf
+from .sports_views import basketball_body, sports_body
 from .views import feelings_body, leetcode_body, vocabulary_body
+from .work_report import prepare_report, report_result
 
 HERE = Path(__file__).parent
-CATEGORIES = ["Gaming", "Economics", "Business", "Physics", "Language", "Miscellaneous"]
-DESCRIPTIONS = {
-    "Gaming": "Competition, measured.", "Economics": "Systems of exchange.",
-    "Business": "From process to insight.", "Physics": "Models of the world.",
-    "Language": "Words, rhythm & meaning.", "Miscellaneous": "Room for curiosity.",
+# Earlier public URLs keep working: each becomes a small forwarding page.
+REDIRECTS = {
+    "Gaming/index.html": "Gaming-and-Performance-Log/index.html",
+    "Economics/index.html": "Business-and-Economics/index.html",
+    "Business/index.html": "Business-and-Economics/index.html",
+    "Physics/index.html": "Science-and-Engineering/Physics/index.html",
+    "Language/index.html": "Language-and-Programming/index.html",
+    "Miscellaneous/index.html": ATLAS,
+    "Sports/index.html": "Sports-and-Entertainment/Series-Hub/index.html",
+    "Physics/Quantum-Mechanics/index.html": QUANTUM,
+    "Physics/Control-Systems/index.html": CONTROL,
+    "Miscellaneous/Algorithms/index.html": ALGORITHMS,
+    "Miscellaneous/LeetCode/index.html": LEETCODE,
+    "Language/Vocabulary/index.html": VOCABULARY,
+    "Language/Feelings/index.html": FEELINGS,
+    "Sports/Basketball-Series/index.html": DASHBOARD,
+    "Sports/Rules/index.html": RULES,
+    "Sports/Creator-Pitch/index.html": PITCH,
+    "About/Work-Term-Report/index.html": REPORT,
+    **{f"Sports-and-Entertainment/NBA-Analytics/{leaf}index.html": f"Sports-and-Entertainment/Sports-Analytics/{leaf}index.html"
+       for leaf in ("", "Player-Rankings/", "Metric-Overview/", "Statistics/", "Predictions-and-Results/",
+                    "Conditioning/", "Shenanigans/")},
 }
-ICONS = {
-    "Gaming": '<path d="M18 22h28l6 21c1 5-4 8-8 4l-6-6H26l-6 6c-4 4-9 1-8-4Z"/><path d="M23 27v12m-6-6h12"/><circle cx="41" cy="29" r="2"/><circle cx="46" cy="35" r="2"/>',
-    "Economics": '<path d="M12 48h40M16 41V30m10 11V24m11 17V19m11 22V10"/><path class="icon-draw" d="m12 25 13-9 11 3L51 7"/>',
-    "Business": '<rect x="12" y="20" width="40" height="30" rx="5"/><path d="M24 20v-7h16v7M12 32q20 12 40 0M28 35h8"/>',
-    "Physics": '<g class="icon-orbit"><ellipse cx="32" cy="32" rx="25" ry="10"/><ellipse cx="32" cy="32" rx="25" ry="10" transform="rotate(60 32 32)"/><ellipse cx="32" cy="32" rx="25" ry="10" transform="rotate(120 32 32)"/></g><circle cx="32" cy="32" r="4"/>',
-    "Language": '<path d="M14 14h36v28H29L17 51v-9h-3Z"/><path class="icon-wave" d="M22 27v6m7-12v18m7-16v12m7-9v6"/>',
-    "Miscellaneous": '<path class="icon-orbit" d="m32 8 7 17 17 7-17 7-7 17-7-17-17-7 17-7Z"/><circle cx="32" cy="32" r="5"/>',
-    "Mental Map": '<path d="M32 32 12 19m20 13 20-13M32 32v23m0-23V9M32 32 12 46m20-14 20 14"/><circle cx="32" cy="32" r="7"/><circle cx="12" cy="19" r="4"/><circle cx="52" cy="19" r="4"/><circle cx="12" cy="46" r="4"/><circle cx="52" cy="46" r="4"/><circle cx="32" cy="9" r="4"/><circle cx="32" cy="55" r="4"/>',
-}
+EMAIL = "l2mcgrat@uwaterloo.ca"
+COPYRIGHT = "© 2026 Liam McGrath. All rights reserved."
+LICENSE_TEXT = f"""Copyright (c) 2026 Liam McGrath. All rights reserved.
+
+This repository and the website published from it (liammspandasprojects.org),
+including its text, notes, data, analyses, documents, images, icons, designs and
+source code, belong to Liam McGrath unless a different owner is noted below.
+
+No license is granted. You may view this material on the website, and on GitHub as
+GitHub's Terms of Service allow, but you may not copy, clone for reuse, modify,
+republish, distribute, sell or make derivative works from any part of it without
+prior written permission from Liam McGrath.
+
+Third-party material keeps its own terms and is not covered by this notice:
+- MathJax, in assets/vendor/mathjax, is distributed under the Apache License 2.0;
+  its license file is included beside it.
+- Names, links and descriptions of other creators refer to their own work and imply
+  no affiliation. Owen Paget's photo is used with his permission and may not be reused.
+- Super Smash Bros. character names and icons, and any third-party icon sets, belong
+  to their respective owners and appear here for commentary and analysis.
+- Map screenshots credit the mapping service they were made with.
+
+To ask for permission, email {EMAIL}.
+"""
 
 
 def write(path: Path, text: str) -> None:
@@ -42,20 +90,49 @@ def safe_json(data: object) -> str:
     return json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c").replace("&", "\\u0026").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
 
 
-def icon(name: str) -> str:
-    return f'<svg class="topic-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{ICONS[name]}</svg>'
+def _up(route: str) -> str:
+    return "../" * route.count("/")
+
+
+def _lead(route: str, label: str = "") -> str:
+    """Atlas location bar for a page hosted at, or attached below, a destination."""
+    key = route.removesuffix("/index.html")
+    if key in NODES:
+        return strip(NODES[key])
+    above, _, name = key.rpartition("/")
+    return strip(NODES[above], label or name.replace("-", " ").capitalize()) if above in NODES else ""
+
+
+def _with_lead(body: str, lead: str) -> str:
+    return re.sub(r"<main\b[^>]*>", lambda match: match[0] + lead, body, count=1)
+
+
+def redirect_html(route: str, target: str) -> str:
+    href = escape(_up(route) + target, quote=True)
+    return (f'<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><title>Moved | Liam McGrath</title>'
+            f'<link rel="canonical" href="{href}"><script src="{_up(route)}assets/redirect.js"></script>'
+            f'<meta http-equiv="refresh" content="0; url={href}"><meta name="robots" content="noindex"></head>'
+            f'<body><p>This page has moved to <a href="{href}">its new home in the site atlas</a>.</p></body></html>\n')
 
 
 def header(prefix: str) -> str:
     return f'''<header class="site-header">
       <a class="brand" href="{prefix}index.html" aria-label="Liam McGrath home"><span class="brand-mark" aria-hidden="true">LM</span><span>LIAM McGRATH<small>AN OPEN NOTEBOOK</small></span></a>
-      <nav aria-label="Primary navigation"><a href="{prefix}Mental-Map/index.html">Mental Map</a><a href="{prefix}Language/index.html">Language</a><a href="{prefix}Smash/index.html">Smash</a><a href="{prefix}About/index.html">About me <span aria-hidden="true">↗</span></a></nav>
+    <nav aria-label="Primary navigation"><a href="{prefix}Mental-Map/index.html">Mental Map</a><a href="{prefix}{ATLAS}">Atlas</a><a href="{prefix}index.html#{FIRST_SECTION_ID}">Creators</a><a href="{prefix}Smash/index.html">Smash</a><a href="{prefix}About/index.html">About me <span aria-hidden="true">↗</span></a></nav>
     </header>'''
+
+
+def footer(prefix: str) -> str:
+    return (f'<footer class="site-footer"><a href="{prefix}index.html">Liam McGrath · An open notebook</a><span>Ideas are better connected.</span>'
+            f'<a href="{prefix}About/index.html">About &amp; documents ↗</a>'
+            f'<p class="site-copyright">{COPYRIGHT} No part of this site or its source may be copied or republished without permission. '
+            f'<a href="{prefix}LICENSE.txt">License</a></p></footer>')
 
 
 def shell(title: str, body: str, depth: int = 0, data_file: str | None = None,
           brand_text: str = "", *, math: bool = False, music: bool = False,
-          analysis: bool = False) -> str:
+          analysis: bool = False, sports: bool = False, styles: tuple[str, ...] = (),
+          scripts: tuple[str, ...] = ()) -> str:
     prefix = "../" * depth
     # Retain this argument for the existing generator's public function signature.
     del brand_text
@@ -64,6 +141,11 @@ def shell(title: str, body: str, depth: int = 0, data_file: str | None = None,
         data += f'<script defer src="{prefix}assets/data/music-analysis.js"></script>'
     if analysis:
         data += f'<script defer src="{prefix}assets/analysis.js"></script>'
+    if sports:
+        data += f'<script defer src="{prefix}assets/sports.js"></script>'
+    data += ''.join(f'<script defer src="{prefix}{script}"></script>' for script in scripts)
+    sports_css = f'<link rel="stylesheet" href="{prefix}assets/sports.css">' if sports else ''
+    sports_css += ''.join(f'<link rel="stylesheet" href="{prefix}{style}">' for style in styles)
     maths = (f'<script defer src="{prefix}assets/math-config.js"></script><script defer id="MathJax-script" src="{prefix}assets/vendor/mathjax/tex-chtml.js"></script>') if math else ""
     if 'id="main-content"' not in body:
         body = body.replace("<main", '<main id="main-content"', 1)
@@ -72,61 +154,23 @@ def shell(title: str, body: str, depth: int = 0, data_file: str | None = None,
 <meta name="description" content="Liam McGrath’s connected notebook of science, language, data analysis and creative projects.">
 <meta name="theme-color" content="#0d101b"><title>{escape(title)} | Liam McGrath</title>
 <link rel="icon" href="{prefix}assets/mark.svg" type="image/svg+xml">
-<link rel="stylesheet" href="{prefix}assets/styles.css"><link rel="stylesheet" href="{prefix}assets/portfolio.css">
-{maths}</head><body><a class="skip-link" href="#main-content">Skip to content</a>{header(prefix)}{body}
-<footer class="site-footer"><a href="{prefix}index.html">Liam McGrath · An open notebook</a><span>Ideas are better connected.</span><a href="{prefix}About/index.html">About &amp; documents ↗</a></footer>
+<link rel="stylesheet" href="{prefix}assets/styles.css"><link rel="stylesheet" href="{prefix}assets/portfolio.css"><link rel="stylesheet" href="{prefix}assets/career.css"><link rel="stylesheet" href="{prefix}assets/atlas-icons.css">
+{sports_css}{maths}</head><body><a class="skip-link" href="#main-content">Skip to content</a>{header(prefix)}{body}
+{footer(prefix)}
 {data}<script src="{prefix}assets/site.js"></script><script defer src="{prefix}assets/portfolio.js"></script>
 </body></html>'''
 
 
-def card(url: str, eyebrow: str, title: str, description: str, symbol: str = "") -> str:
-    art = icon(symbol) if symbol in ICONS else '<span class="card-arrow" aria-hidden="true">↗</span>'
-    return f'<a class="feature-card" href="{escape(url)}">{art}<span class="eyebrow">{escape(eyebrow)}</span><h3>{escape(title)}</h3><p>{escape(description)}</p><span class="card-link">Explore <span aria-hidden="true">↗</span></span></a>'
-
-
 def home_html() -> str:
-    nodes = "".join(f'<a class="hex-node node-{name.lower()}" data-topic="{name.lower()}" href="{name}/index.html"><span class="hex-inner">{icon(name)}<strong>{name}</strong></span></a>' for name in CATEGORIES)
-    # Same centres as the CSS percentages; every spoke terminates at a real link.
-    points = [(300, 78), (492, 189), (492, 411), (300, 522), (108, 411), (108, 189)]
-    spokes = "".join(f'<path class="map-spoke spoke-{name.lower()}" d="M300 300 L{x} {y}"/>' for name, (x, y) in zip(CATEGORIES, points))
-    return shell("Ideas, connected", f'''<main id="main-content" class="home-landing">
-    <section class="home-stage"><div class="home-copy"><p class="eyebrow"><span class="status-dot"></span> The personal atlas of Liam McGrath</p>
-      <h1>Curiosity.<br>Patterns.<br><em>Connections.</em></h1>
-      <p class="home-description">A living notebook at the intersection of science, data and the things that make us human.</p>
-      <div class="home-actions"><a class="button primary" href="Mental-Map/index.html">Enter the Mental Map <span aria-hidden="true">↗</span></a><a class="text-link" href="About/index.html">A little about me →</a></div>
-      <div class="home-caption"><span>01 — EXPLORE THE CONNECTIONS</span><p>Six fields. One ever-growing map.</p></div></div>
-      <div class="map-column"><nav class="hex-map" aria-label="Connected fields of exploration"><div class="hex-frame" aria-hidden="true"></div>
-        <svg class="map-connections" viewBox="0 0 600 600" aria-hidden="true"><path class="map-perimeter" d="M300 78 492 189 492 411 300 522 108 411 108 189Z"/>{spokes}<circle class="map-ring" cx="300" cy="300" r="103"/></svg>
-        {nodes}<a class="hex-node node-mental-map" data-topic="mental-map" href="Mental-Map/index.html"><span class="hex-inner">{icon('Mental Map')}<small>THE CONNECTING THREAD</small><strong>Mental Map</strong><span class="map-enter">Open notebook ↗</span></span></a>
-      </nav><p class="map-hint" id="map-hint" aria-live="polite">Follow a thread. See where it leads.</p></div>
-    </section><section class="home-discover" aria-labelledby="discover-title"><div class="section-heading"><div><p class="eyebrow">A few places to begin</p><h2 id="discover-title">Inside the notebook</h2></div><a class="text-link" href="Mental-Map/index.html">See the full map ↗</a></div>
-    <div class="card-grid">{card('Physics/Quantum-Mechanics/index.html', 'Featured / Physics', 'The quantum notebook', 'A home for analytical solutions, mathematical detail and the questions behind them.', 'Physics')}
-    {card('Language/Vocabulary/index.html', 'Language / Original writing', 'A vocabulary in songs', 'Explore repetitions, rare words and the breadth of a growing lyric archive.', 'Language')}
-    {card('Miscellaneous/LeetCode/index.html', 'Miscellaneous / Practice', 'Thinking in algorithms', 'Arrays, hash tables and trees. A small, open record of working through problems.', 'Miscellaneous')}</div></section></main>''')
+    body = (f'<main id="main-content" class="home-landing home-snap">{home_hero({}, scroll_cue_html(FIRST_SECTION_ID))}'
+            f'{creators_html()}</main>')
+    return shell("Ideas, connected", body, styles=("assets/creators.css",), scripts=("assets/creators.js",))
 
 
-def collection_html(label: str, site: Path) -> str:
-    title = {"Physics": "From first principles.", "Language": "Words have a world inside.", "Gaming": "Play. Measure. Understand.", "Economics": "How systems exchange value.", "Business": "Better questions. Better decisions.", "Miscellaneous": "Follow the interesting bits."}[label]
-    cards = []
-    if label == "Language":
-        cards = [card('Vocabulary/index.html', '01 / Lexical diversity', 'Vocabulary explorer', 'Search word frequencies, compare song versions and explore MATTR-50.', 'Language'), card('Feelings/index.html', '02 / Text & emotion', 'The feelings explorer', 'An interactive wheel, a line-by-line reader, and the evidence behind each suggestion.', 'Mental Map')]
-    elif label == "Miscellaneous":
-        cards = [card('LeetCode/index.html', '01 / Coding practice', 'LeetCode & algorithms', 'A starting collection, not a complete count of problems solved.', 'Miscellaneous')]
-    elif label == "Gaming":
-        cards = [card('../Smash/index.html', '01 / Tournament analytics', 'Super Smash Bros.', 'Fighter profiles, rankings, round histories and comparative analysis.', 'Gaming')]
-    elif label == "Physics":
-        cards = [card('Quantum-Mechanics/index.html', 'Featured / Analytical physics', 'Quantum mechanics', 'A dedicated mathematical notebook. The full source document is next.', 'Physics')]
-        atlas = site / "Physics" / "Dipole-Atlas"
-        if (atlas / "index.html").exists():
-            cards.append(card('Dipole-Atlas/index.html', 'Interactive / Molecular dynamics', 'Dipole Atlas', 'Explore qualitative molecular models, trajectories and downloadable experiments.', 'Mental Map'))
-        for run in sorted(atlas.glob('*/index.html')):
-            cards.append(card(f'Dipole-Atlas/{run.parent.name}/index.html', 'Experiment archive', run.parent.name.replace('_', ' '), 'Recorded trajectories, methodology and model limitations.'))
-    else:
-        anchor = "economics" if label == "Economics" else "business"
-        cards = [card(f'../Mental-Map/index.html#{anchor}', 'From the Mental Map', f'{label} notes', 'The original notebook is the starting point. More focused studies can grow from here.', label)]
-        if label == "Business":
-            cards.append(card('../About/index.html', 'Background / Learning', 'About Liam', 'Engineering education and a foundation in deep learning and process improvement.'))
-    return shell(label, f'''<main id="main-content" class="collection-page"><div class="page-intro"><a class="crumb" href="../index.html">← The atlas</a><p class="eyebrow">The {label.lower()} collection</p><h1>{title}</h1><p class="lede">{DESCRIPTIONS[label]} A part of the larger <a href="../Mental-Map/index.html">Mental Map</a>.</p></div><div class="card-grid">{''.join(cards)}</div></main>''', 1)
+def atlas_page(node, mental: dict[str, str], available) -> str:
+    """A field or topic hexagon page, or an outlined destination page."""
+    body = leaf_body(node, available) if not node.children else branch_body(node, mental, available)
+    return shell(node.title, body, node.depth)
 
 
 def about_html() -> str:
@@ -138,33 +182,154 @@ def about_html() -> str:
     items = ''.join(f'<article class="credential"><span class="eyebrow">{date}</span><h3>{title}</h3><p>{issuer}</p>' + (f'<a href="{url}" rel="noopener noreferrer">View credential ↗</a><small>Credential ID: {identifier}</small>' if url else '') + '</article>' for date, title, issuer, identifier, url in credentials)
     return shell('About me', f'''<main id="main-content" class="collection-page"><section class="about-intro"><div class="monogram" aria-hidden="true">L<span>M</span></div><div><p class="eyebrow">Engineer. Learner. Maker.</p><h1>Hi, I’m Liam.</h1><p class="lede">This is where I connect what I learn—from mathematical models and machine learning to music, language and the logic of games.</p><p>BASc in Nanotechnology Engineering<br><strong>University of Waterloo</strong></p><div class="toolbar"><a class="button primary" href="../Mental-Map/index.html">Explore my Mental Map ↗</a><a class="button ghost" href="https://www.linkedin.com/in/liam-mcgrath-54a917111/" rel="noopener noreferrer">LinkedIn ↗</a><a class="text-link" href="https://github.com/l2mcgrat">GitHub ↗</a></div></div></section>
     <section class="about-section"><p class="eyebrow">Learning, with a paper trail</p><h2>Licenses &amp; certifications</h2><p class="lede">A foundation in neural networks and process improvement.</p><div class="credential-grid">{items}</div><p class="method-note">Education and credentials transcribed from the supplied LinkedIn screenshot. Credential links use the displayed IDs; availability has not been independently verified.</p></section>
-    <section class="about-section"><p class="eyebrow">A growing archive</p><h2>Work &amp; documents</h2><div class="card-grid"><article class="pending-card"><span class="badge">Coming next</span><h3>Engineering &amp; business intelligence</h3><p>Process Engineering and Business Intelligence Lead work at Honda of Canada Manufacturing will be added here after the professional details are supplied.</p></article><article class="pending-card"><span class="badge">Awaiting documents</span><h3>Résumé &amp; work-term report</h3><p>Space reserved for the résumé and third–fourth year work-term report. No downloads have been published yet.</p></article></div></section></main>''', 1)
+    {career_body()}</main>''', 1)
 
 
-def document_html(result: dict, title: str, depth: int, topic_links: str, download: str) -> str:
-    root = '../' * depth
+def document_html(result: dict, title: str, depth: int, topic_links: str, download: str, *,
+                  pdf: str | None = None, lead: str = '', tools: str = '', after: str = '', sidebar: str = '',
+                  data_file: str | None = None, scripts: tuple[str, ...] = (),
+                  byline: str = 'By Liam McGrath · A living document, not a finished textbook.',
+                  note: str = 'Section links stay in this document. Blue topic links open separate readers. Historical writing, editorial corrections and AI-assisted study additions are distinguished in the text. Numbering follows this reader’s order; historical claims still need review.') -> str:
+    pdf_link = (f'<a class="button primary" href="{escape(pdf)}" download>Compiled article · PDF ↓</a>'
+                if pdf else '')
     body = result['body']
     # Add visibly separate editorial links, never change the authored prose.
     if title == 'Mental Map':
+        topics = {
+            ANCHORS.get('Science-and-Engineering/Physics/Quantum-Mechanics', 'quantum-mechanics'): (QUANTUM, 'Open the dedicated quantum-mechanics notebook', 'A focused reader with its own contents and source download.'),
+            'study-control': (CONTROL, 'Open the illustrated control-systems reader', 'A focused reader with its own contents and source download.'),
+            'study-computation': (ALGORITHMS, 'Open the illustrated algorithms reader', 'A focused reader with its own contents and source download.'),
+        }
+        # Fields and topics link back to their hexagons; live destinations to their pages.
+        for node in walk(ROOT):
+            if node.path not in ANCHORS or ANCHORS[node.path] in topics:
+                continue
+            if 1 <= node.depth <= 2:
+                topics[ANCHORS[node.path]] = (node.url, f'Explore {node.title} in the site atlas',
+                                              'Six linked destinations, each with its own animated hexagon.')
+            elif node.path in HOSTED:
+                topics[ANCHORS[node.path]] = (node.url, f'Open the {node.title} page', 'A live reader or dashboard for this destination.')
         for heading in result['headings']:
-            if heading['title'] == 'Quantum Mechanics':
+            if heading['id'] in topics:
+                url, label, small = topics[heading['id']]
                 pattern = f'(id="{re.escape(heading["id"])}"[^>]*>.*?</h[1-6]>)'
-                body = re.sub(pattern, lambda m: m[1] + '<aside class="topic-callout"><span>Go deeper ↗</span><a href="../Physics/Quantum-Mechanics/index.html">Open the dedicated quantum-mechanics notebook</a><small>The original headings below are still an outline.</small></aside>', body, count=1, flags=re.S)
-    return shell(title, f'''<main id="main-content" class="document-page"><div class="reader-top"><div><p class="eyebrow">The connected notebook / LaTeX edition</p><h1>{title}</h1><p>By Liam McGrath · A living document, not a finished textbook.</p></div><div class="toolbar"><a class="button ghost" href="{download}" download>Source + images · ZIP ↓</a><button class="button ghost print-reader" type="button">Print / Save PDF</button></div></div>
-    <div class="reader-layout"><aside class="reader-sidebar"><details class="contents-panel" open><summary>Contents <span>{len(result['headings'])} headings</span></summary><label class="toc-search-label" for="toc-search">Find a section<input id="toc-search" type="search" placeholder="Search the contents…"></label><div id="reader-toc">{result['toc']}</div><p id="toc-empty" hidden>No matching sections.</p></details></aside>
-    <div class="reader-column"><nav class="topic-links" aria-label="Deeper topic pages"><strong>Follow a thread ↗</strong>{topic_links}</nav><p class="reader-note">Section links stay in this document. Blue topic links above open separate pages. Original outline-only sections are retained; these are historical notes, not reviewed reference material.</p><p class="math-status" role="status">Typesetting equations locally…</p><article class="tex-paper">{body}</article><noscript><p>JavaScript is required for equation typesetting. The contents, text and images remain available; download the LaTeX source for the original formulas.</p></noscript><a class="back-top" href="#main-content">Back to the top ↑</a></div></div></main>''', depth, math=True)
+                body = re.sub(pattern, lambda m: m[1] + f'<aside class="topic-callout"><span>Go deeper ↗</span><a href="../{escape(url)}">{escape(label)}</a><small>{small}</small></aside>', body, count=1, flags=re.S)
+    return shell(title, f'''<main id="main-content" class="document-page">{lead}<div class="reader-top"><div><p class="eyebrow">The connected notebook / LaTeX edition</p><h1>{escape(title)}</h1><p>{escape(byline)}</p></div><div class="toolbar">{pdf_link}<a class="button ghost" href="{escape(download)}" download>Source + images · ZIP ↓</a><button class="button ghost print-reader" type="button">Print / Save PDF</button>{tools}</div></div>
+    <div class="reader-layout"><aside class="reader-sidebar">{sidebar}<details class="contents-panel" open><summary>Contents <span>{len(result['headings'])} headings</span></summary><label class="toc-search-label" for="toc-search">Find a section<input id="toc-search" type="search" placeholder="Search the contents…"></label><div id="reader-toc">{result['toc']}</div><p id="toc-empty" hidden>No matching sections.</p></details></aside>
+    <div class="reader-column"><nav class="topic-links" aria-label="Deeper topic pages"><strong>Follow a thread ↗</strong>{topic_links}</nav><p class="reader-note">{escape(note)}</p><p class="math-status" role="status">Typesetting equations locally…</p><article class="tex-paper">{body}</article><noscript><p>JavaScript is required for equation typesetting. The contents, text and images remain available; download the LaTeX source for the original formulas.</p></noscript><a class="back-top" href="#main-content">Back to the top ↑</a></div></div>{after}</main>''', depth, data_file, math=True, scripts=scripts)
 
 
-def quantum_html(root: Path, site: Path) -> str:
-    source = root / 'quantum_mechanics.tex'
+def request_dialog() -> str:
+    """Mental Map change requests: the form drafts an email; nothing is sent or stored by the site."""
+    return f'''<dialog class="request-dialog" id="request-change" aria-labelledby="request-title" data-email="{EMAIL}">
+      <form class="request-form" method="dialog" id="request-form"><p class="eyebrow">Mental Map · Suggest an edit</p><h2 id="request-title">Request a change</h2>
+      <p class="request-intro">Choose where the change belongs, paste your text or .tex, then press Create email. Your email app opens with everything filled in, addressed to Liam; this website does not send or store anything.</p>
+      <div class="request-grid"><label for="request-name">Name<input id="request-name" name="name" required maxlength="120" autocomplete="name"></label>
+      <label for="request-date">Date<input id="request-date" name="date" type="date" required></label>
+      <label for="request-section">Section<select id="request-section" name="section" required></select></label>
+      <label for="request-subsection">Subsection<select id="request-subsection" name="subsection" required disabled></select></label>
+      <label class="request-wide" for="request-subsubsection">Subsubsection<select id="request-subsubsection" name="subsubsection" disabled></select></label></div>
+      <label for="request-content">Content <small>Paste text or .tex content here</small><textarea id="request-content" name="content" rows="9" required maxlength="20000"></textarea></label>
+      <p class="request-status" id="request-status" role="status" aria-live="polite"></p>
+      <div class="request-actions"><button class="button ghost" type="button" data-request-close>Cancel</button><button class="button primary" type="submit">Create email ✉</button></div></form></dialog>'''
+
+
+def reader_html(root: Path, site: Path, source: str, name: str, title: str, route: str, related: str, *,
+                images: str = 'tex_images', pdf_key: str | None = None, byline: str | None = None, note: str | None = None) -> str:
+    """A standalone article read in the site's reader, attached to an atlas page."""
+    up = _up(route)
+    path = root / source
+    assets = site / 'assets' / 'documents' / name
+    url = f'{up}assets/documents/{name}'
+    result = convert_document(path, root / images, assets, url, source_root=root)
+    source_zip(path, assets)
+    pdf = copy_verified_pdf(root, pdf_key, assets) if pdf_key else None
+    options = {key: value for key, value in (('byline', byline), ('note', note)) if value}
+    return document_html(result, title, route.count('/'), related, url + '/source-bundle.zip',
+                         pdf=url + '/' + pdf if pdf else None, lead=_lead(route), **options)
+
+
+def _qm_anchor() -> str:
+    return ANCHORS.get('Science-and-Engineering/Physics/Quantum-Mechanics', 'quantum-mechanics')
+
+
+def quantum_html(root: Path, site: Path, route: str = QUANTUM) -> str:
+    up = _up(route)
+    source = root / 'Quantum_Mechanics.tex'
+    if not source.exists():
+        source = root / 'quantum_mechanics.tex'  # Backward-compatible fixture/import name.
     if source.exists():
         assets = site / 'assets' / 'documents' / 'quantum-mechanics'
         images = root / 'tex_images' / 'quantum_mechanics'
-        result = convert_document(source, images if images.exists() else source.parent, assets, '../../assets/documents/quantum-mechanics')
+        result = convert_document(source, images if images.exists() else source.parent, assets, up + 'assets/documents/quantum-mechanics')
         source_zip(source, assets)
-        return document_html(result, 'Quantum mechanics', 2, '<a href="../../Mental-Map/index.html#quantum-mechanics">Mental Map ↗</a><a href="../index.html">Physics collection ↗</a>', '../../assets/documents/quantum-mechanics/source-bundle.zip')
-    return shell('Quantum mechanics', f'''<main id="main-content" class="collection-page"><section class="quantum-intro"><div><p class="eyebrow">Featured notebook / Physics</p><h1>A world written<br>in wavefunctions.</h1><p class="lede">A dedicated home for analytical solutions of the Schrödinger equation—and the mathematics that makes them possible.</p><span class="badge">Full LaTeX manuscript coming next</span><div class="toolbar"><a class="button primary" href="../../Mental-Map/index.html#quantum-mechanics">Read the Mental Map outline ↗</a><a class="button ghost" href="../index.html">More physics →</a></div></div><div class="quantum-art" aria-hidden="true">{icon('Physics')}<span>ψ</span><small>THE QUANTUM NOTEBOOK</small></div></section>
-    <section class="panel"><h2>From an outline to a deeper study</h2><p>The Mental Map currently provides headings for position, mass, momentum and energy. This dedicated page is ready for the separate quantum-mechanics manuscript, with a linked contents list and LaTeX equation numbering.</p><p class="method-note">No solutions have been added or claimed on your behalf. The exact scope of analytically solvable models will follow the manuscript, rather than claiming an exhaustive list.</p></section></main>''', 2)
+        return document_html(result, 'Quantum mechanics', route.count('/'),
+                             f'<a href="{up}Mental-Map/index.html#{_qm_anchor()}">Mental Map ↗</a><a href="../index.html">Physics ↗</a>'
+                             f'<a href="{up}{REPORT}">Work-term report ↗</a>',
+                             up + 'assets/documents/quantum-mechanics/source-bundle.zip', lead=_lead(route))
+    return shell('Quantum mechanics', f'''<main id="main-content" class="collection-page">{_lead(route)}<section class="quantum-intro"><div><p class="eyebrow">Featured notebook / Physics</p><h1>A world written<br>in wavefunctions.</h1><p class="lede">A dedicated home for analytical solutions of the Schrödinger equation—and the mathematics that makes them possible.</p><span class="badge">Full LaTeX manuscript coming next</span><div class="toolbar"><a class="button primary" href="{up}Mental-Map/index.html#{_qm_anchor()}">Read the Mental Map outline ↗</a><a class="button ghost" href="../index.html">More physics →</a></div></div><div class="quantum-art" aria-hidden="true">{icon_svg('Science-and-Engineering/Physics', 'is-playing')}<span>ψ</span><small>THE QUANTUM NOTEBOOK</small></div></section>
+    <section class="panel"><h2>From an outline to a deeper study</h2><p>The Mental Map currently provides headings for position, mass, momentum and energy. This dedicated page is ready for the separate quantum-mechanics manuscript, with a linked contents list and LaTeX equation numbering.</p><p class="method-note">No solutions have been added or claimed on your behalf. The exact scope of analytically solvable models will follow the manuscript, rather than claiming an exhaustive list.</p></section></main>''', route.count('/'))
+
+
+def study_html(root: Path, site: Path, name: str, title: str, anchor: str, route: str, related: str) -> str:
+    """Focused views of the same unmodified fragments included in Mental Map."""
+    up = _up(route)
+    source = root / 'notebook_sources' / 'additions' / f'{name}.tex'
+    assets = site / 'assets' / 'documents' / name
+    # References are root-prefixed for the canonical notebook/source bundles.
+    # Resolve those paths against the repository, still confined to image_dir,
+    # rather than copying/rebasing the authored fragment.
+    result = convert_document(source, root / 'tex_images' / 'mental_map', assets,
+                              f'{up}assets/documents/{name}', source_root=root)
+    source_zip(source, assets)
+    return document_html(result, title, route.count('/'),
+                         f'<a href="{up}Mental-Map/index.html#{anchor}">Mental Map ↗</a>{related}',
+                         f'{up}assets/documents/{name}/source-bundle.zip', lead=_lead(route))
+
+
+def sports_document_html(root: Path, site: Path, key: str, route: str) -> str:
+    documents = {
+        'basketball-rules': ('basketball_rules.tex', 'First to Four · House rules',
+                            'Owner-supplied house rules · Illustrated public edition',
+                            'Seven challenges, with three diagrams per game. Safety and consent take priority; operational interpretations and unresolved mechanics are explicitly marked.'),
+        'creator-pitch': ('creator_pitch.tex', 'First to Four · Creator pitch',
+                         'Original pilot proposal · Draft, not sent',
+                         'A proposed basketball and sports-data pilot, not a commissioned production. Jesser, Ludwig and Atrioc are aspirational recipients only; no affiliation or endorsement is implied.'),
+    }
+    filename, title, byline, note = documents[key]
+    source = root / 'notebook_sources' / 'sports' / filename
+    assets = site / 'assets' / 'documents' / key
+    url = f'{_up(route)}assets/documents/{key}'
+    result = convert_document(source, root / 'tex_images' / 'sports', assets, url, source_root=root)
+    source_zip(source, assets)
+    pdf = copy_verified_pdf(root, key, assets)
+    return document_html(result, title, route.count('/'),
+                         '<a href="../index.html">Series Hub ↗</a>'
+                         '<a href="../Analytics/index.html">Basketball analytics ↗</a>'
+                         '<a href="../Rules/index.html">House rules ↗</a>'
+                         '<a href="../Creator-Petition/index.html">Creator pitch ↗</a>',
+                         url + '/source-bundle.zip', pdf=url + '/' + pdf if pdf else None,
+                         byline=byline, note=note, lead=_lead(route))
+
+
+def work_report_html(root: Path, site: Path, route: str = REPORT) -> str:
+    up = _up(route)
+    assets = site / 'assets' / 'documents' / 'work-term-report'
+    url = up + 'assets/documents/work-term-report'
+    result = report_result(root, assets, url)
+    source_zip(prepare_report(root), assets)
+    # This audit contains transformations and whole-input hashes, never removed
+    # administrative values or the original class/contact-bearing preamble.
+    write(assets / 'edition-manifest.json', safe_json(result['report_manifest']))
+    pdf = copy_verified_pdf(root, 'work-term-report', assets)
+    return document_html(result, 'Waters in a 1D Carbon Nanotube', route.count('/'),
+                         f'<a href="{up}About/index.html">About Liam ↗</a>'
+                         f'<a href="{up}About/Resume/index.html">Public résumé ↗</a>'
+                         f'<a href="{up}Science-and-Engineering/Physics/index.html">Physics ↗</a>'
+                         f'<a href="{url}/edition-manifest.json" download>Edition audit · JSON ↓</a>',
+                         url + '/source-bundle.zip', pdf=url + '/' + pdf if pdf else None, lead=_lead(route),
+                         byline='Liam McGrath · Historical 3B Nanotechnology Engineering work-term report · Completion date unverified',
+                         note='Privacy-safe public article, not the original ECE template. Scientific text, equations, figures, appendices and references are retained. Administrative/contact details are excluded; ambiguous historical references are marked for review. The compiled PDF uses article pagination; its successful compilation is not a new scientific validation.')
 
 
 def source_zip(source: Path, assets: Path) -> None:
@@ -231,6 +396,9 @@ def upgrade_existing_pages(site: Path) -> None:
         if 'assets/portfolio.js' not in content:
             content = content.replace('</body>', f'<script defer src="{prefix}assets/portfolio.js"></script>\n</body>', 1)
         content = re.sub(r'<header\b[^>]*\bclass=[\'"][^\'"]*\bsite-header\b[^\'"]*[\'"][^>]*>.*?</header>', lambda _: header(prefix), content, count=1, flags=re.S)
+        content, footers = re.subn(r'<footer\b[^>]*\bclass=[\'"][^\'"]*\bsite-footer\b[^\'"]*[\'"][^>]*>.*?</footer>', lambda _: footer(prefix), content, count=1, flags=re.S)
+        if not footers:
+            content = content.replace('</body>', footer(prefix) + '\n</body>', 1)
         main = re.search(r'<main\b[^>]*>', content)
         main_id = re.search(r'\bid=[\'"]([^\'"]+)[\'"]', main[0]) if main else None
         target = main_id[1] if main_id else 'main-content'
@@ -242,7 +410,8 @@ def upgrade_existing_pages(site: Path) -> None:
             write(page, content)
 
 
-def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: dict | None = None) -> dict:
+def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: dict | None = None,
+                      leetcode: dict | None = None, rap: dict | None = None) -> dict:
     root, site = root.resolve(), site.resolve()
     assets = site / 'assets'
     vendor = HERE / 'node_modules' / 'mathjax' / 'es5'
@@ -252,10 +421,16 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
         music = load_analysis(root, 'music-analysis', analyze_music, root.parent / 'music_work')
     if code is None:
         code = load_analysis(root, 'code-analysis', analyze_code, root.parent / 'leetcode_problems')
+    if leetcode is None:
+        leetcode = load_analysis(root, 'leetcode-catalog', leetcode_catalog, root.parent / 'leetcode_problems')
+    if rap is None:
+        rap = load_analysis(root, 'rap-catalog', rap_catalog, root.parent / 'music_work')
     for asset in (HERE / 'web').iterdir():
         if asset.is_file():
             assets.mkdir(parents=True, exist_ok=True)
             shutil.copy2(asset, assets / asset.name)
+    shutil.copytree(HERE / 'web' / 'creators', assets / 'creators', dirs_exist_ok=True)
+    write(site / 'LICENSE.txt', LICENSE_TEXT)
     shutil.copytree(vendor, assets / 'vendor' / 'mathjax', dirs_exist_ok=True)
     shutil.copy2(HERE / 'node_modules' / 'mathjax' / 'LICENSE', assets / 'vendor' / 'mathjax' / 'LICENSE')
     write(assets / 'data' / 'music-analysis.json', safe_json(music))
@@ -263,22 +438,124 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
     write(assets / 'data' / 'code-analysis.json', safe_json(code))
     for name, rows in music_rows(music).items():
         write(assets / 'data' / f'music-{name}.csv', csv_text(rows))
+    basketball = load_basketball(root)
+    # The public-shortname source is validated first, then distributed unchanged
+    # in meaning. Unknown score/time fields are not coerced to points or zeroes.
+    raw_basketball = json.loads((root / 'records/basketball/series.json').read_text(encoding='utf-8'))
+    write(assets / 'data/basketball-source.json', safe_json(raw_basketball))
+    basketball['sourceDownloadAvailable'] = True
+    write(assets / 'data/basketball-analysis.json', safe_json(basketball))
+    write(assets / 'data/basketball-analysis.js', 'window.BASKETBALL_ANALYSIS=' + safe_json(basketball) + ';')
+    for name, rows in export_rows(basketball).items():
+        write(assets / 'data' / f'basketball-{name}.csv', csv_text(rows))
+    athletics = load_athletics(root)
+    for key, data in athletics.items():
+        write(assets / 'data' / f'athletics-{key}.json', safe_json(data))
+    for name, rows in athletics_rows(athletics).items():
+        write(assets / 'data' / f'athletics-{name}.csv', csv_text(rows))
     result = convert_document(root / 'mental_map.tex', root / 'tex_images' / 'mental_map', assets / 'documents' / 'mental-map', '../assets/documents/mental-map')
     source_zip(root / 'mental_map.tex', assets / 'documents' / 'mental-map')
-    links = ''.join(f'<a href="../{url}">{label} ↗</a>' for label, url in [('Quantum mechanics', 'Physics/Quantum-Mechanics/index.html'), ('Vocabulary', 'Language/Vocabulary/index.html'), ('Feelings explorer', 'Language/Feelings/index.html'), ('Algorithms', 'Miscellaneous/LeetCode/index.html')])
+    mental = {heading['id']: heading['title'] for heading in result['headings']}
+    missing = sorted(set(ANCHORS.values()) - set(mental))
+    unmarked = sorted(node.key for node in NODES.values() if node.depth and node.path not in ANCHORS)
+    if missing or unmarked:
+        raise ValueError(f'Every atlas page needs its Mental Map heading; missing ids {missing[:5]}, '
+                         f'pages without a "% atlas:" marker {unmarked[:5]}')
+    require_complete()
+    write(assets / 'atlas-icons.css', icons_css())
+    write(assets / 'data' / 'atlas-schema.js', atlas_schema_script())
+    links = ''.join(f'<a href="../{url}">{label} ↗</a>' for label, url in [
+        ('Site atlas', ATLAS), ('How to add notes · guide', GUIDE), ('Quantum mechanics', QUANTUM), ('Control systems', CONTROL),
+        ('Algorithms', ALGORITHMS), ('Vocabulary', VOCABULARY), ('Feelings explorer', FEELINGS), ('Change log', CHANGE_LOG)])
+    request = (f'<a class="button ghost" href="mailto:{EMAIL}?subject=Mental%20Map%20change%20request" data-request-open>'
+               'Request a change ✉</a>')
+
+    def available(item) -> bool:
+        return not item.legacy or (site / item.legacy).is_file()
+
     pages = {
         'index.html': home_html(), 'About/index.html': about_html(),
-        'Mental-Map/index.html': document_html(result, 'Mental Map', 1, links, '../assets/documents/mental-map/source-bundle.zip'),
-        'Physics/Quantum-Mechanics/index.html': quantum_html(root, site),
-        'Language/Vocabulary/index.html': shell('Vocabulary explorer', vocabulary_body(music), 2, music=True, analysis=True),
-        'Language/Feelings/index.html': shell('Feelings explorer', feelings_body(music), 2, music=True, analysis=True),
-        'Miscellaneous/LeetCode/index.html': shell('LeetCode & algorithms', leetcode_body(code), 2, analysis=True),
+        'About/Resume/index.html': shell('Public résumé', resume_body(), 2),
+        'Mental-Map/index.html': document_html(result, 'Mental Map', 1, links, '../assets/documents/mental-map/source-bundle.zip',
+                                               tools=request, after=request_dialog(), data_file='assets/data/atlas-schema.js',
+                                               sidebar=(f'<a class="request-side" href="mailto:{EMAIL}?subject=Mental%20Map%20change%20request" '
+                                                        'data-request-open>Suggest a change to this section ✉</a>'),
+                                               scripts=('assets/request-change.js',)),
+        ATLAS: shell('Site atlas', atlas_tree_body(), 1, 'assets/data/atlas-schema.js',
+                     styles=('assets/atlas-tree.css',), scripts=('assets/atlas-tree.js',)),
     }
-    pages.update({f'{name}/index.html': collection_html(name, site) for name in CATEGORIES})
+    pages.update({node.url: atlas_page(node, mental, available) for node in walk(ROOT) if node.depth})
+    for path in LEETCODE_LEAVES + RAP_LEAVES:
+        node = NODES[path]
+        render, catalog = (leetcode_content, leetcode) if path in LEETCODE_LEAVES else (rap_content, rap)
+        lede, content = render(path.rsplit('/', 1)[1], catalog, prefix(node))
+        pages[node.url] = shell(node.title, leaf_body(node, available, content, lede), node.depth, styles=('assets/catalog.css',))
+    series = NODES['Sports-and-Entertainment/Series-Hub']
+    hosted = {
+        QUANTUM: quantum_html(root, site),
+        ALGORITHMS: study_html(root, site, 'computation', 'Data structures & algorithms', 'study-computation', ALGORITHMS,
+                               f'<a href="../../../{LEETCODE}">Practice source index ↗</a>'),
+        CONTROL: study_html(root, site, 'control', 'Control systems', 'study-control', CONTROL,
+                            '<a href="../index.html">Classical mechanics ↗</a>'),
+        REPORT: work_report_html(root, site),
+        RULES: sports_document_html(root, site, 'basketball-rules', RULES),
+        PITCH: sports_document_html(root, site, 'creator-pitch', PITCH),
+        DASHBOARD: shell('First to Four · Basketball series', basketball_body(basketball, _lead(DASHBOARD)), 3,
+                         'assets/data/basketball-analysis.js', sports=True),
+        series.url: shell(series.title, sports_body(basketball, branch_stage(series, mental, available)), 2,
+                          'assets/data/basketball-analysis.js', sports=True),
+        VOCABULARY: shell('Vocabulary explorer', _with_lead(vocabulary_body(music, section='Text Analysis', root='../../../'), _lead(VOCABULARY)),
+                          3, music=True, analysis=True),
+        FEELINGS: shell('Feelings explorer', _with_lead(feelings_body(music, section='Text Analysis', root='../../../'), _lead(FEELINGS)),
+                        3, music=True, analysis=True),
+        LEETCODE: shell('LeetCode & algorithms', _with_lead(leetcode_body(code, section='LeetCode', root='../../../'), _lead(LEETCODE)),
+                        3, analysis=True),
+        GUIDE: reader_html(root, site, 'notebook_sources/guides/mental_map_guide.tex', 'mental-map-guide',
+                           'Adding notes to the Mental Map', GUIDE,
+                           '<a href="../index.html">Mental Map ↗</a><a href="../../Science-and-Engineering/index.html">Science &amp; Engineering ↗</a>',
+                           pdf_key='mental-map-guide', byline='Liam McGrath · A how-to for filling the 216 destinations',
+                           note='Steps for moving notes from a Gemini chat log into the right subsubsection, checking them and publishing both repositories.'),
+        CHANGE_LOG: reader_html(root, site, 'notebook_sources/website/change_log.tex', 'website-change-log', 'Website change log', CHANGE_LOG,
+                                '<a href="../index.html">Website Changes ↗</a><a href="../Upcoming-Changes/index.html">Upcoming changes ↗</a>',
+                                byline='Liam McGrath · Requested and implemented changes, newest first',
+                                note='Each date lists what was requested and what was built. Planned work is in Upcoming Changes.'),
+        UPCOMING: reader_html(root, site, 'notebook_sources/website/upcoming_changes.tex', 'website-upcoming', 'Upcoming website changes', UPCOMING,
+                              '<a href="../index.html">Website Changes ↗</a><a href="../Change-Log/index.html">Change log ↗</a>',
+                              byline='Liam McGrath · Planned work and the change-request database plan',
+                              note='Requests are grouped by the date they were made; finished items move to the change log.'),
+        UFC: shell('UFC predictions vs. outcomes', premade_body(
+            NODES[PREDICTIONS], 'UFC predictions vs. outcomes', 'Sports Analytics · Premade tab',
+            'Fight picks recorded before each event, then checked against the results.',
+            ('Log each pick before the event: fighters, predicted winner, method and confidence.',
+             'Add the official result after the event, without editing the original pick.',
+             'Score the picks over time: hit rate, plus a calibration check of the stated confidence.'), _lead(UFC, 'UFC predictions vs. outcomes')), 4),
+        NBA: shell('NBA predictions vs. outcomes', premade_body(
+            NODES[PREDICTIONS], 'NBA predictions vs. outcomes', 'Sports Analytics · Premade tab',
+            'Game and season predictions recorded in advance, then scored against what happened.',
+            ('Log each prediction before tip-off or the season start, with the reasoning and confidence.',
+             'Add the final score or standing once it is official, without editing the original call.',
+             'Score the record over time, by game and by season-long call.'), _lead(NBA, 'NBA predictions vs. outcomes')), 4),
+    }
+    for key, route, body in (('running', RUNNING, running_body), ('swimming', SWIMMING, swimming_body),
+                             ('weightlifting', WEIGHTLIFTING, weightlifting_body)):
+        node = NODES[route.removesuffix('/index.html')]
+        hosted[route] = shell(f'{node.title} log', body(athletics[key], _lead(route)), 3,
+                              styles=('assets/sports.css', 'assets/athletics.css'))
+        overview = route.replace('index.html', 'Overview/index.html')
+        hosted[overview] = reader_html(root, site, f'notebook_sources/athletics/{key}.tex', f'athletics-{key}', f'{node.title}: overview', overview,
+                                       f'<a href="../index.html">{node.title} dashboard ↗</a><a href="../../index.html">Athletics ↗</a>',
+                                       images='tex_images/athletics', byline='Liam McGrath · Training overview',
+                                       note='History and context for the logged training. The dashboard holds every logged value.')
+    pages.update(hosted)
     for path, content in pages.items():
         write(site / path, content)
+    for path, target in REDIRECTS.items():
+        write(site / path, redirect_html(path, target))
     upgrade_existing_pages(site)
-    manifest = {'pages': list(pages), 'document': {key: result[key] for key in ('equation_count', 'image_count', 'warnings')}, 'music': music['summary'], 'codeModules': code['moduleCount']}
+    manifest = {'pages': list(pages), 'redirects': list(REDIRECTS), 'atlasNodes': len(NODES),
+                'document': {key: result[key] for key in ('equation_count', 'image_count', 'warnings')},
+                'music': music['summary'], 'codeModules': code['moduleCount'], 'basketball': basketball['summary'],
+                'leetcodeEntries': len(leetcode['problems']), 'rapSongs': len(rap['songs'])}
     write(assets / 'data' / 'portfolio-build.json', safe_json(manifest))
-    print(f'Portfolio generated: {site} · {len(pages)} pages · {len(result["headings"])} document headings')
+    print(f'Portfolio generated: {site} · {len(pages)} pages · {len(REDIRECTS)} redirects · {len(result["headings"])} document headings')
     return manifest

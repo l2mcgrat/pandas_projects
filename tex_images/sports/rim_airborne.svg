@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="504pt" viewBox="0 0 864 504" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <title>RIM / CONTACT, CATCH, RELEASE</title>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>RIM / CONTACT, CATCH, RELEASE</dc:title>
+    <dc:description>Rim contact is required; additional backboard contact is allowed</dc:description>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>First to Four original diagrams</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 504 
+L 864 504 
+L 864 0 
+L 0 0 
+z
+" style="fill: #fffdf7"/>
+  </g>
+  <g id="axes_1">
+   <g id="line2d_1">
+    <path d="M 36.936 91.0368 
+L 827.064 91.0368 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 70.416 357.984 
+L 793.584 357.984 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #536775; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 231.12 265.248 
+L 231.12 132.768 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #183047; stroke-width: 5; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 231.12 232.128 
+L 281.34 232.128 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 4; stroke-linecap: square"/>
+   </g>
+   <g id="patch_2">
+    <path d="M 145.598719 277.197467 
+Q 200.654242 230.779833 270.405282 228.920325 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 263.922276 225.89202 
+L 270.405282 228.920325 
+L 264.092834 232.289747 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 290.023834 228.565695 
+Q 369.185843 218.912524 435.099029 259.700938 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 431.340666 253.612038 
+L 435.099029 259.700938 
+L 427.972891 259.054288 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 473.595457 257.211413 
+Q 533.600093 197.938099 615.273378 189.499992 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 608.578405 186.974653 
+L 615.273378 189.499992 
+L 609.236122 193.340767 
+z
+" clip-path="url(#p825037869d)" style="fill: #087f83; stroke: #087f83; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 130.68 296.3808 
+C 133.69886 296.3808 136.594482 295.194291 138.729138 293.082588 
+C 140.863794 290.970885 142.0632 288.106399 142.0632 285.12 
+C 142.0632 282.133601 140.863794 279.269115 138.729138 277.157412 
+C 136.594482 275.045709 133.69886 273.8592 130.68 273.8592 
+C 127.66114 273.8592 124.765518 275.045709 122.630862 277.157412 
+C 120.496206 279.269115 119.2968 282.133601 119.2968 285.12 
+C 119.2968 288.106399 120.496206 290.970885 122.630862 293.082588 
+C 124.765518 295.194291 127.66114 296.3808 130.68 296.3808 
+z
+" clip-path="url(#p825037869d)" style="fill: #fffdf7; stroke: #b75016; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 119.2968 285.12 
+L 142.0632 285.12 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_6">
+    <path d="M 130.68 296.3808 
+L 130.68 273.8592 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 274.644 238.752 
+C 277.3077 238.752 279.86266 237.70508 281.746181 235.841813 
+C 283.629701 233.978546 284.688 231.451058 284.688 228.816 
+C 284.688 226.180942 283.629701 223.653454 281.746181 221.790187 
+C 279.86266 219.92692 277.3077 218.88 274.644 218.88 
+C 271.9803 218.88 269.42534 219.92692 267.541819 221.790187 
+C 265.658299 223.653454 264.6 226.180942 264.6 228.816 
+C 264.6 231.451058 265.658299 233.978546 267.541819 235.841813 
+C 269.42534 237.70508 271.9803 238.752 274.644 238.752 
+z
+" clip-path="url(#p825037869d)" style="fill: #fffdf7; stroke: #b75016; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_7">
+    <path d="M 264.6 228.816 
+L 284.688 228.816 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_8">
+    <path d="M 274.644 238.752 
+L 274.644 218.88 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 455.436 280.4832 
+C 458.63244 280.4832 461.698392 279.226896 463.958617 276.990976 
+C 466.218841 274.755055 467.4888 271.72207 467.4888 268.56 
+C 467.4888 265.39793 466.218841 262.364945 463.958617 260.129024 
+C 461.698392 257.893104 458.63244 256.6368 455.436 256.6368 
+C 452.23956 256.6368 449.173608 257.893104 446.913383 260.129024 
+C 444.653159 262.364945 443.3832 265.39793 443.3832 268.56 
+C 443.3832 271.72207 444.653159 274.755055 446.913383 276.990976 
+C 449.173608 279.226896 452.23956 280.4832 455.436 280.4832 
+z
+" clip-path="url(#p825037869d)" style="fill: #fffdf7; stroke: #b75016; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_9">
+    <path d="M 443.3832 268.56 
+L 467.4888 268.56 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_10">
+    <path d="M 455.436 280.4832 
+L 455.436 256.6368 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 632.88 197.6832 
+C 636.07644 197.6832 639.142392 196.426896 641.402617 194.190976 
+C 643.662841 191.955055 644.9328 188.92207 644.9328 185.76 
+C 644.9328 182.59793 643.662841 179.564945 641.402617 177.329024 
+C 639.142392 175.093104 636.07644 173.8368 632.88 173.8368 
+C 629.68356 173.8368 626.617608 175.093104 624.357383 177.329024 
+C 622.097159 179.564945 620.8272 182.59793 620.8272 185.76 
+C 620.8272 188.92207 622.097159 191.955055 624.357383 194.190976 
+C 626.617608 196.426896 629.68356 197.6832 632.88 197.6832 
+z
+" clip-path="url(#p825037869d)" style="fill: #fffdf7; stroke: #b75016; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_11">
+    <path d="M 620.8272 185.76 
+L 644.9328 185.76 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_12">
+    <path d="M 632.88 197.6832 
+L 632.88 173.8368 
+" clip-path="url(#p825037869d)" style="fill: none; stroke: #b75016; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #183047" x="36.936" y="43.950013" transform="rotate(-0 36.936 43.950013)">RIM / CONTACT, CATCH, RELEASE</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536775" x="36.936" y="72.875313" transform="rotate(-0 36.936 72.875313)">Rim contact is required; additional backboard contact is allowed</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #536775" x="36.936" y="481.024238" transform="rotate(-0 36.936 481.024238)">FIRST TO FOUR  /  Original house-rule illustration  /  Schematic, not official court dimensions</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536775" x="137.376" y="384.203313" transform="rotate(-0 137.376 384.203313)">Ground</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #183047" x="167.508" y="135.803313" transform="rotate(-0 167.508 135.803313)">Backboard</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #b75016" x="304.776" y="255.035313" transform="rotate(-0 304.776 255.035313)">Rim</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; fill: #087f83" transform="translate(433.336313 307.068797)">CATCH</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; fill: #087f83" transform="translate(426.65475 322.785703)">airborne</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; fill: #087f83" transform="translate(656.74425 247.405922)">RELEASE</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; fill: #087f83" transform="translate(636.939563 263.122828)">before landing</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #536775" transform="translate(475.786797 128.59973)">Time sequence left → right</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #536775" transform="translate(439.897578 143.006895)">(not the physical flight of the final shot)</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(250.539375 419.676797)">Required setup: RIM touch; backboard may also be touched.</text>
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; fill: #183047" transform="translate(223.138125 435.393703)">Setup goes in? Apply BALL accounting, not a normal immediate miss.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p825037869d">
+   <rect x="30.24" y="20.16" width="803.52" height="463.68"/>
+  </clipPath>
+ </defs>
+</svg>

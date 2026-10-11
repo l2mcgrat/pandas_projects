@@ -1,7 +1,8 @@
 """Focused converter regressions. Run: python -B -m unittest discover -s site_content/tests -v.
 
 No checked-in/generated fixture files: conversion outputs live in temporary
-directories. The real-document tests intentionally use the unchanged source.
+directories. The first-edition regressions intentionally use the byte-identical
+archive; merged-document preservation is covered by the publishing tests.
 """
 
 from collections import Counter
@@ -199,7 +200,7 @@ class MentalMapTests(unittest.TestCase):
     def setUpClass(cls):
         cls.temporary = tempfile.TemporaryDirectory()
         cls.addClassCleanup(cls.temporary.cleanup)
-        cls.source = ROOT / "mental_map.tex"
+        cls.source = ROOT / "notebook_sources/originals/mental_map.pre-merge.tex"
         cls.original = cls.source.read_bytes()
         cls.assets = Path(cls.temporary.name) / "mental-map"
         cls.result = convert_document(cls.source, ROOT / "tex_images/mental_map", cls.assets, "../assets/documents/mental-map")
