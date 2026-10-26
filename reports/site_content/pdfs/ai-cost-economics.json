@@ -1,0 +1,24 @@
+{
+  "compiler": {
+    "flags": [
+      "--untrusted",
+      "--keep-logs",
+      "--keep-intermediates",
+      "--outdir",
+      "output"
+    ],
+    "name": "tectonic",
+    "sourceDateEpoch": "946684800",
+    "version": "Tectonic 0.17.0"
+  },
+  "inputs": {
+    "images": [],
+    "source": {
+      "path": "notebook_sources/studies/ai_cost_economics.tex",
+      "sha256": "86b2a521f8f616a91e2cfe81efd1156e0cef537a65f462984c04d2608dd59c85"
+    }
+  },
+  "key": "ai-cost-economics",
+  "pdfSha256": "d7903fe650dfe803a808078600927a111555a41cbec78873c875a9f745266852",
+  "schemaVersion": 1
+}

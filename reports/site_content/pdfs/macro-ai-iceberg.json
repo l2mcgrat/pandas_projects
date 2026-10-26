@@ -1,0 +1,24 @@
+{
+  "compiler": {
+    "flags": [
+      "--untrusted",
+      "--keep-logs",
+      "--keep-intermediates",
+      "--outdir",
+      "output"
+    ],
+    "name": "tectonic",
+    "sourceDateEpoch": "946684800",
+    "version": "Tectonic 0.17.0"
+  },
+  "inputs": {
+    "images": [],
+    "source": {
+      "path": "notebook_sources/studies/macro_ai_iceberg.tex",
+      "sha256": "99dc16815871c0699574ae308f1f5ae0edee41bebd0acbe4ff2e6faaebc9db09"
+    }
+  },
+  "key": "macro-ai-iceberg",
+  "pdfSha256": "ad3f7be4de2d6899e88a36bdd5190102611d379d1c285563c3a118e621e2a1dc",
+  "schemaVersion": 1
+}

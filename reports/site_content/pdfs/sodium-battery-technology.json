@@ -1,0 +1,24 @@
+{
+  "compiler": {
+    "flags": [
+      "--untrusted",
+      "--keep-logs",
+      "--keep-intermediates",
+      "--outdir",
+      "output"
+    ],
+    "name": "tectonic",
+    "sourceDateEpoch": "946684800",
+    "version": "Tectonic 0.17.0"
+  },
+  "inputs": {
+    "images": [],
+    "source": {
+      "path": "notebook_sources/studies/sodium_battery_technology.tex",
+      "sha256": "8feb34e11406d15fb69babfcc7c6b1da3bbafb87034cc4e686662fdeb1732267"
+    }
+  },
+  "key": "sodium-battery-technology",
+  "pdfSha256": "21a6294967fa7593ded60006ad44d9ccad4a81d7d28f64f7b29a48a18f49b7c6",
+  "schemaVersion": 1
+}

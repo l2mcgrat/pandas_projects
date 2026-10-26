@@ -40,8 +40,17 @@ ALGORITHMS = "Science-and-Engineering/Computer-Science/Data-Structures-and-Algor
 FEELINGS = "Language-and-Programming/Text-Analysis/Sentiment/index.html"
 NEW_PAGES = {
     "index.html", "About/index.html", "Mental-Map/index.html", "About/Resume/index.html",
-    "Atlas/index.html", CONTROL, "Language-and-Programming/LeetCode/Source-Index/index.html",
+    "Atlas/index.html", "Workbench/index.html", "Updates/index.html", "Completion/index.html", "Traffic/index.html",
+    CONTROL, "Language-and-Programming/LeetCode/Source-Index/index.html",
     "Mental-Map/Guide/index.html",
+    "Business-and-Economics/Macroeconomics/Economic-Growth/Paper/index.html",
+    "Business-and-Economics/Law-and-Policy/Public-Policy/Paper/index.html",
+    "Business-and-Economics/Microeconomics/Game-Theory/Gas-Price-Collusion/index.html",
+    "Business-and-Economics/Microeconomics/Game-Theory/Paper/index.html",
+    "Science-and-Engineering/Chemistry/Electrochemistry/Sodium-Battery-Technology/index.html",
+    "Science-and-Engineering/Chemistry/Electrochemistry/Paper/index.html",
+    "Business-and-Economics/Emerging-Industries/Artificial-Intelligence/AI-Cost-Study/index.html",
+    "Business-and-Economics/Emerging-Industries/Artificial-Intelligence/Paper/index.html",
     "Language-and-Programming/Coding-Projects/Website-Changes/Change-Log/index.html",
     "Language-and-Programming/Coding-Projects/Website-Changes/Upcoming-Changes/index.html",
     "Sports-and-Entertainment/Sports-Analytics/Predictions-and-Results/UFC-Predictions-vs-Outcomes/index.html",
@@ -49,8 +58,8 @@ NEW_PAGES = {
     *(f"Gaming-and-Performance-Log/Athletics/{name}/Overview/index.html" for name in ("Running", "Swimming", "Weightlifting")),
     *(node.url for node in atlas.NODES.values() if node.depth),
 }
-NAVIGATION = ("Mental-Map/index.html", "Atlas/index.html", "index.html#creator-owen",
-              "Smash/index.html", "About/index.html")
+NAVIGATION = ("Mental-Map/index.html", "Atlas/index.html", "Workbench/index.html", "Updates/index.html",
+              "index.html#creator-owen", "Smash/index.html", "Completion/index.html", "Traffic/index.html", "About/index.html")
 
 
 def active_tex(text):
@@ -388,7 +397,7 @@ class UpgradeTests(TemporaryTest):
         page, _ = self.legacy(head='<header class="site-header" data-layout="legacy">Old</header>')
         upgrade_existing_pages(self.root)
         soup = BeautifulSoup(page.read_text(encoding="utf-8"), "html.parser")
-        self.assertEqual(len(soup.select('header nav[aria-label="Primary navigation"] a')), 5)
+        self.assertEqual(len(soup.select('header nav[aria-label="Primary navigation"] a')), len(NAVIGATION))
 
     def test_unrelated_html_and_git_metadata_untouched(self):
         unrelated = self.root / "Other/index.html"
@@ -427,7 +436,7 @@ class IntegrationTests(unittest.TestCase):
         cls.paper = BeautifulSoup((cls.site / "Mental-Map/index.html").read_bytes().decode("utf-8"), "html.parser")
 
     def test_every_atlas_page_and_all_local_links_fragments_assets(self):
-        self.assertEqual(len(NEW_PAGES), 5 + 258 + 2 + 8)
+        self.assertEqual(len(NEW_PAGES), 5 + 258 + 2 + 20)
         self.assertEqual(set(self.manifest["pages"]), NEW_PAGES)
         self.assertEqual(self.manifest["atlasNodes"], 259)
         cache = {}
@@ -566,7 +575,7 @@ class IntegrationTests(unittest.TestCase):
         display = [slot.payload for slot in slots.values() if slot.display]
         independent = re.compile(r"\\begin\{(?P<env>equation|align)\}.*?\\end\{(?P=env)\}|\\\[(.*?)\\\]", re.S)
         self.assertEqual([m[2] if m[2] is not None else m[0] for m in independent.finditer(active_tex(source))], display)
-        self.assertEqual(len(display), 682)
+        self.assertEqual(len(display), 687)
         self.assertEqual(sum(slot.original.startswith(r"\[") for slot in slots.values()), 1)
         rendered_inline = [span.get_text()[2:-2] for span in self.paper.select(".tex-paper .math.inline")]
         reference = re.compile(r"\\(?:ref|eqref|autoref)\{([^{}]+)\}")
@@ -790,7 +799,10 @@ class PublishedSiteTests(unittest.TestCase):
                 self.assertEqual(failures, [])
 
     def test_shared_navigation_targets_on_every_upgraded_shell_page(self):
-        expected = {"index.html", "Mental-Map/index.html", "Atlas/index.html", "Smash/index.html", "About/index.html"}
+        expected = {
+            "index.html", "Mental-Map/index.html", "Atlas/index.html", "Workbench/index.html", "Updates/index.html",
+            "Smash/index.html", "Completion/index.html", "Traffic/index.html", "About/index.html",
+        }
         for site in self.sites:
             failures = []
             for page in sorted(site.rglob("*.html")):

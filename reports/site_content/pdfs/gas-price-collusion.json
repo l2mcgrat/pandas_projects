@@ -1,0 +1,24 @@
+{
+  "compiler": {
+    "flags": [
+      "--untrusted",
+      "--keep-logs",
+      "--keep-intermediates",
+      "--outdir",
+      "output"
+    ],
+    "name": "tectonic",
+    "sourceDateEpoch": "946684800",
+    "version": "Tectonic 0.17.0"
+  },
+  "inputs": {
+    "images": [],
+    "source": {
+      "path": "notebook_sources/studies/gas_price_collusion.tex",
+      "sha256": "83977fc11ae32032f92ab193e18eb27ac2755ed0718bf4e1d53f83b1e552e323"
+    }
+  },
+  "key": "gas-price-collusion",
+  "pdfSha256": "a9a2fe0a6f6365328d46df9d433ea1be8c071987e8300e743f493422d8c26746",
+  "schemaVersion": 1
+}

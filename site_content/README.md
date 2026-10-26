@@ -203,7 +203,21 @@ Each dashboard's **Add a session** section shows the file, line format and rebui
 command. If an older copy under LiamMs_PandasProjects/Gaming-and-Performance-Log/Athletics
 differs from the records copy, the build stops rather than ignore the edit. Weightlifting
 charts plot the heaviest set and the heaviest weight for 10+ and 12+ reps
-(`REP_TARGETS`), with reps at the heaviest set on a second axis.
+(`REP_TARGETS`), with reps at the heaviest set on a second axis. Tempo runs come from
+Tempo_Run_Log.txt; swimming handles yard-logged sessions (0.9144 m/yd). The tolerant
+set grammar accepts bodyweight sets, inline dropsets and rep-less weights, excluding
+the latter two with a stated reason.
+
+## Health logs
+
+Sleep/dream and diet logs live in [records/health](../records/health/) with the same
+stale-copy guard. [health.py](health.py) parses them strictly, flags written calorie
+totals that disagree with the listed numbers, and reads the dreams with the feelings
+lexicon, VADER and a fixed motif word list (`MOTIFS`) — presented as a playful count,
+never psychology. `OCTOBER_BMR` (2050) and `DAILY_TARGET_DEFICIT` (500) are owner
+settings. [health_views.py](health_views.py) renders the two dashboards
+(styled by [web/health.css](web/health.css)); the diet page cross-references training
+days from the athletics logs. The unredacted tempo route map is git-ignored.
 
 ## LeetCode and Rap destinations
 

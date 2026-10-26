@@ -26,9 +26,22 @@ DOCUMENTS = {
     "basketball-rules": "notebook_sources/sports/basketball_rules.tex",
     "creator-pitch": "notebook_sources/sports/creator_pitch.tex",
     "mental-map-guide": "notebook_sources/guides/mental_map_guide.tex",
+    "macro-ai-iceberg": "notebook_sources/studies/macro_ai_iceberg.tex",
+    "alberta-referendum-2026": "notebook_sources/studies/alberta_referendum_2026.tex",
+    "gas-price-collusion": "notebook_sources/studies/gas_price_collusion.tex",
+    "sodium-battery-technology": "notebook_sources/studies/sodium_battery_technology.tex",
+    "ai-cost-economics": "notebook_sources/studies/ai_cost_economics.tex",
 }
 # Root-relative folder each article's images must come from.
-IMAGE_DIRS = {"work-term-report": "", "mental-map-guide": "tex_images/guides/"}
+IMAGE_DIRS = {
+    "work-term-report": "",
+    "mental-map-guide": "tex_images/guides/",
+    "macro-ai-iceberg": "tex_images/studies/",
+    "alberta-referendum-2026": "tex_images/studies/",
+    "gas-price-collusion": "tex_images/studies/",
+    "sodium-battery-technology": "tex_images/studies/",
+    "ai-cost-economics": "tex_images/studies/",
+}
 CACHE = "reports/site_content/pdfs"
 EPOCH = "946684800"  # Fixed 2000-01-01 UTC; not a document completion date.
 FLAGS = ("--untrusted", "--keep-logs", "--keep-intermediates", "--outdir", "output")
@@ -38,17 +51,17 @@ TOKEN = re.compile(r"\\(?:[A-Za-z@]+|[^\r\n])|%[^\r\n]*")
 # No input/include, file I/O, special, dynamic command construction, catcodes,
 # package loading aliases, embedded code, fonts by filesystem path, or shell I/O.
 COMMANDS = set("""
-@ifstar Big Bigg Delta Omega Phi Psi Theta Tilde Xi addcontentsline arabic author
+@ifstar AA Big Bigg Delta Lambda Omega Phi Psi Theta Tilde Xi addcontentsline alpha approx arabic author
 baselineskip begin beta bfseries big bigg bra caption cdot centering chi circ
-clearpage cos date delta documentclass emergencystretch end epsilon equiv exp frac gg hat hbar
-hline hspace hyperlink hypertarget includegraphics infty int item kappa ket
-label langle leq let lim linewidth ln makeatletter makeatother maketitle mathcal
+clearpage cos date delta documentclass dots emergencystretch end epsilon equiv exp frac gamma ge gg hat hbar
+hline hspace hyperlink hypertarget in includegraphics infty int item kappa ket
+label lambda langle left leq let lim linewidth ln makeatletter makeatother maketitle mathcal max mid min
 mu multicolumn nabla neq newcommand nolinkurl normalfont normalsize omega paragraph partial
-phi pi prod providecommand rangle ref renewcommand rho rightarrow section
+phi pi pounds prod propto providecommand qquad quad rangle ref renewcommand rho right rightarrow section
 setcounter setlength sigma simeq sin sqrt subsection subsubsection subsubsubsection sum
-tableofcontents tau textasciitilde textbackslash textbf textit textsuperscript texttt textwidth thefigure
+tableofcontents tau text textasciitilde textbackslash textbf textit textsuperscript texttt textwidth thefigure
 theparagraph therefore thesection theta thetable tilde times title titleformat
-titlespacing url usepackage vec vspace workreportsection workreportstarsection
+titlespacing to url usepackage varepsilon vec vspace workreportsection workreportstarsection
 """.split())
 PACKAGES = {"amsmath", "amssymb", "graphicx", "braket", "geometry", "titlesec", "hyperref", "enumitem", "xurl"}
 

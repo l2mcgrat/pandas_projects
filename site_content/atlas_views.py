@@ -24,12 +24,32 @@ FEELINGS = "Language-and-Programming/Text-Analysis/Sentiment/index.html"
 VOCABULARY = "Language-and-Programming/Text-Analysis/Word-Frequency/index.html"
 LEETCODE = "Language-and-Programming/LeetCode/Source-Index/index.html"
 ATLAS = "Atlas/index.html"
+WORKBENCH = "Workbench/index.html"
+UPDATES = "Updates/index.html"
+COMPLETION = "Completion/index.html"
+TRAFFIC = "Traffic/index.html"
 MENTAL_MAP = "Mental-Map/index.html"
 GUIDE = "Mental-Map/Guide/index.html"
+MACRO_STUDY = "Business-and-Economics/Macroeconomics/Economic-Growth/index.html"
+MACRO_PAPER = "Business-and-Economics/Macroeconomics/Economic-Growth/Paper/index.html"
+ALBERTA_STUDY = "Business-and-Economics/Law-and-Policy/Public-Policy/index.html"
+ALBERTA_PAPER = "Business-and-Economics/Law-and-Policy/Public-Policy/Paper/index.html"
+GAS_STUDY = "Business-and-Economics/Microeconomics/Game-Theory/index.html"
+GAS_TAB = "Business-and-Economics/Microeconomics/Game-Theory/Gas-Price-Collusion/index.html"
+GAS_PAPER = "Business-and-Economics/Microeconomics/Game-Theory/Paper/index.html"
+SODIUM_STUDY = "Science-and-Engineering/Chemistry/Electrochemistry/index.html"
+SODIUM_TAB = "Science-and-Engineering/Chemistry/Electrochemistry/Sodium-Battery-Technology/index.html"
+SODIUM_PAPER = "Science-and-Engineering/Chemistry/Electrochemistry/Paper/index.html"
+AI_COST_STUDY = "Business-and-Economics/Emerging-Industries/Artificial-Intelligence/index.html"
+AI_COST_TAB = "Business-and-Economics/Emerging-Industries/Artificial-Intelligence/AI-Cost-Study/index.html"
+AI_COST_PAPER = "Business-and-Economics/Emerging-Industries/Artificial-Intelligence/Paper/index.html"
 _ATHLETICS = "Gaming-and-Performance-Log/Athletics"
 RUNNING = f"{_ATHLETICS}/Running/index.html"
 SWIMMING = f"{_ATHLETICS}/Swimming/index.html"
 WEIGHTLIFTING = f"{_ATHLETICS}/Weightlifting/index.html"
+_HEALTH = "Gaming-and-Performance-Log/Health"
+SLEEP = f"{_HEALTH}/Sleep/index.html"
+DIET = f"{_HEALTH}/Diet/index.html"
 _WEBSITE = "Language-and-Programming/Coding-Projects/Website-Changes"
 CHANGE_LOG = f"{_WEBSITE}/Change-Log/index.html"
 UPCOMING = f"{_WEBSITE}/Upcoming-Changes/index.html"
@@ -41,10 +61,15 @@ LEETCODE_LEAVES = tuple(f"Language-and-Programming/LeetCode/{leaf}" for leaf in 
     "Lists-and-Arrays", "Trees-and-Tries", "Graphs", "Dynamic-Programming", "Recursion", "Hard-Problems"))
 RAP_LEAVES = tuple(f"Language-and-Programming/Rap/{leaf}" for leaf in (
     "Seven-Deadly-Sins", "Homewood-and-Trafalgar", "Made-in-Abyss", "Vagabond", "NanoFtheAbove", "Future-Projects"))
+DATABASE_LEAVES = (
+    "Language-and-Programming/Coding-Projects/Database-Exploration",
+    "Language-and-Programming/Coding-Projects/Relational-Database-Development",
+)
 # Dynamic Programming renders its selection rule but has no solutions yet, so it is not "Live".
 HOSTED = frozenset(route.removesuffix("/index.html") for route in (
-    QUANTUM, ALGORITHMS, REPORT, RULES, DASHBOARD, PITCH, FEELINGS, VOCABULARY, RUNNING, SWIMMING, WEIGHTLIFTING)) | frozenset(
-    path for path in LEETCODE_LEAVES + RAP_LEAVES if not path.endswith("Dynamic-Programming"))
+    QUANTUM, ALGORITHMS, REPORT, RULES, DASHBOARD, PITCH, FEELINGS, VOCABULARY, RUNNING, SWIMMING, WEIGHTLIFTING,
+    SLEEP, DIET, MACRO_STUDY, ALBERTA_STUDY, GAS_STUDY, SODIUM_STUDY, AI_COST_STUDY)) | frozenset(
+    path for path in LEETCODE_LEAVES + RAP_LEAVES + DATABASE_LEAVES if not path.endswith("Dynamic-Programming"))
 
 
 @dataclass(frozen=True)
@@ -110,20 +135,57 @@ _GUIDE = Feature(GUIDE, "Guide · PDF", "Adding notes to the Mental Map", "From 
                  "Career-and-Education/Projects/Mental-Map", date="2026-10-04")
 _ATLAS = Feature(ATLAS, "Site atlas", "Every page at a glance", "The radial tree of all 259 nodes.",
                  "Language-and-Programming/Coding-Projects/Website-Changes", date="2026-10-04")
+_WORKBENCH = Feature(WORKBENCH, "Database · 4 tables", "Notebook Workbench",
+                     "Study queue, wishlist to-dos, spontaneous rap bars by bucket, and a browser voice-note studio.",
+                     "Language-and-Programming/Coding-Projects/Relational-Database-Development", date="2026-10-25")
+_ICEBERG = Feature(MACRO_STUDY, "Macroeconomics · Study 01", "The AI Iceberg Index & sector roles",
+                   "2.2% visible tech adoption vs. 11.7% submerged skill exposure across 12 NAICS industries and 12 regional economies.",
+                   "Business-and-Economics/Macroeconomics/Economic-Growth", date="2026-10-25")
+_ICEBERG_PAPER = Feature(MACRO_PAPER, "LaTeX paper · PDF", "Above and Beneath the Surface",
+                         "Formal decomposition of the Iceberg Index, sector role matrices, and regional multipliers.",
+                         "Business-and-Economics/Macroeconomics", date="2026-10-25")
+_ALBERTA = Feature(ALBERTA_STUDY, "Public Policy · Study 02", "2026 Alberta Referendum anatomy",
+                   "All 10 October 19 ballot questions and how region, party coalition, age, and identity split the vote.",
+                   "Business-and-Economics/Law-and-Policy/Public-Policy", date="2026-10-25")
+_ALBERTA_PAPER = Feature(ALBERTA_PAPER, "LaTeX paper · PDF", "Three Ballots in One",
+                         "Ballot roll-off, demographic decomposition, and why 25% Option 2 equals ~18% direct separatism.",
+                         "Business-and-Economics/Law-and-Policy", date="2026-10-25")
+_GAS = Feature(GAS_STUDY, "Game Theory · Study ST-06", "Gas Price Collusion & oligopoly supergames",
+               "Cross-country pump price decomposition, Rockets & Feathers ECM, and repeated Bertrand SPNE thresholds.",
+               "Business-and-Economics/Microeconomics/Game-Theory", date="2026-10-25")
+_GAS_PAPER = Feature(GAS_PAPER, "LaTeX paper · PDF", "Why Gas Prices Feather Down",
+                     "Repeated Bertrand supergames, German MTS-K AI pricing, Perth FuelWatch signaling, and Pandas code.",
+                     "Business-and-Economics/Microeconomics", date="2026-10-25")
+_SODIUM = Feature(SODIUM_STUDY, "Electrochemistry · Study ST-05", "Sodium Battery Technology & grid storage",
+                  "Period 2 vs. Period 3 electrochemistry, hard carbon intercalation, dual Al collectors, and −20°C grid retention.",
+                  "Science-and-Engineering/Chemistry/Electrochemistry", date="2026-10-25")
+_SODIUM_PAPER = Feature(SODIUM_PAPER, "LaTeX paper · PDF", "Period 3 Power: Sodium-Ion Batteries",
+                        "Faraday capacity, Shannon radius, Stokes desolvation kinetics, and ANL BatPaC cost floors.",
+                        "Science-and-Engineering/Chemistry", date="2026-10-25")
+_AI_COST = Feature(AI_COST_STUDY, "Emerging Industries · Study ST-08", "AI Cost & Compute Economics",
+                   "200× token inference deflation vs. $130M–$1B+ training clusters, Sparse MoE + MLA KV-cache, and cascade routing.",
+                   "Business-and-Economics/Emerging-Industries/Artificial-Intelligence", date="2026-10-26")
+_AI_COST_PAPER = Feature(AI_COST_PAPER, "LaTeX paper · PDF", "AI Cost & Compute Economics",
+                         "Chinchilla scaling, HBM3e memory-bandwidth roofline, Jevons Paradox in reasoning tokens, and Pandas code.",
+                         "Business-and-Economics/Emerging-Industries", date="2026-10-26")
 _CHANGES = Feature(CHANGE_LOG, "Reader · Dated", "Change log", "Every request and what was built, newest first.",
-                   "Language-and-Programming/Coding-Projects/Website-Changes", date="2026-10-10")
+                   "Language-and-Programming/Coding-Projects/Website-Changes", date="2026-10-25")
 _UPCOMING = Feature(UPCOMING, "Reader · Dated", "Upcoming changes", "Planned work by request date, and the change-request database plan.",
-                    "Language-and-Programming/Coding-Projects/Relational-Database-Development", date="2026-10-10")
+                    "Language-and-Programming/Coding-Projects/Relational-Database-Development", date="2026-10-25")
 _DATABASE = Feature(UPCOMING + "#database-plan", "Plan · Nine steps", "Change requests in a database",
                     "From the Mental Map's email form to an insert-only table, with validation and spam checks.",
                     "Language-and-Programming/Coding-Projects/Database-Exploration", date="2026-10-04")
-_RUN = Feature(RUNNING, "Athletics · Intervals", "Running dashboard", "Every I1 interval, session averages and pace per kilometre.",
-               f"{_ATHLETICS}/Running", date="2026-10-04")
-_SWIM = Feature(SWIMMING, "Athletics · Distance", "Swimming dashboard", "Distance per session, the running total and high-school bests.",
-                f"{_ATHLETICS}/Swimming", date="2026-10-10")
+_RUN = Feature(RUNNING, "Athletics · Intervals", "Running dashboard", "Every I1 interval, session averages, and the new tempo runs.",
+               f"{_ATHLETICS}/Running", date="2026-10-18")
+_SWIM = Feature(SWIMMING, "Athletics · Distance", "Swimming dashboard", "Distance per session in yards and metres, the running total and high-school bests.",
+                f"{_ATHLETICS}/Swimming", date="2026-10-18")
 _LIFT = Feature(WEIGHTLIFTING, "Athletics · Strength", "Weightlifting dashboard",
                 "Volume per session; for every exercise, the top set, the heaviest for 10 and 12 reps, and the reps.",
-                f"{_ATHLETICS}/Weightlifting", date="2026-10-10")
+                f"{_ATHLETICS}/Weightlifting", date="2026-10-18")
+_SLEEP = Feature(SLEEP, "Health · Journal", "Sleep & dream log", "Hours per night, every dream as written, and a playful motif reading.",
+                 f"{_HEALTH}/Sleep", date="2026-10-18")
+_DIET = Feature(DIET, "Health · Ledger", "Diet & calorie tracking", "Energy in and out on one chart, with the daily deficit against its target.",
+                f"{_HEALTH}/Diet", date="2026-10-18")
 _UFC = Feature(UFC, "Premade tab · UFC", "UFC predictions vs. outcomes", "A place to log fight predictions before the event and results after.",
                f"{PREDICTIONS}", date="2026-10-04")
 _NBA = Feature(NBA, "Premade tab · NBA", "NBA predictions vs. outcomes", "A place to log game and season predictions, then score them.",
@@ -132,12 +194,20 @@ _NBA = Feature(NBA, "Premade tab · NBA", "NBA predictions vs. outcomes", "A pla
 _LEETCODE_LEAVES = {path: (_LEET,) for path in LEETCODE_LEAVES}
 _RAP_LEAVES = {path: (_VOCAB, _FEEL) for path in RAP_LEAVES}
 FEATURES: dict[str, tuple[Feature, ...]] = {
-    "Science-and-Engineering": (_QM, _CONTROL, _DSA, _DIPOLE),
+    "Science-and-Engineering": (_SODIUM, _QM, _CONTROL, _DSA, _DIPOLE),
+    "Science-and-Engineering/Chemistry": (_SODIUM, _SODIUM_PAPER),
     "Science-and-Engineering/Physics": (_QM, _CONTROL, _DIPOLE, _REPORT),
     "Science-and-Engineering/Physics/Classical-Mechanics": (_CONTROL,),
     "Science-and-Engineering/Physics/Thermodynamics": (_DIPOLE,),
     "Science-and-Engineering/Computer-Science": (_DSA, _LEET, _REPORT),
     "Science-and-Engineering/Computer-Science/Simulations": (_DIPOLE, _REPORT),
+    "Business-and-Economics": (_AI_COST, _GAS, _ICEBERG, _ALBERTA, _AI_COST_PAPER, _GAS_PAPER, _ICEBERG_PAPER, _ALBERTA_PAPER),
+    "Business-and-Economics/Microeconomics": (_GAS, _GAS_PAPER),
+    "Business-and-Economics/Microeconomics/Market-Structures": (_GAS, _GAS_PAPER),
+    "Business-and-Economics/Macroeconomics": (_ICEBERG, _ICEBERG_PAPER, _ALBERTA),
+    "Business-and-Economics/Law-and-Policy": (_ALBERTA, _ALBERTA_PAPER),
+    "Business-and-Economics/Emerging-Industries": (_AI_COST, _AI_COST_PAPER, _ICEBERG, _ICEBERG_PAPER),
+    "Business-and-Economics/Emerging-Industries/Artificial-Intelligence": (_AI_COST, _AI_COST_PAPER, _ICEBERG),
     "Business-and-Economics/Best-Practices-and-Success-Stories/Honda": (_RESUME,),
     "Career-and-Education": (_ABOUT, _RESUME, _REPORT),
     "Career-and-Education/Job-Experiences": (_RESUME, _REPORT),
@@ -146,7 +216,7 @@ FEATURES: dict[str, tuple[Feature, ...]] = {
     "Career-and-Education/Job-Experiences/Corporate-Research-and-Development": (_RESUME,),
     "Career-and-Education/Projects": (_PROJECTS, _MAP, _SMASH, _DASH),
     "Career-and-Education/Projects/KUBO-NO2-Sensor": (_PROJECTS,),
-    "Career-and-Education/Projects/Pandas-Projects": (_SMASH, _DASH, _VOCAB),
+    "Career-and-Education/Projects/Pandas-Projects": (_GAS, _ICEBERG, _ALBERTA, _SMASH, _DASH, _VOCAB),
     "Career-and-Education/Projects/Mental-Map": (_MAP, _GUIDE),
     "Sports-and-Entertainment": (_DASH, _RULES, _PITCH),
     "Sports-and-Entertainment/Series-Hub/History": (Feature(DASHBOARD + "#series-log", "Analytics · Every finish", "The series log",
@@ -157,24 +227,28 @@ FEATURES: dict[str, tuple[Feature, ...]] = {
                                                             date="2026-10-04"),),
     "Sports-and-Entertainment/Sports-Analytics": (_UFC, _NBA),
     PREDICTIONS: (_UFC, _NBA),
-    "Gaming-and-Performance-Log": (_SMASH, _RUN, _LIFT),
+    "Gaming-and-Performance-Log": (_SMASH, _RUN, _LIFT, _SLEEP),
     "Gaming-and-Performance-Log/Smash-Bros": (_SMASH, _RANK, _SCORE, _OPPONENTS),
     "Gaming-and-Performance-Log/Smash-Bros/New-Smash-Mains": (_SMASH,),
     "Gaming-and-Performance-Log/Smash-Bros/Next-Smash-Mains": (_SMASH,),
     "Gaming-and-Performance-Log/Smash-Bros/Player-Statistics": (_RANK, _SCORE),
     _ATHLETICS: (_RUN, _SWIM, _LIFT),
-    "Language-and-Programming": (_VOCAB, _FEEL, _LEET),
-    "Language-and-Programming/Rap": (_VOCAB, _FEEL),
+    _HEALTH: (_SLEEP, _DIET),
+    f"{_HEALTH}/Analytics": (_SLEEP, _DIET),
+    f"{_HEALTH}/Mentality": (_SLEEP,),
+    "Language-and-Programming": (_WORKBENCH, _VOCAB, _FEEL, _LEET),
+    "Language-and-Programming/Rap": (_WORKBENCH, _VOCAB, _FEEL),
+    "Language-and-Programming/Learning-Progress": (_WORKBENCH, _ICEBERG, _ALBERTA),
     "Language-and-Programming/Text-Analysis": (_VOCAB, _FEEL),
     "Language-and-Programming/Text-Analysis/Lexicon": (_VOCAB, _FEEL),
     "Language-and-Programming/LeetCode": (_LEET, _DSA),
     **_LEETCODE_LEAVES,
     **_RAP_LEAVES,
-    "Language-and-Programming/Coding-Projects": (_CHANGES, _UPCOMING, _SMASH, _DASH),
+    "Language-and-Programming/Coding-Projects": (_WORKBENCH, _CHANGES, _UPCOMING, _SMASH, _DASH),
     "Language-and-Programming/Coding-Projects/Simulations": (_DIPOLE,),
-    "Language-and-Programming/Coding-Projects/Database-Exploration": (_DATABASE,),
-    "Language-and-Programming/Coding-Projects/Relational-Database-Development": (_DATABASE,),
-    "Language-and-Programming/Coding-Projects/Website-Changes": (_CHANGES, _UPCOMING, _DATABASE, _ATLAS),
+    "Language-and-Programming/Coding-Projects/Database-Exploration": (_WORKBENCH, _DATABASE),
+    "Language-and-Programming/Coding-Projects/Relational-Database-Development": (_WORKBENCH, _DATABASE),
+    "Language-and-Programming/Coding-Projects/Website-Changes": (_WORKBENCH, _CHANGES, _UPCOMING, _DATABASE, _ATLAS),
 }
 
 
@@ -350,8 +424,8 @@ def home_hero(mental: dict[str, str], cue: str) -> str:
     return f'''<section class="home-stage snap-section" id="home-atlas" aria-labelledby="home-title"><div class="home-copy">
       <p class="eyebrow"><span class="status-dot"></span> The personal atlas of Liam McGrath</p>
       <h1 id="home-title">Curiosity.<br>Patterns.<br><em>Connections.</em></h1>
-      <p class="home-description">A living notebook at the intersection of science, data and the things that make us human.</p>
+      <p class="home-description">A living notebook at the intersection of science, data and the things that make us human — built on <strong>Theory, Application, and Study</strong>.</p>
       <div class="home-actions"><a class="button primary" href="{MENTAL_MAP}">Enter the Mental Map <span aria-hidden="true">↗</span></a>
-      <a class="button ghost" href="{ATLAS}">Explore the site atlas <span aria-hidden="true">↗</span></a><a class="text-link" href="About/index.html">A little about me →</a></div>
+      <a class="button ghost" href="{WORKBENCH}">Open the Workbench <span aria-hidden="true">↗</span></a></div>
       <div class="home-caption"><span>01 — EXPLORE THE CONNECTIONS</span><p>Six fields. Thirty-six paths. 216 destinations.</p></div></div>
       <div class="map-column">{hex_map(ROOT, mental, "Six fields of exploration")}</div>{cue}</section>'''

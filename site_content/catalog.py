@@ -140,7 +140,7 @@ def leetcode_catalog(repo: Path) -> dict[str, Any]:
 
 RAP_PAGES = {
     "Seven-Deadly-Sins": ("Seven_Deadly_Sins", "Seven_Deadly_Sins2_v1", "Seven_Deadly_Sins2_v2", "Seven_Deadly_Sins2_v3"),
-    "Homewood-and-Trafalgar": ("Trafalgar",),
+    "Homewood-and-Trafalgar": ("Homewood", "Trafalgar"),
     "Made-in-Abyss": ("Made_in_Abyss",),
     "Vagabond": ("Vagabond",),
     "NanoFtheAbove": ("Old_Classics", "My_Hero_Academia"),

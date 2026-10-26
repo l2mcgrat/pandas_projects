@@ -3,11 +3,43 @@
 \usepackage[hidelinks]{hyperref}
 \title{Website Change Log}
 \author{Liam McGrath}
-\date{Last updated 10 October 2026}
+\date{Last updated 25 October 2026}
 \begin{document}
 \maketitle
 
 Newest first. Each date lists what was requested and what was implemented. Requests come from the prompts recorded in Website\_Change\_Log.txt and the build conversations; planned work lives in the separate Upcoming Changes document.
+
+\section{25 October 2026: database Workbench, hybrid log sync, and two flagship studies}
+\subsection{Requested changes}
+\begin{itemize}
+\item A hybrid Python script for pulling Gaming \& Performance logs from Google Drive (\texttt{Logs/}) or local files that parses structured entries for zero tokens and repairs formatting slips before rebuilding.
+\item A direct subpage like Atlas (\texttt{Workbench/index.html}) backed by four database tables: (1) a To Study with Data table, (2) a To-Do \& wishlist table, (3) a spontaneous rap lyric table with a topic-bucket dropdown, and (4) a voice-recording studio that feeds a journal and podcast queue.
+\item First end-to-end study for Macroeconomics: what AI will wipe out according to the MIT / Oak Ridge Iceberg Index, how the major NAICS industries break down into occupational roles, an interactive regional economy map, and a dedicated LaTeX paper.
+\item Second end-to-end study: the 19 October 2026 Alberta Referendum votes across all ten questions and how each demographic voted, with its own dedicated LaTeX paper.
+\end{itemize}
+\subsection{Implemented changes}
+\begin{itemize}
+\item \texttt{python -B -m site\_content.log\_sync} pulls all six athletics and health logs from a mounted Google Drive \texttt{Logs/} folder (or local edits), validates them with the strict parsers (0 tokens), applies deterministic regex repairs for common paste slips (0 tokens), and supports an optional \texttt{--llm-repair} single-line Gemini fallback ($<80$ tokens) when a line still fails.
+\item \texttt{Workbench/index.html} is live as a direct top-level subpage backed by a relational SQLite store (\texttt{records/workbench/workbench.db}) and JSON/CSV exports across all four tables, complete with browser capture forms, a Rap bucket filter, a Web Audio voice-note recorder with live dictation, and one-tap GitHub Mobile handoff.
+\item The Macroeconomics study (\texttt{Business-and-Economics/Macroeconomics/Economic-Growth/index.html}) charts the $2.2\%$ visible vs.\ $11.7\%$ submerged Iceberg split across 12 NAICS sectors, breaks every industry into six occupational role families, provides an interactive 12-region North American economy map, and links to its compiled Tectonic PDF paper (\texttt{Paper/index.html}).
+\item The Public Policy study (\texttt{Business-and-Economics/Law-and-Policy/Public-Policy/index.html}) charts all ten 19 October 2026 Alberta Referendum questions, compares 14 demographic slices by region, party coalition, age, turnout, and voting channel, analyzes voter motives inside both coalitions, and links to its compiled Tectonic PDF paper (\texttt{Paper/index.html}).
+\end{itemize}
+
+\section{18 October 2026: sleep, diet and two weeks of training}
+\subsection{Requested changes}
+\begin{itemize}
+\item A Sleep \& Dream log under Health, with some text analysis of the dreams.
+\item A Diet \& Calorie log under Health, charted with expenditure and consumption on one axis and the target and actual deficit on a second axis, noting the high NEAT and the October BMR of 2050 kcal.
+\item Pick up the updated swimming, weightlifting and running logs, and the new tempo-run log.
+\end{itemize}
+\subsection{Implemented changes}
+\begin{itemize}
+\item The Sleep destination charts hours per night, prints every dream as written, and reads them for motifs with a fixed word list, the site's feelings lexicon and VADER polarity --- labelled clearly as a playful pattern count, not psychoanalysis.
+\item The Diet destination charts energy out, energy in and the daily deficit against a 500 kcal/day reference, checks the written weekly summaries, keeps the owner's expenditure notes, and lists the training behind each day from the swimming, lifting and running logs. Written net values that disagree with the arithmetic are flagged, never corrected.
+\item The running dashboard gained a tempo-run section (10.4 km over two routes); its map stays unpublished because the screenshot shows the start point.
+\item The swimming page now handles the yard-logged sessions (converted at 0.9144 m/yd and shown as written) and flags the Oct 5 set list that does not add up to its written total.
+\item The weightlifting parser accepts the new session formats (bodyweight sets, an inline dropset, a set with no rep count, new splits); excluded sets are shown with their reason.
+\end{itemize}
 
 \section{10 October 2026: LeetCode, rap and training data}
 \subsection{Requested changes}

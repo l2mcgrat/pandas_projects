@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from datetime import date
 from html import escape
+import json
 import math
 from typing import Any
 
@@ -32,10 +33,91 @@ def _num(value: float) -> str:
     return f"{value:,.0f}"
 
 
-def _metrics(items: list[tuple[str, str, str]]) -> str:
-    return '<div class="sports-metrics" aria-label="Logged totals">' + "".join(
-        f'<div class="sports-metric"><span>{_e(label)}</span><strong>{_e(value)}</strong><small>{_e(note)}</small></div>'
-        for label, value, note in items) + "</div>"
+KPI_DEFINITIONS: dict[str, str] = {
+    # Macroeconomics · AI Iceberg Index (ST-01)
+    "Visible tip (surface)": "Direct AI & software adoption in ICT, cloud, and computing payrolls (W_surface / W ≈ 2.2% of national wage bill).",
+    "Submerged Iceberg": "Skills-centered cognitive, administrative, financial, and analytical task exposure inside traditional non-tech sectors (W_submerged / W ≈ 11.7%).",
+    "Combined exposure": "Total share of North American wage value where frontier AI models overlap occupational tasks (s_surface + s_submerged = 13.9%; 86.1% human moat).",
+    "Hidden multiplier": "The Iceberg Ratio Λ = s_submerged / s_surface (11.7% / 2.2% = 5.32×), measuring how much hidden non-tech exposure exceeds visible software roles.",
+    # Public Policy · 2026 Alberta Referendum (ST-02)
+    "Question 10 · Remain": "Official Elections Alberta ballot share voting Option 1 (Remain in Canada, 74.95%) vs. Option 2 (commence binding separation referendum, 25.05%).",
+    "Q1–Q5 · Immigration & ID": "Five non-constitutional provincial policy questions on immigration caps, residency waits, fees, and voter ID — all 5 passed (52.3%–59.8% For).",
+    "Q6–Q9 · Constitutional": "Four federal constitutional amendment questions (judiciary, Senate abolition, fiscal opt-out, paramountcy) — all 4 were rejected (46.8%–49.8% For).",
+    "True independence core": "Share of the total electorate whose primary stated motivation is full separation (~18%), since 68% of Option 2 voters sought leverage or a vote.",
+    # Microeconomics · Gas Price Collusion (ST-06)
+    "Oligopoly ex-tax spread": "Pre-tax retail & distribution markup M = P_pump − P_TGP − Tax in concentrated 3–5 firm oligopolies (24–28 c/L vs. 12 c/L competitive benchmark).",
+    "AI pricing duopoly boost": "Causal margin expansion (+28%) estimated by Assad et al. (2024, JPE) when both local German stations adopt algorithmic repricing software.",
+    "Focal signaling boost": "Retail margin expansion (+75%, +2.4–3.5 c/L) after BP used focal-point price leadership in Perth to end Edgeworth cycles (Byrne & de Roos 2019, AER).",
+    "Rockets vs. Feathers": "Asymmetric Error Correction half-life: +10 c/L wholesale jumps pass through in ~1 day (Rocket), while −10 c/L drops decay over ~9–24 days (Feather).",
+    # Chemistry · Sodium Battery Technology (ST-05)
+    "Crustal abundance": "Earth's upper-crustal elemental concentration ratio: Sodium (23,600 ppm) vs. Lithium (20 ppm) = 1,180× higher geological abundance.",
+    "Ionic volume ratio": "Six-coordinate Shannon octahedral volume ratio (r_Na+ / r_Li+)^3 = (1.02 Å / 0.76 Å)^3 ≈ 2.42×, explaining why Na+ requires hard carbon instead of graphite.",
+    "Cell cost floor (BatPaC)": "Pack/cell manufacturing cost floor modeled in ANL BatPaC v5.1 ($41–$49/kWh for Na-ion using Al collectors on both electrodes vs. $68/kWh for LFP).",
+    "Sub-zero retention (−20 °C)": "Available discharge capacity at −20 °C relative to 25 °C: Na-ion retains 88%–92% due to lower Stokes desolvation energy vs. 64% for LFP.",
+    # Emerging Industries · AI Cost & Compute Economics (ST-08)
+    "Inference deflation (2023→26)": "Cumulative reduction in unit token price ($/1M blended tokens) for GPT-4-equivalent or higher reasoning accuracy: from $36.00/1M (Mar 2023) to $0.18/1M (Gemini 3.8 Flash, 200×) and $3.50/1M (Gemini 4 Argon High Thinking, 10.3×).",
+    "Gemini 4 Argon blended": "Blended API inference price ($3.50/1M tokens at 3:1 input/output ratio: $1.25/1M input, $10.00/1M output) achieving 89.2% MMLU-Pro / GPQA accuracy.",
+    "DeepSeek / Flash floor": "Sub-$0.50/1M token frontier inference tier enabled by Sparse MoE (37B active of 671B), Multi-head Latent Attention (MLA 75% KV-cache reduction), and hardware distillation.",
+    "Cascade routing savings": "Enterprise TCO reduction (80.6% savings: $0.68/1M vs. $3.50/1M) achieved by routing 85% of routine traffic to Gemini 3.8 Flash and 15% of complex proofs to Gemini 4 Argon High Thinking.",
+    # Athletics & Health Dashboards
+    "Sessions logged": "Total validated training sessions parsed from the plain-text log file in records/athletics/.",
+    "Best interval": "Fastest single 0.95 km I1 neighbourhood loop recorded across all interval sessions.",
+    "Latest average": "Mean loop time in the most recent interval session, compared against Session 1.",
+    "Latest spread": "Pacing consistency metric: slowest interval minus fastest interval in the latest session.",
+    "Total distance": "Cumulative swim distance across all logged sessions, converted to metres (1 yd = 0.9144 m).",
+    "Average session": "Mean swim distance per session in metres.",
+    "Best week": "Highest Monday–Sunday weekly swim volume in metres.",
+    "Working sets": "Total logged resistance sets excluding warmups and dropsets.",
+    "Loaded volume": "Total mechanical tonnage: Σ (reps × weight in lbs) across loaded exercises.",
+    "Exercises": "Distinct lift names tracked in the weightlifting log.",
+    "Nights logged": "Total consecutive or logged sleep dates in Sleep_and_Dream_Log.txt.",
+    "Average sleep": "Mean nightly sleep duration in hours across the log window.",
+    "Dreams written down": "Total distinct dream paragraphs recorded across all logged nights.",
+    "Recall vs duration": "Mean sleep hours on nights with ≥1 written dream vs. nights marked 'No dreams recorded'.",
+    "Days tracked": "Total full-day nutrition & expenditure entries in Diet_and_Calorie_Tracking.txt.",
+    "Average deficit": "Mean daily net energy balance (Total Expenditure − Total Consumption) vs. the 500 kcal/day target.",
+    "Estimated loss": "Cumulative caloric deficit divided by 3,500 kcal per pound of tissue equivalent.",
+    "Burn above BMR": "Mean daily active energy expenditure above the 1,850 kcal basal metabolic rate (training + NEAT).",
+}
+
+
+def _metrics(
+    items: list[tuple[str, ...]],
+    *,
+    with_tooltips: bool = False,
+    mm_href: str = "",
+    mm_label: str = "",
+) -> str:
+    if not with_tooltips:
+        return '<div class="sports-metrics" aria-label="Logged totals">' + "".join(
+            f'<div class="sports-metric"><span>{_e(item[0])}</span><strong>{_e(item[1])}</strong><small>{_e(item[2])}</small></div>'
+            for item in items
+        ) + "</div>"
+    cards = []
+    for item in items:
+        label, value, note = item[0], item[1], item[2]
+        defn = item[3] if len(item) > 3 and item[3] else KPI_DEFINITIONS.get(
+            label,
+            f"{label}: {note}. Empirical parameter computed from the study's primary dataset.",
+        )
+        item_mm_href = item[4] if len(item) > 4 and item[4] else mm_href
+        item_mm_label = item[5] if len(item) > 5 and item[5] else mm_label
+        mm_html = (
+            f'<a class="kpi-tip-mm" href="{_e(item_mm_href)}">🧠 Mental Map: {_e(item_mm_label or "Open Section")} ↗</a>'
+            if item_mm_href else ""
+        )
+        cards.append(
+            f'<div class="sports-metric kpi-card" data-kpi-card tabindex="0" role="button" aria-expanded="false" '
+            f'aria-label="{_e(label)}: {_e(value)}. Tap or hover for definition.">'
+            f'<span class="kpi-head"><span>{_e(label)}</span><em class="kpi-info-badge" aria-hidden="true" title="Tap or hover for metric definition">ⓘ</em></span>'
+            f'<strong>{_e(value)}</strong><small>{_e(note)}</small>'
+            f'<div class="kpi-tooltip" role="tooltip">'
+            f'<div class="kpi-tip-title">{_e(label)} · Definition</div>'
+            f'<p class="kpi-tip-desc">{_e(defn)}</p>'
+            f'{mm_html}'
+            f'</div></div>'
+        )
+    return '<div class="sports-metrics" aria-label="Key study metrics (hover or tap any card for definition &amp; Mental Map link)">' + "".join(cards) + "</div>"
 
 
 def _downloads(depth: int, files: list[tuple[str, str]]) -> str:
@@ -78,7 +160,7 @@ def _section(number: str, kicker: str, title: str, ident: str, content: str) -> 
             f'<h2 id="{ident}">{_e(title)}</h2>{content}</section>')
 
 
-def running_body(data: dict, lead: str = "") -> str:
+def running_body(data: dict, lead: str = "", tempo: dict | None = None) -> str:
     sessions, summary, route = data["sessions"], data["summary"], data["routes"]["I1"]
     first, last = sessions[0], sessions[-1]
     best = summary["bestInterval"]
@@ -129,11 +211,15 @@ def running_body(data: dict, lead: str = "") -> str:
                       "Each column is one session: the line spans its fastest and slowest interval and the dot marks the computed mean.",
                       _axis(40, 290, low, high, range(int(low) + 5, int(high), 15), clock) + "".join(bars))
     rows = [[_day(s["date"]), s["route"], " · ".join(i["raw"] for i in s["intervals"]), clock(s["average"]),
-             s["recordedAverage"]["raw"], clock(s["best"]), f'{s["spread"]} s', f'{s["fade"]:+d} s', clock(s["pacePerKm"])]
+             s["recordedAverage"]["raw"] if s["recordedAverage"] else "— (none written)", clock(s["best"]),
+             f'{s["spread"]:g} s', f'{s["fade"]:+g} s', clock(s["pacePerKm"])]
             for s in sessions]
     mismatch = summary["recordedAverageMismatches"]
     note = (f'<p class="sports-note">Recorded averages are kept as written. On {", ".join(_day(d) for d in mismatch)} the written average '
             "differs from the mean of the listed intervals by more than rounding.</p>") if mismatch else ""
+    if summary["unwrittenAverages"]:
+        note += (f'<p class="sports-note">No average was written for {", ".join(_day(d) for d in summary["unwrittenAverages"])}; '
+                 "the computed mean stands alone there.</p>")
     history = data["history"]
     history_rows = [[row["year"], row["session"], row["best"], clock(row["pacePerKm"]) + " /km"] for row in history]
     history_rows.append([summary["lastDate"][:4], "I1 loop (0.95 km)", clock(best["seconds"]), clock(best["seconds"] / route["distanceKm"]) + " /km"])
@@ -142,22 +228,41 @@ def running_body(data: dict, lead: str = "") -> str:
     return f'''<main id="main-content" class="collection-page sports-page athletics-page">{lead}
       {_hero("Athletics / Running", "I1 · interval log", "Faster loops.<br>Same <em>route.</em>", deck, actions, art)}
       <p class="sports-scope">Every logged session · {_e(_day(summary["firstDate"]))} → {_e(_day(summary["lastDate"]))}, {summary["firstDate"][:4]}. Descriptive, not a training plan.</p>{metrics}
-      {_section("01", "Every interval", pattern, "running-intervals-title", legend + chart +
+      {_section("01", "Every interval", pattern, "running-intervals-title", f'<div class="bi-running-host" data-bi-running="{_e(json.dumps({"sessions": sessions, "tempo": (tempo or {}).get("runs", [])}, separators=(",", ":")))}">' + legend + chart + '</div>' +
                 '<p class="sports-note">Fade is last interval minus first; a negative fade means the session finished faster than it started.</p>')}
       {_section("02", "Session averages", f"{clock(first['average'])} to {clock(last['average'])} in {summary['sessions']} sessions.", "running-averages-title", averages + note)}
       {_section("03", "The log", "Every interval, as written.", "running-log-title",
                 _table("Running sessions; times are minutes:seconds per loop.", ["Date", "Route", "Intervals", "Mean", "Written average", "Fastest", "Spread", "Fade", "Pace /km"], rows, "running-table"))}
-      <section class="sports-section" id="running-history" aria-labelledby="running-history-title"><p class="sports-kicker">04 / Then and now</p><h2 id="running-history-title">Best times from 2013 and 2017.</h2>
+      {_tempo_section(tempo) if tempo else ""}
+      <section class="sports-section" id="running-history" aria-labelledby="running-history-title"><p class="sports-kicker">05 / Then and now</p><h2 id="running-history-title">Best times from 2013 and 2017.</h2>
       <p>Rough estimates recalled from the major training blocks; earlier logs were lost. Track repeats and a neighbourhood loop are different efforts, so compare paces loosely.</p>
       {_table("Best repeat time per session type, with pace per kilometre.", ["Year", "Session", "Best repeat", "Pace"], history_rows)}</section>
       <section class="sports-section sports-method" aria-labelledby="running-method-title"><p class="sports-kicker">The evidence desk</p><h2 id="running-method-title">How these numbers are made.</h2>
       <ul><li>Source: {_e(data["source"]["path"])}, read line by line; any unreadable line stops the build.</li>
       <li>Pace assumes each interval is one {route["distanceKm"]} km loop of I1 ({_e(route["distanceSource"])}).</li>
       <li>Means are computed from the listed intervals; written averages are shown beside them, never replaced.</li></ul>
-      {_downloads(3, [("athletics-running.json", "Running log · JSON"), ("athletics-running-intervals.csv", "Intervals · CSV"), ("athletics-running-sessions.csv", "Sessions · CSV")])}</section>
-      {_update_notes("running", data, '<li>Add a block per session: a line like <code>I1 - (10/6/2026) - 4 Intervals</code>, then one <code>m:ss</code> time per line, '
-                     'then <code>Avg: m:ss</code>. The interval count must match the times listed; the written average is kept beside the computed mean.</li>')}
+      {_downloads(3, [("athletics-running.json", "Running log · JSON"), ("athletics-running-intervals.csv", "Intervals · CSV"), ("athletics-running-sessions.csv", "Sessions · CSV"), ("athletics-running-tempo.csv", "Tempo runs · CSV")])}</section>
+      {_update_notes("running", data, '<li>Add a block per session: a line like <code>I1 - (10/6/2026) - 4 Intervals</code>, then one <code>m:ss</code> or <code>m:ss.s</code> time per line, '
+                     'then optionally <code>Avg: m:ss</code>. The interval count must match the times listed; the written average is kept beside the computed mean.</li>'
+                     '<li>Tempo runs go in <code>records/athletics/running/Tempo_Run_Log.txt</code>: a <code>(10/12/2026)</code> line, '
+                     'a <code>Tempo Run - 5.8km (Route Name)</code> line, the total time like <code>33:23.81</code>, then the pace line like <code>5:45.5 min/km - 2.89m/s</code>.</li>')}
     </main>'''
+
+
+def _tempo_section(tempo: dict) -> str:
+    runs, summary = tempo["runs"], tempo["summary"]
+    rows = [[_day(r["date"]), r["route"], f'{r["distanceKm"]:g} km', r["timeRaw"], clock(r["paceSeconds"]) + " /km",
+             f'{r["speed"]:g} m/s', r["writtenPace"]["raw"]] for r in runs]
+    chips = "".join(f'<li class="series-{i % SERIES}">{_e(_day(r["date"]))} · {_e(r["route"])} · {r["distanceKm"]:g} km @ {clock(r["paceSeconds"])}/km</li>'
+                    for i, r in enumerate(runs))
+    note = ("Pace and speed are computed from the written time and distance; the written pace line is kept beside them"
+            + (" and matches" if not summary["paceMismatches"] else f" and differs on {', '.join(_day(d) for d in summary['paceMismatches'])}") + ". "
+            "Route distances and names are as written; the route map stays unpublished because it shows the start point.")
+    return (f'<section class="sports-section" id="running-tempo" aria-labelledby="running-tempo-title"><p class="sports-kicker">04 / Tempo runs</p>'
+            f'<h2 id="running-tempo-title">Continuous runs, {summary["kilometres"]:g} km so far.</h2>'
+            f'<ol class="athletics-chips" aria-label="Tempo runs">{chips}</ol>'
+            + _table("Tempo runs; time as written, pace computed.", ["Date", "Route", "Distance", "Time", "Pace", "Speed", "Pace as written"], rows, "tempo-table")
+            + f'<p class="sports-note">{_e(note)}</p></section>')
 
 
 def swimming_body(data: dict, lead: str = "") -> str:
@@ -194,19 +299,24 @@ def swimming_body(data: dict, lead: str = "") -> str:
     chart = _chart("swimming-sessions", "Distance per session and running total",
                    "Bars show metres per session against the left axis. The line climbs to the running total on its own scale.", grid + "".join(bars) + cumulative)
     legend = '<p class="sports-legend"><span class="series-0">■ Session distance</span><span class="series-1">― Running total (own scale)</span></p>'
-    rows = [[_day(s["date"]), f'{_num(s["meters"])} m', f'{s["sets"]} × {s["setMeters"]} m', s["orderRaw"], f'{_num(s["cumulativeMeters"])} m'] for s in sessions]
+    rows = [[_day(s["date"]), f'{_num(s["distance"])} {"yd" if s["unit"] == "y" else "m"}', f'{_num(s["meters"])} m',
+             s["orderRaw"], f'{_num(s["cumulativeMeters"])} m'] for s in sessions]
     week_rows = [[f"Week of {_day(w['weekOf'])}", f"{_num(w['meters'])} m"] for w in weeks]
     bests = [[b["event"], f'{b["liam"]:.2f} s', f'{b["owen"]:.2f} s', "Liam" if b["liam"] < b["owen"] else "Owen"] for b in data["bests"]]
     chips = "".join(f'<li class="series-{i % SERIES}">{i + 1}. {_e(stroke)}</li>' for i, stroke in enumerate(strokes))
     return f'''<main id="main-content" class="collection-page sports-page athletics-page">{lead}
       {_hero("Athletics / Swimming", "Distance log", "Lengths add<br>up to <em>kilometres.</em>", deck, actions, art)}
       <p class="sports-scope">Every logged session. Total distance only, for now: set times start once a pool-safe watch arrives.</p>{metrics}
-      {_section("01", "Distance", "Every session, and where the total stands.", "swimming-distance-title", legend + chart)}
+      {_section("01", "Distance", "Every session, and where the total stands.", "swimming-distance-title", f'<div class="bi-swimming-host" data-bi-swimming="{_e(json.dumps(sessions, separators=(",", ":")))}">' + legend + chart + '</div>')}
       {_section("02", "Stroke order", "Each set swims all four strokes.", "swimming-strokes-title",
                 f'<ol class="athletics-chips" aria-label="Stroke order as logged">{chips}</ol><p class="sports-note">Order as logged: {_e(sessions[-1]["orderRaw"])}. Strokes are swum as evenly as possible to balance the muscle groups.</p>'
                 + _table("Weekly totals.", ["Week", "Distance"], week_rows))}
       {_section("03", "The log", "Every session, as written.", "swimming-log-title",
-                _table("Swimming sessions.", ["Date", "Distance", "Sets", "Stroke order", "Running total"], rows, "swimming-table"))}
+                _table("Swimming sessions.", ["Date", "As written", "In metres", "Sets and strokes", "Running total"], rows, "swimming-table") +
+                (f'<p class="sports-note">Most sessions are logged in yards ({summary["yardSessions"]} of {summary["sessions"]}); the charts and totals convert to metres at 0.9144 m per yard. '
+                 'Set distances inside a yard-day description share the day\'s unit even when suffixed “m”.</p>') +
+                ((f'<p class="sports-note">On {", ".join(_day(d) for d in summary["setMismatches"])} the listed sets do not add up to the written total; '
+                  'the written total drives the charts and the set list stays as written.</p>') if summary["setMismatches"] else ""))}
       <section class="sports-section" id="swimming-bests" aria-labelledby="swimming-bests-title"><p class="sports-kicker">04 / The old rivalry</p><h2 id="swimming-bests-title">High-school bests: Liam and Owen.</h2>
       <p>Best times from high-school racing, recalled rather than taken from a results sheet.</p>
       {_table("50 m best times; lower is faster.", ["Event", "Liam", "Owen", "Faster"], bests)}
@@ -228,7 +338,8 @@ LIFT_LINES = (("value", "lift-top", "Heaviest set"), *((f"best{t}", f"lift-{t}",
 def _ticks(low: float, high: float) -> list[float]:
     """At most five evenly spaced, round tick values covering low..high."""
     raw = ((high - low) or max(abs(high), 1)) / 3
-    step = next(s for s in (1, 2, 2.5, 5, 10, 15, 20, 25, 50, 100, 200, 250, 500, 1000) if s >= raw)
+    steps = (1, 2, 2.5, 5, 10, 15, 20, 25, 50, 100, 200, 250, 500, 1000, 1500, 2000, 2500, 5000, 10000)
+    step = next(s for s in steps if s >= raw)
     start, end = max(0, math.floor(low / step) * step), math.ceil(high / step) * step
     end = end if end > start else start + step
     return [start + k * step for k in range(round((end - start) / step) + 1)]
@@ -236,6 +347,23 @@ def _ticks(low: float, high: float) -> list[float]:
 
 def _weight(value: float | None, assisted: bool) -> str:
     return "—" if value is None else f"{value:g} lb" + (" assist" if assisted else "")
+
+
+def _muscle_group(name: str) -> str:
+    low = name.lower()
+    if any(k in low for k in ("squat", "lunge", "calf", "hamstring", "quad", "leg press", "leg extension", "leg curl")):
+        return "Legs"
+    if any(k in low for k in ("crunch", "situp", "sit-up", "leg raise", "ab ")):
+        return "Abs"
+    if any(k in low for k in ("curl", "bicep", "hammer")):
+        return "Biceps"
+    if any(k in low for k in ("tricep", "dip", "rope extension", "bar extension", "cable extension", "overhead extension")):
+        return "Triceps"
+    if any(k in low for k in ("shoulder", "delt", "lateral raise", "raises")):
+        return "Shoulders"
+    if any(k in low for k in ("pullup", "pull-up", "pulldown", "pull down", "row", "lat ", "back extension", "deadlift")):
+        return "Back"
+    return "Chest"
 
 
 def _progress(entry: dict) -> str:
@@ -286,22 +414,51 @@ def _progress(entry: dict) -> str:
     extra = f'<small>{_e(summary)}.</small>' + (f'<small>Estimated 1RM, latest: {e1rm[-1]:g} lb</small>' if e1rm else "")
     label = (f'{entry["name"]}, {len(points)} sessions. Left axis: {"assistance" if assisted else "weight"} in pounds for the heaviest set and the heaviest '
              f'for 10+ and 12+ reps. Right axis: reps at the heaviest set. {summary}.')
-    return (f'<article class="athletics-multiple"><h3>{_e(entry["name"])}</h3>{badge}'
+    m_grp = _muscle_group(entry["name"])
+    return (f'<article class="athletics-multiple" data-muscle-group="{_e(m_grp)}" data-exercise-name="{_e(entry["name"])}" '
+            f'data-exercise-kind="{_e(entry["kind"])}" data-exercise-points="{_e(json.dumps(points, separators=(",", ":")))}">'
+            f'<div class="multiple-head"><h3>{_e(entry["name"])}</h3><span class="muscle-pill muscle-{_e(m_grp.lower())}">{_e(m_grp)}</span></div>{badge}'
             f'<svg class="athletics-spark" viewBox="0 0 340 176" role="img" aria-label="{_e(label)}">{"".join(parts)}</svg>{extra}</article>')
 
 
 def _update_notes(key: str, data: dict, steps: str) -> str:
-    """Owner notes: where the log lives, the line format, and how to rebuild."""
+    """Owner notes + non-Admin 0-token Google Doc / Logs refresh panel."""
     source = data["source"]
+    last_date = data.get("summary", {}).get("lastDate", "2026-10-18")
+    default_url = "https://docs.google.com/document/d/1mboHEkA2jzHEbJY0mcuXbP-N_cWfyaN-LiN2z8xueq0/edit" if key == "weightlifting" else ""
     return (f'<section class="sports-section athletics-update" id="{key}-update" aria-labelledby="{key}-update-title">'
-            f'<p class="sports-kicker">Owner notes / Adding data</p><h2 id="{key}-update-title">Add a session.</h2>'
-            f'<ol><li>Open <code>{_e(source["path"])}</code> in the pandas_projects folder. It is plain text (.txt). '
-            'The CSV and JSON files on this page are exports made from it at every build; editing them changes nothing.</li>'
-            f'{steps}<li>Rebuild from pandas_projects with <code>python -B -m site_content.build --also-local</code>. '
-            'Any line the build cannot read stops it with the line number.</li>'
+            f'<p class="sports-kicker">Google Drive Logs Sync &amp; Format · No Admin Unlock Required</p>'
+            f'<h2 id="{key}-update-title">Refresh from Google Docs or add a session.</h2>'
+            f'<div class="gdoc-sync-box" data-gdoc-sync="{_e(key)}" data-gdoc-last-date="{_e(last_date)}" data-gdoc-default-url="{_e(default_url)}">'
+            f'<div class="gdoc-sync-head">'
+            f'<div><strong>🔄 Live Google Drive / Docs Log Check (<code>{_e(source["path"])}</code>)</strong>'
+            f'<small class="gdoc-sync-sub">Currently built through <strong>{_e(last_date)}</strong> · Uses <strong>0 API tokens</strong> when up-to-date or when deterministic rules validate the log.</small></div>'
+            f'<div class="wb-form-actions">'
+            f'<button class="button primary gdoc-refresh-btn" type="button" data-gdoc-refresh-btn="{_e(key)}">↻ Check &amp; Refresh Log Now (0 Tokens)</button>'
+            f'<a class="button ghost" href="../../../Updates/index.html">All Doc Updates Hub ↗</a>'
+            f'</div>'
+            f'</div>'
+            f'<div class="gdoc-sync-controls">'
+            f'<label for="gdoc-url-{_e(key)}">Google Doc share URL or ID for <code>{_e(key)}</code> inside your Google Drive <code>Logs/</code> folder (saved in browser):</label>'
+            f'<div class="gdoc-sync-row">'
+            f'<input id="gdoc-url-{_e(key)}" type="url" value="{_e(default_url)}" placeholder="Paste https://docs.google.com/document/d/... link from your Drive Logs folder (optional)">'
+            f'<button class="button ghost" type="button" data-gdoc-save-btn="{_e(key)}">Save Link</button>'
+            f'</div>'
+            f'<p class="gdoc-sync-status" id="gdoc-status-{_e(key)}" role="status" aria-live="polite">'
+            f'Ready · Click "Check &amp; Refresh Log Now" to verify whether newer entries exist since {_e(last_date)}.'
+            f'</p>'
+            f'</div></div>'
+            f'<ol><li>Canonical repo file: <code>{_e(source["path"])}</code> in plain text (.txt) (synced with Google Drive <code>Logs/</code> via <code>python -B -m site_content.log_sync</code>). '
+            'The CSV and JSON files on this page are exports made from it at every build.</li>'
+            f'{steps}<li>To sync all 6 logs from your Google Drive <code>Logs/</code> folder or linked Google Docs and rebuild, run <code>python -B -m site_content.log_sync &amp;&amp; python -B -m site_content.build --also-local</code>. '
+            'Deterministic regex rules fix dates, units, and dashes at <strong>0 token cost</strong>; LLM repair is only called if a line still fails validation.</li>'
             '<li>Publish by committing and pushing the liammspandasprojects repository.</li></ol>'
-            f'<p>The latest entry, as written:</p><pre class="athletics-entry">{_e(chr(10).join(source["latestEntry"]))}</pre>'
-            f'<p class="sports-note">An older copy at LiamMs_PandasProjects/Gaming-and-Performance-Log/Athletics/ is checked too: '
+            f'<p>The latest entry, as written:</p>'
+            + (f'<p class="sports-note" data-wb-admin-locked-msg>🔒 Latest written dream/journal entry is Admin-protected — Unlock Admin to view.</p>'
+               f'<pre class="athletics-entry" data-wb-admin-only hidden>{_e(chr(10).join(source["latestEntry"]))}</pre>'
+               if key == "sleep"
+               else f'<pre class="athletics-entry">{_e(chr(10).join(source["latestEntry"]))}</pre>')
+            + '<p class="sports-note">An older copy under LiamMs_PandasProjects/Gaming-and-Performance-Log/ is checked too: '
             'if it differs from the file above, the build stops instead of skipping the edit.</p></section>')
 
 
@@ -328,14 +485,15 @@ def weightlifting_body(data: dict, lead: str = "") -> str:
     for index, item in enumerate(sessions):
         bx = 90 + index * step
         bars.append(f'<rect class="athletics-bar split-{item["split"]}" x="{bx + step * .16:.1f}" y="{y(item["volume"]):.1f}" width="{step * .68:.1f}" height="{290 - y(item["volume"]):.1f}"><title>{_e(_day(item["date"]))} · {_e(item["splitRaw"])} · {_num(item["volume"])} lb</title></rect>'
-                    f'<text x="{bx + step / 2:.1f}" y="{y(item["volume"]) - 8:.1f}" text-anchor="middle">{item["volume"] / 1000:.1f}k</text>'
+                    f'<text x="{bx + step / 2:.1f}" y="{y(item["volume"]) - 8:.1f}" text-anchor="middle">{item["volume"] / 1000:.1f}k lb</text>'
                     f'<text x="{bx + step / 2:.1f}" y="314" text-anchor="middle">{_e(_day(item["date"]))}</text>')
-    grid = _axis(50, 290, 0, high, range(0, int(high) + 1, 5000), lambda v: f"{v / 1000:g}k")
-    chart = _chart("lifting-volume", "Loaded volume per session, coloured by split",
-                   "Bars show reps times weight for loaded lifts in each session. Bodyweight and assisted sets add no volume.", grid + "".join(bars))
-    legend = '<p class="sports-legend">' + "".join(f'<span class="split-{name}">■ {name}</span>' for name in splits) + "<span>Bodyweight and assisted sets count no volume.</span></p>"
+    grid = _axis(50, 290, 0, high, range(0, int(high) + 1, 5000), lambda v: f"{v / 1000:g}k lb")
+    chart = _chart("lifting-volume", "Loaded volume per session (lb), coloured by split",
+                   "Bars show reps times weight (lb) for loaded lifts in each session. Bodyweight and assisted sets add no volume.", grid + "".join(bars))
+    legend = '<p class="sports-legend">' + "".join(f'<span class="split-{name}">■ {name}</span>' for name in splits) + "<span>Bodyweight and assisted sets count no volume (0 lb).</span></p>"
+    lifting_bi_wrap = f'<div class="bi-lifting-host" id="bi-lifting-host" data-bi-lifting="{_e(json.dumps(sessions, separators=(",", ":")))}">{legend}{chart}</div>'
     tracked = [entry for entry in data["exercises"] if entry["kind"] in ("loaded", "assisted") and len(entry["points"]) > 1]
-    multiples = '<div class="athletics-multiples">' + "".join(_progress(entry) for entry in tracked) + "</div>"
+    multiples = '<div class="athletics-multiples" id="lifting-multiples-grid">' + "".join(_progress(entry) for entry in tracked) + "</div>"
     lift_legend = ('<p class="sports-legend">' + "".join(f'<span class="{cls}">{mark} {_e(label)} (left axis, lb)</span>'
                                                          for (_, cls, label), mark in zip(LIFT_LINES, ("―", "╌", "┈")))
                    + '<span class="lift-reps-key">▮ Reps at the heaviest set (right axis)</span></p>')
@@ -345,13 +503,15 @@ def weightlifting_body(data: dict, lead: str = "") -> str:
               + _table("Per exercise and session: heaviest set, its reps, and the heaviest weight lifted for at least 10 and 12 reps.",
                        ["Exercise", "Date", "Heaviest set", "Reps", *(f"{t}+ reps" for t in REP_TARGETS)], value_rows, "lifting-progress-table")
               + "</details>")
-    rows = [[_day(s["date"]), s["splitRaw"], e["name"], ", ".join(f'{x["reps"]}×{x["weight"]:g}' for x in e["sets"]), e["kind"]]
+    rows = [[_day(s["date"]), s["splitRaw"], e["name"],
+             ", ".join(f'{x["reps"]}×{x["weight"]:g}' for x in e["sets"]) or "— nothing written",
+             e["kind"] + (" · excluded: " + ", ".join(f'{t["raw"]} ({t["reason"]})' for t in e["excludedSets"]) if e["excludedSets"] else "")]
             for s in sessions for e in s["exercises"]]
     peaks = [[p["peak"], p["lift"], f'{p["weightLbs"]} lb' + (f' × {p["reps"]}' if p["reps"] else "")] for p in data["peaks"]]
     return f'''<main id="main-content" class="collection-page sports-page athletics-page">{lead}
       {_hero("Athletics / Weightlifting", "Training log", "Heavier sets,<br>one <em>week</em> at a time.", deck, actions, art)}
       <p class="sports-scope">Every logged working set. Descriptive, not a programme or a strength rating.</p>{metrics}
-      {_section("01", "Volume", "How much work each session moved.", "lifting-volume-title", legend + chart)}
+      {_section("01", "Volume", "How much work each session moved.", "lifting-volume-title", lifting_bi_wrap)}
       {_section("02", "Progress by exercise", "Top sets and rep targets, session by session.", "lifting-progress-title",
                 '<p>Every exercise logged more than once. The left axis is weight: the heaviest set, plus the heaviest weight managed for at least 10 reps '
                 'and for at least 12 reps. The bars, on the right axis, count the reps done at the heaviest set. Assisted lifts plot the least assistance '

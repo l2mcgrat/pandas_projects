@@ -1,0 +1,24 @@
+{
+  "compiler": {
+    "flags": [
+      "--untrusted",
+      "--keep-logs",
+      "--keep-intermediates",
+      "--outdir",
+      "output"
+    ],
+    "name": "tectonic",
+    "sourceDateEpoch": "946684800",
+    "version": "Tectonic 0.17.0"
+  },
+  "inputs": {
+    "images": [],
+    "source": {
+      "path": "notebook_sources/studies/alberta_referendum_2026.tex",
+      "sha256": "983d304ccaf3bdbf25ca677ab9c32921d562dd99b449db1b246340be25a7ca38"
+    }
+  },
+  "key": "alberta-referendum-2026",
+  "pdfSha256": "481eeaad6c20d9368ad5a3e8f33140c05ba42efadae5b1044b3573fd53481062",
+  "schemaVersion": 1
+}

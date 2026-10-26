@@ -16,13 +16,20 @@ from .athletics import athletics_rows, load_athletics
 from .athletics_views import running_body, swimming_body, weightlifting_body
 from .atlas import ANCHORS, NODES, ROOT, walk
 from .atlas_tree import atlas_schema_script, atlas_tree_body
-from .atlas_views import (ALGORITHMS, ATLAS, CHANGE_LOG, CONTROL, DASHBOARD, FEELINGS, GUIDE, HOSTED, LEETCODE, LEETCODE_LEAVES, NBA, PITCH,
-                          PREDICTIONS, QUANTUM, RAP_LEAVES, REPORT, RULES, RUNNING, SWIMMING, UFC, UPCOMING, VOCABULARY, WEIGHTLIFTING,
-                          branch_body, branch_stage, home_hero, leaf_body, prefix, premade_body, strip)
+from .atlas_views import (AI_COST_PAPER, AI_COST_STUDY, AI_COST_TAB, ALBERTA_PAPER, ALBERTA_STUDY, ALGORITHMS, ATLAS, CHANGE_LOG, COMPLETION, CONTROL, DASHBOARD, DATABASE_LEAVES, DIET,
+                          FEELINGS, GAS_PAPER, GAS_STUDY, GAS_TAB, GUIDE, HOSTED, LEETCODE, LEETCODE_LEAVES, MACRO_PAPER, MACRO_STUDY, NBA, PITCH,
+                          PREDICTIONS, QUANTUM, RAP_LEAVES, REPORT, RULES, RUNNING, SLEEP, SODIUM_PAPER, SODIUM_STUDY, SODIUM_TAB, SWIMMING, TRAFFIC, UFC, UPCOMING, UPDATES, VOCABULARY,
+                          WEIGHTLIFTING, WORKBENCH, branch_body, branch_stage, home_hero, leaf_body, prefix, premade_body, strip)
 from .basketball import export_rows, load_basketball
 from .career import career_body, resume_body
 from .catalog import leetcode_catalog, rap_catalog
 from .catalog_views import leetcode_content, rap_content
+from .health import health_rows, load_health
+from .health_views import diet_body, sleep_body
+from .studies import load_studies, studies_rows
+from .studies_views import ai_cost_study_body, alberta_study_body, gas_study_body, macro_study_body, sodium_study_body
+from .workbench import load_workbench, workbench_rows
+from .workbench_views import auth_dialog_html, completion_dashboard_body, database_leaf_content, traffic_dashboard_body, updates_dashboard_body, workbench_body
 from .creators import FIRST_SECTION_ID, creators_html, scroll_cue_html
 from .icons import icon_svg, icons_css, require_complete
 from .latex import convert_document
@@ -116,9 +123,20 @@ def redirect_html(route: str, target: str) -> str:
 
 
 def header(prefix: str) -> str:
+    ic_map = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="4" r="1.8"/><circle cx="19" cy="8" r="1.8"/><circle cx="19" cy="16" r="1.8"/><circle cx="12" cy="20" r="1.8"/><circle cx="5" cy="16" r="1.8"/><circle cx="5" cy="8" r="1.8"/><path d="M12 5.8v3M17.4 9l-2.6 1.5M17.4 15l-2.6-1.5M12 18.2v-3M6.6 15l2.6-1.5M6.6 9l2.6 1.5"/></svg>'
+    ic_atlas = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2.5 20.2 7.2 20.2 16.8 12 21.5 3.8 16.8 3.8 7.2"/><circle cx="12" cy="12" r="2.6"/><path d="M12 2.5v6.9M20.2 7.2l-6 3.5M20.2 16.8l-6-3.5M12 21.5v-6.9M3.8 16.8l6-3.5M3.8 7.2l6 3.5"/></svg>'
+    ic_wb = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v6.2c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8V5.5"/><path d="M4.5 11.7v6.2c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8v-6.2"/></svg>'
+    ic_cre = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.4 6 .9-4.3 4.2 1 6-5.3-2.8-5.3 2.8 1-6L3.4 9.3l6-.9z"/></svg>'
+    ic_smash = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.4 13.8h17.2M8.6 3.4v17.2"/></svg>'
+    ic_comp = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5h16"/><rect x="5.5" y="11" width="3.2" height="6.5" rx=".8"/><rect x="10.4" y="7.5" width="3.2" height="10" rx=".8"/><rect x="15.3" y="4.5" width="3.2" height="13" rx=".8"/></svg>'
+    ic_traffic = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><ellipse cx="12" cy="12" rx="3.8" ry="8.5"/><path d="M3.8 12h16.4M5.2 7.8h13.6M5.2 16.2h13.6"/></svg>'
+    ic_upd = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8.1 8.1 0 0 0-15.5-2m-.5-4v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></svg>'
+    ic_admin = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.4"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.4"/></svg>'
+    ic_pwd = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L19 4m-1.5 1.5l2.5 2.5m-5 1l2 2"/></svg>'
+    ic_about = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.2" r="3.6"/><path d="M5.5 19.5c1.4-3.4 4-5.2 6.5-5.2s5.1 1.8 6.5 5.2"/></svg>'
     return f'''<header class="site-header">
       <a class="brand" href="{prefix}index.html" aria-label="Liam McGrath home"><span class="brand-mark" aria-hidden="true">LM</span><span>LIAM McGRATH<small>AN OPEN NOTEBOOK</small></span></a>
-    <nav aria-label="Primary navigation"><a href="{prefix}Mental-Map/index.html">Mental Map</a><a href="{prefix}{ATLAS}">Atlas</a><a href="{prefix}index.html#{FIRST_SECTION_ID}">Creators</a><a href="{prefix}Smash/index.html">Smash</a><a href="{prefix}About/index.html">About me <span aria-hidden="true">↗</span></a></nav>
+    <nav aria-label="Primary navigation" class="top-symbol-bar"><a class="top-sym-tile" href="{prefix}Mental-Map/index.html">{ic_map}<span class="symbol-caption">Mental Map</span></a><a class="top-sym-tile" href="{prefix}{ATLAS}">{ic_atlas}<span class="symbol-caption">Site Atlas</span></a><a class="top-sym-tile" href="{prefix}{WORKBENCH}">{ic_wb}<span class="symbol-caption">Workbench</span></a><a class="top-sym-tile" href="{prefix}{UPDATES}">{ic_upd}<span class="symbol-caption">Doc Updates</span></a><a class="top-sym-tile" href="{prefix}index.html#{FIRST_SECTION_ID}">{ic_cre}<span class="symbol-caption">Creators</span></a><a class="top-sym-tile" href="{prefix}Smash/index.html">{ic_smash}<span class="symbol-caption">Smash</span></a><a class="top-sym-tile is-admin-tile" href="{prefix}{COMPLETION}" data-wb-admin-only hidden>{ic_comp}<span class="symbol-caption">Map &amp; Site %</span></a><a class="top-sym-tile is-admin-tile" href="{prefix}{TRAFFIC}" data-wb-admin-only hidden>{ic_traffic}<span class="symbol-caption">IP &amp; Traffic</span></a><button class="top-sym-tile is-admin-tile" type="button" data-wb-password-open data-wb-admin-only hidden>{ic_pwd}<span class="symbol-caption">Passwords</span></button><button class="top-sym-tile" type="button" data-wb-auth-open>{ic_admin}<span class="symbol-caption">Unlock Admin</span></button><a class="top-sym-tile" href="{prefix}About/index.html">{ic_about}<span class="symbol-caption">About Me</span></a></nav>
     </header>'''
 
 
@@ -163,8 +181,8 @@ def shell(title: str, body: str, depth: int = 0, data_file: str | None = None,
 
 def home_html() -> str:
     body = (f'<main id="main-content" class="home-landing home-snap">{home_hero({}, scroll_cue_html(FIRST_SECTION_ID))}'
-            f'{creators_html()}</main>')
-    return shell("Ideas, connected", body, styles=("assets/creators.css",), scripts=("assets/creators.js",))
+            f'{creators_html()}{auth_dialog_html()}</main>')
+    return shell("Ideas, connected", body, styles=("assets/creators.css",), scripts=("assets/creators.js", "assets/workbench.js"))
 
 
 def atlas_page(node, mental: dict[str, str], available) -> str:
@@ -453,6 +471,27 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
         write(assets / 'data' / f'athletics-{key}.json', safe_json(data))
     for name, rows in athletics_rows(athletics).items():
         write(assets / 'data' / f'athletics-{name}.csv', csv_text(rows))
+    health = load_health(root)
+    for key, data in health.items():
+        write(assets / 'data' / f'health-{key}.json', safe_json(data))
+    for name, rows in health_rows(health).items():
+        write(assets / 'data' / f'health-{name}.csv', csv_text(rows))
+    workbench = load_workbench(root)
+    write(assets / 'data' / 'workbench.json', safe_json(workbench))
+    for name, rows in workbench_rows(workbench).items():
+        write(assets / 'data' / f'workbench-{name}.csv', csv_text(rows))
+    studies = load_studies()
+    for key, data in studies.items():
+        write(assets / 'data' / f'studies-{key.replace("_", "-")}.json', safe_json(data))
+    for name, rows in studies_rows(studies).items():
+        write(assets / 'data' / f'studies-{name}.csv', csv_text(rows))
+    if 'gas' in studies and 'pandasScript' in studies['gas']:
+        write(assets / 'data' / 'gas_price_collusion_pandas.py', studies['gas']['pandasScript'])
+    if 'sodium' in studies and 'pandasScript' in studies['sodium']:
+        write(assets / 'data' / 'sodium_battery_pandas.py', studies['sodium']['pandasScript'])
+    if 'ai_cost' in studies and 'pandasScript' in studies['ai_cost']:
+        write(assets / 'data' / 'ai_cost_economics_pandas.py', studies['ai_cost']['pandasScript'])
+    write(assets / 'data' / 'live-cloud-studies.json', safe_json({"version": 1, "runs": {}, "entries": {}, "deleted": []}))
     result = convert_document(root / 'mental_map.tex', root / 'tex_images' / 'mental_map', assets / 'documents' / 'mental-map', '../assets/documents/mental-map')
     source_zip(root / 'mental_map.tex', assets / 'documents' / 'mental-map')
     mental = {heading['id']: heading['title'] for heading in result['headings']}
@@ -465,8 +504,9 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
     write(assets / 'atlas-icons.css', icons_css())
     write(assets / 'data' / 'atlas-schema.js', atlas_schema_script())
     links = ''.join(f'<a href="../{url}">{label} ↗</a>' for label, url in [
-        ('Site atlas', ATLAS), ('How to add notes · guide', GUIDE), ('Quantum mechanics', QUANTUM), ('Control systems', CONTROL),
-        ('Algorithms', ALGORITHMS), ('Vocabulary', VOCABULARY), ('Feelings explorer', FEELINGS), ('Change log', CHANGE_LOG)])
+        ('Site atlas', ATLAS), ('Workbench', WORKBENCH), ('How to add notes · guide', GUIDE), ('Quantum mechanics', QUANTUM),
+        ('Control systems', CONTROL), ('Algorithms', ALGORITHMS), ('Vocabulary', VOCABULARY), ('Feelings explorer', FEELINGS),
+        ('Change log', CHANGE_LOG)])
     request = (f'<a class="button ghost" href="mailto:{EMAIL}?subject=Mental%20Map%20change%20request" data-request-open>'
                'Request a change ✉</a>')
 
@@ -483,6 +523,18 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
                                                scripts=('assets/request-change.js',)),
         ATLAS: shell('Site atlas', atlas_tree_body(), 1, 'assets/data/atlas-schema.js',
                      styles=('assets/atlas-tree.css',), scripts=('assets/atlas-tree.js',)),
+        WORKBENCH: shell('Notebook Workbench', workbench_body(workbench, '../'), 1,
+                         styles=('assets/sports.css', 'assets/athletics.css', 'assets/workbench.css'),
+                         scripts=('assets/workbench.js',)),
+        UPDATES: shell('Google Docs & Site Integration Hub', updates_dashboard_body(root, athletics, health, '../'), 1,
+                       styles=('assets/sports.css', 'assets/athletics.css', 'assets/workbench.css'),
+                       scripts=('assets/workbench.js',)),
+        COMPLETION: shell('Map & Site % Reflection', completion_dashboard_body(root, '../'), 1,
+                          styles=('assets/sports.css', 'assets/athletics.css', 'assets/workbench.css'),
+                          scripts=('assets/workbench.js',)),
+        TRAFFIC: shell('IP & Traffic Reflection', traffic_dashboard_body(workbench, '../'), 1,
+                       styles=('assets/sports.css', 'assets/athletics.css', 'assets/workbench.css'),
+                       scripts=('assets/workbench.js',)),
     }
     pages.update({node.url: atlas_page(node, mental, available) for node in walk(ROOT) if node.depth})
     for path in LEETCODE_LEAVES + RAP_LEAVES:
@@ -490,6 +542,11 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
         render, catalog = (leetcode_content, leetcode) if path in LEETCODE_LEAVES else (rap_content, rap)
         lede, content = render(path.rsplit('/', 1)[1], catalog, prefix(node))
         pages[node.url] = shell(node.title, leaf_body(node, available, content, lede), node.depth, styles=('assets/catalog.css',))
+    for path in DATABASE_LEAVES:
+        node = NODES[path]
+        lede, content = database_leaf_content(path.rsplit('/', 1)[1], workbench, prefix(node))
+        pages[node.url] = shell(node.title, leaf_body(node, available, content, lede), node.depth,
+                                styles=('assets/catalog.css',))
     series = NODES['Sports-and-Entertainment/Series-Hub']
     hosted = {
         QUANTUM: quantum_html(root, site),
@@ -539,13 +596,101 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
     for key, route, body in (('running', RUNNING, running_body), ('swimming', SWIMMING, swimming_body),
                              ('weightlifting', WEIGHTLIFTING, weightlifting_body)):
         node = NODES[route.removesuffix('/index.html')]
-        hosted[route] = shell(f'{node.title} log', body(athletics[key], _lead(route)), 3,
+        rendered = (running_body(athletics[key], _lead(route), athletics['tempo']) if key == 'running'
+                    else body(athletics[key], _lead(route)))
+        hosted[route] = shell(f'{node.title} log', rendered, 3,
                               styles=('assets/sports.css', 'assets/athletics.css'))
         overview = route.replace('index.html', 'Overview/index.html')
         hosted[overview] = reader_html(root, site, f'notebook_sources/athletics/{key}.tex', f'athletics-{key}', f'{node.title}: overview', overview,
                                        f'<a href="../index.html">{node.title} dashboard ↗</a><a href="../../index.html">Athletics ↗</a>',
                                        images='tex_images/athletics', byline='Liam McGrath · Training overview',
                                        note='History and context for the logged training. The dashboard holds every logged value.')
+    hosted[SLEEP] = shell('Sleep & dream log', sleep_body(health['sleep'], _lead(SLEEP)), 3,
+                          styles=('assets/sports.css', 'assets/athletics.css', 'assets/health.css'))
+    hosted[DIET] = shell('Diet & calorie tracking', diet_body(health['diet'], athletics, _lead(DIET)), 3,
+                         styles=('assets/sports.css', 'assets/athletics.css', 'assets/health.css'))
+    hosted[MACRO_STUDY] = shell('Economic Growth · The AI Iceberg Index', macro_study_body(studies['macro'], _lead(MACRO_STUDY)), 3,
+                                styles=('assets/sports.css', 'assets/athletics.css', 'assets/studies.css'),
+                                scripts=('assets/studies.js',))
+    hosted[MACRO_PAPER] = reader_html(
+        root, site, 'notebook_sources/studies/macro_ai_iceberg.tex', 'macro-ai-iceberg',
+        'Above and Beneath the Surface: The AI Iceberg Index', MACRO_PAPER,
+        '<a href="../index.html">Interactive Iceberg study ↗</a><a href="../../index.html">Macroeconomics ↗</a><a href="../../../../Workbench/index.html">Workbench ↗</a>',
+        images='tex_images/studies', pdf_key='macro-ai-iceberg',
+        byline='Liam McGrath · Macroeconomics & labor-exposure study',
+        note='Formal decomposition of visible vs. submerged AI skill exposure across 12 NAICS sectors and 12 regional economies.',
+    )
+    hosted[ALBERTA_STUDY] = shell('Public Policy · 2026 Alberta Referendum', alberta_study_body(studies['alberta'], _lead(ALBERTA_STUDY)), 3,
+                                  styles=('assets/sports.css', 'assets/athletics.css', 'assets/studies.css'),
+                                  scripts=('assets/studies.js',))
+    hosted[ALBERTA_PAPER] = reader_html(
+        root, site, 'notebook_sources/studies/alberta_referendum_2026.tex', 'alberta-referendum-2026',
+        'Three Ballots in One: The 2026 Alberta Referendum', ALBERTA_PAPER,
+        '<a href="../index.html">Interactive Referendum study ↗</a><a href="../../index.html">Law &amp; Policy ↗</a><a href="../../../../Workbench/index.html">Workbench ↗</a>',
+        images='tex_images/studies', pdf_key='alberta-referendum-2026',
+        byline='Liam McGrath · Constitutional & demographic voting study',
+        note='All 10 October 19, 2026 ballot questions, ballot roll-off, demographic cross-tabs, and coalition motivation analysis.',
+    )
+    hosted[GAS_STUDY] = shell(
+        'Game Theory · Gas Price Collusion & Oligopoly Supergames',
+        gas_study_body(studies['gas'], _lead(GAS_STUDY), is_subtab=False), 3, math=True,
+        styles=('assets/sports.css', 'assets/athletics.css', 'assets/studies.css'),
+        scripts=('assets/studies.js',),
+    )
+    hosted[GAS_TAB] = shell(
+        'Gas Price Collusion · Game Theory Study Tab',
+        gas_study_body(studies['gas'], _lead(GAS_TAB, 'Gas Price Collusion'), is_subtab=True), 4, math=True,
+        styles=('assets/sports.css', 'assets/athletics.css', 'assets/studies.css'),
+        scripts=('assets/studies.js',),
+    )
+    hosted[GAS_PAPER] = reader_html(
+        root, site, 'notebook_sources/studies/gas_price_collusion.tex', 'gas-price-collusion',
+        'Why Gas Prices Feather Down: Oligopoly Supergames & Algorithmic Pricing', GAS_PAPER,
+        '<a href="../index.html">Interactive Game Theory dashboard ↗</a><a href="../Gas-Price-Collusion/index.html">Gas Price Collusion tab ↗</a><a href="../../index.html">Microeconomics ↗</a><a href="../../../../Workbench/index.html">Workbench ↗</a>',
+        images='tex_images/studies', pdf_key='gas-price-collusion',
+        byline='Liam McGrath · Microeconomics & Game Theory study (Gemini 4 Argon + Pandas)',
+        note='Cross-country retail fuel price decomposition, Rockets & Feathers asymmetric ECM, and repeated Bertrand supergame SPNE thresholds.',
+    )
+    hosted[SODIUM_STUDY] = shell(
+        'Electrochemistry · Sodium Battery Technology & Grid Storage',
+        sodium_study_body(studies['sodium'], _lead(SODIUM_STUDY), is_subtab=False), 3, math=True,
+        styles=('assets/sports.css', 'assets/athletics.css', 'assets/studies.css'),
+        scripts=('assets/studies.js',),
+    )
+    hosted[SODIUM_TAB] = shell(
+        'Sodium Battery Technology · Electrochemistry Study Tab',
+        sodium_study_body(studies['sodium'], _lead(SODIUM_TAB, 'Sodium Battery Technology'), is_subtab=True), 4, math=True,
+        styles=('assets/sports.css', 'assets/athletics.css', 'assets/studies.css'),
+        scripts=('assets/studies.js',),
+    )
+    hosted[SODIUM_PAPER] = reader_html(
+        root, site, 'notebook_sources/studies/sodium_battery_technology.tex', 'sodium-battery-technology',
+        'Period 3 Power: Periodic Table Electrochemistry & Grid-Scale Sodium-Ion Batteries', SODIUM_PAPER,
+        '<a href="../index.html">Interactive Electrochemistry dashboard ↗</a><a href="../Sodium-Battery-Technology/index.html">Sodium Battery tab ↗</a><a href="../../index.html">Chemistry ↗</a><a href="../../../../Workbench/index.html">Workbench ↗</a>',
+        images='tex_images/studies', pdf_key='sodium-battery-technology',
+        byline='Liam McGrath · Electrochemistry & energy-storage study (Gemini 4 Argon + Pandas)',
+        note='Periodic table origins of Na-ion vs. Li-ion, hard carbon nanopore intercalation, dual Al current collectors, and winter blackout BESS resilience.',
+    )
+    hosted[AI_COST_STUDY] = shell(
+        'Artificial Intelligence · AI Cost & Compute Economics',
+        ai_cost_study_body(studies['ai_cost'], _lead(AI_COST_STUDY), is_subtab=False), 3, math=True,
+        styles=('assets/sports.css', 'assets/athletics.css', 'assets/studies.css'),
+        scripts=('assets/studies.js',),
+    )
+    hosted[AI_COST_TAB] = shell(
+        'AI Cost & Compute Economics · Emerging Industries Study Tab',
+        ai_cost_study_body(studies['ai_cost'], _lead(AI_COST_TAB, 'AI Cost & Compute Study'), is_subtab=True), 4, math=True,
+        styles=('assets/sports.css', 'assets/athletics.css', 'assets/studies.css'),
+        scripts=('assets/studies.js',),
+    )
+    hosted[AI_COST_PAPER] = reader_html(
+        root, site, 'notebook_sources/studies/ai_cost_economics.tex', 'ai-cost-economics',
+        'AI Cost & Compute Economics: Token Inference Deflation vs. Frontier Training Capex', AI_COST_PAPER,
+        '<a href="../index.html">Interactive AI Cost dashboard ↗</a><a href="../AI-Cost-Study/index.html">AI Cost Study tab ↗</a><a href="../../index.html">Emerging Industries ↗</a><a href="../../../../Workbench/index.html">Workbench ↗</a>',
+        images='tex_images/studies', pdf_key='ai-cost-economics',
+        byline='Liam McGrath · Emerging Industries & AI Economics study (Gemini 4 Argon + Pandas)',
+        note='Chinchilla pre-training scaling vs. HBM3e memory-bandwidth decoding, Sparse MoE + MLA KV-cache compression, Jevons Paradox in reasoning tokens, and enterprise cascade routing.',
+    )
     pages.update(hosted)
     for path, content in pages.items():
         write(site / path, content)
