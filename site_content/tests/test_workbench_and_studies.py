@@ -14,7 +14,7 @@ from site_content.log_sync import extract_gdoc_id, repair_log_text, validate_or_
 from site_content.pdf import copy_verified_pdf
 from site_content.publishing import home_html
 from site_content.studies import load_studies, studies_rows
-from site_content.studies_views import ai_cost_study_body, alberta_study_body, gas_study_body, macro_study_body, sodium_study_body
+from site_content.studies_views import ai_cost_study_body, alberta_study_body, gas_study_body, gen_tax_study_body, macro_study_body, sodium_study_body
 from site_content.workbench import RAP_BUCKETS, load_workbench, validate_workbench, workbench_rows
 from site_content.workbench_views import (
     completion_dashboard_body,
@@ -151,7 +151,7 @@ class WorkbenchTests(unittest.TestCase):
         run_buttons = [btn["data-run-study-id"] for btn in page.select("#workbench-studies-table [data-run-study-id]")]
         self.assertEqual(run_buttons, ["ST-03", "ST-04", "ST-07"])
         restudy_buttons = [btn["data-restudy-id"] for btn in page.select("#workbench-studies-table [data-restudy-id]")]
-        self.assertEqual(restudy_buttons, ["ST-01", "ST-02", "ST-05", "ST-06", "ST-08"])
+        self.assertEqual(restudy_buttons, ["ST-01", "ST-02", "ST-05", "ST-06", "ST-08", "ST-09"])
         # Study filter bar is always visible; table has 5 public columns + 2 hidden Admin columns (IP Index & Admin).
         self.assertIsNotNone(page.select_one("#wb-study-filters"))
         self.assertIsNotNone(page.select_one("#wb-filter-search"))
@@ -232,6 +232,7 @@ class StudiesTests(unittest.TestCase):
         gas = self.studies["gas"]
         sodium = self.studies["sodium"]
         ai_cost = self.studies["ai_cost"]
+        gen_tax = self.studies["gen_tax"]
         self.assertEqual(len(macro["industries"]), 12)
         self.assertEqual(len(macro["regions"]), 12)
         self.assertEqual(len(alberta["questions"]), 10)
@@ -246,6 +247,8 @@ class StudiesTests(unittest.TestCase):
         self.assertEqual(len(ai_cost["models"]), 8)
         self.assertEqual(len(ai_cost["layers"]), 6)
         self.assertIn("import pandas as pd", ai_cost["pandasScript"])
+        self.assertEqual(len(gen_tax["cohorts"]), 8)
+        self.assertIn("import pandas as pd", gen_tax["pandasScript"])
         csvs = studies_rows(self.studies)
         self.assertEqual(len(csvs["macro-industries"]), 12)
         self.assertEqual(len(csvs["alberta-questions"]), 10)
@@ -254,6 +257,7 @@ class StudiesTests(unittest.TestCase):
         self.assertEqual(len(csvs["sodium-chemistries"]), 6)
         self.assertEqual(len(csvs["ai-cost-models"]), 8)
         self.assertEqual(len(csvs["ai-cost-layers"]), 6)
+        self.assertEqual(len(csvs["gen-tax-cohorts"]), 8)
 
         for key, body in (
             ("macro", macro_study_body(macro)),
@@ -264,6 +268,8 @@ class StudiesTests(unittest.TestCase):
             ("sodium-tab", sodium_study_body(sodium, is_subtab=True)),
             ("ai-cost", ai_cost_study_body(ai_cost)),
             ("ai-cost-tab", ai_cost_study_body(ai_cost, is_subtab=True)),
+            ("gen-tax", gen_tax_study_body(gen_tax)),
+            ("gen-tax-tab", gen_tax_study_body(gen_tax, is_subtab=True)),
         ):
             with self.subTest(study=key):
                 page = BeautifulSoup(body, "html.parser")
@@ -285,7 +291,7 @@ class StudiesTests(unittest.TestCase):
     def test_compiled_study_pdfs_are_verified(self):
         with tempfile.TemporaryDirectory() as folder:
             out = Path(folder)
-            for key in ("macro-ai-iceberg", "alberta-referendum-2026", "gas-price-collusion", "sodium-battery-technology", "ai-cost-economics"):
+            for key in ("macro-ai-iceberg", "alberta-referendum-2026", "gas-price-collusion", "sodium-battery-technology", "ai-cost-economics", "generational-taxes"):
                 self.assertTrue(copy_verified_pdf(ROOT, key, out / key))
                 self.assertTrue((out / key / "document.pdf").is_file())
 

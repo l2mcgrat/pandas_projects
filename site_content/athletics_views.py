@@ -59,6 +59,11 @@ KPI_DEFINITIONS: dict[str, str] = {
     "Gemini 4 Argon blended": "Blended API inference price ($3.50/1M tokens at 3:1 input/output ratio: $1.25/1M input, $10.00/1M output) achieving 89.2% MMLU-Pro / GPQA accuracy.",
     "DeepSeek / Flash floor": "Sub-$0.50/1M token frontier inference tier enabled by Sparse MoE (37B active of 671B), Multi-head Latent Attention (MLA 75% KV-cache reduction), and hardware distillation.",
     "Cascade routing savings": "Enterprise TCO reduction (80.6% savings: $0.68/1M vs. $3.50/1M) achieved by routing 85% of routine traffic to Gemini 3.8 Flash and 15% of complex proofs to Gemini 4 Argon High Thinking.",
+    # Macroeconomics · Taxes on Generations Over Time Periods (ST-09)
+    "Peak tax-bearing cohort (Gen X)": "Population-normalized real annual total tax burden (income, payroll, GST/HST, property, fuel/carbon, and sin excise) per capita for Generation X (ages 45–60) in constant 2024 CAD ($31,420/yr vs. $12,840 rewards).",
+    "Senior fiscal reward ratio (65+)": "Ratio of total real per-capita public benefits received (OAS/GIS, CPP/QPP, and CIHI age-weighted healthcare Social Transfers in Kind) to total direct and indirect taxes paid by cohorts aged 65+ (2.31×).",
+    "Commute fuel & carbon peak": "Mean one-way commute duration (28.4 mins) and annual per-capita road-fuel excise plus carbon levy expenditure ($780/cap) for Millennial commuters pushed into outer suburban rings (81.6% auto share).",
+    "Gen Z vaping excise share": "Share of total national federal and provincial vaping excise duty paid by Generation Z (ages 15–28, 64.2% share / $168 per capita), driven by 19.7% prevalence at ages 20–24 vs. <1.5% for Boomers.",
     # Athletics & Health Dashboards
     "Sessions logged": "Total validated training sessions parsed from the plain-text log file in records/athletics/.",
     "Best interval": "Fastest single 0.95 km I1 neighbourhood loop recorded across all interval sessions.",
@@ -255,12 +260,33 @@ def _tempo_section(tempo: dict) -> str:
              f'{r["speed"]:g} m/s', r["writtenPace"]["raw"]] for r in runs]
     chips = "".join(f'<li class="series-{i % SERIES}">{_e(_day(r["date"]))} · {_e(r["route"])} · {r["distanceKm"]:g} km @ {clock(r["paceSeconds"])}/km</li>'
                     for i, r in enumerate(runs))
+    # Build static dual-metric SVG chart for Tempo Runs (Pace /km bars + Speed m/s line)
+    step = 760 / max(1, len(runs))
+    max_pace = max(360, int(max(r["paceSeconds"] for r in runs)) + 20)
+    y_p = lambda v: 290 - (v / max_pace) * 235
+    bars = []
+    for idx, r in enumerate(runs):
+        bx = 90 + idx * step
+        bars.append(
+            f'<rect class="athletics-bar series-1" x="{bx + step * .18:.1f}" y="{y_p(r["paceSeconds"]):.1f}" width="{step * .64:.1f}" height="{290 - y_p(r["paceSeconds"]):.1f}">'
+            f'<title>{_e(_day(r["date"]))} · {_e(r["route"])} · {r["distanceKm"]:g} km · {clock(r["paceSeconds"])}/km ({r["speed"]:g} m/s)</title></rect>'
+            f'<text x="{bx + step / 2:.1f}" y="{y_p(r["paceSeconds"]) - 8:.1f}" text-anchor="middle">{clock(r["paceSeconds"])}/km ({r["speed"]:g} m/s)</text>'
+            f'<text x="{bx + step / 2:.1f}" y="314" text-anchor="middle">{_e(_day(r["date"]))}</text>'
+        )
+    grid = _axis(55, 290, 0, max_pace, range(0, max_pace + 1, 90), lambda v: f"{clock(v)}/km")
+    tempo_chart = _chart(
+        "running-tempo-chart",
+        "Tempo run pace (/km) and speed (m/s) progression",
+        "Bars show computed pace per kilometre (lower is faster) and speed in metres per second across logged continuous tempo runs.",
+        grid + "".join(bars),
+    )
     note = ("Pace and speed are computed from the written time and distance; the written pace line is kept beside them"
             + (" and matches" if not summary["paceMismatches"] else f" and differs on {', '.join(_day(d) for d in summary['paceMismatches'])}") + ". "
             "Route distances and names are as written; the route map stays unpublished because it shows the start point.")
     return (f'<section class="sports-section" id="running-tempo" aria-labelledby="running-tempo-title"><p class="sports-kicker">04 / Tempo runs</p>'
             f'<h2 id="running-tempo-title">Continuous runs, {summary["kilometres"]:g} km so far.</h2>'
-            f'<ol class="athletics-chips" aria-label="Tempo runs">{chips}</ol>'
+            f'<ol class="athletics-chips" id="tempo-chips-list" aria-label="Tempo runs">{chips}</ol>'
+            f'<div class="bi-tempo-host" data-bi-tempo="{_e(json.dumps(runs, separators=(",", ":")))}">{tempo_chart}</div>'
             + _table("Tempo runs; time as written, pace computed.", ["Date", "Route", "Distance", "Time", "Pace", "Speed", "Pace as written"], rows, "tempo-table")
             + f'<p class="sports-note">{_e(note)}</p></section>')
 
@@ -425,7 +451,13 @@ def _update_notes(key: str, data: dict, steps: str) -> str:
     """Owner notes + non-Admin 0-token Google Doc / Logs refresh panel."""
     source = data["source"]
     last_date = data.get("summary", {}).get("lastDate", "2026-10-18")
-    default_url = "https://docs.google.com/document/d/1mboHEkA2jzHEbJY0mcuXbP-N_cWfyaN-LiN2z8xueq0/edit" if key == "weightlifting" else ""
+    default_url = (
+        "https://docs.google.com/document/d/1mboHEkA2jzHEbJY0mcuXbP-N_cWfyaN-LiN2z8xueq0/edit"
+        if key == "weightlifting"
+        else "https://docs.google.com/document/d/1kaKlOi_fPPrxHyCwf-G3nP93TkC-aPLT5Y-7b776Pmo/edit"
+        if key in ("running", "tempo")
+        else ""
+    )
     return (f'<section class="sports-section athletics-update" id="{key}-update" aria-labelledby="{key}-update-title">'
             f'<p class="sports-kicker">Google Drive Logs Sync &amp; Format · No Admin Unlock Required</p>'
             f'<h2 id="{key}-update-title">Refresh from Google Docs or add a session.</h2>'

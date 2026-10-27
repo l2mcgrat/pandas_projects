@@ -43,6 +43,9 @@ SODIUM_PAPER = "Science-and-Engineering/Chemistry/Electrochemistry/Paper/index.h
 AI_COST_STUDY = "Business-and-Economics/Emerging-Industries/Artificial-Intelligence/index.html"
 AI_COST_TAB = "Business-and-Economics/Emerging-Industries/Artificial-Intelligence/AI-Cost-Study/index.html"
 AI_COST_PAPER = "Business-and-Economics/Emerging-Industries/Artificial-Intelligence/Paper/index.html"
+GEN_TAX_STUDY = "Business-and-Economics/Macroeconomics/Fiscal-Policy/index.html"
+GEN_TAX_TAB = "Business-and-Economics/Macroeconomics/Fiscal-Policy/Taxes-on-Generations/index.html"
+GEN_TAX_PAPER = "Business-and-Economics/Macroeconomics/Fiscal-Policy/Paper/index.html"
 _ATHLETICS = "Gaming-and-Performance-Log/Athletics"
 RUNNING = f"{_ATHLETICS}/Running/index.html"
 SWIMMING = f"{_ATHLETICS}/Swimming/index.html"
@@ -68,7 +71,7 @@ DATABASE_LEAVES = (
 # Dynamic Programming renders its selection rule but has no solutions yet, so it is not "Live".
 HOSTED = frozenset(route.removesuffix("/index.html") for route in (
     QUANTUM, ALGORITHMS, REPORT, RULES, DASHBOARD, PITCH, FEELINGS, VOCABULARY, RUNNING, SWIMMING, WEIGHTLIFTING,
-    SLEEP, DIET, MACRO_STUDY, ALBERTA_STUDY, GAS_STUDY, SODIUM_STUDY, AI_COST_STUDY)) | frozenset(
+    SLEEP, DIET, MACRO_STUDY, ALBERTA_STUDY, GAS_STUDY, SODIUM_STUDY, AI_COST_STUDY, GEN_TAX_STUDY)) | frozenset(
     path for path in LEETCODE_LEAVES + RAP_LEAVES + DATABASE_LEAVES if not path.endswith("Dynamic-Programming"))
 
 
@@ -168,6 +171,12 @@ _AI_COST = Feature(AI_COST_STUDY, "Emerging Industries · Study ST-08", "AI Cost
 _AI_COST_PAPER = Feature(AI_COST_PAPER, "LaTeX paper · PDF", "AI Cost & Compute Economics",
                          "Chinchilla scaling, HBM3e memory-bandwidth roofline, Jevons Paradox in reasoning tokens, and Pandas code.",
                          "Business-and-Economics/Emerging-Industries", date="2026-10-26")
+_GEN_TAX = Feature(GEN_TAX_STUDY, "Fiscal Policy · Study ST-09", "Taxes on Generations Over Time Periods",
+                   "Real population-normalized tax burden vs. fiscal rewards (1985–2025), 28.4m exurban commute carbon tax, youth vape excise & property tax.",
+                   "Business-and-Economics/Macroeconomics/Fiscal-Policy", date="2026-10-27")
+_GEN_TAX_PAPER = Feature(GEN_TAX_PAPER, "LaTeX paper · PDF", "Taxes on Generations Over Time Periods",
+                         "Auerbach-Kotlikoff generational accounting, commute carbon elasticity, vaping excise concentration, and Pandas code.",
+                         "Business-and-Economics/Macroeconomics", date="2026-10-27")
 _CHANGES = Feature(CHANGE_LOG, "Reader · Dated", "Change log", "Every request and what was built, newest first.",
                    "Language-and-Programming/Coding-Projects/Website-Changes", date="2026-10-25")
 _UPCOMING = Feature(UPCOMING, "Reader · Dated", "Upcoming changes", "Planned work by request date, and the change-request database plan.",
@@ -201,10 +210,11 @@ FEATURES: dict[str, tuple[Feature, ...]] = {
     "Science-and-Engineering/Physics/Thermodynamics": (_DIPOLE,),
     "Science-and-Engineering/Computer-Science": (_DSA, _LEET, _REPORT),
     "Science-and-Engineering/Computer-Science/Simulations": (_DIPOLE, _REPORT),
-    "Business-and-Economics": (_AI_COST, _GAS, _ICEBERG, _ALBERTA, _AI_COST_PAPER, _GAS_PAPER, _ICEBERG_PAPER, _ALBERTA_PAPER),
+    "Business-and-Economics": (_GEN_TAX, _AI_COST, _GAS, _ICEBERG, _ALBERTA, _GEN_TAX_PAPER, _AI_COST_PAPER, _GAS_PAPER, _ICEBERG_PAPER, _ALBERTA_PAPER),
     "Business-and-Economics/Microeconomics": (_GAS, _GAS_PAPER),
     "Business-and-Economics/Microeconomics/Market-Structures": (_GAS, _GAS_PAPER),
-    "Business-and-Economics/Macroeconomics": (_ICEBERG, _ICEBERG_PAPER, _ALBERTA),
+    "Business-and-Economics/Macroeconomics": (_GEN_TAX, _GEN_TAX_PAPER, _ICEBERG, _ICEBERG_PAPER, _ALBERTA),
+    "Business-and-Economics/Macroeconomics/Fiscal-Policy": (_GEN_TAX, _GEN_TAX_PAPER, _ICEBERG),
     "Business-and-Economics/Law-and-Policy": (_ALBERTA, _ALBERTA_PAPER),
     "Business-and-Economics/Emerging-Industries": (_AI_COST, _AI_COST_PAPER, _ICEBERG, _ICEBERG_PAPER),
     "Business-and-Economics/Emerging-Industries/Artificial-Intelligence": (_AI_COST, _AI_COST_PAPER, _ICEBERG),

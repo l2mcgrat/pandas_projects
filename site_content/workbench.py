@@ -273,6 +273,27 @@ DEFAULT_SEED: dict[str, Any] = {
             "clicks": 24,
             "notes": "Published via Gemini 4 Argon + Pandas: 8-model inference deflation & capex matrix, 6-layer infrastructure bottleneck inspector, cascade routing simulation, and compiled LaTeX PDF.",
         },
+        {
+            "id": "ST-09",
+            "createdOn": "2026-10-27",
+            "title": "Taxes on Generations over Time Periods",
+            "atlasPath": "Business-and-Economics/Macroeconomics/Fiscal-Policy",
+            "question": (
+                "Using Real Dollars and Normalizing for Population Distribution, how much has the Tax Burden and Tax Rewards "
+                "(in terms of how much benefits have been recieved from taxes by age group) fell on each generation? Track how "
+                "different taxes have varied over the years too, I want plots of that AS WELL AS the other plots you WERE ALREADY "
+                "GOING TO GENERATE, like sales tax, income tax, property tax, taxes on alcohol, gas, etc and factor in how much "
+                "those affect different generations during different time periods factoring in stuff even as minute as average "
+                "commute times (I want data and visuals for how different generations have different average commutes) affecting "
+                "the carbon tax, vape tax targetting younger generations, property taxes impacting older generations. Everything."
+            ),
+            "dataset": "Statistics Canada DHEA (Tables 36-10-0587-01 & 36-10-0588-01, 1999–2025) + Survey of Household Spending (SHS) + Census/LFS Commuting Supplements + CTNS Nicotine Survey + CIHI NHEX (1975–2025) + PBO Carbon & Excise Reports",
+            "status": "published",
+            "studyRoute": "Business-and-Economics/Macroeconomics/Fiscal-Policy/index.html",
+            "paperRoute": "Business-and-Economics/Macroeconomics/Fiscal-Policy/Paper/index.html",
+            "clicks": 31,
+            "notes": "Executed on Mobile via Gemini 4 Argon (20,079 tokens) & promoted to multi-plot Fiscal Policy dashboard (3 SVG plots: Tax Burden vs Rewards, Tax Instrument Mix over Time, and Commute Duration vs Fuel/Carbon/Vape/Property Tax) + Tectonic PDF.",
+        },
     ],
     "theoryQueue": [
         {

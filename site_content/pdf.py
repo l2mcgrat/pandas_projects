@@ -31,6 +31,7 @@ DOCUMENTS = {
     "gas-price-collusion": "notebook_sources/studies/gas_price_collusion.tex",
     "sodium-battery-technology": "notebook_sources/studies/sodium_battery_technology.tex",
     "ai-cost-economics": "notebook_sources/studies/ai_cost_economics.tex",
+    "generational-taxes": "notebook_sources/studies/generational_taxes.tex",
 }
 # Root-relative folder each article's images must come from.
 IMAGE_DIRS = {
@@ -41,6 +42,7 @@ IMAGE_DIRS = {
     "gas-price-collusion": "tex_images/studies/",
     "sodium-battery-technology": "tex_images/studies/",
     "ai-cost-economics": "tex_images/studies/",
+    "generational-taxes": "tex_images/studies/",
 }
 CACHE = "reports/site_content/pdfs"
 EPOCH = "946684800"  # Fixed 2000-01-01 UTC; not a document completion date.

@@ -1,0 +1,24 @@
+{
+  "compiler": {
+    "flags": [
+      "--untrusted",
+      "--keep-logs",
+      "--keep-intermediates",
+      "--outdir",
+      "output"
+    ],
+    "name": "tectonic",
+    "sourceDateEpoch": "946684800",
+    "version": "Tectonic 0.17.0"
+  },
+  "inputs": {
+    "images": [],
+    "source": {
+      "path": "notebook_sources/studies/generational_taxes.tex",
+      "sha256": "9462f27bc2fccd1e97c1d4bde8b9092e04befd518436e338a1a881a4a6f666dc"
+    }
+  },
+  "key": "generational-taxes",
+  "pdfSha256": "82d61ceeb727b33f8a31dc328dfde861505a1c89f77c237fbf283a30236e3c13",
+  "schemaVersion": 1
+}

@@ -51,6 +51,8 @@ NEW_PAGES = {
     "Science-and-Engineering/Chemistry/Electrochemistry/Paper/index.html",
     "Business-and-Economics/Emerging-Industries/Artificial-Intelligence/AI-Cost-Study/index.html",
     "Business-and-Economics/Emerging-Industries/Artificial-Intelligence/Paper/index.html",
+    "Business-and-Economics/Macroeconomics/Fiscal-Policy/Taxes-on-Generations/index.html",
+    "Business-and-Economics/Macroeconomics/Fiscal-Policy/Paper/index.html",
     "Language-and-Programming/Coding-Projects/Website-Changes/Change-Log/index.html",
     "Language-and-Programming/Coding-Projects/Website-Changes/Upcoming-Changes/index.html",
     "Sports-and-Entertainment/Sports-Analytics/Predictions-and-Results/UFC-Predictions-vs-Outcomes/index.html",
@@ -436,7 +438,7 @@ class IntegrationTests(unittest.TestCase):
         cls.paper = BeautifulSoup((cls.site / "Mental-Map/index.html").read_bytes().decode("utf-8"), "html.parser")
 
     def test_every_atlas_page_and_all_local_links_fragments_assets(self):
-        self.assertEqual(len(NEW_PAGES), 5 + 258 + 2 + 20)
+        self.assertEqual(len(NEW_PAGES), 5 + 258 + 2 + 22)
         self.assertEqual(set(self.manifest["pages"]), NEW_PAGES)
         self.assertEqual(self.manifest["atlasNodes"], 259)
         cache = {}
@@ -575,7 +577,7 @@ class IntegrationTests(unittest.TestCase):
         display = [slot.payload for slot in slots.values() if slot.display]
         independent = re.compile(r"\\begin\{(?P<env>equation|align)\}.*?\\end\{(?P=env)\}|\\\[(.*?)\\\]", re.S)
         self.assertEqual([m[2] if m[2] is not None else m[0] for m in independent.finditer(active_tex(source))], display)
-        self.assertEqual(len(display), 687)
+        self.assertEqual(len(display), 688)
         self.assertEqual(sum(slot.original.startswith(r"\[") for slot in slots.values()), 1)
         rendered_inline = [span.get_text()[2:-2] for span in self.paper.select(".tex-paper .math.inline")]
         reference = re.compile(r"\\(?:ref|eqref|autoref)\{([^{}]+)\}")

@@ -38,12 +38,14 @@ class ParserTests(unittest.TestCase):
 
     def test_tempo_runs_pace_and_speed_match_the_written_lines(self):
         tempo = self.data["tempo"]
-        self.assertEqual(tempo["summary"]["runs"], 2)
-        first, second = tempo["runs"]
+        self.assertEqual(tempo["summary"]["runs"], 4)
+        first, second, third, fourth = tempo["runs"]
         self.assertEqual((first["route"], first["distanceKm"], first["timeSeconds"]), ("House to Vape Store & Back", 4.6, 1415.21))
         self.assertEqual(first["paceSeconds"], 307.65)
         self.assertEqual(second["timeRaw"], "33.23.81")  # dots as written
         self.assertEqual(second["speed"], 2.89)
+        self.assertEqual((third["date"], third["timeSeconds"]), ("2026-10-24", 1287.96))
+        self.assertEqual((fourth["date"], fourth["timeSeconds"]), ("2026-10-26", 1276.16))
         self.assertEqual(tempo["summary"]["paceMismatches"], [])
 
     def test_swimming_totals_and_weeks(self):
@@ -117,7 +119,7 @@ class ParserTests(unittest.TestCase):
     def test_csv_rows_cover_every_value(self):
         rows = athletics_rows(self.data)
         self.assertEqual(len(rows["running-intervals"]), 19)
-        self.assertEqual(len(rows["running-tempo"]), 2)
+        self.assertEqual(len(rows["running-tempo"]), 4)
         self.assertEqual(len(rows["weightlifting-sets"]), self.data["weightlifting"]["summary"]["sets"])
         progress = rows["weightlifting-progress"]
         self.assertEqual(set(progress[0]), {"exercise", "kind", "date", "topSetLbs", "repsAtTopSet", "best10RepsLbs",

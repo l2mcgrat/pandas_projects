@@ -8,7 +8,7 @@ from typing import Any
 
 from .athletics_views import _chart, _downloads, _hero, _metrics, _num, _section, _table
 
-__all__ = ["ai_cost_study_body", "alberta_study_body", "gas_study_body", "macro_study_body", "sodium_study_body"]
+__all__ = ["ai_cost_study_body", "alberta_study_body", "gas_study_body", "gen_tax_study_body", "macro_study_body", "sodium_study_body"]
 
 
 def _e(value: Any) -> str:
@@ -1226,4 +1226,257 @@ def ai_cost_study_body(data: dict[str, Any], lead: str = "", *, is_subtab: bool 
         ])}
       </section>
     </main>'''
+
+
+# ---- Study 6 View: ST-09 Taxes on Generations Over Time Periods (Multi-Plot) ---------
+
+def _gen_tax_burden_rewards_svg(cohorts: list[dict[str, Any]]) -> str:
+    """Plot 1: Real Per-Capita Tax Burden vs. Fiscal Rewards (Cash + Healthcare/Education STiK) in 2024 CAD/capita."""
+    height = 78 + len(cohorts) * 38
+    max_cad = 36000.0
+    left, width = 285.0, 395.0
+    parts = []
+    for tick in (0, 9000, 18000, 27000, 36000):
+        tx = left + (tick / max_cad) * width
+        parts.append(
+            f'<line class="chart-grid" x1="{tx:.1f}" x2="{tx:.1f}" y1="30" y2="{height - 26}"/>'
+            f'<text x="{tx:.1f}" y="20" text-anchor="middle">${tick // 1000}k/cap</text>'
+        )
+    for idx, c in enumerate(cohorts):
+        y = 38 + idx * 38
+        w_tax = (c["totalTaxCad"] / max_cad) * width
+        w_rew = (c["totalRewardCad"] / max_cad) * width
+        short_lbl = c["cohort"].replace("Baseline", "Era")
+        parts.append(
+            f'<text x="{left - 10:.1f}" y="{y + 15:.1f}" text-anchor="end">{_e(short_lbl)}</text>'
+            f'<rect class="study-bar-submerged" x="{left:.1f}" y="{y:.1f}" width="{w_tax:.1f}" height="12">'
+            f'<title>{_e(c["cohort"])} · Real Gross Taxes Paid: ${_num(c["totalTaxCad"])}/capita (2024 CAD)</title></rect>'
+            f'<rect class="study-bar-surface" x="{left:.1f}" y="{y + 13:.1f}" width="{w_rew:.1f}" height="12">'
+            f'<title>{_e(c["cohort"])} · Real Fiscal Rewards Received (Cash + Health/Education STiK): ${_num(c["totalRewardCad"])}/capita (Ratio {c["rewardRatio"]:.2f}×)</title></rect>'
+            f'<text class="athletics-label" x="{left + max(w_tax, w_rew) + 8:.1f}" y="{y + 16:.1f}">${_num(c["totalTaxCad"])} tax vs ${_num(c["totalRewardCad"])} reward ({c["rewardRatio"]:.2f}×)</text>'
+        )
+    return _chart(
+        "gen-tax-burden-rewards-chart",
+        "Plot 1 · Real Per-Capita Tax Burden vs. Fiscal Rewards by Generation & Historical Era (2024 CAD/capita)",
+        "Amber top bars show real population-normalized gross taxes paid per capita; cyan bottom bars show real cash + healthcare/education transfers received per capita (StatCan DHEA, SHS & CIHI, 1985–2025).",
+        "".join(parts),
+        height=height,
+    )
+
+
+def _gen_tax_mix_svg(cohorts: list[dict[str, Any]]) -> str:
+    """Plot 2: Stacked Tax Instrument Composition (Income/Payroll, Sales, Property, Fuel/Carbon, Alcohol & Vape Excise)."""
+    height = 78 + len(cohorts) * 36
+    max_cad = 32000.0
+    left, width = 285.0, 395.0
+    parts = []
+    for tick in (0, 8000, 16000, 24000, 32000):
+        tx = left + (tick / max_cad) * width
+        parts.append(
+            f'<line class="chart-grid" x1="{tx:.1f}" x2="{tx:.1f}" y1="30" y2="{height - 26}"/>'
+            f'<text x="{tx:.1f}" y="20" text-anchor="middle">${tick // 1000}k/cap</text>'
+        )
+    for idx, c in enumerate(cohorts):
+        y = 38 + idx * 36
+        w_inc = (c["incomePayrollCad"] / max_cad) * width
+        w_sal = (c["salesTaxCad"] / max_cad) * width
+        w_prp = (c["propertyTaxCad"] / max_cad) * width
+        w_exc = ((c["fuelCarbonCad"] + c["alcoholTaxCad"] + c["vapeTaxCad"]) / max_cad) * width
+        x1 = left + w_inc
+        x2 = x1 + w_sal
+        x3 = x2 + w_prp
+        short_lbl = c["cohort"].replace("Baseline", "Era")
+        parts.append(
+            f'<text x="{left - 10:.1f}" y="{y + 15:.1f}" text-anchor="end">{_e(short_lbl)}</text>'
+            f'<rect fill="#bba1ff" x="{left:.1f}" y="{y:.1f}" width="{w_inc:.1f}" height="20">'
+            f'<title>{_e(c["cohort"])} · Income &amp; Payroll (PIT + CPP/EI): ${_num(c["incomePayrollCad"])}/cap</title></rect>'
+            f'<rect fill="#69d4cf" x="{x1:.1f}" y="{y:.1f}" width="{w_sal:.1f}" height="20">'
+            f'<title>{_e(c["cohort"])} · Sales Tax (GST/HST/PST): ${_num(c["salesTaxCad"])}/cap</title></rect>'
+            f'<rect fill="#f7ab65" x="{x2:.1f}" y="{y:.1f}" width="{w_prp:.1f}" height="20">'
+            f'<title>{_e(c["cohort"])} · Municipal Property Tax: ${_num(c["propertyTaxCad"])}/cap ({c["homeownerPct"]:g}% homeowner rate)</title></rect>'
+            f'<rect fill="#f28b82" x="{x3:.1f}" y="{y:.1f}" width="{max(3.0, w_exc):.1f}" height="20">'
+            f'<title>{_e(c["cohort"])} · Fuel/Carbon (${c["fuelCarbonCad"]}) + Alcohol (${c["alcoholTaxCad"]}) + Vape (${c["vapeTaxCad"]})</title></rect>'
+            f'<text class="athletics-label" x="{x3 + max(3.0, w_exc) + 8:.1f}" y="{y + 15:.1f}">PIT ${_num(c["incomePayrollCad"])} · Sales ${_num(c["salesTaxCad"])} · Prop ${_num(c["propertyTaxCad"])}</text>'
+        )
+    return _chart(
+        "gen-tax-mix-chart",
+        "Plot 2 · Tax Instrument Breakdown Across Generations & Time Periods (Income/Payroll, Sales, Property & Sin/Fuel Excise)",
+        "Stacked bars decompose per-capita tax payments into Income & Payroll (violet), Sales GST/HST (cyan), Property Tax (amber), and Fuel/Carbon + Alcohol + Vape Excise (coral).",
+        "".join(parts),
+        height=height,
+    )
+
+
+def _gen_commute_excise_svg(cohorts: list[dict[str, Any]]) -> str:
+    """Plot 3: Average One-Way Commute Duration (mins) & Fuel/Carbon Tax vs. Youth Vape Excise & Property Tax Incidence."""
+    height = 78 + len(cohorts) * 36
+    max_fuel = 1000.0
+    left, width = 285.0, 395.0
+    parts = []
+    for tick in (0, 250, 500, 750, 1000):
+        tx = left + (tick / max_fuel) * width
+        parts.append(
+            f'<line class="chart-grid" x1="{tx:.1f}" x2="{tx:.1f}" y1="30" y2="{height - 26}"/>'
+            f'<text x="{tx:.1f}" y="20" text-anchor="middle">${tick}/cap</text>'
+        )
+    for idx, c in enumerate(cohorts):
+        y = 38 + idx * 36
+        w_fuel = (c["fuelCarbonCad"] / max_fuel) * width
+        w_vape = (c["vapeTaxCad"] / max_fuel) * width
+        x_comm = left + (c["commuteMins"] / 35.0) * width
+        short_lbl = c["cohort"].replace("Baseline", "Era")
+        parts.append(
+            f'<text x="{left - 10:.1f}" y="{y + 15:.1f}" text-anchor="end">{_e(short_lbl)}</text>'
+            f'<rect fill="#69d4cf" x="{left:.1f}" y="{y:.1f}" width="{w_fuel:.1f}" height="20">'
+            f'<title>{_e(c["cohort"])} · Gross Fuel &amp; Carbon Tax: ${c["fuelCarbonCad"]}/cap ({c["commuteMins"]:.1f} min 1-way commute, {c["autoSharePct"]:.1f}% auto share)</title></rect>'
+            f'<rect fill="#f28b82" x="{left + w_fuel:.1f}" y="{y:.1f}" width="{max(0.0, w_vape):.1f}" height="20">'
+            f'<title>{_e(c["cohort"])} · Vaping Excise Duty: ${c["vapeTaxCad"]}/cap ({c["vapePrevPct"]:.1f}% prevalence)</title></rect>'
+            f'<circle cx="{x_comm:.1f}" cy="{y + 10:.1f}" r="5" fill="#ffffff" stroke="#0d101b" stroke-width="1.6">'
+            f'<title>Average One-Way Commute Duration: {c["commuteMins"]:.1f} mins ({c["autoSharePct"]:.1f}% private vehicle share)</title></circle>'
+            f'<text class="athletics-label" x="{left + w_fuel + w_vape + 8:.1f}" y="{y + 15:.1f}">{c["commuteMins"]:.1f}m commute → ${c["fuelCarbonCad"]} CO2/fuel + ${c["vapeTaxCad"]} vape</text>'
+        )
+    return _chart(
+        "gen-tax-commute-excise-chart",
+        "Plot 3 · Average Commute Duration (● mins) Driving Fuel & Carbon Tax ($/cap) + Youth Vaping Excise ($/cap)",
+        "Cyan bars show annual per-capita road-fuel excise and carbon tax; coral extensions show vaping excise duty ($168/cap on Gen Z); white markers plot mean one-way commute duration (peaking at 28.4 mins for Millennials).",
+        "".join(parts),
+        height=height,
+    )
+
+
+def gen_tax_study_body(data: dict[str, Any], lead: str = "", *, is_subtab: bool = False) -> str:
+    """Render ST-09: Taxes on Generations Over Time Periods in Business-and-Economics/Macroeconomics/Fiscal-Policy."""
+    s = data["summary"]
+    cohorts = data["cohorts"]
+    up_root = "../../../../" if is_subtab else "../../../"
+    paper_href = "../Paper/index.html" if is_subtab else "Paper/index.html"
+    overview_href = "../index.html" if is_subtab else "index.html"
+    subtab_href = "index.html" if is_subtab else "Taxes-on-Generations/index.html"
+
+    deck = (
+        f"In constant 2024 Canadian dollars normalized for cohort population size (1985–2025), prime-working-age Gen X ({s['peakTaxCohort']}) "
+        f"and Millennials ($26,890/yr, 28.4 min commute) fund the fiscal base while 65+ seniors receive {s['seniorRewardRatio']} in pensions and healthcare."
+    )
+    actions = (
+        f'<a class="button primary" href="{paper_href}">Read the LaTeX paper &amp; PDF <span aria-hidden="true">↗</span></a>'
+        '<a class="button ghost" href="#gen-tax-mix-title">Plot 2: Tax Mix Over Time</a>'
+        '<a class="button ghost" href="#gen-tax-commute-title">Plot 3: Commute &amp; Vape Tax</a>'
+        f'<a class="button ghost" href="{up_root}Mental-Map/index.html#sec:fiscal-policy">Mental Map § 2.3.3 ↗</a>'
+        f'<a class="button ghost" href="{up_root}Workbench/index.html">Workbench (ST-09) ↗</a>'
+    )
+    art = (
+        '<div class="athletics-split-card" aria-hidden="true">'
+        f'<span class="split-Back"><strong>{s["peakTaxCohort"]}</strong>Gen X peak tax</span>'
+        f'<span class="split-Chest"><strong>{s["seniorRewardRatio"]}</strong>65+ reward ratio</span>'
+        f'<span class="split-Shoulders"><strong>28.4m</strong>Millennial commute</span></div>'
+    )
+    tab_bar = (
+        '<nav class="wb-bucket-bar" aria-label="Fiscal Policy destination tabs" style="margin: 14px 0 6px;">'
+        f'<a class="wb-bucket-chip{" is-active" if not is_subtab else ""}" href="{overview_href}">🏛️ Fiscal Policy · Generational Tax Dashboard</a>'
+        f'<a class="wb-bucket-chip{" is-active" if is_subtab else ""}" href="{subtab_href}">📊 Taxes on Generations Study Tab (ST-09)</a>'
+        f'<a class="wb-bucket-chip" href="{paper_href}">📄 Compiled LaTeX Paper &amp; PDF</a>'
+        f'<a class="wb-bucket-chip" href="{up_root}Mental-Map/index.html#sec:fiscal-policy">🧠 Mental Map § 2.3.3</a>'
+        f'<a class="wb-bucket-chip" href="{up_root}Workbench/index.html">🗄️ Workbench Queue</a>'
+        '</nav>'
+    )
+    mm_fp = f"{up_root}Mental-Map/index.html#sec:fiscal-policy"
+    mm_fp_lbl = "§ 2.3.3 Macroeconomics / Fiscal Policy"
+    metrics = _metrics([
+        ("Peak tax-bearing cohort (Gen X)", s["peakTaxCohort"], "Net fiscal deficit −$18,580/capita (Reward Ratio 0.41×)"),
+        ("Senior fiscal reward ratio (65+)", s["seniorRewardRatio"], "$29,140 transfers + health STiK vs. $12,610 taxes paid/capita"),
+        ("Commute fuel & carbon peak", s["millennialCommuteTax"], "Millennials (29–44) longest 1-way commute & gross fuel/CO2 tax"),
+        ("Gen Z vaping excise share", s["genZVapeShare"], "19.7% prevalence (ages 20–24) vs. <1.5% for Boomers"),
+    ], with_tooltips=True, mm_href=mm_fp, mm_label=mm_fp_lbl)
+
+    gen_inspector = (
+        '<aside class="study-inspector" style="margin: 14px 0 18px;" aria-label="Generational Fiscal Incidence Parameter Inspector">'
+        '<p class="eyebrow">Generational Fiscal Incidence &amp; Behavioral Micro-Model Inspector (hover / tap parameters)</p>'
+        '<h3>Auerbach-Kotlikoff Generational Accounting &amp; Micro-Excise Elasticities</h3>'
+        '<div class="study-reg-kpis">'
+        + _inspector_param_card("Aging Fiscal Shift β_65+", "gt-param-beta", "+$468.40 / 1% pop", "Panel OLS fixed-effects estimate of the additional real annual net tax burden imposed on prime working-age adults (25–54) per 1 percentage-point increase in the 65+ population share.", mm_fp, mm_fp_lbl)
+        + _inspector_param_card("Commute Carbon Elasticity γ", "gt-param-gamma", "1.34 (p = 0.0003)", "Elasticity of gross household fuel and carbon tax expenditure with respect to cohort mean one-way commute duration across Canadian CMAs.", mm_fp, mm_fp_lbl)
+        + _inspector_param_card("Vape Excise Youth Skew CI", "gt-param-vape", "−0.54 (64.2% Gen Z)", "Age-ranked concentration index of federal/provincial vaping excise duty payments; negative values below −0.45 indicate severe concentration on cohorts under age 30.", mm_fp, mm_fp_lbl)
+        + _inspector_param_card("Senior Health STiK Multiplier", "gt-param-hlth", "3.68× (65+) / 6.49× (80+)", "Ratio of CIHI per-capita public healthcare expenditure for seniors aged 65+ ($14,042) and 80+ ($24,800) relative to the working-age baseline of $3,818/capita.", mm_fp, mm_fp_lbl)
+        + '</div>'
+        '<h4>Structural Incidence &amp; Behavioral Attribute Scores (hover / tap for definition)</h4>'
+        '<div class="study-sector-bars">'
+        + _inspector_attr_row("Prime-Age Income & Payroll Tax Concentration", "gt-attr-pit", "79% (Ages 29–60)", "Share of aggregate national personal income tax and CPP/EI payroll contributions funded by Millennials and Gen X after normalizing for population share.", mm_fp, mm_fp_lbl)
+        + _inspector_attr_row("Exurban Auto Commute Exposure (Ages 30–54)", "gt-attr-comm", "83% Auto Share (28.4m)", "Weighted share of employed Millennials and Gen X commuting via private vehicle from outer suburban rings, driving peak gross fuel and carbon tax incidence.", mm_fp, mm_fp_lbl)
+        + _inspector_attr_row("Boomer Homeownership & Property Tax Share", "gt-attr-prop", "76% ($2,640/cap)", "Homeownership rate among Baby Boomer households, resulting in the highest gross per-capita municipal property tax outflow alongside the lowest tax-to-equity ratio.", mm_fp, mm_fp_lbl)
+        + _inspector_attr_row("Life-Cycle Fiscal Asymmetry (2025 vs 1990)", "gt-attr-asym", "88% (+$7,040/cap)", "Expansion of the real young-adult net fiscal deficit between the 1990 Boomer baseline (ages 26–44) and the 2025 Millennial baseline (ages 29–44).", mm_fp, mm_fp_lbl)
+        + '</div></aside>'
+    )
+
+    cohort_rows = [
+        [
+            c["cohort"],
+            f'${_num(c["totalTaxCad"])} (${_num(c["incomePayrollCad"])} PIT/CPP | ${_num(c["salesTaxCad"])} Sales | ${_num(c["propertyTaxCad"])} Prop)',
+            f'${_num(c["totalRewardCad"])}',
+            f'{c["netIncidenceCad"]:+,d} / cap ({c["rewardRatio"]:.2f}×)',
+            f'{c["commuteMins"]:.1f} min ({c["autoSharePct"]:.1f}% auto)',
+            f'${c["fuelCarbonCad"]} fuel/CO2 · ${c["alcoholTaxCad"]} alc · ${c["vapeTaxCad"]} vape',
+            c["driverNote"],
+        ]
+        for c in cohorts
+    ]
+
+    pandas_box = (
+        '<details class="wb-schema-details" open>'
+        '<summary>🐍 View reproducible Pandas analysis script (<code>generational_taxes_pandas.py</code>)</summary>'
+        f'<pre class="wb-bars" style="padding:14px; border:1px solid #69d4cf44; border-radius:8px; background:#080b14; overflow-x:auto;"><code>{_e(data["pandasScript"])}</code></pre>'
+        '</details>'
+    )
+
+    return f'''<main id="main-content" class="collection-page sports-page athletics-page study-page">{lead}
+      {tab_bar}
+      {_hero("Macroeconomics / Fiscal Policy", "Study ST-09 · Gemini 4 Argon + Pandas", "Who pays the bill,<br>and who gets <em>rewarded.</em>", deck, actions, art)}
+      <p class="sports-scope">Workbench Study ST-09 · Executed on Mobile via <strong>{_e(data["model"])}</strong> &amp; promoted to canonical multi-plot dashboard · Grounded in Statistics Canada DHEA (Tables 36-10-0587-01 &amp; 36-10-0588-01), Survey of Household Spending (SHS), Census/LFS Commuting Supplements, CTNS Vaping &amp; Nicotine Survey, CIHI National Health Expenditure Database (1975–2025), and PBO Carbon &amp; Excise Reports.</p>
+      {_section("01", "Real tax burden vs. fiscal rewards", "Population-normalized per-capita taxes paid vs. cash and healthcare/education transfers received (2024 CAD).", "gen-tax-burden-title",
+                '<p class="sports-legend"><span class="study-key-submerged">■ Real Gross Taxes Paid per Capita (2024 CAD)</span>'
+                '<span class="study-key-surface">■ Real Fiscal Rewards Received per Capita (OAS/CPP/CCB + Healthcare &amp; Education STiK)</span></p>'
+                + _gen_tax_burden_rewards_svg(cohorts)
+                + metrics
+                + gen_inspector
+                + '<p>To eliminate demographic bulge bias and inflation distortion, every cohort is normalized by its population count \\(N_{g,t}\\) and deflated to constant 2024 Canadian dollars. '
+                'Prime-working-age <strong>Generation X (ages 45–60)</strong> and <strong>Millennials (ages 29–44)</strong> carry net fiscal burdens of <strong>−$18,580/capita</strong> (\\(\\Lambda = 0.41\\times\\)) and <strong>−$13,440/capita</strong> (\\(\\Lambda = 0.50\\times\\)), '
+                'whereas <strong>Baby Boomers (61–79)</strong> and the <strong>Silent Generation (80+)</strong> receive net fiscal rewards of <strong>+$13,330/capita</strong> (\\(\\Lambda = 1.94\\times\\)) and <strong>+$24,440/capita</strong> (\\(\\Lambda = 3.68\\times\\)) driven by OAS/GIS, CPP payouts, and age-weighted CIHI healthcare Social Transfers in Kind ($14,042 to $24,800/capita).</p>'
+                + _table("Population-normalized real annual tax burden, public transfer rewards, commute duration, and excise incidence across 8 generational cohorts (2024 CAD).",
+                         ["Generation / Era", "Gross Tax / Cap (Breakdown)", "Fiscal Rewards / Cap", "Net Incidence (Ratio)", "Mean 1-Way Commute", "Fuel/CO2, Alcohol & Vape Tax", "Key Structural Driver"],
+                         cohort_rows, "gen-tax-cohorts-table"))}
+      {_section("02", "Tax instrument mix over time (1985–2025)", "How income/payroll, sales (GST/HST), property tax, and sin/carbon excise shifted across eras.", "gen-tax-mix-title",
+                '<p>Comparing <strong>Millennials in 2025 (ages 29–44)</strong> against <strong>Baby Boomers at the exact same life-cycle stage in 1990 (ages 26–44)</strong> reveals a <strong>+$7,040/capita (+35.5%) increase in real tax burden</strong>. '
+                'In 1990, the combined employer-employee CPP payroll rate was 4.4% under a 5.8 : 1 worker-to-retiree support ratio, and neither the federal carbon levy nor vaping excise existed. '
+                'In 2025, Millennials pay an 11.9%–13.9% enhanced CPP1/CPP2 payroll rate under a 3.4 : 1 support ratio, alongside higher shelter-driven property and sales taxes. '
+                'Meanwhile, <strong>Baby Boomers (76% homeownership)</strong> pay the highest absolute municipal property tax ($2,640/capita), though it represents just 0.38% of their accumulated home equity versus 1.15% for leveraged young buyers.</p>'
+                + '<p class="sports-legend"><span style="color:#bba1ff;font-weight:700;">■ Income &amp; Payroll Tax (PIT + CPP/EI)</span>'
+                '<span style="color:#69d4cf;font-weight:700;">■ Sales Tax (GST/HST/PST)</span>'
+                '<span style="color:#f7ab65;font-weight:700;">■ Municipal Property Tax</span>'
+                '<span style="color:#f28b82;font-weight:700;">■ Fuel/Carbon, Alcohol &amp; Vape Excise</span></p>'
+                + _gen_tax_mix_svg(cohorts))}
+      {_section("03", "Commute times, carbon/fuel tax & youth vape excise", "Why exurban housing geometry taxes Millennial/Gen X commuters while vaping excise targets Gen Z.", "gen-tax-commute-title",
+                '<p>Indirect excise taxes exhibit the sharpest generational divergence in the entire tax code:</p>'
+                '<ul>'
+                '<li><strong>Average Commute Duration &amp; Fuel/Carbon Tax (Millennials &amp; Gen X):</strong> Priced out of transit-dense urban cores by high home price-to-income ratios, Millennials (ages 29–44) and Gen X (ages 45–60) log the longest one-way commutes in Canada at <strong>28.4 minutes</strong> (81.6% private auto share) and <strong>27.6 minutes</strong> (84.8% auto share), compared with 21.8 minutes for Boomers at the same age in 1990. With a commute-to-carbon elasticity of \\(\\gamma = 1.34\\), Millennials and Gen X pay <strong>$780 to $815/capita</strong> in gross road-fuel excise and carbon levies (and remain net payers of −$145 to −$185/capita even after quarterly Canada Carbon Rebates, whereas non-commuting seniors receive a +$115 to +$140 net rebate windfall).</li>'
+                '<li><strong>Vaping Excise Duty (Gen Z Concentration):</strong> Introduced in October 2022 ($1 per 2 mL) and hiked +12% in July 2024 with provincial harmonization (doubling to $2/2 mL in ON, QC, AB, BC), vaping excise falls <strong>64.2% on Generation Z</strong> ($168/capita, where 30-day prevalence is 19.7% at ages 20–24 versus &lt;1.5% among Boomers, concentration index \\(CI = -0.54\\)).</li>'
+                '</ul>'
+                + '<p class="sports-legend"><span style="color:#69d4cf;font-weight:700;">■ Annual Road-Fuel &amp; Carbon Tax ($/capita)</span>'
+                '<span style="color:#f28b82;font-weight:700;">■ Annual Vaping Excise Duty ($/capita)</span>'
+                '<span class="ab-key-against">● White marker = Mean One-Way Commute Duration (mins)</span></p>'
+                + _gen_commute_excise_svg(cohorts)
+                + pandas_box)}
+      <section class="sports-section sports-method" aria-labelledby="gen-tax-method-title">
+        <p class="sports-kicker">The evidence desk</p>
+        <h2 id="gen-tax-method-title">Sources, LaTeX paper, Pandas script, and downloads.</h2>
+        <ul>
+          <li><strong>National accounts &amp; household surveys:</strong> Statistics Canada <em>Distributions of Household Economic Accounts (DHEA, Tables 36-10-0587-01 &amp; 36-10-0588-01, 1999–2025)</em>, <em>Survey of Household Spending by Age of Reference Person (SHS, Table 11-10-0227-01)</em>, and <em>Census / Labour Force Survey Commuting Reference Tables (98-10-0458-01)</em>.</li>
+          <li><strong>Health &amp; excise microdata:</strong> CIHI <em>National Health Expenditure Database (NHEX 1975–2025)</em>, Health Canada <em>Canadian Tobacco and Nicotine Survey (CTNS 2022–2024)</em>, and Parliamentary Budget Officer (PBO) <em>Distributional Carbon Pricing &amp; Fiscal Sustainability Reports</em>.</li>
+          <li><strong>Dedicated LaTeX paper &amp; Mental Map integration:</strong> Read the compiled paper at <a href="{paper_href}">Fiscal Policy: Taxes on Generations Paper &amp; PDF ↗</a> and see the integrated notes in <a href="{up_root}Mental-Map/index.html#sec:fiscal-policy">Mental Map § 2.3.3 Fiscal Policy ↗</a>.</li>
+        </ul>
+        {_downloads(4 if is_subtab else 3, [
+            ("studies-gen-tax.json", "Generational Taxes study · JSON"),
+            ("studies-gen-tax-cohorts.csv", "8 Generational & Historical Cohorts · CSV"),
+        ])}
+      </section>
+    </main>'''
+
 

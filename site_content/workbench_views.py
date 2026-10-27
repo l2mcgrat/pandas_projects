@@ -1054,6 +1054,8 @@ def updates_dashboard_body(root: Path, athletics: dict[str, Any], health: dict[s
 
     weight_doc_id = saved_map.get("weightlifting", "1mboHEkA2jzHEbJY0mcuXbP-N_cWfyaN-LiN2z8xueq0")
     weight_url = f"https://docs.google.com/document/d/{weight_doc_id}/edit" if weight_doc_id and not weight_doc_id.startswith("http") else weight_doc_id
+    tempo_doc_id = saved_map.get("tempo", "1kaKlOi_fPPrxHyCwf-G3nP93TkC-aPLT5Y-7b776Pmo")
+    tempo_url = f"https://docs.google.com/document/d/{tempo_doc_id}/edit" if tempo_doc_id and not tempo_doc_id.startswith("http") else tempo_doc_id
 
     docs_spec = [
         (
@@ -1080,10 +1082,10 @@ def updates_dashboard_body(root: Path, athletics: dict[str, Any], health: dict[s
             "tempo",
             "03 · Running Tempo Log",
             "records/athletics/running/Tempo_Run_Log.txt",
-            f"{prefix}Gaming-and-Performance-Log/Athletics/Running/index.html",
+            f"{prefix}Gaming-and-Performance-Log/Athletics/Running/index.html#running-tempo",
             athletics["tempo"]["summary"]["lastDate"],
             f"{athletics['tempo']['summary']['runs']} tempo runs · {athletics['tempo']['summary']['kilometres']} km total",
-            saved_map.get("tempo", ""),
+            tempo_url,
             "\n".join(athletics["tempo"]["source"]["latestEntry"][:5]),
         ),
         (

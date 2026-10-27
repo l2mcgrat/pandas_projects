@@ -17,6 +17,9 @@ SODIUM_PAPER_ROUTE = "Science-and-Engineering/Chemistry/Electrochemistry/Paper/i
 AI_COST_STUDY_ROUTE = "Business-and-Economics/Emerging-Industries/Artificial-Intelligence/index.html"
 AI_COST_TAB_ROUTE = "Business-and-Economics/Emerging-Industries/Artificial-Intelligence/AI-Cost-Study/index.html"
 AI_COST_PAPER_ROUTE = "Business-and-Economics/Emerging-Industries/Artificial-Intelligence/Paper/index.html"
+GEN_TAX_STUDY_ROUTE = "Business-and-Economics/Macroeconomics/Fiscal-Policy/index.html"
+GEN_TAX_TAB_ROUTE = "Business-and-Economics/Macroeconomics/Fiscal-Policy/Taxes-on-Generations/index.html"
+GEN_TAX_PAPER_ROUTE = "Business-and-Economics/Macroeconomics/Fiscal-Policy/Paper/index.html"
 
 ROLE_FAMILIES: tuple[tuple[str, str, float, float], ...] = (
     # (key, label, surface_ai_pct, submerged_ai_pct)
@@ -755,6 +758,109 @@ print(f"\\n100M Token/Month Enterprise Workload: All-Frontier = ${all_argon_mont
 '''
 
 
+# ---- Study 6: ST-09 Taxes on Generations Over Time Periods (Macroeconomics / Fiscal Policy) -----
+GEN_TAX_COHORTS: tuple[dict[str, Any], ...] = (
+    {
+        "id": "GENZ-2025", "cohort": "Gen Z (Ages 15–28, 2025)",
+        "era": "2025 Current", "totalTaxCad": 8640, "totalRewardCad": 11920,
+        "netIncidenceCad": 3280, "rewardRatio": 1.38,
+        "incomePayrollCad": 4120, "salesTaxCad": 1980, "propertyTaxCad": 410,
+        "fuelCarbonCad": 340, "alcoholTaxCad": 142, "vapeTaxCad": 168,
+        "commuteMins": 21.2, "autoSharePct": 61.5, "vapePrevPct": 19.7, "homeownerPct": 18.4,
+        "driverNote": "Net Reward +$3,280/cap; peak vaping excise ($168/cap, 64.2% national share) & education STiK ($6,850/cap)",
+    },
+    {
+        "id": "MILL-2025", "cohort": "Millennials (Ages 29–44, 2025)",
+        "era": "2025 Current", "totalTaxCad": 26890, "totalRewardCad": 13450,
+        "netIncidenceCad": -13440, "rewardRatio": 0.50,
+        "incomePayrollCad": 15420, "salesTaxCad": 3410, "propertyTaxCad": 2120,
+        "fuelCarbonCad": 780, "alcoholTaxCad": 248, "vapeTaxCad": 74,
+        "commuteMins": 28.4, "autoSharePct": 81.6, "vapePrevPct": 9.4, "homeownerPct": 52.6,
+        "driverNote": "Net Burden −$13,440/cap; longest exurban commute (28.4 min, $780 fuel/CO2 tax) + 11.9% CPP payroll rate",
+    },
+    {
+        "id": "GENX-2025", "cohort": "Gen X (Ages 45–60, 2025)",
+        "era": "2025 Current", "totalTaxCad": 31420, "totalRewardCad": 12840,
+        "netIncidenceCad": -18580, "rewardRatio": 0.41,
+        "incomePayrollCad": 18350, "salesTaxCad": 3890, "propertyTaxCad": 2490,
+        "fuelCarbonCad": 815, "alcoholTaxCad": 245, "vapeTaxCad": 32,
+        "commuteMins": 27.6, "autoSharePct": 84.8, "vapePrevPct": 4.2, "homeownerPct": 71.2,
+        "driverNote": "Peak Net Burden −$18,580/cap; highest income ($18,350), sales ($3,890) & fuel/carbon tax ($815/cap)",
+    },
+    {
+        "id": "BOOM-2025", "cohort": "Baby Boomers (Ages 61–79, 2025)",
+        "era": "2025 Current", "totalTaxCad": 14180, "totalRewardCad": 27510,
+        "netIncidenceCad": 13330, "rewardRatio": 1.94,
+        "incomePayrollCad": 7650, "salesTaxCad": 2920, "propertyTaxCad": 2640,
+        "fuelCarbonCad": 410, "alcoholTaxCad": 165, "vapeTaxCad": 8,
+        "commuteMins": 19.8, "autoSharePct": 22.0, "vapePrevPct": 1.4, "homeownerPct": 76.0,
+        "driverNote": "Net Reward +$13,330/cap; peak property tax ($2,640/cap) offset by $13,120 OAS/CPP & $14,042 CIHI health STiK",
+    },
+    {
+        "id": "SILENT-2025", "cohort": "Silent Gen (Ages 80+, 2025)",
+        "era": "2025 Current", "totalTaxCad": 9120, "totalRewardCad": 33560,
+        "netIncidenceCad": 24440, "rewardRatio": 3.68,
+        "incomePayrollCad": 4680, "salesTaxCad": 1850, "propertyTaxCad": 2180,
+        "fuelCarbonCad": 185, "alcoholTaxCad": 72, "vapeTaxCad": 2,
+        "commuteMins": 4.2, "autoSharePct": 3.0, "vapePrevPct": 0.4, "homeownerPct": 68.5,
+        "driverNote": "Net Reward +$24,440/cap; $24,800/cap CIHI healthcare STiK + $8,760 OAS/GIS pensions",
+    },
+    {
+        "id": "BOOM-1990", "cohort": "Boomers at Ages 26–44 (1990 Baseline)",
+        "era": "1990 Historical", "totalTaxCad": 19850, "totalRewardCad": 13040,
+        "netIncidenceCad": -6810, "rewardRatio": 0.66,
+        "incomePayrollCad": 11840, "salesTaxCad": 2890, "propertyTaxCad": 1680,
+        "fuelCarbonCad": 460, "alcoholTaxCad": 295, "vapeTaxCad": 0,
+        "commuteMins": 21.8, "autoSharePct": 79.2, "vapePrevPct": 0.0, "homeownerPct": 64.0,
+        "driverNote": "1990 Real 2024$: 4.4% CPP rate, 5.8:1 worker support ratio, $0 carbon/vape tax, 21.8 min commute",
+    },
+    {
+        "id": "GENX-2005", "cohort": "Gen X at Ages 25–40 (2005 Baseline)",
+        "era": "2005 Historical", "totalTaxCad": 23410, "totalRewardCad": 12180,
+        "netIncidenceCad": -11230, "rewardRatio": 0.52,
+        "incomePayrollCad": 13680, "salesTaxCad": 3250, "propertyTaxCad": 1890,
+        "fuelCarbonCad": 540, "alcoholTaxCad": 265, "vapeTaxCad": 0,
+        "commuteMins": 25.1, "autoSharePct": 81.0, "vapePrevPct": 0.0, "homeownerPct": 58.5,
+        "driverNote": "2005 Real 2024$: 7% GST era, 9.9% CPP reform rate, 25.1 min suburban commute, moderate property tax",
+    },
+    {
+        "id": "SILENT-1990", "cohort": "Silent Gen at Ages 45–60 (1990 Baseline)",
+        "era": "1990 Historical", "totalTaxCad": 24680, "totalRewardCad": 11420,
+        "netIncidenceCad": -13260, "rewardRatio": 0.46,
+        "incomePayrollCad": 14920, "salesTaxCad": 3140, "propertyTaxCad": 1950,
+        "fuelCarbonCad": 490, "alcoholTaxCad": 310, "vapeTaxCad": 0,
+        "commuteMins": 20.4, "autoSharePct": 82.5, "vapePrevPct": 0.0, "homeownerPct": 74.0,
+        "driverNote": "1990 Real 2024$: Peak manufacturing/income tax era before 1991 GST & 1997 CPP payroll expansion",
+    },
+)
+
+PANDAS_GEN_TAX_SCRIPT = '''"""Reproducible Pandas analysis for ST-09: Taxes on Generations Over Time Periods (Real 2024 CAD/Capita)."""
+import numpy as np
+import pandas as pd
+
+# 1. Load Population-Normalized Generational Fiscal Accounting Table (StatCan DHEA, SHS, Census, CTNS & CIHI)
+df = pd.read_csv("studies-gen-tax-cohorts.csv")
+df["net_fiscal_reward_cad"] = df["totalRewardCad"] - df["totalTaxCad"]
+df["reward_to_tax_ratio"] = (df["totalRewardCad"] / df["totalTaxCad"]).round(2)
+df["indirect_excise_share_pct"] = (
+    (df["salesTaxCad"] + df["propertyTaxCad"] + df["fuelCarbonCad"] + df["alcoholTaxCad"] + df["vapeTaxCad"])
+    / df["totalTaxCad"] * 100
+).round(1)
+
+print("=== ST-09: Population-Normalized Generational Tax Burden vs. Fiscal Rewards (2024 CAD/Capita) ===")
+print(df[["id", "totalTaxCad", "totalRewardCad", "net_fiscal_reward_cad", "reward_to_tax_ratio", "commuteMins", "fuelCarbonCad", "vapeTaxCad", "propertyTaxCad"]])
+
+# 2. Age-Matched Life-Cycle Comparison: Millennials (2025, Ages 29-44) vs. Boomers (1990, Ages 26-44)
+mill_2025 = df.loc[df["id"] == "MILL-2025"].iloc[0]
+boom_1990 = df.loc[df["id"] == "BOOM-1990"].iloc[0]
+burden_delta = mill_2025["totalTaxCad"] - boom_1990["totalTaxCad"]
+commute_delta = mill_2025["commuteMins"] - boom_1990["commuteMins"]
+print(f"\\nYoung-Adult Life-Cycle Shift (2025 Millennials vs. 1990 Boomers at Same Age):")
+print(f"  Real Gross Tax Delta: +${burden_delta:,.0f}/capita (+{burden_delta / boom_1990['totalTaxCad'] * 100:.1f}%)")
+print(f"  One-Way Commute Delta: +{commute_delta:.1f} mins ({mill_2025['commuteMins']}m vs {boom_1990['commuteMins']}m) -> Fuel/Carbon Tax ${mill_2025['fuelCarbonCad']}/cap")
+'''
+
+
 def load_studies() -> dict[str, Any]:
     """Return validated study datasets for Macroeconomics AI Iceberg, Alberta 2026 Referendum, and Gas Price Collusion."""
     for sector in INDUSTRY_SECTORS:
@@ -880,12 +986,32 @@ def load_studies() -> dict[str, Any]:
             "layers": list(AI_COST_LAYERS),
             "pandasScript": PANDAS_AI_COST_SCRIPT,
         },
+        "gen_tax": {
+            "id": "ST-09",
+            "title": "Taxes on Generations Over Time Periods: Real Tax Burden, Fiscal Rewards, Commute Carbon Incidence & Excise Asymmetry",
+            "route": GEN_TAX_STUDY_ROUTE,
+            "tabRoute": GEN_TAX_TAB_ROUTE,
+            "paperRoute": GEN_TAX_PAPER_ROUTE,
+            "date": "2026-10-27",
+            "model": "Gemini 4 Argon (gemini-4-argon · High Thinking + Google Search + Pandas · 20,079 tokens)",
+            "summary": {
+                "peakTaxCohort": "$31,420 / yr",
+                "seniorRewardRatio": "2.31× Taxes",
+                "millennialCommuteTax": "28.4 mins / $780",
+                "genZVapeShare": "64.2% ($168/cap)",
+                "cohortsAnalyzed": len(GEN_TAX_COHORTS),
+            },
+            "cohorts": list(GEN_TAX_COHORTS),
+            "pandasScript": PANDAS_GEN_TAX_SCRIPT,
+        },
     }
 
 
 def studies_rows(data: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
     """Flatten study tables for CSV downloads."""
-    macro, alberta, gas, sodium, ai_cost = data["macro"], data["alberta"], data["gas"], data["sodium"], data["ai_cost"]
+    macro, alberta, gas, sodium, ai_cost, gen_tax = (
+        data["macro"], data["alberta"], data["gas"], data["sodium"], data["ai_cost"], data["gen_tax"]
+    )
     return {
         "macro-industries": [
             {
@@ -916,4 +1042,5 @@ def studies_rows(data: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
         "sodium-temp-curve": [dict(t) for t in sodium["tempCurve"]],
         "ai-cost-models": [dict(m) for m in ai_cost["models"]],
         "ai-cost-layers": [dict(l) for l in ai_cost["layers"]],
+        "gen-tax-cohorts": [dict(g) for g in gen_tax["cohorts"]],
     }

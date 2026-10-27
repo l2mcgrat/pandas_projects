@@ -17,7 +17,7 @@ from .athletics_views import running_body, swimming_body, weightlifting_body
 from .atlas import ANCHORS, NODES, ROOT, walk
 from .atlas_tree import atlas_schema_script, atlas_tree_body
 from .atlas_views import (AI_COST_PAPER, AI_COST_STUDY, AI_COST_TAB, ALBERTA_PAPER, ALBERTA_STUDY, ALGORITHMS, ATLAS, CHANGE_LOG, COMPLETION, CONTROL, DASHBOARD, DATABASE_LEAVES, DIET,
-                          FEELINGS, GAS_PAPER, GAS_STUDY, GAS_TAB, GUIDE, HOSTED, LEETCODE, LEETCODE_LEAVES, MACRO_PAPER, MACRO_STUDY, NBA, PITCH,
+                          FEELINGS, GAS_PAPER, GAS_STUDY, GAS_TAB, GEN_TAX_PAPER, GEN_TAX_STUDY, GEN_TAX_TAB, GUIDE, HOSTED, LEETCODE, LEETCODE_LEAVES, MACRO_PAPER, MACRO_STUDY, NBA, PITCH,
                           PREDICTIONS, QUANTUM, RAP_LEAVES, REPORT, RULES, RUNNING, SLEEP, SODIUM_PAPER, SODIUM_STUDY, SODIUM_TAB, SWIMMING, TRAFFIC, UFC, UPCOMING, UPDATES, VOCABULARY,
                           WEIGHTLIFTING, WORKBENCH, branch_body, branch_stage, home_hero, leaf_body, prefix, premade_body, strip)
 from .basketball import export_rows, load_basketball
@@ -27,7 +27,7 @@ from .catalog_views import leetcode_content, rap_content
 from .health import health_rows, load_health
 from .health_views import diet_body, sleep_body
 from .studies import load_studies, studies_rows
-from .studies_views import ai_cost_study_body, alberta_study_body, gas_study_body, macro_study_body, sodium_study_body
+from .studies_views import ai_cost_study_body, alberta_study_body, gas_study_body, gen_tax_study_body, macro_study_body, sodium_study_body
 from .workbench import load_workbench, workbench_rows
 from .workbench_views import auth_dialog_html, completion_dashboard_body, database_leaf_content, traffic_dashboard_body, updates_dashboard_body, workbench_body
 from .creators import FIRST_SECTION_ID, creators_html, scroll_cue_html
@@ -491,6 +491,8 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
         write(assets / 'data' / 'sodium_battery_pandas.py', studies['sodium']['pandasScript'])
     if 'ai_cost' in studies and 'pandasScript' in studies['ai_cost']:
         write(assets / 'data' / 'ai_cost_economics_pandas.py', studies['ai_cost']['pandasScript'])
+    if 'gen_tax' in studies and 'pandasScript' in studies['gen_tax']:
+        write(assets / 'data' / 'generational_taxes_pandas.py', studies['gen_tax']['pandasScript'])
     write(assets / 'data' / 'live-cloud-studies.json', safe_json({"version": 1, "runs": {}, "entries": {}, "deleted": []}))
     result = convert_document(root / 'mental_map.tex', root / 'tex_images' / 'mental_map', assets / 'documents' / 'mental-map', '../assets/documents/mental-map')
     source_zip(root / 'mental_map.tex', assets / 'documents' / 'mental-map')
@@ -690,6 +692,26 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
         images='tex_images/studies', pdf_key='ai-cost-economics',
         byline='Liam McGrath · Emerging Industries & AI Economics study (Gemini 4 Argon + Pandas)',
         note='Chinchilla pre-training scaling vs. HBM3e memory-bandwidth decoding, Sparse MoE + MLA KV-cache compression, Jevons Paradox in reasoning tokens, and enterprise cascade routing.',
+    )
+    hosted[GEN_TAX_STUDY] = shell(
+        'Fiscal Policy · Taxes on Generations Over Time Periods',
+        gen_tax_study_body(studies['gen_tax'], _lead(GEN_TAX_STUDY), is_subtab=False), 3, math=True,
+        styles=('assets/sports.css', 'assets/athletics.css', 'assets/studies.css'),
+        scripts=('assets/studies.js',),
+    )
+    hosted[GEN_TAX_TAB] = shell(
+        'Taxes on Generations Over Time Periods · Fiscal Policy Study Tab',
+        gen_tax_study_body(studies['gen_tax'], _lead(GEN_TAX_TAB, 'Taxes on Generations'), is_subtab=True), 4, math=True,
+        styles=('assets/sports.css', 'assets/athletics.css', 'assets/studies.css'),
+        scripts=('assets/studies.js',),
+    )
+    hosted[GEN_TAX_PAPER] = reader_html(
+        root, site, 'notebook_sources/studies/generational_taxes.tex', 'generational-taxes',
+        'Taxes on Generations Over Time Periods: Real Tax Burden, Fiscal Rewards, Commutes & Excise', GEN_TAX_PAPER,
+        '<a href="../index.html">Interactive Fiscal Policy dashboard ↗</a><a href="../Taxes-on-Generations/index.html">Taxes on Generations tab ↗</a><a href="../../index.html">Macroeconomics ↗</a><a href="../../../../Workbench/index.html">Workbench ↗</a>',
+        images='tex_images/studies', pdf_key='generational-taxes',
+        byline='Liam McGrath · Macroeconomics & Fiscal Policy study (Gemini 4 Argon + Pandas · 20,079 tokens)',
+        note='Population-normalized real generational accounting (1985–2025), exurban commute carbon elasticity, youth vaping excise concentration, and senior healthcare STiK multipliers.',
     )
     pages.update(hosted)
     for path, content in pages.items():
