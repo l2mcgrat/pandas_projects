@@ -1052,10 +1052,19 @@ def updates_dashboard_body(root: Path, athletics: dict[str, Any], health: dict[s
         except Exception:
             saved_map = {}
 
-    weight_doc_id = saved_map.get("weightlifting", "1mboHEkA2jzHEbJY0mcuXbP-N_cWfyaN-LiN2z8xueq0")
-    weight_url = f"https://docs.google.com/document/d/{weight_doc_id}/edit" if weight_doc_id and not weight_doc_id.startswith("http") else weight_doc_id
-    tempo_doc_id = saved_map.get("tempo", "1kaKlOi_fPPrxHyCwf-G3nP93TkC-aPLT5Y-7b776Pmo")
-    tempo_url = f"https://docs.google.com/document/d/{tempo_doc_id}/edit" if tempo_doc_id and not tempo_doc_id.startswith("http") else tempo_doc_id
+    def _gdoc_url(k: str, fallback_id: str) -> str:
+        raw_id = saved_map.get(k, fallback_id)
+        if not raw_id:
+            return ""
+        return raw_id if raw_id.startswith("http") else f"https://docs.google.com/document/d/{raw_id}/edit"
+
+    weight_url = _gdoc_url("weightlifting", "1mboHEkA2jzHEbJY0mcuXbP-N_cWfyaN-LiN2z8xueq0")
+    running_url = _gdoc_url("running", "1RDyIJPISvIbaM4f-EoBlpVi99kGVZ81fRUKOmzYTJXA")
+    tempo_url = _gdoc_url("tempo", "1kaKlOi_fPPrxHyCwf-G3nP93TkC-aPLT5Y-7b776Pmo")
+    swim_url = _gdoc_url("swimming", "1wRNnr8kl4ccqGtSn9_G5Y79UFcv3aEn02r_GJ90uY8s")
+    sleep_url = _gdoc_url("sleep", "1UMa-zXddL1PCfasksWie27N00IBfWEBUiDq9UDLTJ4w")
+    diet_url = _gdoc_url("diet", "1q0g1iAhzHCSrEL0nxUQfW3FjZw5qJ8uj70WPVH2i5Ug")
+    mm_url = _gdoc_url("mental_map", "15YE6fyNMoGA9JZlQnkiBG4rGtn4h4cP5gauPV2Wf_rw")
 
     docs_spec = [
         (
@@ -1075,7 +1084,7 @@ def updates_dashboard_body(root: Path, athletics: dict[str, Any], health: dict[s
             f"{prefix}Gaming-and-Performance-Log/Athletics/Running/index.html",
             athletics["running"]["summary"]["lastDate"],
             f"{athletics['running']['summary']['sessions']} interval sessions · {athletics['running']['summary']['intervals']} loops",
-            saved_map.get("running", ""),
+            running_url,
             "\n".join(athletics["running"]["source"]["latestEntry"][:6]),
         ),
         (
@@ -1095,7 +1104,7 @@ def updates_dashboard_body(root: Path, athletics: dict[str, Any], health: dict[s
             f"{prefix}Gaming-and-Performance-Log/Athletics/Swimming/index.html",
             athletics["swimming"]["summary"]["lastDate"],
             f"{athletics['swimming']['summary']['sessions']} swim sessions · {_num(athletics['swimming']['summary']['meters'])} m total",
-            saved_map.get("swimming", ""),
+            swim_url,
             "\n".join(athletics["swimming"]["source"]["latestEntry"][:4]),
         ),
         (
@@ -1105,7 +1114,7 @@ def updates_dashboard_body(root: Path, athletics: dict[str, Any], health: dict[s
             f"{prefix}Gaming-and-Performance-Log/Health/Sleep/index.html",
             health["sleep"]["summary"]["lastDate"],
             f"{health['sleep']['summary']['nights']} nights · {health['sleep']['summary']['averageHours']} h avg · {health['sleep']['summary']['dreams']} dreams",
-            saved_map.get("sleep", ""),
+            sleep_url,
             "🔒 Dream text Admin-protected (unlock Admin to preview raw dream entry)",
         ),
         (
@@ -1115,18 +1124,18 @@ def updates_dashboard_body(root: Path, athletics: dict[str, Any], health: dict[s
             f"{prefix}Gaming-and-Performance-Log/Health/Diet/index.html",
             health["diet"]["summary"]["lastDate"],
             f"{health['diet']['summary']['days']} days tracked · {health['diet']['summary']['averageDeficit']:+d} kcal/day avg deficit",
-            saved_map.get("diet", ""),
+            diet_url,
             "\n".join(health["diet"]["source"]["latestEntry"][:6]),
         ),
         (
             "mental_map",
-            "07 · Mental Map & Study Drafts Google Doc",
+            "07 · Mental Map & Journal Drafts Google Doc",
             "mental_map.tex / Workbench Study Queue",
             f"{prefix}Mental-Map/index.html",
-            "2026-10-26",
+            "2026-10-27",
             "Sync study notes, LaTeX subsections, or reading notes from any Google Doc into Workbench & Mental Map",
-            saved_map.get("mental_map", ""),
-            "% atlas: Business-and-Economics/Emerging-Industries/Artificial-Intelligence (ST-08 synced)",
+            mm_url,
+            "% atlas: Business-and-Economics/Macroeconomics/Fiscal-Policy (ST-09 synced)",
         ),
     ]
 
@@ -1156,10 +1165,10 @@ def updates_dashboard_body(root: Path, athletics: dict[str, Any], health: dict[s
         )
 
     kpis = _metrics([
-        ("Connected log streams", "7 Google Docs", "6 Athletics/Health logs + Mental Map/Study Drafts"),
-        ("Weightlifting live sync", athletics["weightlifting"]["summary"]["lastDate"], f"{athletics['weightlifting']['summary']['sessions']} sessions (4 new Oct 21–25 workouts synced!)"),
-        ("Token cost per sync", "0 API tokens", "Deterministic regex repairs dates, dashes, separators & units"),
-        ("Permanent cloud commit", "GitHub API + CLI", "Saves in browser + commits to repo when GitHub PAT is set"),
+        ("Connected log streams", "7 Google Docs", "All 6 Athletics/Health logs + Journal/Mental Map linked"),
+        ("Athletics live sync", f"Lift {athletics['weightlifting']['summary']['lastDate'][5:]} · Swim {athletics['swimming']['summary']['lastDate'][5:]}", f"{athletics['weightlifting']['summary']['sessions']} lifts · {athletics['swimming']['summary']['sessions']} swims · {athletics['tempo']['summary']['runs']} tempo runs"),
+        ("Health live sync", f"Diet {health['diet']['summary']['lastDate'][5:]} · Sleep {health['sleep']['summary']['lastDate'][5:]}", f"{health['diet']['summary']['days']} diet days · {health['sleep']['summary']['nights']} sleep nights"),
+        ("Token cost & commit", "0 API tokens", "Deterministic regex + GitHub API / CLI sync"),
     ])
 
     actions = (
@@ -1169,15 +1178,15 @@ def updates_dashboard_body(root: Path, athletics: dict[str, Any], health: dict[s
     )
     art = (
         '<div class="athletics-split-card" aria-hidden="true">'
-        '<span class="split-Back"><strong>7 Docs</strong>unified sync hub</span>'
-        '<span class="split-Chest"><strong>Oct 25</strong>lifting synced</span>'
+        '<span class="split-Back"><strong>7 Docs</strong>all linked</span>'
+        '<span class="split-Chest"><strong>Oct 28</strong>logs synced</span>'
         '<span class="split-Shoulders"><strong>0 tok</strong>deterministic</span></div>'
     )
     return f'''<main id="main-content" class="collection-page sports-page athletics-page workbench-page">
       {_hero("Google Drive & Site Integration Hub", "Zero-Token Log & Document Updater", "Update every doc,<br>in <em>one</em> click.",
              "Centralized update center for all Google Docs integrated into your portfolio — Weightlifting, Running, Tempo, Swimming, Sleep & Dreams, Diet & Calories, and Mental Map drafts.",
              actions, art)}
-      <p class="sports-scope" id="gdoc-sync-all-status" role="status" aria-live="polite">All 7 document connectors ready · Weightlifting Google Doc (<code>1mboHEkA2jzHEbJY...</code>) is linked and synced through <strong>2026-10-25</strong> (21 sessions).</p>
+      <p class="sports-scope" id="gdoc-sync-all-status" role="status" aria-live="polite">All 7 Google Docs linked &amp; synced · Weightlifting (<strong>{_e(athletics["weightlifting"]["summary"]["lastDate"])}</strong>, {athletics["weightlifting"]["summary"]["sessions"]} sessions) · Swimming (<strong>{_e(athletics["swimming"]["summary"]["lastDate"])}</strong>, {athletics["swimming"]["summary"]["sessions"]} sessions) · Tempo (<strong>{_e(athletics["tempo"]["summary"]["lastDate"])}</strong>, {athletics["tempo"]["summary"]["runs"]} runs) · Sleep (<strong>{_e(health["sleep"]["summary"]["lastDate"])}</strong>, {health["sleep"]["summary"]["nights"]} nights) · Diet (<strong>{_e(health["diet"]["summary"]["lastDate"])}</strong>, {health["diet"]["summary"]["days"]} days).</p>
       {kpis}
       {_section("01", "All integrated Google Docs", "Link or update any document individually, or click 'Update & Sync ALL Connected Docs Now' above.", "updates-docs-title",
                 '<div class="wb-pipeline-grid" style="grid-template-columns:1fr;gap:18px;">' + "".join(cards_html) + '</div>')}

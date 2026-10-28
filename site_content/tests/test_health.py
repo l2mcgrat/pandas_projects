@@ -20,15 +20,15 @@ class SleepTests(unittest.TestCase):
 
     def test_nights_hours_and_recall(self):
         summary = self.sleep["summary"]
-        self.assertEqual((summary["nights"], summary["dreams"]), (14, 15))
-        self.assertEqual((summary["firstDate"], summary["lastDate"]), ("2026-10-05", "2026-10-18"))
+        self.assertEqual((summary["nights"], summary["dreams"]), (21, 20))
+        self.assertEqual((summary["firstDate"], summary["lastDate"]), ("2026-10-05", "2026-10-25"))
         nights = {night["date"]: night for night in self.sleep["nights"]}
         self.assertEqual(nights["2026-10-05"]["hours"], 6.5)
         self.assertEqual(len(nights["2026-10-05"]["dreams"]), 2)
         # "No dreams recorded" stays a deliberate entry, not a parse gap.
         self.assertTrue(nights["2026-10-16"]["noDreamsWritten"])
         self.assertEqual(nights["2026-10-16"]["dreams"], [])
-        self.assertEqual(summary["nightsWithDreams"], 11)
+        self.assertEqual(summary["nightsWithDreams"], 15)
 
     def test_dream_reading_is_lexicon_based_and_keeps_text_as_written(self):
         first = self.sleep["nights"][0]["dreams"][0]
@@ -65,7 +65,7 @@ class DietTests(unittest.TestCase):
         self.assertEqual(days["2026-10-15"]["expenditureNote"], "16k walk, high NEAT, cold")
         self.assertEqual(oct5["activity"], 3930 - OCTOBER_BMR)
         summary = self.diet["summary"]
-        self.assertEqual(summary["days"], 15)
+        self.assertEqual(summary["days"], 24)
         self.assertEqual(summary["totalDeficit"], sum(day["deficit"] for day in self.diet["days"]))
         self.assertEqual(summary["targetDeficit"], DAILY_TARGET_DEFICIT)
 
@@ -73,8 +73,8 @@ class DietTests(unittest.TestCase):
         weeks = {week["weekOf"]: week for week in self.diet["weeks"]}
         self.assertEqual(weeks["2026-10-05"]["writtenLoss"], 4079)
         self.assertEqual(weeks["2026-10-05"]["computedLoss"], 4079)
-        self.assertEqual(weeks["2026-10-12"]["writtenLoss"], 4120)
-        self.assertNotEqual(weeks["2026-10-12"]["computedLoss"], 4120)
+        self.assertEqual(weeks["2026-10-12"]["writtenLoss"], 2532)
+        self.assertEqual(weeks["2026-10-19"]["writtenLoss"], 4809)
 
     def test_malformed_diet_log_stops(self):
         with self.assertRaisesRegex(ValueError, "no Total"):

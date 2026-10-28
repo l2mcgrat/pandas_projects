@@ -50,11 +50,12 @@ class ParserTests(unittest.TestCase):
 
     def test_swimming_totals_and_weeks(self):
         swim = self.data["swimming"]
-        self.assertEqual(swim["summary"]["sessions"], 15)
-        self.assertEqual(swim["summary"]["yardSessions"], 13)
+        self.assertEqual(swim["summary"]["sessions"], 20)
+        self.assertEqual(swim["summary"]["yardSessions"], 17)
         first = swim["sessions"][0]  # 1600 yd → 1463 m
         self.assertEqual((first["distance"], first["unit"], first["meters"]), (1600, "y", 1463))
-        self.assertEqual(swim["sessions"][-1]["meters"], 2000)  # Oct 14 logged in metres
+        self.assertEqual(next(s for s in swim["sessions"] if s["date"] == "2026-10-14")["meters"], 2000)  # Oct 14 logged in metres
+        self.assertEqual(swim["sessions"][-1]["meters"], 1463)  # Oct 27 logged as 1600 yd
         self.assertEqual(sum(week["meters"] for week in swim["weeks"]), swim["summary"]["meters"])
         # Oct 10 freeform: 650 + 3×450 = 2000, four sets, strokes from the words.
         mixed = next(s for s in swim["sessions"] if s["date"] == "2026-10-10")
@@ -133,7 +134,7 @@ class ParserTests(unittest.TestCase):
             for path in SOURCES.values():
                 (root / path).parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(ROOT / path, root / path)
-            self.assertEqual(load_athletics(root)["swimming"]["summary"]["sessions"], 15)
+            self.assertEqual(load_athletics(root)["swimming"]["summary"]["sessions"], 20)
             copy = root / EARLIER_COPIES["swimming"]
             copy.parent.mkdir(parents=True)
             copy.write_text((ROOT / SOURCES["swimming"]).read_text(encoding="utf-8") + "\n(10/16/2026) - 400m - 1x400 of Free\n", encoding="utf-8")

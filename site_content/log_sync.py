@@ -110,15 +110,148 @@ def extract_gdoc_id(raw: str) -> str | None:
     return match[1] if match else None
 
 
+def _read_varint(buf: bytes, pos: int) -> tuple[int, int]:
+    shift = 0
+    res = 0
+    while pos < len(buf):
+        b = buf[pos]
+        pos += 1
+        res |= (b & 0x7F) << shift
+        if not (b & 0x80):
+            break
+        shift += 7
+    return res, pos
+
+
+def _snappy_decompress(data: bytes) -> bytes:
+    ulen, pos = _read_varint(data, 0)
+    n = len(data)
+    out = bytearray()
+    while pos < n and len(out) < ulen:
+        tag = data[pos]
+        pos += 1
+        ttype = tag & 0x03
+        if ttype == 0:
+            length = (tag >> 2) + 1
+            if length > 60:
+                extra = length - 60
+                length = int.from_bytes(data[pos : pos + extra], "little") + 1
+                pos += extra
+            out.extend(data[pos : pos + length])
+            pos += length
+        else:
+            if ttype == 1:
+                length = ((tag >> 2) & 0x07) + 4
+                offset = ((tag & 0xE0) << 3) | data[pos]
+                pos += 1
+            elif ttype == 2:
+                length = (tag >> 2) + 1
+                offset = int.from_bytes(data[pos : pos + 2], "little")
+                pos += 2
+            else:
+                length = (tag >> 2) + 1
+                offset = int.from_bytes(data[pos : pos + 4], "little")
+                pos += 4
+            if offset <= 0 or offset > len(out):
+                break
+            for _ in range(length):
+                out.append(out[-offset])
+    return bytes(out)
+
+
+def _extract_gdoc_from_local_indexeddb(doc_id: str) -> str | None:
+    """Fallback when a Google Doc is still set to 'Restricted' (HTTP 401): read its V8 Kix text from local Chrome/Edge IndexedDB."""
+    target = doc_id.encode("ascii")
+    home = Path.home()
+    candidate_dirs = [
+        home / "AppData/Local/Google/Chrome/User Data/Default/IndexedDB/https_docs.google.com_0.indexeddb.leveldb",
+        home / "AppData/Local/Microsoft/Edge/User Data/Default/IndexedDB/https_docs.google.com_0.indexeddb.leveldb",
+    ]
+    segments: dict[int, str] = {}
+    for docs_dir in candidate_dirs:
+        if not docs_dir.is_dir():
+            continue
+        for ldb_path in sorted(docs_dir.glob("*.ldb")):
+            try:
+                raw = ldb_path.read_bytes()
+                if len(raw) < 48:
+                    continue
+                footer = raw[-48:]
+                _, pos = _read_varint(footer, 0)
+                _, pos = _read_varint(footer, pos)
+                idx_off, pos = _read_varint(footer, pos)
+                idx_size, pos = _read_varint(footer, pos)
+                idx_raw = raw[idx_off : idx_off + idx_size]
+                idx_block = _snappy_decompress(idx_raw) if raw[idx_off + idx_size] == 1 else idx_raw
+                num_restarts = int.from_bytes(idx_block[-4:], "little")
+                limit = len(idx_block) - 4 * (num_restarts + 1)
+                p_idx = 0
+                blocks = []
+                while p_idx < limit:
+                    _, p_idx = _read_varint(idx_block, p_idx)
+                    nsh, p_idx = _read_varint(idx_block, p_idx)
+                    vlen, p_idx = _read_varint(idx_block, p_idx)
+                    p_idx += nsh
+                    val = idx_block[p_idx : p_idx + vlen]
+                    p_idx += vlen
+                    b_off, vp = _read_varint(val, 0)
+                    b_sz, vp = _read_varint(val, vp)
+                    blocks.append((b_off, b_sz))
+                for b_off, b_sz in blocks:
+                    b_raw = raw[b_off : b_off + b_sz]
+                    b_data = _snappy_decompress(b_raw) if raw[b_off + b_sz] == 1 else b_raw
+                    n_rest = int.from_bytes(b_data[-4:], "little")
+                    b_lim = len(b_data) - 4 * (n_rest + 1)
+                    bp = 0
+                    while bp < b_lim:
+                        _, bp = _read_varint(b_data, bp)
+                        nsh, bp = _read_varint(b_data, bp)
+                        vlen, bp = _read_varint(b_data, bp)
+                        bp += nsh
+                        val = b_data[bp : bp + vlen]
+                        bp += vlen
+                        if target in val and b"ibiI" in val:
+                            search_pos = 0
+                            while True:
+                                idx = val.find(b"ibiI", search_pos)
+                                if idx == -1:
+                                    break
+                                ibi_val, p2 = _read_varint(val, idx + 4)
+                                if val[p2 : p2 + 3] == b'"\x01s':
+                                    p2 += 3
+                                    stag = val[p2]
+                                    p2 += 1
+                                    slen, p2 = _read_varint(val, p2)
+                                    sbytes = val[p2 : p2 + slen]
+                                    text_seg = (
+                                        sbytes.decode("utf-16le", errors="ignore")
+                                        if stag == 0x63
+                                        else sbytes.decode("latin1", errors="ignore")
+                                    )
+                                    segments[ibi_val] = text_seg
+                                search_pos = idx + 4
+            except Exception:
+                continue
+    if segments:
+        return "".join(segments[k] for k in sorted(segments))
+    return None
+
+
 def fetch_gdoc_text(doc_id_or_url: str) -> str:
-    """Download a Google Doc directly as UTF-8 plain text via its /export?format=txt endpoint."""
+    """Download a Google Doc as UTF-8 plain text via /export?format=txt, falling back to local Chrome IndexedDB if Restricted."""
     doc_id = extract_gdoc_id(doc_id_or_url)
     if not doc_id:
         raise ValueError(f"Could not extract a Google Doc ID from {doc_id_or_url!r}")
     url = f"https://docs.google.com/document/d/{doc_id}/export?format=txt"
     req = urllib_request.Request(url, headers={"User-Agent": "LiamPortfolioLogSync/1.0"})
-    with urllib_request.urlopen(req, timeout=15) as resp:
-        return resp.read().decode("utf-8-sig")
+    try:
+        with urllib_request.urlopen(req, timeout=15) as resp:
+            return resp.read().decode("utf-8-sig")
+    except Exception:
+        cached = _extract_gdoc_from_local_indexeddb(doc_id)
+        if cached:
+            return cached
+        raise
 
 
 def load_gdoc_map(root: Path) -> dict[str, str]:
@@ -156,9 +289,11 @@ def default_drive_dirs() -> list[Path]:
 
 
 def _repair_line(key: str, line: str, prev_nonempty: str) -> str:
-    fixed = line.translate(_DASHES).strip()
+    fixed = re.sub(r"[\u200b\u200c\u200d\ufeff\xa0]", " ", line).translate(_DASHES).strip()
     if not fixed:
         return ""
+    if re.fullmatch(r"-{5,}", fixed):
+        return "-" * 50
     fixed = _MERGED_YEAR.sub(r"\1/\2/\3", fixed)
     if match := _DOT_DATE.fullmatch(fixed):
         fixed = f"{match[1]}{match[2]}/{match[3]}/{match[4]}{match[5]}{match[6]}"
@@ -166,6 +301,8 @@ def _repair_line(key: str, line: str, prev_nonempty: str) -> str:
     if key == "running":
         if m := re.fullmatch(r"[iI](\d+)\s*-\s*\(?(\d{1,2}/\d{1,2}/\d{4})\)?\s*-\s*(\d+)\s*[iI]ntervals?", fixed):
             return f"I{m[1]} - ({m[2]}) - {m[3]} Intervals"
+        if m := re.fullmatch(r"\(?(\d{1,2}/\d{1,2}/\d{4})\)?\s*(?:-\s*)?(\d+)\s*[iI]ntervals?", fixed):
+            return f"I1 - ({m[1]}) - {m[2]} Intervals"
         if m := re.fullmatch(r"(\d{1,2})\.([0-5]\d(?:\.\d+)?)", fixed):
             return f"{m[1]}:{m[2]}"
         if m := re.fullmatch(r"(?:[aA]vg|[aA]verage)\s*:?\s*(\d{1,2})[:.]([0-5]\d(?:\.\d+)?)", fixed):
@@ -224,23 +361,28 @@ def _repair_line(key: str, line: str, prev_nonempty: str) -> str:
 def repair_log_text(key: str, text: str) -> tuple[str, list[dict]]:
     """Apply zero-token deterministic repairs and return (repaired_text, changes)."""
     spec = SPECS[key]
-    raw_lines = text.replace("\r\n", "\n").splitlines()
+    raw_lines = [re.sub(r"[\u200b\u200c\u200d\ufeff\xa0]", " ", ln) for ln in text.replace("\r\n", "\n").splitlines()]
     changes: list[dict] = []
 
     first_idx = next((i for i, ln in enumerate(raw_lines) if ln.strip()), None)
     if first_idx is None:
         return text, changes
     first = raw_lines[first_idx].strip()
-    if key == "weightlifting" and not first.startswith("Weightlifting Log"):
-        if re.fullmatch(r"(?:Weight)?[lL]ifting\s+[lL]og.*", first):
+    alt_headers = {
+        "weightlifting": r"(?:Weight)?[lL]ifting\s+[lL]og.*",
+        "swimming": r"Swimming(?:\s+Tempo)?\s+Log.*",
+        "sleep": r"Sleep(?:_and_Dream)?[\s_]+Log.*",
+        "diet": r"(?:Food\s+Log|Diet\s+and\s+Calorie\s+Tracking).*",
+        "running": r"(?:Running\s+)?Interval\s+Training.*",
+        "tempo": r"Tempo[\s_]+Run[\s_]+Log.*",
+    }
+    if first != spec.header and not (key == "weightlifting" and first.startswith("Weightlifting Log")):
+        if key in alt_headers and re.fullmatch(alt_headers[key], first, re.I):
             raw_lines[first_idx] = spec.header
             changes.append({"line": first_idx + 1, "before": first, "after": spec.header, "method": "rule-header"})
         else:
             raw_lines.insert(first_idx, spec.header)
             changes.append({"line": first_idx + 1, "before": "", "after": spec.header, "method": "rule-header"})
-    elif key != "weightlifting" and first != spec.header:
-        raw_lines.insert(first_idx, spec.header)
-        changes.append({"line": first_idx + 1, "before": "", "after": spec.header, "method": "rule-header"})
 
     _MONTH_BANNER = re.compile(
         r"^(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+20\d{2}$",
@@ -250,16 +392,25 @@ def repair_log_text(key: str, text: str) -> tuple[str, list[dict]]:
     prev_nonempty = ""
     last_year = 0
     for number, line in enumerate(raw_lines, 1):
-        if not line.strip():
+        s_line = line.strip()
+        if not s_line:
             out.append("")
             continue
-        if _MONTH_BANNER.fullmatch(line.strip()):
-            changes.append({"line": number, "before": line.strip(), "after": "", "method": "rule-month-heading"})
+        if _MONTH_BANNER.fullmatch(s_line) or (key == "running" and re.fullmatch(r"1KM\s+Interval\s+Training.*", s_line, re.I)):
+            changes.append({"line": number, "before": s_line, "after": "", "method": "rule-month-heading"})
             continue
-        if number == 1 or (prev_nonempty == "" and line.strip() == spec.header):
-            out.append(line.strip())
-            prev_nonempty = line.strip()
+        if number == 1 or (prev_nonempty == "" and s_line == spec.header):
+            out.append(s_line)
+            prev_nonempty = s_line
             continue
+        if key == "diet":
+            if m_combo := re.fullmatch(r"(Breakfast|Lunch|Dinner|Snacks)\s*[/&]\s*(Breakfast|Lunch|Dinner|Snacks)\s*[:\-]\s*(.+)", s_line, re.I):
+                l1 = f"{m_combo[1].capitalize()} - {m_combo[3].strip()}"
+                l2 = f"{m_combo[2].capitalize()} - {m_combo[3].strip()}"
+                changes.append({"line": number, "before": s_line, "after": f"{l1} / {l2}", "method": "rule-split-meal"})
+                out.extend([l1, l2])
+                prev_nonempty = l2
+                continue
         repaired = _repair_line(key, line, prev_nonempty)
         if m_yr := re.match(r"^(\(?(\d{1,2})/(\d{1,2})/)(20\d{2})(\)?(?:\s*-\s*.+)?)$", repaired):
             yr = int(m_yr[4])
@@ -267,8 +418,8 @@ def repair_log_text(key: str, text: str) -> tuple[str, list[dict]]:
                 repaired = f"{m_yr[1]}{last_year}{m_yr[5]}"
             else:
                 last_year = yr
-        if repaired != line.strip():
-            changes.append({"line": number, "before": line.strip(), "after": repaired, "method": "rule"})
+        if repaired != s_line:
+            changes.append({"line": number, "before": s_line, "after": repaired, "method": "rule"})
         out.append(repaired)
         prev_nonempty = repaired
     return "\n".join(out) + "\n", changes
@@ -367,9 +518,29 @@ def sync_logs(
         chosen_desc = ""
 
         if key in gdoc_map:
-            raw = fetch_gdoc_text(gdoc_map[key])
-            source_label = "gdoc-cloud"
-            chosen_desc = f"https://docs.google.com/document/d/{gdoc_map[key]}"
+            try:
+                raw = fetch_gdoc_text(gdoc_map[key])
+                source_label = "gdoc-cloud"
+                chosen_desc = f"https://docs.google.com/document/d/{gdoc_map[key]}"
+                if key == "running" and rec_file.is_file():
+                    rec_txt = rec_file.read_text(encoding="utf-8-sig")
+                    rec_dates = sorted(
+                        f"{m[3]}-{int(m[1]):02d}-{int(m[2]):02d}"
+                        for m in re.finditer(r"(\d{1,2})/(\d{1,2})/(20\d{2})", rec_txt)
+                    )
+                    gdoc_dates = sorted(
+                        f"{m[3]}-{int(m[1]):02d}-{int(m[2]):02d}"
+                        for m in re.finditer(r"(\d{1,2})/(\d{1,2})/(20\d{2})", raw)
+                    )
+                    if rec_dates and (not gdoc_dates or gdoc_dates[-1] <= rec_dates[-1]):
+                        raw = rec_txt
+            except Exception:
+                if rec_file.is_file():
+                    raw = rec_file.read_text(encoding="utf-8-sig")
+                    source_label = "records-fallback"
+                    chosen_desc = str(rec_file.relative_to(root))
+                else:
+                    raise
         else:
             candidates: list[tuple[str, Path]] = []
             if drive_dir is not None:

@@ -451,13 +451,14 @@ def _update_notes(key: str, data: dict, steps: str) -> str:
     """Owner notes + non-Admin 0-token Google Doc / Logs refresh & on-site quick-add panel."""
     source = data["source"]
     last_date = data.get("summary", {}).get("lastDate", "2026-10-18")
-    default_url = (
-        "https://docs.google.com/document/d/1mboHEkA2jzHEbJY0mcuXbP-N_cWfyaN-LiN2z8xueq0/edit"
-        if key == "weightlifting"
-        else "https://docs.google.com/document/d/1kaKlOi_fPPrxHyCwf-G3nP93TkC-aPLT5Y-7b776Pmo/edit"
-        if key in ("running", "tempo")
-        else ""
-    )
+    default_url = {
+        "weightlifting": "https://docs.google.com/document/d/1mboHEkA2jzHEbJY0mcuXbP-N_cWfyaN-LiN2z8xueq0/edit",
+        "running": "https://docs.google.com/document/d/1RDyIJPISvIbaM4f-EoBlpVi99kGVZ81fRUKOmzYTJXA/edit",
+        "tempo": "https://docs.google.com/document/d/1kaKlOi_fPPrxHyCwf-G3nP93TkC-aPLT5Y-7b776Pmo/edit",
+        "swimming": "https://docs.google.com/document/d/1wRNnr8kl4ccqGtSn9_G5Y79UFcv3aEn02r_GJ90uY8s/edit",
+        "sleep": "https://docs.google.com/document/d/1UMa-zXddL1PCfasksWie27N00IBfWEBUiDq9UDLTJ4w/edit",
+        "diet": "https://docs.google.com/document/d/1q0g1iAhzHCSrEL0nxUQfW3FjZw5qJ8uj70WPVH2i5Ug/edit",
+    }.get(key, "")
     sample_placeholder = {
         "diet": "10/28/2026\nBreakfast - 3/1/28g Protein Powder, Large Regular Coffee 20/7/1g, 81/3/3g 3 Bananas\nLunch - 84/30/24g Fried Rice (2/3 Tupperware)\nDinner - 37/20/50g Pulled Ham on a Bun, 2/20/60g Chicken Parmesan, 19/4/3g Roasted Potato Wedges\nSnacks - Nothing\nTotal Expenditure - 2800cals\nTotal Consumption - 2425cals - 246/85/169g\nNet Expenditure - 375cal loss",
         "weightlifting": "10/28/2026 - Back & Bis\nAssisted Pullups; 12x90lbs, 10x75lbs, 8x60lbs\nBarbell Curls; 15x50lbs, 12x60lbs, 8x70lbs",
