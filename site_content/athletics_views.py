@@ -448,7 +448,7 @@ def _progress(entry: dict) -> str:
 
 
 def _update_notes(key: str, data: dict, steps: str) -> str:
-    """Owner notes + non-Admin 0-token Google Doc / Logs refresh panel."""
+    """Owner notes + non-Admin 0-token Google Doc / Logs refresh & on-site quick-add panel."""
     source = data["source"]
     last_date = data.get("summary", {}).get("lastDate", "2026-10-18")
     default_url = (
@@ -458,38 +458,53 @@ def _update_notes(key: str, data: dict, steps: str) -> str:
         if key in ("running", "tempo")
         else ""
     )
+    sample_placeholder = {
+        "diet": "10/28/2026\nBreakfast - 3/1/28g Protein Powder, Large Regular Coffee 20/7/1g, 81/3/3g 3 Bananas\nLunch - 84/30/24g Fried Rice (2/3 Tupperware)\nDinner - 37/20/50g Pulled Ham on a Bun, 2/20/60g Chicken Parmesan, 19/4/3g Roasted Potato Wedges\nSnacks - Nothing\nTotal Expenditure - 2800cals\nTotal Consumption - 2425cals - 246/85/169g\nNet Expenditure - 375cal loss",
+        "weightlifting": "10/28/2026 - Back & Bis\nAssisted Pullups; 12x90lbs, 10x75lbs, 8x60lbs\nBarbell Curls; 15x50lbs, 12x60lbs, 8x70lbs",
+        "swimming": "(10/28/2026) - 2000m - 5x400 of Fly-Back_Breast-Free",
+        "running": "I1 - (10/28/2026) - 4 Intervals\n3:42.0\n3:39.5\n3:36.2\n3:33.8\nAvg: 3:37.9",
+        "tempo": "(10/28/2026)\nTempo Run - 4.6km (House to Vape Store & Back)\n21:10.00\n4:36.1 min/km - 3.62m/s",
+        "sleep": "10/28/2026\n7.5hrs\nNo dreams recorded",
+    }.get(key, "")
     return (f'<section class="sports-section athletics-update" id="{key}-update" aria-labelledby="{key}-update-title">'
-            f'<p class="sports-kicker">Google Drive Logs Sync &amp; Format · No Admin Unlock Required</p>'
-            f'<h2 id="{key}-update-title">Refresh from Google Docs or add a session.</h2>'
-            f'<div class="gdoc-sync-box" data-gdoc-sync="{_e(key)}" data-gdoc-last-date="{_e(last_date)}" data-gdoc-default-url="{_e(default_url)}">'
+            f'<p class="sports-kicker">Google Drive Logs Sync &amp; Direct On-Site Editor · No Terminal Required</p>'
+            f'<h2 id="{key}-update-title">Refresh from Google Docs or add an entry directly from the site.</h2>'
+            f'<div class="gdoc-sync-box" data-gdoc-sync="{_e(key)}" data-gdoc-last-date="{_e(last_date)}" data-gdoc-default-url="{_e(default_url)}" data-gdoc-repo-path="{_e(source["path"])}">'
             f'<div class="gdoc-sync-head">'
-            f'<div><strong>🔄 Live Google Drive / Docs Log Check (<code>{_e(source["path"])}</code>)</strong>'
-            f'<small class="gdoc-sync-sub">Currently built through <strong>{_e(last_date)}</strong> · Uses <strong>0 API tokens</strong> when up-to-date or when deterministic rules validate the log.</small></div>'
+            f'<div><strong>🔄 Live Google Drive / Docs Sync &amp; On-Site Publisher (<code>{_e(source["path"])}</code>)</strong>'
+            f'<small class="gdoc-sync-sub">Currently built through <strong>{_e(last_date)}</strong> · Uses <strong>0 API tokens</strong> to validate, update charts &amp; tables live, and commit to GitHub.</small></div>'
             f'<div class="wb-form-actions">'
             f'<button class="button primary gdoc-refresh-btn" type="button" data-gdoc-refresh-btn="{_e(key)}">↻ Check &amp; Refresh Log Now (0 Tokens)</button>'
+            f'<button class="button ghost" type="button" data-gdoc-commit-btn="{_e(key)}">☁️ Commit &amp; Publish Log to GitHub</button>'
             f'<a class="button ghost" href="../../../Updates/index.html">All Doc Updates Hub ↗</a>'
             f'</div>'
             f'</div>'
             f'<div class="gdoc-sync-controls">'
-            f'<label for="gdoc-url-{_e(key)}">Google Doc share URL or ID for <code>{_e(key)}</code> inside your Google Drive <code>Logs/</code> folder (saved in browser):</label>'
+            f'<label for="gdoc-url-{_e(key)}">Option A — Google Doc share URL or ID for <code>{_e(key)}</code> inside your Google Drive <code>Logs/</code> folder (saved across devices):</label>'
             f'<div class="gdoc-sync-row">'
-            f'<input id="gdoc-url-{_e(key)}" type="url" value="{_e(default_url)}" placeholder="Paste https://docs.google.com/document/d/... link from your Drive Logs folder (optional)">'
+            f'<input id="gdoc-url-{_e(key)}" type="url" value="{_e(default_url)}" placeholder="Paste https://docs.google.com/document/d/... link from your Drive Logs folder (Anyone with link: Viewer)">'
             f'<button class="button ghost" type="button" data-gdoc-save-btn="{_e(key)}">Save Link</button>'
             f'</div>'
+            f'<details class="gdoc-quick-add" style="margin-top:10px;">'
+            f'<summary style="cursor:pointer;color:#9ddacf;font-weight:600;">➕ Option B — Paste or Type a New Entry Directly on the Site (0 Tokens · Updates Charts, Tables &amp; GitHub)</summary>'
+            f'<div style="margin-top:8px;display:grid;gap:8px;">'
+            f'<textarea id="gdoc-append-text-{_e(key)}" rows="6" style="width:100%;font-family:monospace;font-size:13px;padding:10px;border-radius:8px;background:#0d101b;color:#eeeef7;border:1px solid rgba(157,218,207,0.3);" placeholder="{_e(sample_placeholder)}"></textarea>'
+            f'<div class="wb-form-actions">'
+            f'<button class="button primary" type="button" data-gdoc-append-btn="{_e(key)}">⚡ Append Entry, Update Charts &amp; Publish from Site (0 Tokens)</button>'
+            f'</div></div></details>'
             f'<p class="gdoc-sync-status" id="gdoc-status-{_e(key)}" role="status" aria-live="polite">'
-            f'Ready · Click "Check &amp; Refresh Log Now" to verify whether newer entries exist since {_e(last_date)}.'
+            f'Ready · Click "Check &amp; Refresh Log Now" to pull from Google Docs, or open Option B above to paste a new entry directly on the site.'
             f'</p>'
             f'</div></div>'
-            f'<ol><li>Canonical repo file: <code>{_e(source["path"])}</code> in plain text (.txt) (synced with Google Drive <code>Logs/</code> via <code>python -B -m site_content.log_sync</code>). '
-            'The CSV and JSON files on this page are exports made from it at every build.</li>'
-            f'{steps}<li>To sync all 6 logs from your Google Drive <code>Logs/</code> folder or linked Google Docs and rebuild, run <code>python -B -m site_content.log_sync &amp;&amp; python -B -m site_content.build --also-local</code>. '
-            'Deterministic regex rules fix dates, units, and dashes at <strong>0 token cost</strong>; LLM repair is only called if a line still fails validation.</li>'
-            '<li>Publish by committing and pushing the liammspandasprojects repository.</li></ol>'
+            f'<ol><li><strong>Do it 100% from the site (Phone or Desktop):</strong> Either paste your Google Doc share link in <strong>Option A</strong> above and click <strong>↻ Check &amp; Refresh Log Now (0 Tokens)</strong>, OR open <strong>➕ Option B</strong> above, paste your new entry, and click <strong>⚡ Append Entry, Update Charts &amp; Publish from Site</strong>. Both immediately apply the <strong>0-token regex formatter</strong>, redraw the interactive PowerBI charts, KPI cards, and tables on this page, relay across your devices, and commit to GitHub (when your GitHub PAT is saved in <strong>🔐 Unlock Admin</strong>).</li>'
+            f'{steps}'
+            f'<li>Canonical repo file: <code>{_e(source["path"])}</code> in plain text (.txt) (also mirrored under <code>LiamMs_PandasProjects/Gaming-and-Performance-Log/</code>; both copies are updated together when you click <strong>☁️ Commit &amp; Publish Log to GitHub</strong>).</li>'
+            '<li>Optional local CLI sync: If you are in VS Code, you can also run <code>python -B -m site_content.log_sync ; python -B -m site_content.build --also-local</code> and push <code>liammspandasprojects</code>.</li></ol>'
             f'<p>The latest entry, as written:</p>'
             + (f'<p class="sports-note" data-wb-admin-locked-msg>🔒 Latest written dream/journal entry is Admin-protected — Unlock Admin to view.</p>'
-               f'<pre class="athletics-entry" data-wb-admin-only hidden>{_e(chr(10).join(source["latestEntry"]))}</pre>'
+               f'<pre class="athletics-entry" id="gdoc-preview-{_e(key)}" data-wb-admin-only hidden>{_e(chr(10).join(source["latestEntry"]))}</pre>'
                if key == "sleep"
-               else f'<pre class="athletics-entry">{_e(chr(10).join(source["latestEntry"]))}</pre>')
+               else f'<pre class="athletics-entry" id="gdoc-preview-{_e(key)}">{_e(chr(10).join(source["latestEntry"]))}</pre>')
             + '<p class="sports-note">An older copy under LiamMs_PandasProjects/Gaming-and-Performance-Log/ is checked too: '
             'if it differs from the file above, the build stops instead of skipping the edit.</p></section>')
 

@@ -75,8 +75,8 @@ class ParserTests(unittest.TestCase):
         assisted = next(e for e in lift["exercises"] if e["name"] == "Assisted Pullups")
         self.assertEqual(assisted["kind"], "assisted")
         self.assertNotIn("change", assisted)
-        self.assertEqual(lift["summary"]["sessions"], 21)
-        self.assertEqual(lift["summary"]["splits"], {"Chest": 6, "Back": 9, "Shoulders": 6})
+        self.assertEqual(lift["summary"]["sessions"], 22)
+        self.assertEqual(lift["summary"]["splits"], {"Chest": 7, "Back": 9, "Shoulders": 6})
 
     def test_new_set_formats_are_kept_or_excluded_with_reasons(self):
         lift = self.data["weightlifting"]

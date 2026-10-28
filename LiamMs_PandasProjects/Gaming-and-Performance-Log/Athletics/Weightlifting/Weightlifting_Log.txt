@@ -1,8 +1,6 @@
 Weightlifting Log (Dropsets Excluded)
 
 
-
-
 9/14/2026 - Chest & Abs
 
 
@@ -229,3 +227,14 @@ Lat Compressions; 15x58lbs, 12x65lbs, 12x65lbs, 7x42lbs
 Barbell Curls; 15x50lbs, 12x60lbs, 8x70lbs, 15x30lbs
 Hammer Curls; 15x18lbs, 12x22lbs, 12x25lbs
 Back Extensions; 20x0lbs, 15x15lbs, 12x25lbs, 12x0lbs
+
+
+10/27/2026 - Chest & Abs
+
+
+Barbell Press; 15x95lbs, 12x135lbs, 5x155lbs, 9x135lbs, 8x95lbs
+Incline Dumbbell Press; 11x40lbs, 8x48lbs, 8x48lbs, 10x32lbs
+Incline Dumbbell Flys; 12x20lbs, 12x20lbs, 10x20lbs
+Machine Flys; 20x100lbs, 12x130lbs, 9x145lbs, 10x115lbs, 8x85lbs
+DCC Cable Flys; 8x27lbs, 10x20lbs, 12x17lbs
+Machine Crunches; 20x10lbs, 20x25lbs, 10x35lbs, 15x25lbs, 15x10lbs

@@ -65,7 +65,7 @@ class DietTests(unittest.TestCase):
         self.assertEqual(days["2026-10-15"]["expenditureNote"], "16k walk, high NEAT, cold")
         self.assertEqual(oct5["activity"], 3930 - OCTOBER_BMR)
         summary = self.diet["summary"]
-        self.assertEqual(summary["days"], 14)
+        self.assertEqual(summary["days"], 15)
         self.assertEqual(summary["totalDeficit"], sum(day["deficit"] for day in self.diet["days"]))
         self.assertEqual(summary["targetDeficit"], DAILY_TARGET_DEFICIT)
 
