@@ -118,6 +118,56 @@ def _node_link(prefix: str, atlas_path: str) -> str:
     return f'<a href="{_e(prefix + node.url)}">{_e(node.title)} ↗</a>'
 
 
+def _render_linkages_badges(prefix: str, linkages_raw: str) -> str:
+    """Render comma-separated workbench IDs or Atlas paths as interactive linkage badges."""
+    tokens = [tok.strip() for tok in str(linkages_raw or "").split(",") if tok.strip()]
+    if not tokens:
+        return '<span class="wb-badge wb-flat">—</span>'
+    badges = []
+    for tok in tokens:
+        if tok in NODES:
+            node = NODES[tok]
+            badges.append(f'<a class="wb-action-link" href="{_e(prefix + node.url)}" title="Connected Atlas Destination: {_e(tok)}">🔗 {_e(node.title)} ↗</a>')
+        elif tok.startswith("ST-"):
+            badges.append(f'<a class="wb-action-link" href="#workbench-studies-table" data-wb-jump-row="{_e(tok)}" title="Connected Study {_e(tok)}">📊 {_e(tok)}</a>')
+        elif tok.startswith("TH-"):
+            badges.append(f'<a class="wb-action-link" href="#workbench-theory-table" data-wb-jump-row="{_e(tok)}" title="Connected Theory {_e(tok)}">📐 {_e(tok)}</a>')
+        elif tok.startswith("AP-"):
+            badges.append(f'<a class="wb-action-link" href="#workbench-apps-table" data-wb-jump-row="{_e(tok)}" title="Connected Application {_e(tok)}">⚙️ {_e(tok)}</a>')
+        elif tok.startswith("TD-"):
+            badges.append(f'<a class="wb-action-link" href="#workbench-todos-table" data-wb-jump-row="{_e(tok)}" title="Connected To-Do {_e(tok)}">✅ {_e(tok)}</a>')
+        else:
+            badges.append(f'<span class="wb-badge wb-flat">🔗 {_e(tok)}</span>')
+    return '<div class="wb-linkages-cell" style="display:flex;flex-wrap:wrap;gap:4px;">' + "".join(badges) + "</div>"
+
+
+CHART_TYPE_OPTIONS: tuple[tuple[str, str, str], ...] = (
+    ("auto", "✨ Auto-Select Best Plots", "Automatically chooses the best plot types for the question"),
+    ("box_whisker", "📦 Box & Whisker Plot", "Min, Q1, median, Q3, max & spatial/monthly distributions"),
+    ("line", "📈 Multi-Series Line Plot", "Continuous daily/time-series curves & local maxima/minima swings"),
+    ("stacked_column", "📊 Stacked Column Chart", "Vertical stacked columns by severity, cohort, or component"),
+    ("clustered_column", "📊 Clustered Column + Line", "Dual-axis vertical columns (left axis) + line (right axis)"),
+    ("pie_donut", "🥧 Pie / Donut Chart", "Proportional share ring with percentage breakdown"),
+    ("radar", "🕸️ Radar / Spider Chart", "Multi-axis polygon comparing structural/physical profiles"),
+    ("sankey", "🔀 Sankey Flow Diagram", "Source → mechanism → outcome proportional flow ribbons"),
+    ("histogram", "📉 Histogram / Distribution", "Frequency distribution bins + kernel density curve"),
+)
+
+
+def _chart_type_picker_html(name_attr: str, selected_csv: str = "auto") -> str:
+    selected = {s.strip() for s in (selected_csv or "auto").split(",") if s.strip()}
+    pills = []
+    for val, label, desc in CHART_TYPE_OPTIONS:
+        checked = " checked" if val in selected or (not selected and val == "auto") else ""
+        pills.append(
+            f'<label class="wb-scope-pill" title="{_e(desc)}">'
+            f'<input type="checkbox" name="{_e(name_attr)}" value="{_e(val)}"{checked}>'
+            f'<span class="wb-scope-check" aria-hidden="true">✓</span>'
+            f'<span>{_e(label)}</span></label>'
+        )
+    return '<div class="wb-restudy-checks" style="display:flex;flex-wrap:wrap;gap:6px;">' + "".join(pills) + "</div>"
+
+
 def _status_badge(status: str) -> str:
     tone = "up" if status in ("published", "done", "processed") else ("warn" if status in ("in-progress", "recorded") else "flat")
     return f'<span class="wb-badge wb-{tone}">{_e(status)}</span>'
@@ -172,7 +222,7 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
          "Spontaneous rap lyrics routed into the 6 Rap subsubsections and voice memos transcribed into the Journal/Podcast queue."),
     ])
 
-    # 1. Study Queue table (compact 5-column table when locked; reveals IP Index & Delete columns when Unlock Admin is active)
+    # 1. Study Queue table (compact 6-column table when locked; reveals IP Index & Delete columns when Unlock Admin is active)
     study_rows = []
     for item in data["studyQueue"]:
         links = []
@@ -187,7 +237,9 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
                 f'data-study-title="{_e(item["title"])}" '
                 f'data-study-path="{_e(item["atlasPath"])}" '
                 f'data-study-question="{_e(item["question"])}" '
-                f'data-study-dataset="{_e(item["dataset"])}">▶ Run study now</button>'
+                f'data-study-dataset="{_e(item["dataset"])}" '
+                f'data-study-charts="{_e(item.get("chartTypes", "auto"))}" '
+                f'data-study-linkages="{_e(item.get("linkages", ""))}">▶ Run study now</button>'
             )
         else:
             links.append(
@@ -196,18 +248,32 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
                 f'data-study-title="{_e(item["title"])}" '
                 f'data-study-path="{_e(item["atlasPath"])}" '
                 f'data-study-question="{_e(item["question"])}" '
-                f'data-study-dataset="{_e(item["dataset"])}">↻ Re-Study Deeper</button>'
+                f'data-study-dataset="{_e(item["dataset"])}" '
+                f'data-study-charts="{_e(item.get("chartTypes", "auto"))}" '
+                f'data-study-linkages="{_e(item.get("linkages", ""))}">↻ Re-Study Deeper</button>'
             )
+        links.append(
+            f'<button class="button ghost wb-run-study-btn wb-followup-btn" type="button" '
+            f'data-followup-id="{_e(item["id"])}" '
+            f'data-study-title="{_e(item["title"])}" '
+            f'data-study-path="{_e(item["atlasPath"])}" '
+            f'data-study-question="{_e(item["question"])}" '
+            f'data-study-dataset="{_e(item["dataset"])}" '
+            f'data-study-charts="{_e(item.get("chartTypes", "auto"))}" '
+            f'data-study-linkages="{_e(item.get("linkages", ""))}">➕ Follow-Up / Extrapolate</button>'
+        )
         ip_idx = item.get("ipIndex", "IP#OWNER")
         clicks = int(item.get("clicks", 0))
         study_rows.append((
             item["id"], item["createdOn"], item["title"], item["atlasPath"],
-            item["question"], item["dataset"], item["status"], ip_idx, clicks, " · ".join(links) or "Queued",
+            item["question"], item["dataset"], item.get("chartTypes", "auto"), item.get("linkages", ""),
+            item["status"], ip_idx, clicks, " · ".join(links) or "Queued",
         ))
     study_tbody = "".join(
         f'<tr data-study-row="{_e(cid)}" data-study-date="{_e(created)}" data-study-title="{_e(title)}" '
         f'data-study-path="{_e(path)}" data-study-field="{_e(path.split("/")[0])}" '
         f'data-study-question="{_e(question)}" data-study-dataset="{_e(dataset)}" '
+        f'data-study-charts="{_e(chart_types)}" data-study-linkages="{_e(linkages)}" '
         f'data-study-status-val="{_e(status)}" data-study-ip="{_e(ip_idx)}" data-study-clicks="{clicks}">'
         f'<th scope="row" class="wb-col-id"><code>{_e(cid)}</code></th><td class="wb-col-date">{_e(created)}</td>'
         f'<td class="wb-study-td"><div class="wb-study-cell">'
@@ -219,21 +285,26 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
         f'<div class="wb-pbi-head"><span class="wb-pbi-kicker"><code>{_e(cid)}</code> · Study Tooltip · <span data-click-badge="{_e(cid)}">{clicks} visits</span></span>'
         f'<button type="button" class="wb-pbi-close" data-wb-tip-close aria-label="Close study tooltip">✕</button></div>'
         f'<div class="wb-pbi-row"><span class="wb-pbi-label">Destination</span><div class="wb-pbi-val">{_node_link(prefix, path)}</div></div>'
+        f'<div class="wb-pbi-row"><span class="wb-pbi-label">Connected Linkages</span><div class="wb-pbi-val">{_render_linkages_badges(prefix, linkages)}</div></div>'
         f'<div class="wb-pbi-row"><span class="wb-pbi-label">Question</span><p class="wb-pbi-question">{_e(question)}</p></div>'
+        f'<div class="wb-pbi-row"><span class="wb-pbi-label">Plot Types (Multi-Select for Run / Re-Study)</span>'
+        f'{_chart_type_picker_html(f"tipChartType-{cid}", chart_types)}</div>'
         f'<div class="wb-pbi-row"><span class="wb-pbi-label">Re-Study Data Scope (Multi-Select)</span>'
         f'<div class="wb-restudy-checks">'
         f'<label class="wb-scope-pill"><input type="checkbox" data-restudy-new="{_e(cid)}" checked><span class="wb-scope-check" aria-hidden="true"></span><span>New External Datasets</span></label>'
         f'<label class="wb-scope-pill"><input type="checkbox" data-restudy-updated="{_e(cid)}"><span class="wb-scope-check" aria-hidden="true"></span><span>Updated / Internal Site Datasets</span></label>'
         f'</div></div>'
-        f'<div class="wb-pbi-row"><span class="wb-pbi-label">Outputs / Run</span><div class="wb-pbi-actions" data-study-outputs="{_e(cid)}">{links_html}</div></div>'
+        f'<div class="wb-pbi-row"><span class="wb-pbi-label">Outputs / Run / Follow-Up</span><div class="wb-pbi-actions" data-study-outputs="{_e(cid)}">{links_html}</div></div>'
         f'<div class="wb-pbi-row" data-wb-admin-only hidden><span class="wb-pbi-label">Admin · IP Index &amp; Moderation</span>'
         f'<div class="wb-pbi-actions"><code class="wb-ip-badge">{_e(ip_idx)}</code>'
         f'<button type="button" class="button ghost wb-delete-study-btn" data-delete-study-id="{_e(cid)}">🗑 Delete study</button></div></div>'
         f'</div></div></td>'
-        f'<td class="wb-col-data">{_e(dataset)}</td><td class="wb-col-status" data-study-status="{_e(cid)}">{_status_badge(status)}</td>'
+        f'<td class="wb-col-data">{_e(dataset)}</td>'
+        f'<td class="wb-col-linkages">{_render_linkages_badges(prefix, linkages)}</td>'
+        f'<td class="wb-col-status" data-study-status="{_e(cid)}">{_status_badge(status)}</td>'
         f'<td data-wb-admin-col hidden><code class="wb-ip-badge">{_e(ip_idx)}</code></td>'
         f'<td data-wb-admin-col hidden><button type="button" class="button ghost wb-delete-study-btn" data-delete-study-id="{_e(cid)}" aria-label="Delete {_e(cid)}">🗑 Delete</button></td></tr>'
-        for cid, created, title, path, question, dataset, status, ip_idx, clicks, links_html in study_rows
+        for cid, created, title, path, question, dataset, chart_types, linkages, status, ip_idx, clicks, links_html in study_rows
     )
     field_options = "".join(
         f'<option value="{_e(node.path)}">{_e(node.title)}</option>'
@@ -268,9 +339,9 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
     study_table = (
         study_filter_bar
         + '<div class="sports-table-wrap wb-studies-wrap" role="region" aria-label="To study with data" tabindex="0">'
-        '<table id="workbench-studies-table"><caption>To Study with Data — hover or tap any Study link for Destination, Question, Visit Rank &amp; Outputs / Run</caption>'
+        '<table id="workbench-studies-table"><caption>To Study with Data — hover or tap any Study link for Destination, Question, Plot Picker, Linkages &amp; Run / Follow-Up</caption>'
         '<thead><tr><th scope="col">ID</th><th scope="col">Date</th><th scope="col">Study (hover / tap)</th>'
-        '<th scope="col">Data</th><th scope="col">Status</th>'
+        '<th scope="col">Data</th><th scope="col">Linkages</th><th scope="col">Status</th>'
         '<th scope="col" data-wb-admin-col hidden>IP Index</th>'
         '<th scope="col" data-wb-admin-col hidden>Admin</th></tr></thead>'
         f'<tbody id="wb-studies-body">{study_tbody}</tbody></table></div>'
@@ -302,6 +373,11 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
         {_cascading_atlas_select("wb-study", "Target")}
         <label class="wb-wide" for="wb-study-question">Core question &amp; hypotheses <small>(expands automatically as you type)</small><textarea id="wb-study-question" name="question" class="wb-auto-grow" rows="3" required maxlength="4000" placeholder="What hypothesis, mechanism, or distribution are we testing? Box grows automatically..."></textarea></label>
         <label class="wb-wide" for="wb-study-dataset">Data source / URL <small>(optional — leave blank to auto-search, or click your own site data chips below)</small><textarea id="wb-study-dataset" name="dataset" class="wb-auto-grow" rows="1" maxlength="1500" placeholder="Leave blank for LLM dataset discovery, click a site dataset below, or enter StatCan / BLS / CSV / URL"></textarea></label>
+        <label class="wb-wide" for="wb-study-linkages">Interconnected Linkages <small>(comma-separated Study/Theory/App IDs or Atlas paths, e.g. <code>TH-04, AP-04, Science-and-Engineering/Physics/Thermodynamics</code>)</small><input id="wb-study-linkages" name="linkages" type="text" placeholder="e.g. TH-01, AP-01, ST-05-00, Business-and-Economics/Macroeconomics/Fiscal-Policy"></label>
+      </div>
+      <div class="wb-scope-group" role="group" aria-label="Select output plot and chart types (Multi-Select)">
+        <span class="wb-scope-heading">📊 Output Plot &amp; Visual Types <small>(Multi-Select — pick any combination of Box &amp; Whisker, Line, Stacked/Clustered Column, Pie, Radar, Sankey, or Histogram)</small></span>
+        {_chart_type_picker_html("chartTypes", "auto")}
       </div>
       {site_data_presets}
       <div class="wb-scope-group" role="group" aria-label="Dataset search and Re-Study scope (Multi-Select)">
@@ -344,6 +420,7 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
         f'<td><strong>{_e(t["title"])}</strong></td>'
         f'<td>{_node_link(prefix, t["atlasPath"])}</td>'
         f'<td>{_e(t["scopePrompt"])}</td>'
+        f'<td>{_render_linkages_badges(prefix, t.get("linkages", ""))}</td>'
         f'<td>{_status_badge(t["status"])}</td>'
         f'<td><button class="button ghost wb-run-study-btn" type="button" '
         f'data-run-study-id="{_e(t["id"])}" '
@@ -359,7 +436,7 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
         '<table id="workbench-theory-table"><caption>Learn / Theory Queue — First-Principles Foundations &amp; Subsubsection Introductions</caption>'
         '<thead><tr><th scope="col">ID</th><th scope="col">Date</th><th scope="col">Category</th>'
         '<th scope="col">Theory Topic</th><th scope="col">Destination</th><th scope="col">Derivation / Scope</th>'
-        '<th scope="col">Status</th><th scope="col">Run</th></tr></thead>'
+        '<th scope="col">Linkages</th><th scope="col">Status</th><th scope="col">Run</th></tr></thead>'
         f'<tbody id="wb-theory-body">{theory_tbody}</tbody></table></div>'
     )
     theory_form = f'''<form class="wb-form wb-snap-target" id="wb-theory-form" data-wb-table="theoryQueue">
@@ -372,6 +449,7 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
         <label for="wb-theory-title">Theory module title <small>(auto-grows)</small><textarea id="wb-theory-title" name="title" class="wb-auto-grow" rows="1" required maxlength="500" placeholder="e.g. Introduction to Non-Equilibrium Thermodynamics &amp; Entropy Production"></textarea></label>
         {_cascading_atlas_select("wb-theory", "Theory")}
         <label class="wb-wide" for="wb-theory-scope">Foundational concepts &amp; equations to derive <small>(auto-expands)</small><textarea id="wb-theory-scope" name="scopePrompt" class="wb-auto-grow" rows="3" required maxlength="4000" placeholder="What laws, axioms, or mathematical derivations should this module build from scratch for the webpage and Mental Map?"></textarea></label>
+        <label class="wb-wide" for="wb-theory-linkages">Interconnected Linkages <small>(comma-separated Study/Application IDs or Atlas paths)</small><input id="wb-theory-linkages" name="linkages" type="text" placeholder="e.g. ST-11-00, AP-04, Science-and-Engineering/Physics/Thermodynamics"></label>
       </div>
       <div class="wb-form-actions"><button class="button primary" type="submit">Save to Theory Queue +</button>
       <button class="button ghost" type="button" data-wb-github="theoryQueue">Open in GitHub Mobile ↗</button></div>
@@ -387,6 +465,7 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
         f'<td>{_node_link(prefix, a["atlasPath"])}</td>'
         f'<td>{_e(a["systemDesign"])}</td>'
         f'<td>{_e(a["societalBenefit"])}</td>'
+        f'<td>{_render_linkages_badges(prefix, a.get("linkages", ""))}</td>'
         f'<td>{_status_badge(a["status"])}</td>'
         f'<td><button class="button ghost wb-run-study-btn" type="button" '
         f'data-run-study-id="{_e(a["id"])}" '
@@ -402,7 +481,7 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
         '<table id="workbench-apps-table"><caption>Applications Queue — How Fundamentals Apply to Real-World Systems &amp; Societal Benefit</caption>'
         '<thead><tr><th scope="col">ID</th><th scope="col">Date</th><th scope="col">Domain</th>'
         '<th scope="col">Application</th><th scope="col">Destination</th><th scope="col">System Design</th>'
-        '<th scope="col">Societal Benefit</th><th scope="col">Status</th><th scope="col">Run</th></tr></thead>'
+        '<th scope="col">Societal Benefit</th><th scope="col">Linkages</th><th scope="col">Status</th><th scope="col">Run</th></tr></thead>'
         f'<tbody id="wb-apps-body">{app_tbody}</tbody></table></div>'
     )
     app_form = f'''<form class="wb-form wb-snap-target" id="wb-app-form" data-wb-table="applicationsQueue">
@@ -416,6 +495,7 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
         {_cascading_atlas_select("wb-app", "Application")}
         <label class="wb-wide" for="wb-app-design">System mechanism &amp; implementation <small>(auto-expands)</small><textarea id="wb-app-design" name="systemDesign" class="wb-auto-grow" rows="2" required maxlength="3000" placeholder="How do the physical/mathematical fundamentals get engineered into a working device, algorithm, or policy?"></textarea></label>
         <label class="wb-wide" for="wb-app-benefit">Positive benefit to society <small>(auto-expands)</small><textarea id="wb-app-benefit" name="societalBenefit" class="wb-auto-grow" rows="2" required maxlength="2000" placeholder="What concrete human, economic, environmental, or safety problem does this solve at scale?"></textarea></label>
+        <label class="wb-wide" for="wb-app-linkages">Interconnected Linkages <small>(comma-separated Study/Theory IDs or Atlas paths)</small><input id="wb-app-linkages" name="linkages" type="text" placeholder="e.g. ST-11-00, TH-04, Science-and-Engineering/Physics/Thermodynamics"></label>
       </div>
       <div class="wb-form-actions"><button class="button primary" type="submit">Save to Applications Queue +</button>
       <button class="button ghost" type="button" data-wb-github="applicationsQueue">Open in GitHub Mobile ↗</button></div>
@@ -423,10 +503,12 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
 
     # 2. Wishlist To-Do table
     todo_tbody = "".join(
-        f'<tr><th scope="row"><code>{_e(t["id"])}</code></th><td>{_e(t["createdOn"])}</td>'
+        f'<tr data-todo-row="{_e(t["id"])}"><th scope="row"><code>{_e(t["id"])}</code></th><td>{_e(t["createdOn"])}</td>'
         f'<td><strong>{_e(t["title"])}</strong></td><td>{_e(t["category"])}</td>'
         f'<td><span class="wb-prio wb-prio-{_e(t["priority"])}">{_e(t["priority"])}</span></td>'
-        f'<td>{_node_link(prefix, t["atlasPath"])}</td><td>{_status_badge(t["status"])}</td>'
+        f'<td>{_node_link(prefix, t["atlasPath"])}</td>'
+        f'<td>{_render_linkages_badges(prefix, t.get("linkages", ""))}</td>'
+        f'<td>{_status_badge(t["status"])}</td>'
         f'<td>{_e(t["notes"])}</td></tr>'
         for t in data["wishlistTodos"]
     )
@@ -435,7 +517,7 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
         '<table id="workbench-todos-table"><caption>To-Do &amp; Website Wishlist</caption>'
         '<thead><tr><th scope="col">ID</th><th scope="col">Date</th><th scope="col">Item</th>'
         '<th scope="col">Category</th><th scope="col">Priority</th><th scope="col">Destination</th>'
-        '<th scope="col">Status</th><th scope="col">Notes</th></tr></thead>'
+        '<th scope="col">Linkages</th><th scope="col">Status</th><th scope="col">Notes</th></tr></thead>'
         f'<tbody id="wb-todos-body">{todo_tbody}</tbody></table></div>'
     )
     prio_options = "".join(f'<option value="{p}">{p}</option>' for p in TODO_PRIORITIES)
@@ -446,6 +528,7 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
         <label for="wb-todo-category">Category<select id="wb-todo-category" name="category"><option value="Website">Website</option><option value="Database">Database</option><option value="Studies">Studies</option><option value="Athletics">Athletics</option><option value="Automation">Automation</option></select></label>
         <label for="wb-todo-priority">Priority<select id="wb-todo-priority" name="priority">{prio_options}</select></label>
         {_cascading_atlas_select("wb-todo", "To-Do")}
+        <label class="wb-wide" for="wb-todo-linkages">Interconnected Linkages <small>(optional Study/Theory/App IDs or Atlas paths)</small><input id="wb-todo-linkages" name="linkages" type="text" placeholder="e.g. ST-01-00, Gaming-and-Performance-Log/Athletics"></label>
         <label class="wb-wide" for="wb-todo-notes">Implementation notes <small>(auto-grows)</small><textarea id="wb-todo-notes" name="notes" class="wb-auto-grow" rows="2" maxlength="2000" placeholder="Optional schema or UI note"></textarea></label>
       </div>
       <div class="wb-form-actions"><button class="button primary" type="submit">Save to-do +</button>
@@ -555,10 +638,16 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
             </span>
           </label>
         </div>
-        <div class="wb-restudy-bar">
-          <span><strong>Re-Study Data Scope (Multi-Select):</strong></span>
-          <label class="wb-scope-pill"><input type="checkbox" id="wb-modal-scope-new" checked><span class="wb-scope-check" aria-hidden="true"></span><span>Look for New External Datasets (Default)</span></label>
-          <label class="wb-scope-pill"><input type="checkbox" id="wb-modal-scope-updated"><span class="wb-scope-check" aria-hidden="true"></span><span>Re-evaluate Updated / Internal Site Datasets</span></label>
+        <div class="wb-restudy-bar" style="flex-direction:column;align-items:flex-start;gap:8px;">
+          <div>
+            <span><strong>Re-Study Data Scope (Multi-Select):</strong></span>
+            <label class="wb-scope-pill"><input type="checkbox" id="wb-modal-scope-new" checked><span class="wb-scope-check" aria-hidden="true"></span><span>Look for New External Datasets (Default)</span></label>
+            <label class="wb-scope-pill"><input type="checkbox" id="wb-modal-scope-updated"><span class="wb-scope-check" aria-hidden="true"></span><span>Re-evaluate Updated / Internal Site Datasets</span></label>
+          </div>
+          <div id="wb-modal-chart-picker" style="width:100%;">
+            <span style="display:block;font-size:12.5px;font-weight:700;color:#9ddacf;margin-bottom:4px;">📊 Output Plot Types for Re-Study (Multi-Select):</span>
+            ''' + _chart_type_picker_html("modalChartTypes", "auto") + '''
+          </div>
         </div>
         <div class="wb-run-dest-links" id="wb-run-dest-links" hidden></div>
         <div class="wb-run-visuals" id="wb-run-visuals" hidden></div>
@@ -566,6 +655,7 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
         <label class="request-wide" for="wb-run-tex"><span>Generated standalone LaTeX source (<code>.tex</code>)</span><textarea id="wb-run-tex" rows="12" readonly></textarea></label>
         <div class="request-actions">
           <button class="button ghost" type="button" id="wb-run-rerun">↻ Re-Study Deeper with Gemini Argon</button>
+          <button class="button ghost" type="button" id="wb-run-followup">➕ Follow-Up / Extrapolate (ST-XX-01)</button>
           <button class="button ghost" type="button" id="wb-run-download-py">Download Pandas .py ↓</button>
           <button class="button ghost" type="button" id="wb-run-download-csv">Download Data .csv ↓</button>
           <button class="button ghost" type="button" id="wb-run-download-tex">Download .tex ↓</button>
@@ -573,6 +663,39 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
           <button class="button primary" type="button" data-wb-dialog-close="wb-run-dialog">Done</button>
         </div>
       </div>
+    </dialog>
+    <dialog class="request-dialog wb-dialog" id="wb-followup-dialog" aria-labelledby="wb-followup-title">
+      <form class="request-form" method="dialog" id="wb-followup-form">
+        <p class="eyebrow" id="wb-followup-eyebrow">Engineering Triad Expansion · Follow-Up Study &amp; Theory / Application Extrapolation</p>
+        <h2 id="wb-followup-title">Follow-Up &amp; Extrapolate Study</h2>
+        <p class="request-intro">Expand on an existing study by incrementing its index (e.g. <code>ST-11-00 → ST-11-01</code>), asking a new core question, and optionally extrapolating directly to a linked <strong>Theory (<code>TH-XX</code>)</strong> and/or <strong>Application (<code>AP-XX</code>)</strong> in the same subsubsection or a different one—with bidirectional linkages automatically wired across all tables and dashboards.</p>
+        <input type="hidden" id="wb-fu-parent-id" name="parentId" value="">
+        <div class="request-grid">
+          <label for="wb-fu-next-id">New Follow-Up Study ID (auto-incremented)<input id="wb-fu-next-id" name="nextId" type="text" readonly value="ST-01-01"></label>
+          <label for="wb-fu-title">Follow-Up Study Title<input id="wb-fu-title" name="title" type="text" required placeholder="e.g. Follow-Up: Mesoscale Bowen-Ratio &amp; Albedo Thresholds"></label>
+          ''' + _cascading_atlas_select("wb-fu", "Follow-Up Destination (Same or Different)") + '''
+          <label class="request-wide" for="wb-fu-question">New Core Question to Expand on Parent Study<textarea id="wb-fu-question" name="question" rows="3" required placeholder="What deeper question, new regional/industry slice, or counterfactual are we testing in this follow-up?"></textarea></label>
+          <label class="request-wide" for="wb-fu-dataset">Dataset Scope (optional — inherits parent study datasets + new search)<input id="wb-fu-dataset" name="dataset" type="text" placeholder="Inherits parent datasets + auto-searches new benchmarks"></label>
+          <div class="request-wide">
+            <span style="display:block;font-size:13px;font-weight:700;color:#9ddacf;margin-bottom:6px;">📊 Multi-Select Plot &amp; Visual Types for Follow-Up Study:</span>
+            ''' + _chart_type_picker_html("fuChartTypes", "auto,line,box_whisker") + '''
+          </div>
+          <div class="request-wide" style="padding:12px;border-radius:8px;border:1px solid rgba(157,218,207,0.28);background:rgba(157,218,207,0.05);display:grid;gap:10px;">
+            <span style="font-weight:700;color:#9ddacf;">🔗 Extrapolate to Theory &amp; Application (Same or Different Subsubsection):</span>
+            <label class="wb-inline-check"><input type="checkbox" id="wb-fu-extrap-theory" checked> <strong>📐 Also Extrapolate to a Linked Theory Module (<code>TH-XX</code>)</strong></label>
+            <input id="wb-fu-theory-prompt" type="text" placeholder="Optional Theory scope (leave blank to auto-derive governing laws &amp; equations from this study)">
+            <label class="wb-inline-check"><input type="checkbox" id="wb-fu-extrap-app" checked> <strong>⚙️ Also Extrapolate to a Linked Engineering / Policy Application (<code>AP-XX</code>)</strong></label>
+            <input id="wb-fu-app-prompt" type="text" placeholder="Optional Application design (leave blank to auto-engineer real-world system &amp; societal benefit)">
+            <label for="wb-fu-linkages">Additional Cross-Section Linkages (auto-includes Parent Study, Theory &amp; Application)<input id="wb-fu-linkages" name="linkages" type="text" placeholder="e.g. ST-01-00, Science-and-Engineering/Physics/Thermodynamics"></label>
+          </div>
+          <label class="request-wide wb-inline-check"><input type="checkbox" id="wb-fu-run-now" checked> <strong>⚡ Run Follow-Up Study immediately with Gemini 4 Argon upon saving</strong></label>
+        </div>
+        <p class="request-status" id="wb-fu-status" role="status" aria-live="polite"></p>
+        <div class="request-actions">
+          <button class="button ghost" type="button" data-wb-dialog-close="wb-followup-dialog">Cancel</button>
+          <button class="button primary" type="submit">🚀 Save Follow-Up &amp; Extrapolations</button>
+        </div>
+      </form>
     </dialog>'''
 
     return f'''<main id="main-content" class="collection-page sports-page athletics-page workbench-page">
@@ -1298,11 +1421,17 @@ def reminders_dashboard_body(data: dict[str, Any], prefix: str = "../") -> str:
         '<h3>1. Email Delivery &amp; Test Confirmation</h3>'
         '<p><strong>Default Email (Always Active — No Selection Needed):</strong> <code id="reabs-default-email">l2mcgrat@uwaterloo.ca</code></p>'
         '<p style="font-size:13px;color:#b8c0d8;">Every reminder sets the email Urgency Flag (<code>X-Priority: 1 (Highest) / Importance: High</code> for High, <code>Normal</code> for Medium, <code>Low</code> for Low) and includes one-tap links to mark the item completed and log hours.</p>'
-        '<div class="wb-form-actions" style="margin:10px 0;">'
-        '<button class="button primary" type="button" id="reabs-test-email-btn">📧 Send Test Email to l2mcgrat@uwaterloo.ca</button>'
-        '<button class="button ghost" type="button" id="reabs-test-outlook-btn">↗ Open Pre-Filled UWaterloo / Mail Test</button>'
+        '<div class="wb-form-actions" style="margin:10px 0;flex-wrap:wrap;gap:8px;">'
+        '<button class="button primary" type="button" id="reabs-test-email-btn">📧 Send Test Email Now</button>'
+        '<button class="button ghost" type="button" id="reabs-test-gmail-btn">↗ Open Pre-Filled Gmail Test</button>'
+        '<button class="button ghost" type="button" id="reabs-test-outlook-btn">↗ Open Pre-Filled UWaterloo / Outlook Test</button>'
         '</div>'
-        '<p class="gdoc-sync-status" id="reabs-test-email-status" role="status" aria-live="polite">Ready · Click above to send an instant test email to l2mcgrat@uwaterloo.ca (plus any checked optional emails).</p>'
+        '<p class="gdoc-sync-status" id="reabs-test-email-status" role="status" aria-live="polite">Ready · Click above to send a test email to l2mcgrat@uwaterloo.ca (plus any checked optional emails) and mirror it to your phone.</p>'
+        '<details style="margin:8px 0;font-size:12.5px;color:#9ddacf;"><summary style="cursor:pointer;font-weight:600;">⚙️ Background Email Webhook (Google Apps Script / Web3Forms — bypasses FormSubmit 521 outage)</summary>'
+        '<div style="margin-top:8px;display:grid;gap:6px;">'
+        '<div class="gdoc-sync-row"><input id="reabs-email-webhook" type="text" placeholder="Paste Google Apps Script Web App URL (https://script.google.com/macros/s/.../exec) or Web3Forms Key"><button class="button ghost" type="button" id="reabs-save-webhook-btn">Save Relay</button></div>'
+        '<small style="color:#b8c0d8;">To send 100% silent background emails from your Gmail to <code>l2mcgrat@uwaterloo.ca</code> forever (0 cost, no third-party downtime): open <a href="https://script.google.com/home/start" target="_blank" rel="noopener" style="color:#69d4cf;">script.google.com ↗</a> → <strong>New Project</strong> → paste: <code>function doPost(e){var d=JSON.parse(e.postData.contents);MailApp.sendEmail(d.to,d.subject,d.body);return ContentService.createTextOutput("OK");}</code> → <strong>Deploy → New deployment → Web app (Anyone)</strong> → paste the URL above!</small>'
+        '</div></details>'
         '<hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:12px 0;">'
         '<label for="reabs-new-email" style="display:block;font-weight:600;margin-bottom:6px;">Add Optional Email Recipient (stays optional until deleted):</label>'
         '<div class="gdoc-sync-row">'
@@ -1338,7 +1467,10 @@ def reminders_dashboard_body(data: dict[str, Any], prefix: str = "../") -> str:
         '<input id="reabs-reply-cmd" type="text" placeholder="Type or relay: DONE RB-01 0.75h  or  OFF RB-03  or  HOURS RB-02 1.5">'
         '<button class="button primary" type="button" id="reabs-reply-submit-btn">⚡ Execute Reply</button>'
         '</div>'
-        '<small style="display:block;margin-top:6px;color:#9ddacf;">Tip: Every email &amp; text reminder also embeds one-tap links (<code>✓ Complete 0.5h</code>, <code>1h</code>, <code>2h</code>, <code>🔕 Turn Off</code>) that automatically mark the item completed and log the hours when tapped on your phone!</small>'
+        '<div id="reabs-phone-feed" style="margin-top:8px;padding:8px 10px;border-radius:6px;background:rgba(105,212,207,0.06);border:1px solid rgba(105,212,207,0.25);font-size:12.5px;color:#d7dcf0;">'
+        '<strong>📡 Live Phone ↔ Web Feed (<code>liam_reabs_sms_67wxyE7L_v1</code>):</strong> <span id="reabs-phone-feed-body">Listening for messages &amp; action-button taps from your ntfy mobile app…</span>'
+        '</div>'
+        '<small style="display:block;margin-top:6px;color:#9ddacf;">Tip: Every email &amp; text reminder embeds native 1-tap action buttons (<code>✓ Done (0.5h)</code>, <code>✓ Done (1.0h)</code>, <code>🔕 Mute</code>) in the ntfy app, or you can type <code>DONE RB-01 1h</code> (or <code>1</code>) directly into the ntfy topic on your phone!</small>'
         '</article>'
         '</div>'
     )

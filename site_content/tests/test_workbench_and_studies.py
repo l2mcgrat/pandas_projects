@@ -150,17 +150,23 @@ class WorkbenchTests(unittest.TestCase):
         self.assertIsNotNone(page.select_one("#wb-run-download-csv"))
         self.assertIsNotNone(page.select_one("#wb-filter-sort"))
         run_buttons = [btn["data-run-study-id"] for btn in page.select("#workbench-studies-table [data-run-study-id]")]
-        self.assertEqual(run_buttons, ["ST-03", "ST-04", "ST-07"])
+        self.assertEqual(run_buttons, ["ST-03-00", "ST-04-00", "ST-07-00"])
         restudy_buttons = [btn["data-restudy-id"] for btn in page.select("#workbench-studies-table [data-restudy-id]")]
-        self.assertEqual(restudy_buttons, ["ST-01", "ST-02", "ST-05", "ST-06", "ST-08", "ST-09"])
-        # Study filter bar is always visible; table has 5 public columns + 2 hidden Admin columns (IP Index & Admin).
+        self.assertEqual(
+            restudy_buttons,
+            ["ST-01-00", "ST-02-00", "ST-05-00", "ST-06-00", "ST-08-00", "ST-09-00", "ST-10-00", "ST-11-00"],
+        )
+        followup_buttons = [btn["data-followup-id"] for btn in page.select("#workbench-studies-table [data-followup-id]")]
+        self.assertEqual(len(followup_buttons), len(data["studyQueue"]))
+        self.assertIsNotNone(page.select_one("#wb-followup-dialog"))
+        # Study filter bar is always visible; table has 6 public columns (including Linkages) + 2 hidden Admin columns (IP Index & Admin).
         self.assertIsNotNone(page.select_one("#wb-study-filters"))
         self.assertIsNotNone(page.select_one("#wb-filter-search"))
         self.assertIsNotNone(page.select_one("#wb-filter-status"))
         self.assertIsNotNone(page.select_one("#wb-filter-field"))
         self.assertIsNotNone(page.select_one("#wb-filter-ip"))
         study_headers = [th.get_text(strip=True) for th in page.select("#workbench-studies-table thead th")]
-        self.assertEqual(study_headers, ["ID", "Date", "Study (hover / tap)", "Data", "Status", "IP Index", "Admin"])
+        self.assertEqual(study_headers, ["ID", "Date", "Study (hover / tap)", "Data", "Linkages", "Status", "IP Index", "Admin"])
         self.assertEqual(len(page.select("#workbench-studies-table thead th[data-wb-admin-col][hidden]")), 2)
         self.assertEqual(len(page.select("#workbench-studies-table .wb-study-link")), len(data["studyQueue"]))
         self.assertEqual(len(page.select("#workbench-studies-table .wb-pbi-tooltip")), len(data["studyQueue"]))
@@ -216,11 +222,11 @@ class WorkbenchTests(unittest.TestCase):
         self.assertIn("Barrie Recycling and Waste Corp", reabs_body)
         self.assertIn("705-792-6557", reabs_body)
         self.assertIn("reabs-history-chart", reabs_body)
-        # 3-stage cascading Section -> Subsection -> Subsubsection dropdowns on Workbench forms
-        self.assertEqual(len(page.select("[data-wb-cascade]")), 5)
-        self.assertEqual(len(page.select("[data-cascade-field]")), 5)
-        self.assertEqual(len(page.select("[data-cascade-topic]")), 5)
-        self.assertEqual(len(page.select("[data-cascade-leaf]")), 5)
+        # 3-stage cascading Section -> Subsection -> Subsubsection dropdowns on Workbench forms + Follow-Up modal
+        self.assertEqual(len(page.select("[data-wb-cascade]")), 6)
+        self.assertEqual(len(page.select("[data-cascade-field]")), 6)
+        self.assertEqual(len(page.select("[data-cascade-topic]")), 6)
+        self.assertEqual(len(page.select("[data-cascade-leaf]")), 6)
         # Voice note / Journal transcripts are Admin-protected
         self.assertTrue(page.select("#workbench-voice-table [data-wb-admin-only][hidden]"))
 

@@ -60,6 +60,7 @@ VOICE_CHANNELS = ("Journal", "Podcast", "Study Memo", "Freestyle")
 SCHEMA_SQL = """
 CREATE TABLE IF NOT EXISTS study_queue (
     id TEXT PRIMARY KEY,
+    parent_id TEXT,
     created_on TEXT NOT NULL,
     title TEXT NOT NULL,
     atlas_path TEXT NOT NULL,
@@ -69,6 +70,8 @@ CREATE TABLE IF NOT EXISTS study_queue (
     study_route TEXT,
     paper_route TEXT,
     clicks INTEGER NOT NULL DEFAULT 0,
+    chart_types TEXT NOT NULL DEFAULT 'auto',
+    linkages TEXT NOT NULL DEFAULT '',
     notes TEXT NOT NULL DEFAULT ''
 );
 
@@ -80,6 +83,7 @@ CREATE TABLE IF NOT EXISTS theory_queue (
     atlas_path TEXT NOT NULL,
     scope_prompt TEXT NOT NULL,
     status TEXT NOT NULL CHECK (status IN ('published', 'in-progress', 'queued')),
+    linkages TEXT NOT NULL DEFAULT '',
     notes TEXT NOT NULL DEFAULT ''
 );
 
@@ -92,6 +96,7 @@ CREATE TABLE IF NOT EXISTS applications_queue (
     system_design TEXT NOT NULL,
     societal_benefit TEXT NOT NULL,
     status TEXT NOT NULL CHECK (status IN ('published', 'in-progress', 'queued')),
+    linkages TEXT NOT NULL DEFAULT '',
     notes TEXT NOT NULL DEFAULT ''
 );
 
@@ -103,6 +108,7 @@ CREATE TABLE IF NOT EXISTS wishlist_todos (
     priority TEXT NOT NULL CHECK (priority IN ('high', 'medium', 'low')),
     atlas_path TEXT NOT NULL,
     status TEXT NOT NULL CHECK (status IN ('done', 'in-progress', 'planned')),
+    linkages TEXT NOT NULL DEFAULT '',
     notes TEXT NOT NULL DEFAULT ''
 );
 
@@ -161,11 +167,12 @@ CREATE TABLE IF NOT EXISTS reabs_reminders (
 """.strip()
 
 DEFAULT_SEED: dict[str, Any] = {
-    "schemaVersion": 1,
-    "updatedOn": "2026-10-25",
+    "schemaVersion": 2,
+    "updatedOn": "2026-10-29",
     "studyQueue": [
         {
-            "id": "ST-01",
+            "id": "ST-01-00",
+            "parentId": None,
             "createdOn": "2026-10-25",
             "title": "The AI Iceberg Index: Sector & Role Exposure Across North America",
             "atlasPath": "Business-and-Economics/Macroeconomics/Economic-Growth",
@@ -180,10 +187,13 @@ DEFAULT_SEED: dict[str, Any] = {
             "studyRoute": "Business-and-Economics/Macroeconomics/Economic-Growth/index.html",
             "paperRoute": "Business-and-Economics/Macroeconomics/Economic-Growth/Paper/index.html",
             "clicks": 38,
+            "chartTypes": "stacked_column,horizontal_bar",
+            "linkages": "ST-08-00,ST-09-00,Business-and-Economics/Emerging-Industries/Artificial-Intelligence",
             "notes": "First end-to-end Workbench test study: interactive regional map, 12-industry x 6-role matrix, and compiled LaTeX PDF.",
         },
         {
-            "id": "ST-02",
+            "id": "ST-02-00",
+            "parentId": None,
             "createdOn": "2026-10-25",
             "title": "2026 Alberta Referendum: All 10 Ballot Questions & Demographic Vote Anatomy",
             "atlasPath": "Business-and-Economics/Law-and-Policy/Public-Policy",
@@ -197,10 +207,13 @@ DEFAULT_SEED: dict[str, Any] = {
             "studyRoute": "Business-and-Economics/Law-and-Policy/Public-Policy/index.html",
             "paperRoute": "Business-and-Economics/Law-and-Policy/Public-Policy/Paper/index.html",
             "clicks": 31,
+            "chartTypes": "horizontal_bar,pie_donut",
+            "linkages": "ST-09-00,RL-03,Business-and-Economics/Macroeconomics/Fiscal-Policy",
             "notes": "Second Workbench study: compares ballot categories, regional/age/party splits, and voter motives with a compiled LaTeX PDF.",
         },
         {
-            "id": "ST-03",
+            "id": "ST-03-00",
+            "parentId": None,
             "createdOn": "2026-10-25",
             "title": "First to Four Basketball — Leverage & Run-Distribution Study",
             "atlasPath": "Sports-and-Entertainment/Series-Hub/Analytics",
@@ -210,10 +223,13 @@ DEFAULT_SEED: dict[str, Any] = {
             "studyRoute": "Sports-and-Entertainment/Series-Hub/Analytics/index.html",
             "paperRoute": None,
             "clicks": 14,
+            "chartTypes": "histogram,line",
+            "linkages": "Sports-and-Entertainment/Sports-Analytics/Predictions-and-Results",
             "notes": "Queued for the JimmyHighRoller-style deep dive once the next series batch is logged.",
         },
         {
-            "id": "ST-04",
+            "id": "ST-04-00",
+            "parentId": None,
             "createdOn": "2026-10-25",
             "title": "Primer-Style Evolutionary & Market Agent Simulations",
             "atlasPath": "Science-and-Engineering/Computer-Science/Simulations",
@@ -223,10 +239,13 @@ DEFAULT_SEED: dict[str, Any] = {
             "studyRoute": None,
             "paperRoute": None,
             "clicks": 19,
+            "chartTypes": "line,sankey",
+            "linkages": "TH-03,ST-06-00,Business-and-Economics/Microeconomics/Game-Theory",
             "notes": "Planned interactive simulation branch with downloadable parameter seeds.",
         },
         {
-            "id": "ST-05",
+            "id": "ST-05-00",
+            "parentId": None,
             "createdOn": "2026-10-25",
             "title": "Sodium Battery Technology",
             "atlasPath": "Science-and-Engineering/Chemistry/Electrochemistry",
@@ -240,10 +259,13 @@ DEFAULT_SEED: dict[str, Any] = {
             "studyRoute": "Science-and-Engineering/Chemistry/Electrochemistry/index.html",
             "paperRoute": "Science-and-Engineering/Chemistry/Electrochemistry/Paper/index.html",
             "clicks": 27,
+            "chartTypes": "horizontal_bar,line",
+            "linkages": "TH-01,AP-01,ST-11-00,Science-and-Engineering/Chemistry/Physical-Chemistry",
             "notes": "Added from mobile Workbench queue and promoted to canonical Electrochemistry dashboard + Tectonic PDF.",
         },
         {
-            "id": "ST-06",
+            "id": "ST-06-00",
+            "parentId": None,
             "createdOn": "2026-10-25",
             "title": "Gas Price Collusion",
             "atlasPath": "Business-and-Economics/Microeconomics/Game-Theory",
@@ -257,10 +279,13 @@ DEFAULT_SEED: dict[str, Any] = {
             "studyRoute": "Business-and-Economics/Microeconomics/Game-Theory/index.html",
             "paperRoute": "Business-and-Economics/Microeconomics/Game-Theory/Paper/index.html",
             "clicks": 29,
+            "chartTypes": "horizontal_bar,line",
+            "linkages": "TH-02,AP-02,ST-09-00",
             "notes": "Published via Gemini 4 Argon + Pandas: interactive 12-country pump price decomposition, Rockets & Feathers ECM, repeated Bertrand supergame inspector, and compiled LaTeX PDF.",
         },
         {
-            "id": "ST-07",
+            "id": "ST-07-00",
+            "parentId": None,
             "createdOn": "2026-10-25",
             "title": "Calorie Intake & Deficit vs. Weightlifting Strength Rate-of-Change",
             "atlasPath": "Gaming-and-Performance-Log/Athletics/Weightlifting",
@@ -274,10 +299,13 @@ DEFAULT_SEED: dict[str, Any] = {
             "studyRoute": "Gaming-and-Performance-Log/Athletics/Weightlifting/index.html",
             "paperRoute": None,
             "clicks": 11,
+            "chartTypes": "clustered_column,line,box_whisker",
+            "linkages": "AP-03,VN-02,Gaming-and-Performance-Log/Health/Diet",
             "notes": "Queued cross-section study using internal site athletics + calorie tracking logs once additional training weeks accumulate.",
         },
         {
-            "id": "ST-08",
+            "id": "ST-08-00",
+            "parentId": None,
             "createdOn": "2026-10-26",
             "title": "AI Cost & Compute Economics: Token Inference Deflation, Training Capex & Test-Time Reasoning Scaling",
             "atlasPath": "Business-and-Economics/Emerging-Industries/Artificial-Intelligence",
@@ -291,10 +319,13 @@ DEFAULT_SEED: dict[str, Any] = {
             "studyRoute": "Business-and-Economics/Emerging-Industries/Artificial-Intelligence/index.html",
             "paperRoute": "Business-and-Economics/Emerging-Industries/Artificial-Intelligence/Paper/index.html",
             "clicks": 24,
+            "chartTypes": "horizontal_bar,line,sankey",
+            "linkages": "ST-01-00,Business-and-Economics/Macroeconomics/Economic-Growth",
             "notes": "Published via Gemini 4 Argon + Pandas: 8-model inference deflation & capex matrix, 6-layer infrastructure bottleneck inspector, cascade routing simulation, and compiled LaTeX PDF.",
         },
         {
-            "id": "ST-09",
+            "id": "ST-09-00",
+            "parentId": None,
             "createdOn": "2026-10-27",
             "title": "Taxes on Generations over Time Periods",
             "atlasPath": "Business-and-Economics/Macroeconomics/Fiscal-Policy",
@@ -311,8 +342,54 @@ DEFAULT_SEED: dict[str, Any] = {
             "status": "published",
             "studyRoute": "Business-and-Economics/Macroeconomics/Fiscal-Policy/index.html",
             "paperRoute": "Business-and-Economics/Macroeconomics/Fiscal-Policy/Paper/index.html",
-            "clicks": 31,
+            "clicks": 33,
+            "chartTypes": "horizontal_bar,stacked_column,line",
+            "linkages": "ST-01-00,ST-02-00,ST-06-00,Business-and-Economics/Law-and-Policy/Public-Policy",
             "notes": "Executed on Mobile via Gemini 4 Argon (20,079 tokens) & promoted to multi-plot Fiscal Policy dashboard (3 SVG plots: Tax Burden vs Rewards, Tax Instrument Mix over Time, and Commute Duration vs Fuel/Carbon/Vape/Property Tax) + Tectonic PDF.",
+        },
+        {
+            "id": "ST-10-00",
+            "parentId": None,
+            "createdOn": "2026-10-28",
+            "title": "Automotive Recall Comparison",
+            "atlasPath": "Business-and-Economics/Key-Performance-Indicators/Customer-Metrics",
+            "question": (
+                "How to the total amount of recalls compare between different automotive companies, the severity of each recall "
+                "should be part of a stacked column chart. Total cost and total customer loss from each."
+            ),
+            "dataset": "USDOT / NHTSA Safety Recalls Flat Files & Annual Reports (49 CFR Part 573, DataHub mu99-t4jn, 2024–2025) + Transport Canada MVSA Recalls + SEC 10-K / IFRS Warranty Reserve Filings (Warranty Week 2025–2026) + JD Power Brand Loyalty (2025) & Reynolds Defection Report (2026)",
+            "status": "published",
+            "studyRoute": "Business-and-Economics/Key-Performance-Indicators/Customer-Metrics/index.html",
+            "paperRoute": None,
+            "clicks": 18,
+            "chartTypes": "stacked_column,clustered_column,sankey",
+            "linkages": "ST-06-00,Business-and-Economics/Key-Performance-Indicators/Financial-Metrics",
+            "notes": "Executed via Gemini 4 Argon (13,660 tokens): Stacked Column Chart of Recall Severity by OEM (High-Severity Physical vs. Moderate Mechanical vs. OTA/Software), Dual-Axis Cost ($B) & Customer Defection Loss (k buyers), and Sankey Defect-to-Churn Flow.",
+        },
+        {
+            "id": "ST-11-00",
+            "parentId": None,
+            "createdOn": "2026-10-29",
+            "title": "Temperature Patterns",
+            "atlasPath": "Science-and-Engineering/Chemistry/Physical-Chemistry",
+            "question": (
+                "I want to see the medium to long term temperature swings that occur in different regions between (timewise) local "
+                "maxima and minima for highs and low temperatures recorded for each day. I'm curious how much humidty plays a role "
+                "in these temperature swings so i've outline a few different regions. I would want line plots and box and whisker "
+                "plots showing temperature for every day of this year for a few key locations around the world (Barrie Ontario, "
+                "Vancouver BC, Dublin Ireland, Rio de Janeiro Brazil, Dubai UAE, etc), and Box and Whisker plots containing data "
+                "from 20 or more areas within a 200km radius of each of these locations for each month of the year up until "
+                "November 1st. My plans later on is to build some theory as to why this happens and understand the applications "
+                "that could be used for weather control and storm prevention if that is even something that's possible to geoengineer around."
+            ),
+            "dataset": "NOAA GHCNd v3.31 (248 stations across 200 km buffers) + ECMWF ERA5 Hourly Reanalysis + Environment & Climate Change Canada (ECCC) + Met Éireann + INMET Brazil + WMO WIGOS (Jan 1 – Nov 1, 2026)",
+            "status": "published",
+            "studyRoute": "Science-and-Engineering/Chemistry/Physical-Chemistry/index.html",
+            "paperRoute": None,
+            "clicks": 22,
+            "chartTypes": "line,box_whisker,radar",
+            "linkages": "TH-04,AP-04,ST-05-00,Science-and-Engineering/Physics/Thermodynamics",
+            "notes": "Executed via Gemini 4 Argon (16,144 tokens): Daily High/Low & Synoptic Extrema Line Plots (Jan 1–Nov 1 across Barrie, Vancouver, Dublin, Rio & Dubai), Monthly 200 km Spatial Box-and-Whisker Plots (≥20 stations per hub), Psychrometric Radar Profile, and linked Theory (TH-04) & Storm-Prevention Geoengineering Application (AP-04).",
         },
     ],
     "theoryQueue": [
@@ -324,6 +401,7 @@ DEFAULT_SEED: dict[str, Any] = {
             "atlasPath": "Science-and-Engineering/Chemistry/Electrochemistry",
             "scopePrompt": "Introduce Electrochemistry from scratch: Gibbs free energy, chemical potentials, the Nernst equation, Butler-Volmer overpotentials, and Period 2 vs. Period 3 alkali intercalation.",
             "status": "published",
+            "linkages": "ST-05-00,AP-01",
             "notes": "Integrated into Mental Map § 1.3.3 and the Electrochemistry destination.",
         },
         {
@@ -334,6 +412,7 @@ DEFAULT_SEED: dict[str, Any] = {
             "atlasPath": "Business-and-Economics/Microeconomics/Game-Theory",
             "scopePrompt": "Introduce Game Theory from scratch: strategic-form games, Bertrand vs. Cournot competition, folk theorems, grim-trigger SPNE thresholds, and monitoring lags.",
             "status": "published",
+            "linkages": "ST-06-00,AP-02,ST-04-00",
             "notes": "Integrated into Mental Map § 2.2.4 and the Game Theory destination.",
         },
         {
@@ -344,7 +423,19 @@ DEFAULT_SEED: dict[str, Any] = {
             "atlasPath": "Science-and-Engineering/Computer-Science/Simulations",
             "scopePrompt": "Derive the replicator differential equation from discrete generational payoffs and connect ESS conditions to spatial agent simulations.",
             "status": "queued",
-            "notes": "Pairs with ST-04 Primer-style simulation study.",
+            "linkages": "ST-04-00,TH-02",
+            "notes": "Pairs with ST-04-00 Primer-style simulation study.",
+        },
+        {
+            "id": "TH-04",
+            "createdOn": "2026-10-29",
+            "category": "Mathematical & Physical Framework",
+            "title": "Clausius-Clapeyron Vapor Pressure, Brunt Infrared Continuum Emissivity & Bowen-Ratio Boundary-Layer Energy Partitioning",
+            "atlasPath": "Science-and-Engineering/Chemistry/Physical-Chemistry",
+            "scopePrompt": "Derive why specific humidity q (g/kg) and Bowen ratio β = H/LE—rather than relative humidity RH—govern diurnal temperature range (DTR) and multi-day baroclinic Rossby-wave temperature swings via Clausius-Clapeyron latent enthalpy and 8–12 μm H2O continuum back-radiation.",
+            "status": "published",
+            "linkages": "ST-11-00,AP-04,Science-and-Engineering/Physics/Thermodynamics",
+            "notes": "Extrapolated from ST-11-00 (Temperature Patterns) into Physical Chemistry & Mental Map § 1.3.1.",
         },
     ],
     "applicationsQueue": [
@@ -357,7 +448,8 @@ DEFAULT_SEED: dict[str, Any] = {
             "systemDesign": "4-to-12 hour utility substation battery banks using Polyanionic NFPP / Prussian White cells with dual Al collectors and 0 V safe maintenance.",
             "societalBenefit": "Prevents catastrophic winter heating blackouts at −20°C to −35°C without lithium or copper supply bottlenecks.",
             "status": "published",
-            "notes": "Live in Electrochemistry (ST-05) and Mental Map § 1.3.3.",
+            "linkages": "ST-05-00,TH-01",
+            "notes": "Live in Electrochemistry (ST-05-00) and Mental Map § 1.3.3.",
         },
         {
             "id": "AP-02",
@@ -368,7 +460,8 @@ DEFAULT_SEED: dict[str, Any] = {
             "systemDesign": "Design asymmetric disclosure rules (delayed bulk API feeds + maverick club station licensing) that help consumers search without giving oligopolists 0-second retaliation feeds.",
             "societalBenefit": "Compresses 25–28 c/L oligopoly fuel markups toward the 12 c/L competitive benchmark, saving households billions annually.",
             "status": "published",
-            "notes": "Live in Game Theory (ST-06) and Mental Map § 2.2.4.",
+            "linkages": "ST-06-00,TH-02",
+            "notes": "Live in Game Theory (ST-06-00) and Mental Map § 2.2.4.",
         },
         {
             "id": "AP-03",
@@ -379,7 +472,20 @@ DEFAULT_SEED: dict[str, Any] = {
             "systemDesign": "Combine daily TDEE/consumption logs with 10+ and 12+ rep-target thresholds to time deloads and carbohydrate refeeds.",
             "societalBenefit": "Preserves lean muscle mass and central nervous system recovery during sustained fat-loss phases.",
             "status": "queued",
-            "notes": "Pairs with ST-07 Calorie vs. Lifting progression study.",
+            "linkages": "ST-07-00,VN-02",
+            "notes": "Pairs with ST-07-00 Calorie vs. Lifting progression study.",
+        },
+        {
+            "id": "AP-04",
+            "createdOn": "2026-10-29",
+            "domain": "General Engineering Application",
+            "title": "Mesoscale Albedo, Bowen-Ratio Irrigation & Marine Cloud Brightening Geoengineering for Convective Storm Prevention",
+            "atlasPath": "Science-and-Engineering/Chemistry/Physical-Chemistry",
+            "systemDesign": "Couple surface albedo augmentation (Δα ≥ +0.12) with upwind Bowen-ratio irrigation (β < 0.8) and 100–300 nm sea-salt Marine Cloud Brightening to thicken Convective Inhibition (CIN) without raising equivalent potential temperature θ_e or CAPE.",
+            "societalBenefit": "Mitigates extreme urban heatwaves by 1.8–3.2°C and suppresses severe supercell/flash-flood convective initiation across 50–200 km corridors.",
+            "status": "published",
+            "linkages": "ST-11-00,TH-04,Science-and-Engineering/Physics/Thermodynamics",
+            "notes": "Extrapolated from ST-11-00 (Temperature Patterns) into Physical Chemistry.",
         },
     ],
     "siteTraffic": [
@@ -608,13 +714,28 @@ def validate_workbench(data: dict[str, Any]) -> dict[str, Any]:
     if set(RAP_PAGES) != RAP_BUCKET_SLUGS:
         raise ValueError("RAP_BUCKETS must match catalog.RAP_PAGES keys.")
     studies = [
-        {**row, "clicks": int(row.get("clicks", 0))}
+        {
+            "parentId": None,
+            "chartTypes": "auto",
+            "linkages": "",
+            **row,
+            "clicks": int(row.get("clicks", 0)),
+        }
         for row in data.get("studyQueue", [])
     ]
-    theory = data.get("theoryQueue", DEFAULT_SEED["theoryQueue"])
-    applications = data.get("applicationsQueue", DEFAULT_SEED["applicationsQueue"])
+    theory = [
+        {"linkages": "", **row}
+        for row in data.get("theoryQueue", DEFAULT_SEED["theoryQueue"])
+    ]
+    applications = [
+        {"linkages": "", **row}
+        for row in data.get("applicationsQueue", DEFAULT_SEED["applicationsQueue"])
+    ]
     traffic = data.get("siteTraffic", DEFAULT_SEED["siteTraffic"])
-    todos = data.get("wishlistTodos", [])
+    todos = [
+        {"linkages": "", **row}
+        for row in data.get("wishlistTodos", [])
+    ]
     lyrics = data.get("rapLyrics", [])
     voices = data.get("voiceNotes", [])
     reabs = data.get("reabsReminders", DEFAULT_SEED["reabsReminders"])
@@ -722,23 +843,23 @@ def sync_sqlite(db_path: Path, data: dict[str, Any]) -> None:
             conn.execute(f"DROP TABLE IF EXISTS {tbl}")
         conn.executescript(SCHEMA_SQL)
         conn.executemany(
-            "INSERT INTO study_queue (id, created_on, title, atlas_path, question, dataset, status, study_route, paper_route, clicks, notes) "
-            "VALUES (:id, :createdOn, :title, :atlasPath, :question, :dataset, :status, :studyRoute, :paperRoute, :clicks, :notes)",
+            "INSERT INTO study_queue (id, parent_id, created_on, title, atlas_path, question, dataset, status, study_route, paper_route, clicks, chart_types, linkages, notes) "
+            "VALUES (:id, :parentId, :createdOn, :title, :atlasPath, :question, :dataset, :status, :studyRoute, :paperRoute, :clicks, :chartTypes, :linkages, :notes)",
             data["studyQueue"],
         )
         conn.executemany(
-            "INSERT INTO theory_queue (id, created_on, category, title, atlas_path, scope_prompt, status, notes) "
-            "VALUES (:id, :createdOn, :category, :title, :atlasPath, :scopePrompt, :status, :notes)",
+            "INSERT INTO theory_queue (id, created_on, category, title, atlas_path, scope_prompt, status, linkages, notes) "
+            "VALUES (:id, :createdOn, :category, :title, :atlasPath, :scopePrompt, :status, :linkages, :notes)",
             data["theoryQueue"],
         )
         conn.executemany(
-            "INSERT INTO applications_queue (id, created_on, domain, title, atlas_path, system_design, societal_benefit, status, notes) "
-            "VALUES (:id, :createdOn, :domain, :title, :atlasPath, :systemDesign, :societalBenefit, :status, :notes)",
+            "INSERT INTO applications_queue (id, created_on, domain, title, atlas_path, system_design, societal_benefit, status, linkages, notes) "
+            "VALUES (:id, :createdOn, :domain, :title, :atlasPath, :systemDesign, :societalBenefit, :status, :linkages, :notes)",
             data["applicationsQueue"],
         )
         conn.executemany(
-            "INSERT INTO wishlist_todos (id, created_on, title, category, priority, atlas_path, status, notes) "
-            "VALUES (:id, :createdOn, :title, :category, :priority, :atlasPath, :status, :notes)",
+            "INSERT INTO wishlist_todos (id, created_on, title, category, priority, atlas_path, status, linkages, notes) "
+            "VALUES (:id, :createdOn, :title, :category, :priority, :atlasPath, :status, :linkages, :notes)",
             data["wishlistTodos"],
         )
         conn.executemany(

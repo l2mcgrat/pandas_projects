@@ -501,7 +501,12 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
         write(assets / 'data' / 'ai_cost_economics_pandas.py', studies['ai_cost']['pandasScript'])
     if 'gen_tax' in studies and 'pandasScript' in studies['gen_tax']:
         write(assets / 'data' / 'generational_taxes_pandas.py', studies['gen_tax']['pandasScript'])
-    write(assets / 'data' / 'live-cloud-studies.json', safe_json({"version": 1, "runs": {}, "entries": {}, "deleted": []}))
+    pub_studies_path = root / 'records' / 'workbench' / 'published_studies.json'
+    if pub_studies_path.is_file():
+        pub_studies_data = json.loads(pub_studies_path.read_text(encoding='utf-8'))
+    else:
+        pub_studies_data = {"version": 1, "runs": {}, "entries": {}, "deleted": []}
+    write(assets / 'data' / 'live-cloud-studies.json', safe_json(pub_studies_data))
     result = convert_document(root / 'mental_map.tex', root / 'tex_images' / 'mental_map', assets / 'documents' / 'mental-map', '../assets/documents/mental-map')
     source_zip(root / 'mental_map.tex', assets / 'documents' / 'mental-map')
     mental = {heading['id']: heading['title'] for heading in result['headings']}
