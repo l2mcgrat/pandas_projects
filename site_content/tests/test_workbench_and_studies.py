@@ -222,11 +222,18 @@ class WorkbenchTests(unittest.TestCase):
         self.assertIn("Barrie Recycling and Waste Corp", reabs_body)
         self.assertIn("705-792-6557", reabs_body)
         self.assertIn("reabs-history-chart", reabs_body)
-        # 3-stage cascading Section -> Subsection -> Subsubsection dropdowns on Workbench forms + Follow-Up modal
-        self.assertEqual(len(page.select("[data-wb-cascade]")), 6)
-        self.assertEqual(len(page.select("[data-cascade-field]")), 6)
-        self.assertEqual(len(page.select("[data-cascade-topic]")), 6)
-        self.assertEqual(len(page.select("[data-cascade-leaf]")), 6)
+        # 3-stage cascading Section -> Subsection -> Subsubsection dropdowns on Workbench forms + Re-Run modal + Follow-Up modal
+        self.assertIsNotNone(page.select_one("#wb-rerun-dialog"))
+        self.assertIsNotNone(page.select_one("#wb-rerun-form"))
+        self.assertIsNotNone(page.select_one("#wb-rerun-question"))
+        self.assertIsNotNone(page.select_one("#wb-rerun-dataset"))
+        self.assertIsNotNone(page.select_one("#wb-rerun-linkages"))
+        self.assertTrue(page.select('[data-rerun-site-dataset]'))
+        self.assertTrue(page.select('input[name="rerunChartTypes"]'))
+        self.assertEqual(len(page.select("[data-wb-cascade]")), 7)
+        self.assertEqual(len(page.select("[data-cascade-field]")), 7)
+        self.assertEqual(len(page.select("[data-cascade-topic]")), 7)
+        self.assertEqual(len(page.select("[data-cascade-leaf]")), 7)
         # Voice note / Journal transcripts are Admin-protected
         self.assertTrue(page.select("#workbench-voice-table [data-wb-admin-only][hidden]"))
 

@@ -623,6 +623,18 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
       <button class="button ghost" type="button" data-wb-github="voiceNotes">Send via GitHub Mobile ↗</button></div>
     </form>'''
 
+    rerun_site_data_presets = (
+        '<div class="wb-site-data-bar" role="group" aria-label="Attach internal site datasets for Re-Study">'
+        '<span class="wb-site-data-label">📎 Attach My Site\'s Data (click to toggle):</span>'
+        '<button type="button" class="wb-bucket-chip" data-rerun-site-dataset="Internal Site Data: records/athletics/weightlifting/Weightlifting_Log.txt + records/health/diet/Diet_and_Calorie_Tracking.txt">🏋️ Weightlifting + Calorie Logs</button>'
+        '<button type="button" class="wb-bucket-chip" data-rerun-site-dataset="Internal Site Data: records/athletics/running/Interval_Data.txt + Tempo_Run_Log.txt + records/health/sleep/Sleep_and_Dream_Log.txt">🏃 Running + Tempo + Sleep Logs</button>'
+        '<button type="button" class="wb-bucket-chip" data-rerun-site-dataset="Internal Site Data: records/athletics/swimming/Swimming_Log.txt">🏊 Swimming Log</button>'
+        '<button type="button" class="wb-bucket-chip" data-rerun-site-dataset="Internal Site Data: records/basketball/series.json (13 series, 73 rounds)">🏀 First-to-Four Basketball</button>'
+        '<button type="button" class="wb-bucket-chip" data-rerun-site-dataset="Internal Site Data: Smash/index.html + matchup_chart.csv + character_models/">🎮 Smash Bros Mains &amp; Matchups</button>'
+        '<button type="button" class="wb-bucket-chip" data-rerun-site-dataset="Internal Site Data: records/site_content/music-analysis.json + rap-catalog.json">🎤 Rap Lyrics &amp; Sentiment</button>'
+        '</div>'
+    )
+
     dialogs = auth_dialog_html() + '''
     <dialog class="request-dialog wb-dialog wb-run-dialog" id="wb-run-dialog" aria-labelledby="wb-run-title">
       <div class="request-form">
@@ -654,7 +666,7 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
         <div class="wb-run-summary" id="wb-run-summary"></div>
         <label class="request-wide" for="wb-run-tex"><span>Generated standalone LaTeX source (<code>.tex</code>)</span><textarea id="wb-run-tex" rows="12" readonly></textarea></label>
         <div class="request-actions">
-          <button class="button ghost" type="button" id="wb-run-rerun">↻ Re-Study Deeper with Gemini Argon</button>
+          <button class="button ghost" type="button" id="wb-run-rerun">↻ Re-Study Deeper (Open All Selection Criteria)</button>
           <button class="button ghost" type="button" id="wb-run-followup">➕ Follow-Up / Extrapolate (ST-XX-01)</button>
           <button class="button ghost" type="button" id="wb-run-download-py">Download Pandas .py ↓</button>
           <button class="button ghost" type="button" id="wb-run-download-csv">Download Data .csv ↓</button>
@@ -664,19 +676,79 @@ def workbench_body(data: dict[str, Any], prefix: str = "../") -> str:
         </div>
       </div>
     </dialog>
+    <dialog class="request-dialog wb-dialog wb-run-dialog" id="wb-rerun-dialog" aria-labelledby="wb-rerun-dialog-title">
+      <form class="request-form" method="dialog" id="wb-rerun-form" autocomplete="off">
+        <p class="eyebrow" id="wb-rerun-eyebrow">Configure &amp; Re-Run Study · All Initial Selection Criteria</p>
+        <h2 id="wb-rerun-dialog-title">Re-Run / Configure Study</h2>
+        <p class="request-intro" id="wb-rerun-intro">Review or modify any of the initial selection criteria below—Title, Target Atlas Destination, Core Question, Data Sources, Internal Site Logs, Linkages, Multi-Select Output Plot Types, and Dataset Search Scope—before executing with Gemini 4 Argon.</p>
+        <input type="hidden" id="wb-rerun-base-id" name="baseId" value="ST-01-00">
+        <div class="wb-form-grid">
+          <label for="wb-rerun-mode">Execution Mode
+            <select id="wb-rerun-mode" name="rerunMode">
+              <option value="inplace" selected>🔄 Re-Run &amp; Update Study In-Place (Keep Current ID)</option>
+              <option value="followup">➕ Save &amp; Run as Incrementing Follow-Up Study (ST-XX-01)</option>
+            </select>
+          </label>
+          <label for="wb-rerun-target-id">Active Study ID<input id="wb-rerun-target-id" name="targetId" type="text" readonly value="ST-01-00"></label>
+          <label for="wb-rerun-title">Study title <small>(auto-grows)</small><textarea id="wb-rerun-title" name="title" class="wb-auto-grow" rows="1" required maxlength="500"></textarea></label>
+          <label for="wb-rerun-status">Status<select id="wb-rerun-status" name="status"><option value="published">published</option><option value="in-progress">in-progress</option><option value="queued">queued</option></select></label>
+          ''' + _cascading_atlas_select("wb-rerun", "Target") + '''
+          <label class="wb-wide" for="wb-rerun-question">Core question &amp; hypotheses <small>(expands automatically as you type)</small><textarea id="wb-rerun-question" name="question" class="wb-auto-grow" rows="3" required maxlength="4000"></textarea></label>
+          <label class="wb-wide" for="wb-rerun-dataset">Data source / URL <small>(optional — leave blank to auto-search, or click your own site data chips below)</small><textarea id="wb-rerun-dataset" name="dataset" class="wb-auto-grow" rows="1" maxlength="1500"></textarea></label>
+          <label class="wb-wide" for="wb-rerun-linkages">Interconnected Linkages <small>(comma-separated Study/Theory/App IDs or Atlas paths, e.g. <code>TH-04, AP-04, Science-and-Engineering/Physics/Thermodynamics</code>)</small><input id="wb-rerun-linkages" name="linkages" type="text" placeholder="e.g. TH-01, AP-01, ST-05-00, Business-and-Economics/Macroeconomics/Fiscal-Policy"></label>
+        </div>
+        <div class="wb-scope-group" role="group" aria-label="Select output plot and chart types for Re-Study (Multi-Select)" style="margin-top:10px;">
+          <span class="wb-scope-heading">📊 Output Plot &amp; Visual Types <small>(Multi-Select — pick any combination of Box &amp; Whisker, Line, Stacked/Clustered Column, Pie, Radar, Sankey, or Histogram)</small></span>
+          ''' + _chart_type_picker_html("rerunChartTypes", "auto") + '''
+        </div>
+        ''' + rerun_site_data_presets + '''
+        <div class="wb-scope-group" role="group" aria-label="Dataset search and Re-Study scope (Multi-Select)" style="margin-top:10px;">
+          <span class="wb-scope-heading">Dataset search &amp; Re-Study scope <small>(Multi-Select — toggle either or both)</small></span>
+          <div class="wb-scope-pills">
+            <label class="wb-scope-pill" for="wb-rerun-scope-new">
+              <input type="checkbox" name="scopeNewDatasets" id="wb-rerun-scope-new" value="new" checked>
+              <span class="wb-scope-check" aria-hidden="true">✓</span>
+              <span class="wb-scope-copy">
+                <strong>🌐 Look for New External Datasets <em class="wb-scope-tag">Default</em></strong>
+                <small>Search StatCan, IEA, BLS, FRED, NREL, USGS &amp; peer-reviewed tables</small>
+              </span>
+            </label>
+            <label class="wb-scope-pill" for="wb-rerun-scope-updated">
+              <input type="checkbox" name="scopeUpdatedDatasets" id="wb-rerun-scope-updated" value="updated">
+              <span class="wb-scope-check" aria-hidden="true">✓</span>
+              <span class="wb-scope-copy">
+                <strong>🗄️ Re-evaluate Updated / Internal Site Datasets <em class="wb-scope-tag">Site Logs</em></strong>
+                <small>Cross-check Athletics, Calorie, Sleep, Smash Bros &amp; Basketball logs</small>
+              </span>
+            </label>
+          </div>
+        </div>
+        <div class="request-actions" style="margin-top:14px;">
+          <button class="button ghost" type="button" data-wb-dialog-close="wb-rerun-dialog">Cancel</button>
+          <button class="button primary" type="submit" id="wb-rerun-submit-btn">⚡ Run Study with Selected Criteria ▶</button>
+        </div>
+      </form>
+    </dialog>
     <dialog class="request-dialog wb-dialog" id="wb-followup-dialog" aria-labelledby="wb-followup-title">
       <form class="request-form" method="dialog" id="wb-followup-form">
         <p class="eyebrow" id="wb-followup-eyebrow">Engineering Triad Expansion · Follow-Up Study &amp; Theory / Application Extrapolation</p>
         <h2 id="wb-followup-title">Follow-Up &amp; Extrapolate Study</h2>
-        <p class="request-intro">Expand on an existing study by incrementing its index (e.g. <code>ST-11-00 → ST-11-01</code>), asking a new core question, and optionally extrapolating directly to a linked <strong>Theory (<code>TH-XX</code>)</strong> and/or <strong>Application (<code>AP-XX</code>)</strong> in the same subsubsection or a different one—with bidirectional linkages automatically wired across all tables and dashboards.</p>
+        <p class="request-intro" id="wb-followup-parent-label">Expand on an existing study by incrementing its index (e.g. <code>ST-11-00 → ST-11-01</code>), asking a new core question, and optionally extrapolating directly to a linked <strong>Theory (<code>TH-XX</code>)</strong> and/or <strong>Application (<code>AP-XX</code>)</strong> in the same subsubsection or a different one—with bidirectional linkages automatically wired across all tables and dashboards.</p>
         <input type="hidden" id="wb-fu-parent-id" name="parentId" value="">
         <div class="request-grid">
-          <label for="wb-fu-next-id">New Follow-Up Study ID (auto-incremented)<input id="wb-fu-next-id" name="nextId" type="text" readonly value="ST-01-01"></label>
-          <label for="wb-fu-title">Follow-Up Study Title<input id="wb-fu-title" name="title" type="text" required placeholder="e.g. Follow-Up: Mesoscale Bowen-Ratio &amp; Albedo Thresholds"></label>
+          <label for="wb-fu-mode">Expansion Type
+            <select id="wb-fu-mode" name="followUpMode">
+              <option value="followup_study" selected>🔬 Follow-Up Empirical Study (ST-XX-01) + Optional Theory/App</option>
+              <option value="theory">📐 Standalone Theory Derivation Only (TH-XX)</option>
+              <option value="application">⚙️ Standalone Applied Engineering System Only (AP-XX)</option>
+            </select>
+          </label>
+          <label for="wb-fu-next-id">New Item ID (auto-incremented)<input id="wb-fu-next-id" name="nextId" type="text" readonly value="ST-01-01"></label>
+          <label class="request-wide" for="wb-fu-title">Follow-Up Title<input id="wb-fu-title" name="title" type="text" required placeholder="e.g. Follow-Up: Mesoscale Bowen-Ratio &amp; Albedo Thresholds"></label>
           ''' + _cascading_atlas_select("wb-fu", "Follow-Up Destination (Same or Different)") + '''
-          <label class="request-wide" for="wb-fu-question">New Core Question to Expand on Parent Study<textarea id="wb-fu-question" name="question" rows="3" required placeholder="What deeper question, new regional/industry slice, or counterfactual are we testing in this follow-up?"></textarea></label>
+          <label class="request-wide" for="wb-fu-question">New Core Question / Derivation Scope / System Design<textarea id="wb-fu-question" name="question" rows="3" required placeholder="What deeper question, new regional/industry slice, or counterfactual are we testing in this follow-up?"></textarea></label>
           <label class="request-wide" for="wb-fu-dataset">Dataset Scope (optional — inherits parent study datasets + new search)<input id="wb-fu-dataset" name="dataset" type="text" placeholder="Inherits parent datasets + auto-searches new benchmarks"></label>
-          <div class="request-wide">
+          <div class="request-wide" id="wb-fu-charts-wrap">
             <span style="display:block;font-size:13px;font-weight:700;color:#9ddacf;margin-bottom:6px;">📊 Multi-Select Plot &amp; Visual Types for Follow-Up Study:</span>
             ''' + _chart_type_picker_html("fuChartTypes", "auto,line,box_whisker") + '''
           </div>
