@@ -40,7 +40,7 @@ ALGORITHMS = "Science-and-Engineering/Computer-Science/Data-Structures-and-Algor
 FEELINGS = "Language-and-Programming/Text-Analysis/Sentiment/index.html"
 NEW_PAGES = {
     "index.html", "About/index.html", "Mental-Map/index.html", "About/Resume/index.html",
-    "Atlas/index.html", "Workbench/index.html", "Updates/index.html", "Completion/index.html", "Traffic/index.html",
+    "Atlas/index.html", "Workbench/index.html", "Updates/index.html", "Completion/index.html", "Traffic/index.html", "Reminders/index.html",
     CONTROL, "Language-and-Programming/LeetCode/Source-Index/index.html",
     "Mental-Map/Guide/index.html",
     "Business-and-Economics/Macroeconomics/Economic-Growth/Paper/index.html",
@@ -61,7 +61,7 @@ NEW_PAGES = {
     *(node.url for node in atlas.NODES.values() if node.depth),
 }
 NAVIGATION = ("Mental-Map/index.html", "Atlas/index.html", "Workbench/index.html", "Updates/index.html",
-              "index.html#creator-owen", "Smash/index.html", "Completion/index.html", "Traffic/index.html", "About/index.html")
+              "index.html#creator-owen", "Smash/index.html", "Completion/index.html", "Traffic/index.html", "Reminders/index.html", "About/index.html")
 
 
 def active_tex(text):
@@ -438,7 +438,7 @@ class IntegrationTests(unittest.TestCase):
         cls.paper = BeautifulSoup((cls.site / "Mental-Map/index.html").read_bytes().decode("utf-8"), "html.parser")
 
     def test_every_atlas_page_and_all_local_links_fragments_assets(self):
-        self.assertEqual(len(NEW_PAGES), 5 + 258 + 2 + 22)
+        self.assertEqual(len(NEW_PAGES), 5 + 258 + 2 + 23)
         self.assertEqual(set(self.manifest["pages"]), NEW_PAGES)
         self.assertEqual(self.manifest["atlasNodes"], 259)
         cache = {}
@@ -803,7 +803,7 @@ class PublishedSiteTests(unittest.TestCase):
     def test_shared_navigation_targets_on_every_upgraded_shell_page(self):
         expected = {
             "index.html", "Mental-Map/index.html", "Atlas/index.html", "Workbench/index.html", "Updates/index.html",
-            "Smash/index.html", "Completion/index.html", "Traffic/index.html", "About/index.html",
+            "Smash/index.html", "Completion/index.html", "Traffic/index.html", "Reminders/index.html", "About/index.html",
         }
         for site in self.sites:
             failures = []

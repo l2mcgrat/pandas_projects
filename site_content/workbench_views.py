@@ -17,6 +17,7 @@ __all__ = [
     "auth_dialog_html",
     "completion_dashboard_body",
     "database_leaf_content",
+    "reminders_dashboard_body",
     "site_completion_dashboard_content",
     "traffic_dashboard_body",
     "updates_dashboard_body",
@@ -1193,5 +1194,335 @@ def updates_dashboard_body(root: Path, athletics: dict[str, Any], health: dict[s
       {_section("02", "CLI & automated GitHub Actions sync", "How zero-token deterministic repair + cloud compilation work end-to-end.", "updates-cli-title",
                 '<p>When you log workouts or notes on your phone in Google Docs, the deterministic parser repairs common mobile typing slips at <strong>0 token cost</strong> — including missing colons/semicolons after exercise names (<code>Incline Dumbbell Press 10x40lbs</code>), dash or comma separators (<code>Barbell Press - 25x45lbs</code>, <code>Seated Cable Rows, 15x58lbs</code>), singular <code>lb</code> units, month headers (<code>September 2026</code>), and year typos (<code>10/25/2025</code> after <code>10/24/2026</code>).</p>'
                 '<pre class="athletics-entry">python -B -m site_content.log_sync &amp;&amp; python -B -m site_content.build --also-local</pre>')}
+      {auth_dialog_html()}
+    </main>'''
+
+
+def _reabs_history_svg(items: list[dict[str, Any]]) -> str:
+    """Initial static dual-axis SVG chart for REABS tasks & hours (upgraded live in browser by PowerBI engine)."""
+    height = 330
+    left, right, top, bottom = 82.0, 818.0, 46.0, 285.0
+    plot_w = right - left
+    plot_h = bottom - top
+    parts = [
+        f'<text x="{left - 8:.1f}" y="22" text-anchor="end" fill="#9ddacf" font-weight="700" font-size="11.5">▮ Bars: Hours / Est. Hours (h)</text>',
+        f'<text x="{right + 8:.1f}" y="22" text-anchor="start" fill="#f7ab65" font-weight="700" font-size="11.5">● Line: Cumulative REABS (h)</text>',
+    ]
+    n = max(1, len(items))
+    step = plot_w / n
+    vals = [float(it.get("hoursSpent") or (1.5 if it.get("urgency") == "High" else 1.0 if it.get("urgency") == "Medium" else 0.5)) for it in items]
+    max_b = max(2.0, *vals)
+    cum = 0.0
+    cums = []
+    for v in vals:
+        cum += v
+        cums.append(round(cum, 2))
+    max_l = max(2.0, *cums)
+    for k in range(5):
+        ty = bottom - (k / 4) * plot_h
+        b_lbl = f"{(max_b * k / 4):.1f} h"
+        l_lbl = f"{(max_l * k / 4):.1f} h"
+        parts.append(
+            f'<line class="chart-grid" x1="{left:.1f}" x2="{right:.1f}" y1="{ty:.1f}" y2="{ty:.1f}"/>'
+            f'<text x="{left - 8:.1f}" y="{ty + 4:.1f}" text-anchor="end">{b_lbl}</text>'
+            f'<text x="{right + 8:.1f}" y="{ty + 4:.1f}" text-anchor="start">{l_lbl}</text>'
+        )
+    line_pts = []
+    for idx, it in enumerate(items):
+        v = vals[idx]
+        cv = cums[idx]
+        cx = left + (idx + 0.5) * step
+        bw = min(54.0, max(18.0, step * 0.56))
+        bh = max(6.0, (v / max_b) * plot_h)
+        by = bottom - bh
+        ly = bottom - (cv / max_l) * plot_h
+        line_pts.append(f"{cx:.1f},{ly:.1f}")
+        urg = it.get("urgency", "Medium")
+        cls = "series-2" if urg == "High" else "series-1" if urg == "Medium" else "series-0"
+        short_lbl = f"{it['id']} · {it['title'][:18]}"
+        parts.append(
+            f'<rect class="athletics-bar {cls}" x="{cx - bw / 2:.1f}" y="{by:.1f}" width="{bw:.1f}" height="{bh:.1f}">'
+            f'<title>{_e(it["id"])} {_e(it["title"])} ({_e(urg)}): {v:g} h</title></rect>'
+            f'<text x="{cx:.1f}" y="{max(34.0, by - 7.0):.1f}" text-anchor="middle">{v:g} h ({_e(urg)})</text>'
+            f'<text x="{cx:.1f}" y="{bottom + 22:.1f}" text-anchor="middle">{_e(short_lbl)}</text>'
+        )
+    if len(line_pts) > 1:
+        parts.append(f'<polyline class="athletics-line series-1" points="{" ".join(line_pts)}"/>')
+    return _chart(
+        "reabs-history-chart",
+        "REABS Hours Logged & Scheduled Across Active and Completed Bullshit Tasks",
+        "Primary bars show hours logged (or estimated hours for active items) coloured by Urgency (High/Medium/Low); secondary line tracks cumulative REABS hours.",
+        "".join(parts),
+        height=height,
+    )
+
+
+def reminders_dashboard_body(data: dict[str, Any], prefix: str = "../") -> str:
+    """Render the standalone Admin-tab Reminders (REABS — Random Extra Additional Bullshit) page (Reminders/index.html)."""
+    reabs = data.get("reabsReminders", [])
+    wb_href = _e(prefix + "Workbench/index.html")
+
+    active_count = sum(1 for r in reabs if r.get("status") == "active")
+    done_count = sum(1 for r in reabs if r.get("status") == "completed")
+    hours_total = sum(float(r.get("hoursSpent") or 0.0) for r in reabs)
+
+    kpis = _metrics([
+        ("Active REABS items", str(active_count), "Scheduled email & text reminders active"),
+        ("Completed REABS", str(done_count), "Historical bullshit tasks finished"),
+        ("Logged REABS hours", f"{hours_total:g} hrs", "Cumulative hours tracked across completed REABS"),
+        ("Default recipient", "l2mcgrat@uwaterloo.ca", "Always active · + optional emails & SMS"),
+    ])
+
+    rant_html = (
+        '<article class="wb-pipe-card" id="reabs-rant-card" style="border-left:4px solid #f7ab65;background:rgba(247,171,101,0.06);margin-bottom:18px;">'
+        '<span class="eyebrow" style="color:#f7ab65;">Why This Tab Exists · The REABS Manifesto (Verbatim)</span>'
+        '<h3 style="margin:4px 0 10px;">REABS — Random Extra Additional Bullshit</h3>'
+        '<blockquote style="margin:0 0 10px;padding:10px 14px;border-left:3px solid rgba(157,218,207,0.4);color:#e8eaf6;font-style:italic;line-height:1.65;">'
+        '&ldquo;I want to throw something new in for the admin tabs, something similar to workbench called Reminders, which is different from to do which is more website focused. '
+        'These will be things I have to get done, all it <strong>Random Extra Additional Bullshit, or REABS</strong>, which is stuff I have to do ontop of stuff that actually benefits my future directly as a human, '
+        'stuff which is outside of Financial Management, Natural Formal and Social Sciences/Engineering/Business/Macro/Micro and SocioEconomic Study/Theory applications, website To Dos, Rap Lyrics, Voice Memo Sessions, '
+        'you know, stuff that benefits my understanding of the universe, the world, the economy on a macroscopic and microscopic or business level, doesn\'t help me understand myself and optimize my interactions with people and the world at large... '
+        'no this is just <strong>Random Extra Additional Bullshit</strong> that poses no benefit to me whatsoever but needs to get done. Put this rant in the page too this part included!&rdquo;'
+        '</blockquote>'
+        '<p style="margin:0;color:#b8c0d8;line-height:1.6;">'
+        '&ldquo;So because these things are random and have little to no connection to my actual development as a person, or goals, week to week or month to month personal data study or website optimization, '
+        'I need reminders at specific times of the day to do certain things.&rdquo;'
+        '</p>'
+        '</article>'
+    )
+
+    channels_html = (
+        '<div class="wb-pipeline-grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-bottom:16px;">'
+        '<article class="wb-pipe-card">'
+        '<span class="eyebrow">Default &amp; Optional Email Recipients</span>'
+        '<h3>1. Email Delivery &amp; Test Confirmation</h3>'
+        '<p><strong>Default Email (Always Active — No Selection Needed):</strong> <code id="reabs-default-email">l2mcgrat@uwaterloo.ca</code></p>'
+        '<p style="font-size:13px;color:#b8c0d8;">Every reminder sets the email Urgency Flag (<code>X-Priority: 1 (Highest) / Importance: High</code> for High, <code>Normal</code> for Medium, <code>Low</code> for Low) and includes one-tap links to mark the item completed and log hours.</p>'
+        '<div class="wb-form-actions" style="margin:10px 0;">'
+        '<button class="button primary" type="button" id="reabs-test-email-btn">📧 Send Test Email to l2mcgrat@uwaterloo.ca</button>'
+        '<button class="button ghost" type="button" id="reabs-test-outlook-btn">↗ Open Pre-Filled UWaterloo / Mail Test</button>'
+        '</div>'
+        '<p class="gdoc-sync-status" id="reabs-test-email-status" role="status" aria-live="polite">Ready · Click above to send an instant test email to l2mcgrat@uwaterloo.ca (plus any checked optional emails).</p>'
+        '<hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:12px 0;">'
+        '<label for="reabs-new-email" style="display:block;font-weight:600;margin-bottom:6px;">Add Optional Email Recipient (stays optional until deleted):</label>'
+        '<div class="gdoc-sync-row">'
+        '<input id="reabs-new-email" type="email" placeholder="e.g. animerapboi42069@gmail.com or secondary email">'
+        '<button class="button ghost" type="button" id="reabs-add-email-btn">➕ Add Email</button>'
+        '</div>'
+        '<div id="reabs-optional-emails-list" style="margin-top:10px;display:grid;gap:6px;">'
+        '<small style="color:#a4acc3;">No optional additional emails saved yet — add one above to make it selectable on reminders.</small>'
+        '</div>'
+        '</article>'
+        '<article class="wb-pipe-card">'
+        '<span class="eyebrow">Text / SMS Reminders &amp; Email/Text Reply-to-Complete</span>'
+        '<h3>2. Text Reminders &amp; Two-Way Reply Logger</h3>'
+        '<p style="font-size:13px;color:#b8c0d8;">Receive text reminders on your phone via carrier SMS gateway, mobile push (<code>ntfy.sh/liam_reabs_sms_67wxyE7L_v1</code>), or direct SMS composer, and reply to mark tasks completed with hours logged.</p>'
+        '<div class="wb-form-grid" style="grid-template-columns:1fr 1fr;gap:8px;margin:8px 0;">'
+        '<label for="reabs-sms-number">Your Mobile Number (for Text / SMS)<input id="reabs-sms-number" type="tel" placeholder="e.g. 519-555-0199"></label>'
+        '<label for="reabs-sms-carrier">SMS Carrier Gateway / Push Method<select id="reabs-sms-carrier">'
+        '<option value="ntfy" selected>ntfy Mobile Push + SMS Link (Instant · No Carrier Block)</option>'
+        '<option value="txt.bell.ca">Bell Mobility (@txt.bell.ca)</option>'
+        '<option value="pcs.rogers.com">Rogers (@pcs.rogers.com)</option>'
+        '<option value="msg.telus.com">Telus / Koodo (@msg.telus.com)</option>'
+        '<option value="txt.freedommobile.ca">Freedom Mobile (@txt.freedommobile.ca)</option>'
+        '</select></label>'
+        '</div>'
+        '<div class="wb-form-actions" style="margin:8px 0;">'
+        '<button class="button ghost" type="button" id="reabs-save-sms-btn">💾 Save Text Settings</button>'
+        '<button class="button primary" type="button" id="reabs-test-sms-btn">📱 Send Test Text / Push Now</button>'
+        '</div>'
+        '<p class="gdoc-sync-status" id="reabs-test-sms-status" role="status" aria-live="polite">Ready · Text reminders fire alongside scheduled emails when SMS is enabled on a reminder.</p>'
+        '<hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:12px 0;">'
+        '<label for="reabs-reply-cmd" style="display:block;font-weight:600;margin-bottom:6px;">Reply Command / Email &amp; Text Completion Parser (<code>DONE RB-01 1.5h</code> or <code>OFF RB-02</code>):</label>'
+        '<div class="gdoc-sync-row">'
+        '<input id="reabs-reply-cmd" type="text" placeholder="Type or relay: DONE RB-01 0.75h  or  OFF RB-03  or  HOURS RB-02 1.5">'
+        '<button class="button primary" type="button" id="reabs-reply-submit-btn">⚡ Execute Reply</button>'
+        '</div>'
+        '<small style="display:block;margin-top:6px;color:#9ddacf;">Tip: Every email &amp; text reminder also embeds one-tap links (<code>✓ Complete 0.5h</code>, <code>1h</code>, <code>2h</code>, <code>🔕 Turn Off</code>) that automatically mark the item completed and log the hours when tapped on your phone!</small>'
+        '</article>'
+        '</div>'
+    )
+
+    add_form_html = (
+        '<form class="wb-form" id="reabs-add-form" autocomplete="off">'
+        '<div class="wb-form-head"><h3>➕ Add a New REABS Reminder</h3>'
+        '<span class="wb-form-note">Default email <code>l2mcgrat@uwaterloo.ca</code> is automatic · Phone numbers auto-lookup via Google/Gemini when left blank (unless set to <code>N/A</code>)</span></div>'
+        '<div class="wb-form-grid">'
+        '<label class="wb-wide" for="reabs-title">REABS Task Title (What bullshit needs to get done?)'
+        '<input id="reabs-title" name="title" type="text" required placeholder="e.g. Contact Manulife Financial Regarding TFSA Setup"></label>'
+        '<label for="reabs-urgency">Urgency (Sets Email Urgency Flag)'
+        '<select id="reabs-urgency" name="urgency">'
+        '<option value="High">🚨 High Urgency (X-Priority: 1 · Urgent Flag)</option>'
+        '<option value="Medium" selected>⚡ Medium Urgency (X-Priority: 3 · Standard Flag)</option>'
+        '<option value="Low">📌 Low Urgency (X-Priority: 5 · Low Flag)</option>'
+        '</select></label>'
+        '<label for="reabs-time">Reminder Time of Day'
+        '<input id="reabs-time" name="timeOfDay" type="time" value="14:00" required></label>'
+        '<div class="wb-wide">'
+        '<span style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Reminder Days of the Week (check days or use quick presets):</span>'
+        '<div class="wb-form-actions" style="flex-wrap:wrap;gap:10px;align-items:center;">'
+        '<label class="wb-inline-check"><input type="checkbox" name="reabsDay" value="Mon" checked> Mon</label>'
+        '<label class="wb-inline-check"><input type="checkbox" name="reabsDay" value="Tue"> Tue</label>'
+        '<label class="wb-inline-check"><input type="checkbox" name="reabsDay" value="Wed" checked> Wed</label>'
+        '<label class="wb-inline-check"><input type="checkbox" name="reabsDay" value="Thu" checked> Thurs</label>'
+        '<label class="wb-inline-check"><input type="checkbox" name="reabsDay" value="Fri"> Fri</label>'
+        '<label class="wb-inline-check"><input type="checkbox" name="reabsDay" value="Sat"> Sat</label>'
+        '<label class="wb-inline-check"><input type="checkbox" name="reabsDay" value="Sun"> Sun</label>'
+        '<button type="button" class="bi-btn" data-reabs-day-preset="Mon,Tue,Wed,Thu,Fri">Mon–Fri</button>'
+        '<button type="button" class="bi-btn" data-reabs-day-preset="Mon,Wed,Thu">Mon, Wed, Thurs</button>'
+        '<button type="button" class="bi-btn" data-reabs-day-preset="Mon,Thu">Mon, Thurs</button>'
+        '<button type="button" class="bi-btn" data-reabs-day-preset="Mon,Tue,Wed,Thu,Fri,Sat,Sun">Every Day</button>'
+        '</div></div>'
+        '<div class="wb-wide" style="display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:end;">'
+        '<label for="reabs-phone">Organization / Contact Phone Number (leave blank to auto-pull from Google/Gemini, or type <code>N/A</code>)'
+        '<input id="reabs-phone" name="phoneNumber" type="text" placeholder="Leave blank to auto-lookup via Google/Gemini, type a number, or N/A"></label>'
+        '<label class="wb-inline-check" style="padding-bottom:10px;"><input type="checkbox" id="reabs-phone-na"> <strong>N/A</strong> (Don\'t look up phone)</label>'
+        '<button class="button ghost" type="button" id="reabs-lookup-phone-btn" style="margin-bottom:2px;">🔍 Auto-Find Phone (Google/Gemini)</button>'
+        '</div>'
+        '<div class="wb-wide">'
+        '<span style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Email &amp; Text Recipients for this Reminder:</span>'
+        '<div id="reabs-form-emails-wrap" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">'
+        '<label class="wb-inline-check"><input type="checkbox" checked disabled> <strong>l2mcgrat@uwaterloo.ca</strong> (Default — Always Sent)</label>'
+        '<span id="reabs-form-extra-emails" style="display:inline-flex;flex-wrap:wrap;gap:10px;"></span>'
+        '<label class="wb-inline-check" style="margin-left:auto;"><input type="checkbox" id="reabs-form-sms" checked> 📱 Also send Text / SMS Reminder</label>'
+        '</div></div>'
+        '<label class="wb-wide" for="reabs-reasoning">Reasoning (Why does this REABS need to get done?)'
+        '<textarea id="reabs-reasoning" name="reasoning" rows="2" required placeholder="e.g. I want to be able to pull money out later in the future that I\'ve forgetable put away over time..."></textarea></label>'
+        '</div>'
+        '<div class="wb-form-actions">'
+        '<button class="button primary" type="submit">➕ Save REABS Reminder &amp; Arm Schedule</button>'
+        '<span class="wb-form-feedback" id="reabs-form-feedback" role="status" aria-live="polite"></span>'
+        '</div></form>'
+    )
+
+    table_rows_html = []
+    for r in reabs:
+        rid = _e(r["id"])
+        urg = r["urgency"]
+        urg_cls = "wb-warn" if urg == "High" else "wb-up" if urg == "Medium" else "wb-flat"
+        urg_icon = "🚨 High" if urg == "High" else "⚡ Medium" if urg == "Medium" else "📌 Low"
+        phone_val = r.get("phoneNumber") or "N/A"
+        phone_src = r.get("phoneSource") or "direct"
+        if phone_val.upper() == "N/A" or phone_src == "na":
+            phone_html = '<span class="wb-badge wb-flat" title="Explicitly marked N/A — no phone lookup or phone number included in email/text">N/A (No Phone Lookup)</span>'
+        else:
+            src_badge = " <small style='color:#9ddacf;'>(Google/Gemini)</small>" if phone_src == "google-gemini" else ""
+            phone_html = f'<a href="tel:{_e(re.sub(r"[^0-9+]", "", phone_val))}" style="color:#69d4cf;font-weight:700;">📞 {_e(phone_val)}</a>{src_badge}'
+
+        rem_on = bool(r.get("remindersEnabled", 1)) and r.get("status") != "completed"
+        status_str = r.get("status", "active")
+        hrs_val = float(r.get("hoursSpent") or 0.0)
+        table_rows_html.append(
+            f'<tr data-reabs-row="{rid}" data-reabs-status="{_e(status_str)}">'
+            f'<th scope="row"><code>{rid}</code><br><small style="color:#a4acc3;">{_e(r["createdOn"])}</small></th>'
+            f'<td><strong>{_e(r["title"])}</strong><br><small style="color:#b8c0d8;"><strong>Reasoning:</strong> {_e(r["reasoning"])}</small></td>'
+            f'<td><span class="wb-badge {urg_cls}">{urg_icon}</span><br><small>Email Flag: <code>{("X-Priority: 1" if urg == "High" else "X-Priority: 3" if urg == "Medium" else "X-Priority: 5")}</code></small></td>'
+            f'<td><strong>{_e(r["scheduleText"])}</strong><br><small style="color:#9ddacf;">Default: <code>{_e(r.get("defaultEmail", "l2mcgrat@uwaterloo.ca"))}</code></small></td>'
+            f'<td>{phone_html}</td>'
+            f'<td>'
+            f'<button class="button ghost wb-run-study-btn" type="button" data-reabs-toggle="{rid}">'
+            f'{"🔔 ON (Active)" if rem_on else "🔕 OFF (Muted)"}</button>'
+            f'</td>'
+            f'<td>'
+            f'<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">'
+            f'<input type="number" step="0.25" min="0" max="200" value="{hrs_val:g}" data-reabs-hours-input="{rid}" '
+            f'style="width:70px;padding:4px 6px;border-radius:6px;background:#0d101b;color:#eeeef7;border:1px solid rgba(157,218,207,0.35);" title="Hours spent to complete this REABS task">'
+            f'<button class="button primary wb-run-study-btn" type="button" data-reabs-complete="{rid}">'
+            f'{"✓ Completed" if status_str == "completed" else "✓ Mark Done & Log Hrs"}</button>'
+            f'</div>'
+            f'<div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;">'
+            f'<button class="button ghost wb-run-study-btn" type="button" data-reabs-send-email="{rid}">📧 Email Now</button>'
+            f'<button class="button ghost wb-run-study-btn" type="button" data-reabs-send-sms="{rid}">📱 Text Now</button>'
+            f'<button class="button ghost wb-delete-study-btn" type="button" data-reabs-delete="{rid}">🗑</button>'
+            f'</div>'
+            f'</td>'
+            f'</tr>'
+        )
+
+    active_table_html = (
+        '<div class="sports-table-wrap" role="region" aria-label="REABS Reminders Queue" tabindex="0">'
+        '<table id="reabs-active-table">'
+        '<caption>Active &amp; Completed REABS Reminders (toggle reminders ON/OFF, send instant Email/Text with Urgency flags, or mark completed &amp; log hours).</caption>'
+        '<thead><tr>'
+        '<th scope="col">ID / Date</th>'
+        '<th scope="col">REABS Task &amp; Reasoning</th>'
+        '<th scope="col">Urgency &amp; Email Flag</th>'
+        '<th scope="col">Schedule &amp; Recipient</th>'
+        '<th scope="col">Phone Number</th>'
+        '<th scope="col">Reminders</th>'
+        '<th scope="col">Complete / Log Hours / Send</th>'
+        '</tr></thead>'
+        f'<tbody id="reabs-active-tbody">{"".join(table_rows_html)}</tbody>'
+        '</table></div>'
+    )
+
+    history_rows = [
+        [
+            r["id"],
+            r["title"],
+            r["urgency"],
+            r["scheduleText"],
+            r.get("phoneNumber") or "N/A",
+            r.get("status", "active"),
+            r.get("completedOn") or "Pending (Active)",
+            f'{float(r.get("hoursSpent") or 0.0):g} hrs',
+        ]
+        for r in reabs
+    ]
+
+    history_bi_payload = [
+        {
+            "id": r["id"],
+            "date": r.get("completedOn") or r["createdOn"],
+            "title": r["title"],
+            "urgency": r["urgency"],
+            "status": r.get("status", "active"),
+            "hoursSpent": float(r.get("hoursSpent") or (1.5 if r["urgency"] == "High" else 1.0 if r["urgency"] == "Medium" else 0.5)),
+            "loggedHours": float(r.get("hoursSpent") or 0.0),
+        }
+        for r in reabs
+    ]
+
+    actions = (
+        '<a class="button primary" href="#reabs-add-form">➕ Add REABS Reminder ↓</a>'
+        '<a class="button ghost" href="#reabs-history-title">📊 REABS History &amp; Hours Visual ↓</a>'
+        f'<a class="button ghost" href="{wb_href}">Open Workbench ↗</a>'
+        '<button class="button ghost" type="button" data-wb-auth-open>🔓 Admin Vault (30m)</button>'
+    )
+    art = (
+        '<div class="athletics-split-card" aria-hidden="true">'
+        f'<span class="split-Chest"><strong>{active_count}</strong>active REABS</span>'
+        f'<span class="split-Back"><strong>{done_count}</strong>completed</span>'
+        f'<span class="split-Shoulders"><strong>{hours_total:g}h</strong>logged</span></div>'
+    )
+    gate = (
+        '<section class="sports-section" data-wb-admin-locked-msg>'
+        '<div class="admin-gate-banner">'
+        '<div><strong>🔒 Owner REABS Reminders &amp; Email/SMS Dispatcher · Admin Login Required</strong>'
+        '<p>This standalone REABS (Random Extra Additional Bullshit) reminder &amp; email/text scheduler is private to the site owner. Unlock Admin above or below (valid for 30 minutes across all branches of the site).</p></div>'
+        '<button class="button primary" type="button" data-wb-auth-open>🔐 Unlock Admin (30 min)</button>'
+        '</div></section>'
+    )
+
+    return f'''<main id="main-content" class="collection-page sports-page athletics-page workbench-page" data-reabs-seed="{_e(json.dumps(reabs, separators=(",", ":")))}">
+      {_hero("Owner Admin · REABS Engine", "Reminders · REABS", "Random Extra<br>Additional <em>Bullshit.</em>",
+             "Scheduled email & text reminders with urgency flags, Google/Gemini phone auto-lookup, two-way completion & hours logging, and historical REABS visualization.",
+             actions, art)}
+      {gate}
+      <div data-wb-admin-only hidden>
+        <p class="sports-scope">Admin Session Active · Default email <code>l2mcgrat@uwaterloo.ca</code> armed · Backed by <code>reabs_reminders</code> in <code>records/workbench/workbench.db</code>.</p>
+        {rant_html}
+        {kpis}
+        {_section("01", "Email & text delivery channels", "Default uwaterloo.ca email, test buttons, optional email manager, and two-way reply commands.", "reabs-channels-title", channels_html)}
+        {_section("02", "REABS reminder queue & scheduler", "Add a REABS task, auto-lookup phone numbers via Google/Gemini (or set N/A), toggle reminders, or mark completed with hours.", "reabs-queue-title", add_form_html + active_table_html)}
+        {_section("03", "Historical REABS completed & hours visual", "Visualize all REABS completed over time and total hours spent on Random Extra Additional Bullshit.", "reabs-history-title",
+                  f'<div class="bi-reabs-host" id="bi-reabs-host" data-bi-reabs="{_e(json.dumps(history_bi_payload, separators=(",", ":")))}">'
+                  + '<p class="sports-legend"><span class="series-2">■ High Urgency REABS (h)</span><span class="series-1">■ Medium Urgency REABS (h)</span><span class="series-0">■ Low Urgency REABS (h)</span></p>'
+                  + _reabs_history_svg(reabs)
+                  + '</div>'
+                  + _table("Historical & active REABS ledger (hours spent update live when marked completed on-site or via email/text reply).",
+                           ["ID", "REABS Task", "Urgency", "Schedule", "Phone", "Status", "Completed Date", "Hours Logged"],
+                           history_rows, "reabs-history-table"))}
+      </div>
       {auth_dialog_html()}
     </main>'''

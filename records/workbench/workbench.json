@@ -370,5 +370,64 @@
       "atlasPath": "Gaming-and-Performance-Log/Health/Diet",
       "status": "processed"
     }
+  ],
+  "reabsReminders": [
+    {
+      "id": "RB-01",
+      "createdOn": "2026-10-29",
+      "title": "Contact Manulife Financial Regarding TFSA Setup",
+      "urgency": "Medium",
+      "scheduleText": "2pm Mon, Wed, Thurs",
+      "daysOfWeek": "Mon,Wed,Thu",
+      "timeOfDay": "14:00",
+      "phoneNumber": "1-888-790-4387",
+      "phoneSource": "google-gemini",
+      "reasoning": "I want to be able to pull money out later in the future that I've forgetable put away over time, and also this provides me an easier way to save money unconciously.",
+      "defaultEmail": "l2mcgrat@uwaterloo.ca",
+      "extraEmails": "",
+      "smsEnabled": 1,
+      "remindersEnabled": 1,
+      "status": "active",
+      "completedOn": null,
+      "hoursSpent": 0.0
+    },
+    {
+      "id": "RB-02",
+      "createdOn": "2026-10-29",
+      "title": "Contact HCM AR and Payroll Regarding Missed Overtime",
+      "urgency": "High",
+      "scheduleText": "8am Mon, Thurs",
+      "daysOfWeek": "Mon,Thu",
+      "timeOfDay": "08:00",
+      "phoneNumber": "N/A",
+      "phoneSource": "na",
+      "reasoning": "I want to understand why my 6hrs overtime for Oct 19th to 23rd was not included in my pay, and also understand the whole process for approving overtime and why this wasn't done automatically this time.",
+      "defaultEmail": "l2mcgrat@uwaterloo.ca",
+      "extraEmails": "",
+      "smsEnabled": 1,
+      "remindersEnabled": 1,
+      "status": "active",
+      "completedOn": null,
+      "hoursSpent": 0.0
+    },
+    {
+      "id": "RB-03",
+      "createdOn": "2026-10-29",
+      "title": "Barrie Recycling and Waste Corp",
+      "urgency": "Low",
+      "scheduleText": "3pm Mon-Fri",
+      "daysOfWeek": "Mon,Tue,Wed,Thu,Fri",
+      "timeOfDay": "15:00",
+      "phoneNumber": "705-792-6557",
+      "phoneSource": "direct",
+      "reasoning": "Nima wants me to have bins and I want to look proper cause he's my new buddy.",
+      "defaultEmail": "l2mcgrat@uwaterloo.ca",
+      "extraEmails": "",
+      "smsEnabled": 1,
+      "remindersEnabled": 1,
+      "status": "active",
+      "completedOn": null,
+      "hoursSpent": 0.0
+    }
   ]
 }

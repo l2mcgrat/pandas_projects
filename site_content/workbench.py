@@ -138,6 +138,26 @@ CREATE TABLE IF NOT EXISTS site_traffic (
     top_section TEXT NOT NULL,
     last_seen TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS reabs_reminders (
+    id TEXT PRIMARY KEY,
+    created_on TEXT NOT NULL,
+    title TEXT NOT NULL,
+    urgency TEXT NOT NULL CHECK (urgency IN ('High', 'Medium', 'Low')),
+    schedule_text TEXT NOT NULL,
+    days_of_week TEXT NOT NULL,
+    time_of_day TEXT NOT NULL,
+    phone_number TEXT NOT NULL DEFAULT '',
+    phone_source TEXT NOT NULL DEFAULT 'direct',
+    reasoning TEXT NOT NULL,
+    default_email TEXT NOT NULL DEFAULT 'l2mcgrat@uwaterloo.ca',
+    extra_emails TEXT NOT NULL DEFAULT '',
+    sms_enabled INTEGER NOT NULL DEFAULT 1,
+    reminders_enabled INTEGER NOT NULL DEFAULT 1,
+    status TEXT NOT NULL CHECK (status IN ('active', 'completed', 'muted')),
+    completed_on TEXT,
+    hours_spent REAL NOT NULL DEFAULT 0.0
+);
 """.strip()
 
 DEFAULT_SEED: dict[str, Any] = {
@@ -521,6 +541,65 @@ DEFAULT_SEED: dict[str, Any] = {
             "status": "processed",
         },
     ],
+    "reabsReminders": [
+        {
+            "id": "RB-01",
+            "createdOn": "2026-10-29",
+            "title": "Contact Manulife Financial Regarding TFSA Setup",
+            "urgency": "Medium",
+            "scheduleText": "2pm Mon, Wed, Thurs",
+            "daysOfWeek": "Mon,Wed,Thu",
+            "timeOfDay": "14:00",
+            "phoneNumber": "1-888-790-4387",
+            "phoneSource": "google-gemini",
+            "reasoning": "I want to be able to pull money out later in the future that I've forgetable put away over time, and also this provides me an easier way to save money unconciously.",
+            "defaultEmail": "l2mcgrat@uwaterloo.ca",
+            "extraEmails": "",
+            "smsEnabled": 1,
+            "remindersEnabled": 1,
+            "status": "active",
+            "completedOn": None,
+            "hoursSpent": 0.0,
+        },
+        {
+            "id": "RB-02",
+            "createdOn": "2026-10-29",
+            "title": "Contact HCM AR and Payroll Regarding Missed Overtime",
+            "urgency": "High",
+            "scheduleText": "8am Mon, Thurs",
+            "daysOfWeek": "Mon,Thu",
+            "timeOfDay": "08:00",
+            "phoneNumber": "N/A",
+            "phoneSource": "na",
+            "reasoning": "I want to understand why my 6hrs overtime for Oct 19th to 23rd was not included in my pay, and also understand the whole process for approving overtime and why this wasn't done automatically this time.",
+            "defaultEmail": "l2mcgrat@uwaterloo.ca",
+            "extraEmails": "",
+            "smsEnabled": 1,
+            "remindersEnabled": 1,
+            "status": "active",
+            "completedOn": None,
+            "hoursSpent": 0.0,
+        },
+        {
+            "id": "RB-03",
+            "createdOn": "2026-10-29",
+            "title": "Barrie Recycling and Waste Corp",
+            "urgency": "Low",
+            "scheduleText": "3pm Mon-Fri",
+            "daysOfWeek": "Mon,Tue,Wed,Thu,Fri",
+            "timeOfDay": "15:00",
+            "phoneNumber": "705-792-6557",
+            "phoneSource": "direct",
+            "reasoning": "Nima wants me to have bins and I want to look proper cause he's my new buddy.",
+            "defaultEmail": "l2mcgrat@uwaterloo.ca",
+            "extraEmails": "",
+            "smsEnabled": 1,
+            "remindersEnabled": 1,
+            "status": "active",
+            "completedOn": None,
+            "hoursSpent": 0.0,
+        },
+    ],
 }
 
 
@@ -538,6 +617,7 @@ def validate_workbench(data: dict[str, Any]) -> dict[str, Any]:
     todos = data.get("wishlistTodos", [])
     lyrics = data.get("rapLyrics", [])
     voices = data.get("voiceNotes", [])
+    reabs = data.get("reabsReminders", DEFAULT_SEED["reabsReminders"])
     seen_ids: set[str] = set()
 
     def check_id(raw_id: str) -> None:
@@ -583,6 +663,12 @@ def validate_workbench(data: dict[str, Any]) -> dict[str, Any]:
             raise ValueError(f"Voice note {row['id']} references unknown atlas node {row['atlasPath']!r}")
         if int(row["durationSeconds"]) < 0 or row["status"] not in ("processed", "queued"):
             raise ValueError(f"Voice note {row['id']} has invalid duration or status")
+    for row in reabs:
+        check_id(row["id"])
+        if row["urgency"] not in ("High", "Medium", "Low"):
+            raise ValueError(f"REABS {row['id']} has invalid urgency {row['urgency']!r}")
+        if row["status"] not in ("active", "completed", "muted"):
+            raise ValueError(f"REABS {row['id']} has invalid status {row['status']!r}")
 
     summary = {
         "studies": len(studies),
@@ -602,6 +688,10 @@ def validate_workbench(data: dict[str, Any]) -> dict[str, Any]:
         "voiceSeconds": sum(int(v["durationSeconds"]) for v in voices),
         "uniqueIpIndexes": len(traffic),
         "totalVisits": sum(int(ip.get("visits", 0)) for ip in traffic),
+        "reabsTotal": len(reabs),
+        "reabsActive": sum(r["status"] == "active" for r in reabs),
+        "reabsCompleted": sum(r["status"] == "completed" for r in reabs),
+        "reabsHoursTotal": round(sum(float(r.get("hoursSpent", 0.0)) for r in reabs), 2),
     }
     return {
         "schemaVersion": data.get("schemaVersion", 1),
@@ -618,6 +708,7 @@ def validate_workbench(data: dict[str, Any]) -> dict[str, Any]:
         "wishlistTodos": todos,
         "rapLyrics": lyrics,
         "voiceNotes": voices,
+        "reabsReminders": reabs,
         "summary": summary,
         "schemaSql": SCHEMA_SQL,
     }
@@ -627,7 +718,7 @@ def sync_sqlite(db_path: Path, data: dict[str, Any]) -> None:
     """Materialize the validated workbench tables into a relational SQLite database."""
     db_path.parent.mkdir(parents=True, exist_ok=True)
     with closing(sqlite3.connect(db_path)) as conn:
-        for tbl in ("study_queue", "theory_queue", "applications_queue", "wishlist_todos", "rap_lyrics", "voice_notes", "site_traffic"):
+        for tbl in ("study_queue", "theory_queue", "applications_queue", "wishlist_todos", "rap_lyrics", "voice_notes", "site_traffic", "reabs_reminders"):
             conn.execute(f"DROP TABLE IF EXISTS {tbl}")
         conn.executescript(SCHEMA_SQL)
         conn.executemany(
@@ -664,6 +755,13 @@ def sync_sqlite(db_path: Path, data: dict[str, Any]) -> None:
             "INSERT INTO site_traffic (ip_index, masked_ip, role, visits, study_clicks, top_section, last_seen) "
             "VALUES (:ipIndex, :maskedIp, :role, :visits, :studyClicks, :topSection, :lastSeen)",
             data["siteTraffic"],
+        )
+        conn.executemany(
+            "INSERT INTO reabs_reminders (id, created_on, title, urgency, schedule_text, days_of_week, time_of_day, "
+            "phone_number, phone_source, reasoning, default_email, extra_emails, sms_enabled, reminders_enabled, status, completed_on, hours_spent) "
+            "VALUES (:id, :createdOn, :title, :urgency, :scheduleText, :daysOfWeek, :timeOfDay, "
+            ":phoneNumber, :phoneSource, :reasoning, :defaultEmail, :extraEmails, :smsEnabled, :remindersEnabled, :status, :completedOn, :hoursSpent)",
+            data["reabsReminders"],
         )
         conn.commit()
 

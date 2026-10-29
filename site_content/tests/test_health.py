@@ -20,15 +20,15 @@ class SleepTests(unittest.TestCase):
 
     def test_nights_hours_and_recall(self):
         summary = self.sleep["summary"]
-        self.assertEqual((summary["nights"], summary["dreams"]), (21, 20))
-        self.assertEqual((summary["firstDate"], summary["lastDate"]), ("2026-10-05", "2026-10-25"))
+        self.assertEqual((summary["nights"], summary["dreams"]), (25, 21))
+        self.assertEqual((summary["firstDate"], summary["lastDate"]), ("2026-10-05", "2026-10-29"))
         nights = {night["date"]: night for night in self.sleep["nights"]}
         self.assertEqual(nights["2026-10-05"]["hours"], 6.5)
         self.assertEqual(len(nights["2026-10-05"]["dreams"]), 2)
         # "No dreams recorded" stays a deliberate entry, not a parse gap.
         self.assertTrue(nights["2026-10-16"]["noDreamsWritten"])
         self.assertEqual(nights["2026-10-16"]["dreams"], [])
-        self.assertEqual(summary["nightsWithDreams"], 15)
+        self.assertEqual(summary["nightsWithDreams"], 16)
 
     def test_dream_reading_is_lexicon_based_and_keeps_text_as_written(self):
         first = self.sleep["nights"][0]["dreams"][0]

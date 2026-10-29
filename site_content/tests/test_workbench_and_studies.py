@@ -19,6 +19,7 @@ from site_content.workbench import RAP_BUCKETS, load_workbench, validate_workben
 from site_content.workbench_views import (
     completion_dashboard_body,
     database_leaf_content,
+    reminders_dashboard_body,
     site_completion_dashboard_content,
     traffic_dashboard_body,
     updates_dashboard_body,
@@ -206,6 +207,15 @@ class WorkbenchTests(unittest.TestCase):
         self.assertIn("db-ip-traffic-chart", traffic_body)
         self.assertIn("db-study-clicks-chart", traffic_body)
         self.assertIn("data-wb-admin-only", traffic_body)
+        reabs_body = reminders_dashboard_body(data, "../")
+        self.assertIn("Random Extra Additional Bullshit", reabs_body)
+        self.assertIn("Put this rant in the page too this part included!", reabs_body)
+        self.assertIn("l2mcgrat@uwaterloo.ca", reabs_body)
+        self.assertIn("Contact Manulife Financial Regarding TFSA Setup", reabs_body)
+        self.assertIn("Contact HCM AR and Payroll Regarding Missed Overtime", reabs_body)
+        self.assertIn("Barrie Recycling and Waste Corp", reabs_body)
+        self.assertIn("705-792-6557", reabs_body)
+        self.assertIn("reabs-history-chart", reabs_body)
         # 3-stage cascading Section -> Subsection -> Subsubsection dropdowns on Workbench forms
         self.assertEqual(len(page.select("[data-wb-cascade]")), 5)
         self.assertEqual(len(page.select("[data-cascade-field]")), 5)

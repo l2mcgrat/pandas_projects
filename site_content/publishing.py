@@ -18,7 +18,7 @@ from .atlas import ANCHORS, NODES, ROOT, walk
 from .atlas_tree import atlas_schema_script, atlas_tree_body
 from .atlas_views import (AI_COST_PAPER, AI_COST_STUDY, AI_COST_TAB, ALBERTA_PAPER, ALBERTA_STUDY, ALGORITHMS, ATLAS, CHANGE_LOG, COMPLETION, CONTROL, DASHBOARD, DATABASE_LEAVES, DIET,
                           FEELINGS, GAS_PAPER, GAS_STUDY, GAS_TAB, GEN_TAX_PAPER, GEN_TAX_STUDY, GEN_TAX_TAB, GUIDE, HOSTED, LEETCODE, LEETCODE_LEAVES, MACRO_PAPER, MACRO_STUDY, NBA, PITCH,
-                          PREDICTIONS, QUANTUM, RAP_LEAVES, REPORT, RULES, RUNNING, SLEEP, SODIUM_PAPER, SODIUM_STUDY, SODIUM_TAB, SWIMMING, TRAFFIC, UFC, UPCOMING, UPDATES, VOCABULARY,
+                          PREDICTIONS, QUANTUM, RAP_LEAVES, REMINDERS, REPORT, RULES, RUNNING, SLEEP, SODIUM_PAPER, SODIUM_STUDY, SODIUM_TAB, SWIMMING, TRAFFIC, UFC, UPCOMING, UPDATES, VOCABULARY,
                           WEIGHTLIFTING, WORKBENCH, branch_body, branch_stage, home_hero, leaf_body, prefix, premade_body, strip)
 from .basketball import export_rows, load_basketball
 from .career import career_body, resume_body
@@ -29,7 +29,7 @@ from .health_views import diet_body, sleep_body
 from .studies import load_studies, studies_rows
 from .studies_views import ai_cost_study_body, alberta_study_body, gas_study_body, gen_tax_study_body, macro_study_body, sodium_study_body
 from .workbench import load_workbench, workbench_rows
-from .workbench_views import auth_dialog_html, completion_dashboard_body, database_leaf_content, traffic_dashboard_body, updates_dashboard_body, workbench_body
+from .workbench_views import auth_dialog_html, completion_dashboard_body, database_leaf_content, reminders_dashboard_body, traffic_dashboard_body, updates_dashboard_body, workbench_body
 from .creators import FIRST_SECTION_ID, creators_html, scroll_cue_html
 from .icons import icon_svg, icons_css, require_complete
 from .latex import convert_document
@@ -130,13 +130,14 @@ def header(prefix: str) -> str:
     ic_smash = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.4 13.8h17.2M8.6 3.4v17.2"/></svg>'
     ic_comp = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5h16"/><rect x="5.5" y="11" width="3.2" height="6.5" rx=".8"/><rect x="10.4" y="7.5" width="3.2" height="10" rx=".8"/><rect x="15.3" y="4.5" width="3.2" height="13" rx=".8"/></svg>'
     ic_traffic = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><ellipse cx="12" cy="12" rx="3.8" ry="8.5"/><path d="M3.8 12h16.4M5.2 7.8h13.6M5.2 16.2h13.6"/></svg>'
+    ic_rem = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>'
     ic_upd = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8.1 8.1 0 0 0-15.5-2m-.5-4v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></svg>'
     ic_admin = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.4"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.4"/></svg>'
     ic_pwd = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L19 4m-1.5 1.5l2.5 2.5m-5 1l2 2"/></svg>'
     ic_about = '<svg class="nav-sym" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.2" r="3.6"/><path d="M5.5 19.5c1.4-3.4 4-5.2 6.5-5.2s5.1 1.8 6.5 5.2"/></svg>'
     return f'''<header class="site-header">
       <a class="brand" href="{prefix}index.html" aria-label="Liam McGrath home"><span class="brand-mark" aria-hidden="true">LM</span><span>LIAM McGRATH<small>AN OPEN NOTEBOOK</small></span></a>
-    <nav aria-label="Primary navigation" class="top-symbol-bar"><a class="top-sym-tile" href="{prefix}Mental-Map/index.html">{ic_map}<span class="symbol-caption">Mental Map</span></a><a class="top-sym-tile" href="{prefix}{ATLAS}">{ic_atlas}<span class="symbol-caption">Site Atlas</span></a><a class="top-sym-tile" href="{prefix}{WORKBENCH}">{ic_wb}<span class="symbol-caption">Workbench</span></a><a class="top-sym-tile" href="{prefix}{UPDATES}">{ic_upd}<span class="symbol-caption">Doc Updates</span></a><a class="top-sym-tile" href="{prefix}index.html#{FIRST_SECTION_ID}">{ic_cre}<span class="symbol-caption">Creators</span></a><a class="top-sym-tile" href="{prefix}Smash/index.html">{ic_smash}<span class="symbol-caption">Smash</span></a><a class="top-sym-tile is-admin-tile" href="{prefix}{COMPLETION}" data-wb-admin-only hidden>{ic_comp}<span class="symbol-caption">Map &amp; Site %</span></a><a class="top-sym-tile is-admin-tile" href="{prefix}{TRAFFIC}" data-wb-admin-only hidden>{ic_traffic}<span class="symbol-caption">IP &amp; Traffic</span></a><button class="top-sym-tile is-admin-tile" type="button" data-wb-password-open data-wb-admin-only hidden>{ic_pwd}<span class="symbol-caption">Passwords</span></button><button class="top-sym-tile" type="button" data-wb-auth-open>{ic_admin}<span class="symbol-caption">Unlock Admin</span></button><a class="top-sym-tile" href="{prefix}About/index.html">{ic_about}<span class="symbol-caption">About Me</span></a></nav>
+    <nav aria-label="Primary navigation" class="top-symbol-bar"><a class="top-sym-tile" href="{prefix}Mental-Map/index.html">{ic_map}<span class="symbol-caption">Mental Map</span></a><a class="top-sym-tile" href="{prefix}{ATLAS}">{ic_atlas}<span class="symbol-caption">Site Atlas</span></a><a class="top-sym-tile" href="{prefix}{WORKBENCH}">{ic_wb}<span class="symbol-caption">Workbench</span></a><a class="top-sym-tile" href="{prefix}{UPDATES}">{ic_upd}<span class="symbol-caption">Doc Updates</span></a><a class="top-sym-tile" href="{prefix}index.html#{FIRST_SECTION_ID}">{ic_cre}<span class="symbol-caption">Creators</span></a><a class="top-sym-tile" href="{prefix}Smash/index.html">{ic_smash}<span class="symbol-caption">Smash</span></a><a class="top-sym-tile is-admin-tile" href="{prefix}{COMPLETION}" data-wb-admin-only hidden>{ic_comp}<span class="symbol-caption">Map &amp; Site %</span></a><a class="top-sym-tile is-admin-tile" href="{prefix}{TRAFFIC}" data-wb-admin-only hidden>{ic_traffic}<span class="symbol-caption">IP &amp; Traffic</span></a><a class="top-sym-tile is-admin-tile" href="{prefix}{REMINDERS}" data-wb-admin-only hidden>{ic_rem}<span class="symbol-caption">Reminders</span></a><button class="top-sym-tile is-admin-tile" type="button" data-wb-password-open data-wb-admin-only hidden>{ic_pwd}<span class="symbol-caption">Passwords</span></button><button class="top-sym-tile" type="button" data-wb-auth-open>{ic_admin}<span class="symbol-caption">Unlock Admin</span></button><a class="top-sym-tile" href="{prefix}About/index.html">{ic_about}<span class="symbol-caption">About Me</span></a></nav>
     </header>'''
 
 
@@ -537,6 +538,9 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
         TRAFFIC: shell('IP & Traffic Reflection', traffic_dashboard_body(workbench, '../'), 1,
                        styles=('assets/sports.css', 'assets/athletics.css', 'assets/workbench.css'),
                        scripts=('assets/workbench.js',)),
+        REMINDERS: shell('Reminders · REABS (Random Extra Additional Bullshit)', reminders_dashboard_body(workbench, '../'), 1,
+                         styles=('assets/sports.css', 'assets/athletics.css', 'assets/workbench.css'),
+                         scripts=('assets/workbench.js',)),
     }
     pages.update({node.url: atlas_page(node, mental, available) for node in walk(ROOT) if node.depth})
     for path in LEETCODE_LEAVES + RAP_LEAVES:

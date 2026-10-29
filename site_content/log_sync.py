@@ -391,6 +391,7 @@ def repair_log_text(key: str, text: str) -> tuple[str, list[dict]]:
     out: list[str] = []
     prev_nonempty = ""
     last_year = 0
+    last_sleep_hrs = "6hrs"
     for number, line in enumerate(raw_lines, 1):
         s_line = line.strip()
         if not s_line:
@@ -418,10 +419,19 @@ def repair_log_text(key: str, text: str) -> tuple[str, list[dict]]:
                 repaired = f"{m_yr[1]}{last_year}{m_yr[5]}"
             else:
                 last_year = yr
+        if key == "sleep":
+            if re.fullmatch(r"\d+(?:\.\d+)?hrs", repaired, re.I):
+                last_sleep_hrs = repaired
+            elif re.fullmatch(r"\d{1,2}/\d{1,2}/20\d{2}", prev_nonempty):
+                out.append(last_sleep_hrs)
+                changes.append({"line": number, "before": "", "after": last_sleep_hrs, "method": "rule-default-hours"})
         if repaired != s_line:
             changes.append({"line": number, "before": s_line, "after": repaired, "method": "rule"})
         out.append(repaired)
         prev_nonempty = repaired
+    if key == "sleep" and re.fullmatch(r"\d{1,2}/\d{1,2}/20\d{2}", prev_nonempty):
+        out.extend([last_sleep_hrs, "No dreams recorded"])
+        changes.append({"line": len(raw_lines), "before": "", "after": last_sleep_hrs, "method": "rule-default-hours"})
     return "\n".join(out) + "\n", changes
 
 
