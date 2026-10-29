@@ -434,8 +434,12 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
     root, site = root.resolve(), site.resolve()
     assets = site / 'assets'
     vendor = HERE / 'node_modules' / 'mathjax' / 'es5'
+    fallback_vendor = root / 'LiamMs_PandasProjects' / 'assets' / 'vendor' / 'mathjax'
     if not vendor.exists():
-        raise FileNotFoundError('Local MathJax is missing. Install the dependencies in site_content with npm ci before building.')
+        if fallback_vendor.exists():
+            vendor = fallback_vendor
+        else:
+            raise FileNotFoundError('Local MathJax is missing. Install the dependencies in site_content with npm ci before building.')
     if music is None:
         music = load_analysis(root, 'music-analysis', analyze_music, root.parent / 'music_work')
     if code is None:
@@ -450,8 +454,11 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
             shutil.copy2(asset, assets / asset.name)
     shutil.copytree(HERE / 'web' / 'creators', assets / 'creators', dirs_exist_ok=True)
     write(site / 'LICENSE.txt', LICENSE_TEXT)
-    shutil.copytree(vendor, assets / 'vendor' / 'mathjax', dirs_exist_ok=True)
-    shutil.copy2(HERE / 'node_modules' / 'mathjax' / 'LICENSE', assets / 'vendor' / 'mathjax' / 'LICENSE')
+    if vendor.resolve() != (assets / 'vendor' / 'mathjax').resolve():
+        shutil.copytree(vendor, assets / 'vendor' / 'mathjax', dirs_exist_ok=True)
+    mathjax_license = HERE / 'node_modules' / 'mathjax' / 'LICENSE'
+    if mathjax_license.is_file():
+        shutil.copy2(mathjax_license, assets / 'vendor' / 'mathjax' / 'LICENSE')
     write(assets / 'data' / 'music-analysis.json', safe_json(music))
     write(assets / 'data' / 'music-analysis.js', 'window.MUSIC_ANALYSIS=' + safe_json(music) + ';')
     write(assets / 'data' / 'code-analysis.json', safe_json(code))

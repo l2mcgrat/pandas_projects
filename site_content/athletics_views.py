@@ -239,7 +239,8 @@ def running_body(data: dict, lead: str = "", tempo: dict | None = None) -> str:
       {_section("03", "The log", "Every interval, as written.", "running-log-title",
                 _table("Running sessions; times are minutes:seconds per loop.", ["Date", "Route", "Intervals", "Mean", "Written average", "Fastest", "Spread", "Fade", "Pace /km"], rows, "running-table"))}
       {_tempo_section(tempo) if tempo else ""}
-      <section class="sports-section" id="running-history" aria-labelledby="running-history-title"><p class="sports-kicker">05 / Then and now</p><h2 id="running-history-title">Best times from 2013 and 2017.</h2>
+      {_running_weekly_combined_section(data, tempo)}
+      <section class="sports-section" id="running-history" aria-labelledby="running-history-title"><p class="sports-kicker">06 / Then and now</p><h2 id="running-history-title">Best times from 2013 and 2017.</h2>
       <p>Rough estimates recalled from the major training blocks; earlier logs were lost. Track repeats and a neighbourhood loop are different efforts, so compare paces loosely.</p>
       {_table("Best repeat time per session type, with pace per kilometre.", ["Year", "Session", "Best repeat", "Pace"], history_rows)}</section>
       <section class="sports-section sports-method" aria-labelledby="running-method-title"><p class="sports-kicker">The evidence desk</p><h2 id="running-method-title">How these numbers are made.</h2>
@@ -252,6 +253,139 @@ def running_body(data: dict, lead: str = "", tempo: dict | None = None) -> str:
                      '<li>Tempo runs go in <code>records/athletics/running/Tempo_Run_Log.txt</code>: a <code>(10/12/2026)</code> line, '
                      'a <code>Tempo Run - 5.8km (Route Name)</code> line, the total time like <code>33:23.81</code>, then the pace line like <code>5:45.5 min/km - 2.89m/s</code>.</li>')}
     </main>'''
+
+
+def _running_weekly_combined_section(data: dict, tempo: dict | None, long_runs: list[dict] | None = None) -> str:
+    """Stacked column chart & weekly table combining Interval Training, Tempo Runs, and Long Runs (placeholder doc wired for post-winter)."""
+    from datetime import date, timedelta
+
+    def _monday_iso(iso_str: str) -> str:
+        d = date.fromisoformat(iso_str)
+        return (d - timedelta(days=d.weekday())).isoformat()
+
+    route_km = data["routes"]["I1"]["distanceKm"]
+    week_map: dict[str, dict[str, float]] = {}
+
+    for s in data.get("sessions", []):
+        wk = _monday_iso(s["date"])
+        entry = week_map.setdefault(wk, {"intervalKm": 0.0, "tempoKm": 0.0, "longKm": 0.0})
+        entry["intervalKm"] = round(entry["intervalKm"] + s["count"] * route_km, 2)
+
+    for r in (tempo or {}).get("runs", []):
+        wk = _monday_iso(r["date"])
+        entry = week_map.setdefault(wk, {"intervalKm": 0.0, "tempoKm": 0.0, "longKm": 0.0})
+        entry["tempoKm"] = round(entry["tempoKm"] + float(r["distanceKm"]), 2)
+
+    # Long runs placeholder (Google Doc 1Yw_Vjd-VCPS599GW6NN45AqPCHBpWE2yNSrR9qr9ouM — populates automatically once post-winter entries are logged)
+    for lr in (long_runs or []):
+        wk = _monday_iso(lr["date"])
+        entry = week_map.setdefault(wk, {"intervalKm": 0.0, "tempoKm": 0.0, "longKm": 0.0})
+        entry["longKm"] = round(entry["longKm"] + float(lr.get("distanceKm", 0.0)), 2)
+
+    weeks_list = []
+    cum_km = 0.0
+    for wk in sorted(week_map):
+        w = week_map[wk]
+        tot = round(w["intervalKm"] + w["tempoKm"] + w["longKm"], 2)
+        cum_km = round(cum_km + tot, 2)
+        weeks_list.append({
+            "date": wk,
+            "weekOf": wk,
+            "intervalKm": w["intervalKm"],
+            "tempoKm": w["tempoKm"],
+            "longKm": w["longKm"],
+            "totalKm": tot,
+            "cumulativeKm": cum_km,
+        })
+
+    max_wk = max(10.0, *(w["totalKm"] for w in weeks_list))
+    high_wk = math.ceil(max_wk / 2.0) * 2.0
+    max_cum = max(10.0, cum_km)
+    step = 740 / max(1, len(weeks_list))
+    y_bar = lambda v: 290 - (v / high_wk) * 235
+    y_cum = lambda v: 290 - (v / max_cum) * 235
+
+    parts = [_axis(55, 290, 0, high_wk, [round(high_wk * k / 4, 1) for k in range(5)], lambda v: f"{v:g} km")]
+    line_pts = []
+    for idx, w in enumerate(weeks_list):
+        cx = 90 + (idx + 0.5) * step
+        bw = min(56.0, step * 0.62)
+        bx = cx - bw / 2
+        # Stacked segments: bottom = intervalKm (series-0), middle = tempoKm (series-1), top = longKm (series-2)
+        h_int = (w["intervalKm"] / high_wk) * 235
+        h_tmp = (w["tempoKm"] / high_wk) * 235
+        h_lng = (w["longKm"] / high_wk) * 235
+        y_int = 290 - h_int
+        y_tmp = y_int - h_tmp
+        y_lng = y_tmp - h_lng
+        if h_int > 0:
+            parts.append(
+                f'<rect class="athletics-bar series-0" x="{bx:.1f}" y="{y_int:.1f}" width="{bw:.1f}" height="{h_int:.1f}">'
+                f'<title>Week of {_e(_day(w["weekOf"]))} · Intervals: {w["intervalKm"]:g} km</title></rect>'
+            )
+        if h_tmp > 0:
+            parts.append(
+                f'<rect class="athletics-bar series-1" x="{bx:.1f}" y="{y_tmp:.1f}" width="{bw:.1f}" height="{h_tmp:.1f}">'
+                f'<title>Week of {_e(_day(w["weekOf"]))} · Tempo / Continuous: {w["tempoKm"]:g} km</title></rect>'
+            )
+        if h_lng > 0:
+            parts.append(
+                f'<rect class="athletics-bar series-2" x="{bx:.1f}" y="{y_lng:.1f}" width="{bw:.1f}" height="{h_lng:.1f}">'
+                f'<title>Week of {_e(_day(w["weekOf"]))} · Long Run: {w["longKm"]:g} km</title></rect>'
+            )
+        top_y = min(y_int, y_tmp, y_lng)
+        parts.append(
+            f'<text x="{cx:.1f}" y="{max(36.0, top_y - 8.0):.1f}" text-anchor="middle">{w["totalKm"]:g} km</text>'
+            f'<text x="{cx:.1f}" y="314" text-anchor="middle">Wk {_e(_day(w["weekOf"]))}</text>'
+        )
+        line_pts.append(f"{cx:.1f},{y_cum(w['cumulativeKm']):.1f}")
+
+    if len(line_pts) > 1:
+        parts.append(f'<polyline class="athletics-line series-3" points="{" ".join(line_pts)}"/>')
+
+    comb_chart = _chart(
+        "running-weekly-combined",
+        "Weekly running volume by type (stacked km) and cumulative running total (km)",
+        "Stacked columns show weekly Interval Training (km), Tempo / Continuous Runs (km), and Long Runs (km) on the left axis; the line tracks the cumulative running total (km) on the right axis.",
+        "".join(parts),
+    )
+    legend = (
+        '<p class="sports-legend">'
+        '<span class="series-0">■ Interval training (km)</span>'
+        '<span class="series-1">■ Tempo / continuous run (km)</span>'
+        '<span class="series-2">■ Long run (km · post-winter placeholder linked)</span>'
+        '<span class="series-3">● Cumulative running total (km, 2nd axis)</span>'
+        '</p>'
+    )
+    week_rows = [
+        [
+            f"Week of {_day(w['weekOf'])}",
+            f"{w['intervalKm']:g} km",
+            f"{w['tempoKm']:g} km",
+            f"{w['longKm']:g} km" if w["longKm"] > 0 else "0 km (post-winter)",
+            f"{w['totalKm']:g} km",
+            f"{w['cumulativeKm']:g} km",
+        ]
+        for w in weeks_list
+    ]
+    payload = {
+        "weeks": weeks_list,
+        "longRunDocId": "1Yw_Vjd-VCPS599GW6NN45AqPCHBpWE2yNSrR9qr9ouM",
+    }
+    return (
+        f'<section class="sports-section" id="running-weekly-totals" aria-labelledby="running-weekly-title">'
+        f'<p class="sports-kicker">05 / Combined weekly running volume &amp; running total</p>'
+        f'<h2 id="running-weekly-title">Intervals + Tempo + Long Runs: {cum_km:g} km total across {len(weeks_list)} weeks.</h2>'
+        f'<div class="bi-running-weekly-host" id="bi-running-weekly-host" data-bi-running-weekly="{_e(json.dumps(payload, separators=(",", ":")))}">'
+        f'{legend}{comb_chart}</div>'
+        + _table(
+            "Weekly running distance by training type and cumulative running total (Monday–Sunday weeks).",
+            ["Week", "Intervals", "Tempo / Continuous", "Long Runs", "Weekly total", "Running total"],
+            week_rows,
+            "running-weeks-table",
+        )
+        + '</section>'
+    )
 
 
 def _tempo_section(tempo: dict) -> str:
@@ -327,7 +461,11 @@ def swimming_body(data: dict, lead: str = "") -> str:
     legend = '<p class="sports-legend"><span class="series-0">■ Session distance</span><span class="series-1">― Running total (own scale)</span></p>'
     rows = [[_day(s["date"]), f'{_num(s["distance"])} {"yd" if s["unit"] == "y" else "m"}', f'{_num(s["meters"])} m',
              s["orderRaw"], f'{_num(s["cumulativeMeters"])} m'] for s in sessions]
-    week_rows = [[f"Week of {_day(w['weekOf'])}", f"{_num(w['meters'])} m"] for w in weeks]
+    swim_cum_wk = 0
+    week_rows = []
+    for w in weeks:
+        swim_cum_wk += int(w["meters"])
+        week_rows.append([f"Week of {_day(w['weekOf'])}", f"{_num(w['meters'])} m", f"{_num(swim_cum_wk)} m"])
     bests = [[b["event"], f'{b["liam"]:.2f} s', f'{b["owen"]:.2f} s', "Liam" if b["liam"] < b["owen"] else "Owen"] for b in data["bests"]]
     chips = "".join(f'<li class="series-{i % SERIES}">{i + 1}. {_e(stroke)}</li>' for i, stroke in enumerate(strokes))
     return f'''<main id="main-content" class="collection-page sports-page athletics-page">{lead}
@@ -336,7 +474,7 @@ def swimming_body(data: dict, lead: str = "") -> str:
       {_section("01", "Distance", "Every session, and where the total stands.", "swimming-distance-title", f'<div class="bi-swimming-host" data-bi-swimming="{_e(json.dumps(sessions, separators=(",", ":")))}">' + legend + chart + '</div>')}
       {_section("02", "Stroke order", "Each set swims all four strokes.", "swimming-strokes-title",
                 f'<ol class="athletics-chips" aria-label="Stroke order as logged">{chips}</ol><p class="sports-note">Order as logged: {_e(sessions[-1]["orderRaw"])}. Strokes are swum as evenly as possible to balance the muscle groups.</p>'
-                + _table("Weekly totals.", ["Week", "Distance"], week_rows))}
+                + _table("Weekly totals.", ["Week", "Distance", "Running total"], week_rows, "swimming-weeks-table"))}
       {_section("03", "The log", "Every session, as written.", "swimming-log-title",
                 _table("Swimming sessions.", ["Date", "As written", "In metres", "Sets and strokes", "Running total"], rows, "swimming-table") +
                 (f'<p class="sports-note">Most sessions are logged in yards ({summary["yardSessions"]} of {summary["sessions"]}); the charts and totals convert to metres at 0.9144 m per yard. '

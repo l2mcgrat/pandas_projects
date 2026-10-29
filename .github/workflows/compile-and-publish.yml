@@ -6,6 +6,9 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 6 * * *'
+    - cron: '0 12 * * 1,4'
+    - cron: '0 18 * * 1,3,4'
+    - cron: '0 19 * * 1-5'
 
 jobs:
   build-and-publish:
@@ -19,15 +22,31 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install Python dependencies & Pandoc
+      - name: Install Python dependencies, Node MathJax & Pandoc
         run: |
           sudo apt-get update && sudo apt-get install -y pandoc
           pip install beautifulsoup4 pypandoc vaderSentiment pandas numpy
+          if [ -f site_content/package-lock.json ]; then npm ci --prefix site_content || true; fi
 
       - name: Sync linked Google Docs (0-token deterministic repair)
         run: |
           python -B -m site_content.log_sync || true
 
+      - name: Dispatch due REABS scheduled email & text reminders
+        run: |
+          python -B -m site_content.reabs_notify || true
+
       - name: Build portfolio site
         run: |
+          mkdir -p ../liammspandasprojects
           python -B -m site_content.build --also-local
+
+      - name: Commit synced Google Docs & built portfolio back to repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add records/ LiamMs_PandasProjects/ || true
+          if ! git diff --cached --quiet; then
+            git commit -m "Auto-sync Google Docs & rebuild portfolio [skip ci]"
+            git push origin main || true
+          fi

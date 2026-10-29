@@ -1511,7 +1511,6 @@ def reminders_dashboard_body(data: dict[str, Any], prefix: str = "../") -> str:
       {gate}
       <div data-wb-admin-only hidden>
         <p class="sports-scope">Admin Session Active · Default email <code>l2mcgrat@uwaterloo.ca</code> armed · Backed by <code>reabs_reminders</code> in <code>records/workbench/workbench.db</code>.</p>
-        {rant_html}
         {kpis}
         {_section("01", "Email & text delivery channels", "Default uwaterloo.ca email, test buttons, optional email manager, and two-way reply commands.", "reabs-channels-title", channels_html)}
         {_section("02", "REABS reminder queue & scheduler", "Add a REABS task, auto-lookup phone numbers via Google/Gemini (or set N/A), toggle reminders, or mark completed with hours.", "reabs-queue-title", add_form_html + active_table_html)}
@@ -1523,6 +1522,7 @@ def reminders_dashboard_body(data: dict[str, Any], prefix: str = "../") -> str:
                   + _table("Historical & active REABS ledger (hours spent update live when marked completed on-site or via email/text reply).",
                            ["ID", "REABS Task", "Urgency", "Schedule", "Phone", "Status", "Completed Date", "Hours Logged"],
                            history_rows, "reabs-history-table"))}
+        {_section("04", "The REABS manifesto", "Why Random Extra Additional Bullshit has its own dedicated Admin tab.", "reabs-manifesto-title", rant_html)}
       </div>
       {auth_dialog_html()}
     </main>'''

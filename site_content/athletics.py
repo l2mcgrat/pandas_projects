@@ -30,6 +30,7 @@ EARLIER_COPIES = {
 }
 # Heaviest weight (least assistance for assisted lifts) managed for at least this many reps.
 REP_TARGETS = (10, 12)
+LONG_RUN_PLACEHOLDER_DOC_ID = "1Yw_Vjd-VCPS599GW6NN45AqPCHBpWE2yNSrR9qr9ouM"
 ROUTES = {"I1": {"name": "Interval route 1", "distanceKm": 0.95,
                  "distanceSource": "GeoDistance measurement shown on the route map"}}
 RUN_HISTORY = (
