@@ -49,7 +49,7 @@ OUTLINE = (
         ("Projects", "Things built, measured and shipped.",
          ("KUBO - NO2 Sensor", "Pandas Projects", "WebDev Consulting", "Raspberry Pi", "Mental Map", "Future Plans")),
         ("Future Planning", "Where the next chapters are heading.",
-         ("E-Learning", "Europe Migration", "Networking and Connections", "Creative Endeavours", "New Age Promotion", "Roadmap to Logan")),
+         ("E-Learning", "Europe Migration", "Networking and Connections", "Creative Endeavours", "New Age Promotion", "Road to Success")),
         ("Career Paths", "Different routes, compared side by side.",
          ("Logan", "Amar", "Rhema", "Owen", "Liam", "Calena")),
     )),

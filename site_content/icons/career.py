@@ -280,7 +280,7 @@ ICONS = {
         "parts": (("a", "0%{transform:scale(.8);opacity:0}30%{opacity:1}100%{transform:scale(1.25);opacity:0}", "40px 32px", "1.2s", "ease-out"),
                   ("b", "0%,100%{transform:rotate(0deg)}20%{transform:rotate(-4deg)}", "18px 32px", "1.2s", "ease-out")),
     },
-    "Career-and-Education/Future-Planning/Roadmap-to-Logan": {
+    "Career-and-Education/Future-Planning/Road-to-Success": {
         "draw": '<path d="M8 56c2-12 20-10 20-20s-8-12-6-18M44 56c0-10-6-12-6-20s-6-14-10-18"/>'
                 '<path class="a" stroke-dasharray="3 4" d="M26 56c0-11 10-11 10-20s-7-13-9-18"/>'
                 '<path d="M26 18V6"/><path class="b" d="M26 6h8l-2 2.5 2 2.5h-8"/>',
