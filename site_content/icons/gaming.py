@@ -99,7 +99,7 @@ ICONS = {
         "parts": (("a", "0%,100%{transform:translateY(-5px)}45%,65%{transform:translateY(3px)}", "32px 28px", "2.4s", "ease-in-out"),
                   ("b", "0%,50%{opacity:.3;transform:rotate(0deg)}65%{opacity:1;transform:rotate(72deg)}100%{opacity:.3;transform:rotate(72deg)}", "32px 19px", "2.4s", "ease-out")),
     },
-    "Gaming-and-Performance-Log/Smash-Bros/Highlights": {
+    "Gaming-and-Performance-Log/Smash-Bros/1v1-History": {
         "draw": '<path opacity=".4" d="M10 56h44"/><path class="a" d="M32 56V40"/>'
                 f'<g class="b"><path d="{_burst(32, 20, 3, 12, 10)}"/><circle cx="32" cy="20" r="1.4" fill="currentColor" stroke="none"/></g>'
                 '<circle cx="14" cy="14" r="1.2" fill="currentColor" stroke="none"/><circle cx="50" cy="30" r="1" fill="currentColor" stroke="none"/>',

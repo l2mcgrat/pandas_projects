@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 from site_content.athletics import (EARLIER_COPIES, SOURCES, athletics_rows, clock, load_athletics, parse_running,
                                     parse_swimming, parse_tempo, parse_weightlifting)
 from site_content.athletics_views import running_body, swimming_body, weightlifting_body
+from site_content.smash_series import load_smash_series, smash_series_body
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -38,24 +39,25 @@ class ParserTests(unittest.TestCase):
 
     def test_tempo_runs_pace_and_speed_match_the_written_lines(self):
         tempo = self.data["tempo"]
-        self.assertEqual(tempo["summary"]["runs"], 4)
-        first, second, third, fourth = tempo["runs"]
+        self.assertEqual(tempo["summary"]["runs"], 5)
+        first, second, third, fourth, fifth = tempo["runs"]
         self.assertEqual((first["route"], first["distanceKm"], first["timeSeconds"]), ("House to Vape Store & Back", 4.6, 1415.21))
         self.assertEqual(first["paceSeconds"], 307.65)
         self.assertEqual(second["timeRaw"], "33.23.81")  # dots as written
         self.assertEqual(second["speed"], 2.89)
         self.assertEqual((third["date"], third["timeSeconds"]), ("2026-10-24", 1287.96))
         self.assertEqual((fourth["date"], fourth["timeSeconds"]), ("2026-10-26", 1276.16))
+        self.assertEqual((fifth["date"], fifth["timeSeconds"]), ("2026-10-29", 1284.01))
         self.assertEqual(tempo["summary"]["paceMismatches"], [])
 
     def test_swimming_totals_and_weeks(self):
         swim = self.data["swimming"]
-        self.assertEqual(swim["summary"]["sessions"], 20)
-        self.assertEqual(swim["summary"]["yardSessions"], 17)
+        self.assertEqual(swim["summary"]["sessions"], 27)
+        self.assertEqual(swim["summary"]["yardSessions"], 20)
         first = swim["sessions"][0]  # 1600 yd → 1463 m
         self.assertEqual((first["distance"], first["unit"], first["meters"]), (1600, "y", 1463))
         self.assertEqual(next(s for s in swim["sessions"] if s["date"] == "2026-10-14")["meters"], 2000)  # Oct 14 logged in metres
-        self.assertEqual(swim["sessions"][-1]["meters"], 1463)  # Oct 27 logged as 1600 yd
+        self.assertEqual(swim["sessions"][-1]["meters"], 2000)  # Nov 6 logged as 2000 m
         self.assertEqual(sum(week["meters"] for week in swim["weeks"]), swim["summary"]["meters"])
         # Oct 10 freeform: 650 + 3×450 = 2000, four sets, strokes from the words.
         mixed = next(s for s in swim["sessions"] if s["date"] == "2026-10-10")
@@ -76,8 +78,8 @@ class ParserTests(unittest.TestCase):
         assisted = next(e for e in lift["exercises"] if e["name"] == "Assisted Pullups")
         self.assertEqual(assisted["kind"], "assisted")
         self.assertNotIn("change", assisted)
-        self.assertEqual(lift["summary"]["sessions"], 22)
-        self.assertEqual(lift["summary"]["splits"], {"Chest": 7, "Back": 9, "Shoulders": 6})
+        self.assertEqual(lift["summary"]["sessions"], 27)
+        self.assertEqual(lift["summary"]["splits"], {"Chest": 8, "Back": 11, "Shoulders": 8})
 
     def test_new_set_formats_are_kept_or_excluded_with_reasons(self):
         lift = self.data["weightlifting"]
@@ -120,7 +122,7 @@ class ParserTests(unittest.TestCase):
     def test_csv_rows_cover_every_value(self):
         rows = athletics_rows(self.data)
         self.assertEqual(len(rows["running-intervals"]), 19)
-        self.assertEqual(len(rows["running-tempo"]), 4)
+        self.assertEqual(len(rows["running-tempo"]), 5)
         self.assertEqual(len(rows["weightlifting-sets"]), self.data["weightlifting"]["summary"]["sets"])
         progress = rows["weightlifting-progress"]
         self.assertEqual(set(progress[0]), {"exercise", "kind", "date", "topSetLbs", "repsAtTopSet", "best10RepsLbs",
@@ -128,13 +130,28 @@ class ParserTests(unittest.TestCase):
         rows_ = next(r for r in progress if r["exercise"] == "Bent Over Rows" and r["date"] == "2026-09-30")
         self.assertEqual((rows_["topSetLbs"], rows_["best10RepsLbs"], rows_["best12RepsLbs"]), (135, 135, 115))
 
+    def test_smash_series_1v1_history_and_next_smash_mains_scoring(self):
+        smash = load_smash_series(ROOT)
+        self.assertEqual(smash["summary"]["matches"], 113)
+        self.assertEqual(smash["summary"]["wins"], 78)
+        self.assertEqual(smash["summary"]["losses"], 35)
+        self.assertEqual(smash["summary"]["seriesCount"], 11)
+        self.assertEqual(smash["summary"]["seriesWins"], 10)
+        self.assertEqual(smash["summary"]["seriesTies"], 1)
+        body = smash_series_body(smash)
+        soup = BeautifulSoup(body, "html.parser")
+        self.assertIsNotNone(soup.select_one("#smash-series-table"))
+        self.assertIsNotNone(soup.select_one("#smash-fighters-table"))
+        self.assertIsNotNone(soup.select_one("#smash-opponents-table"))
+        self.assertIsNotNone(soup.select_one("#smash-matches-table"))
+
     def test_an_edited_earlier_copy_stops_the_build(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             for path in SOURCES.values():
                 (root / path).parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(ROOT / path, root / path)
-            self.assertEqual(load_athletics(root)["swimming"]["summary"]["sessions"], 20)
+            self.assertEqual(load_athletics(root)["swimming"]["summary"]["sessions"], 27)
             copy = root / EARLIER_COPIES["swimming"]
             copy.parent.mkdir(parents=True)
             copy.write_text((ROOT / SOURCES["swimming"]).read_text(encoding="utf-8") + "\n(10/16/2026) - 400m - 1x400 of Free\n", encoding="utf-8")

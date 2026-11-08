@@ -1260,6 +1260,7 @@ def updates_dashboard_body(root: Path, athletics: dict[str, Any], health: dict[s
     swim_url = _gdoc_url("swimming", "1wRNnr8kl4ccqGtSn9_G5Y79UFcv3aEn02r_GJ90uY8s")
     sleep_url = _gdoc_url("sleep", "1UMa-zXddL1PCfasksWie27N00IBfWEBUiDq9UDLTJ4w")
     diet_url = _gdoc_url("diet", "1q0g1iAhzHCSrEL0nxUQfW3FjZw5qJ8uj70WPVH2i5Ug")
+    smash_url = _gdoc_url("smash_series", "1nD1anwy7vaR_V9K9LuIkL5CmEcPqMO7rog3yTbX_U9g")
     mm_url = _gdoc_url("mental_map", "15YE6fyNMoGA9JZlQnkiBG4rGtn4h4cP5gauPV2Wf_rw")
 
     docs_spec = [
@@ -1324,8 +1325,18 @@ def updates_dashboard_body(root: Path, athletics: dict[str, Any], health: dict[s
             "\n".join(health["diet"]["source"]["latestEntry"][:6]),
         ),
         (
+            "smash_series",
+            "07 · Smash 1v1 Series Log (vs. Friends)",
+            "records/athletics/smash/Smash_Series_Log.txt",
+            f"{prefix}Gaming-and-Performance-Log/Smash-Bros/1v1-History/index.html",
+            "2026-11-07",
+            "113 1v1 games across 11 Series (78–35 · 69.0% win rate · +85 net stocks)",
+            smash_url,
+            "11/7/2026 · Series 4 · Bowser Jr vs. Sephiroth - (1, 0)",
+        ),
+        (
             "mental_map",
-            "07 · Mental Map & Journal Drafts Google Doc",
+            "08 · Mental Map & Journal Drafts Google Doc",
             "mental_map.tex / Workbench Study Queue",
             f"{prefix}Mental-Map/index.html",
             "2026-10-27",

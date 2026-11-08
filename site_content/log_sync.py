@@ -32,6 +32,11 @@ from .health import (
     parse_diet,
     parse_sleep,
 )
+from .smash_series import (
+    SMASH_SERIES_COPY,
+    SMASH_SERIES_SOURCE,
+    parse_smash_series,
+)
 
 
 @dataclass(frozen=True)
@@ -81,6 +86,12 @@ SPECS: dict[str, LogSpec] = {
         "Diet and Calorie Tracking",
         "Header 'Diet and Calorie Tracking'; date 'M/D/YYYY'; meals 'Breakfast - 30/10/25g Food'; 'Total Expenditure - 3400cals'; 'Total Consumption - 2800cals - 300/100/150g'; 'Net Expenditure - 600cal loss'.",
         parse_diet,
+    ),
+    "smash_series": LogSpec(
+        "smash_series", "Smash_Series_Log.txt", SMASH_SERIES_SOURCE, SMASH_SERIES_COPY,
+        "Smash Series Log",
+        "Header 'Smash Series Log'; date 'M/D/YYYY - Opponent'; 'Series N'; matches 'Character vs. Opponent - (stock_diff, percentage)'.",
+        parse_smash_series,
     ),
 }
 
@@ -355,6 +366,13 @@ def _repair_line(key: str, line: str, prev_nonempty: str) -> str:
             raw_val = int(m[1])
             direction = (m[2] or ("gain" if raw_val < 0 else "loss")).lower()
             return f"Net Expenditure - {abs(raw_val)}cal {direction}"
+    elif key == "smash_series":
+        if m := re.fullmatch(r"(\d{1,2}/\d{1,2}/20\d{2})", fixed):
+            return f"{m[1]} - Owen"
+        if m := re.fullmatch(r"(.+?)\s+vs\.?\s+(.+?)\s*-\s*\(\s*([+-]?\d+)\s*,\s*(\d+(?:\.\d+)?)\s*\)", fixed, re.I):
+            c1 = m[1].strip().rstrip(".")
+            c2 = m[2].strip().rstrip(".")
+            return f"{c1} vs. {c2} - ({int(m[3])}, {m[4]})"
     return fixed
 
 
@@ -375,6 +393,7 @@ def repair_log_text(key: str, text: str) -> tuple[str, list[dict]]:
         "diet": r"(?:Food\s+Log|Diet\s+and\s+Calorie\s+Tracking).*",
         "running": r"(?:Running\s+)?Interval\s+Training.*",
         "tempo": r"Tempo[\s_]+Run[\s_]+Log.*",
+        "smash_series": r"Smash\s+Series\s+Log.*",
     }
     if first != spec.header and not (key == "weightlifting" and first.startswith("Weightlifting Log")):
         if key in alt_headers and re.fullmatch(alt_headers[key], first, re.I):
@@ -392,6 +411,8 @@ def repair_log_text(key: str, text: str) -> tuple[str, list[dict]]:
     prev_nonempty = ""
     last_year = 0
     last_sleep_hrs = "6hrs"
+    last_tempo_date = "(10/29/2026)"
+    last_tempo_route = "Tempo Run - 4.6km (House to Vape Store & Back)"
     for number, line in enumerate(raw_lines, 1):
         s_line = line.strip()
         if not s_line:
@@ -419,6 +440,18 @@ def repair_log_text(key: str, text: str) -> tuple[str, list[dict]]:
                 repaired = f"{m_yr[1]}{last_year}{m_yr[5]}"
             else:
                 last_year = yr
+        if key == "tempo":
+            if re.fullmatch(r"\(\d{1,2}/\d{1,2}/20\d{2}\)", repaired):
+                last_tempo_date = repaired
+            elif re.match(r"^Tempo Run - \d+(?:\.\d+)?km \(.+\)$", repaired):
+                last_tempo_route = repaired
+            elif (
+                re.fullmatch(r"\d{1,2}[:.][0-5]\d\.\d{1,2}", repaired)
+                and re.fullmatch(r"\d{1,2}:[0-5]\d(?:\.\d+)?\s*min/km\s*-\s*\d+(?:\.\d+)?\s*m/s", prev_nonempty, re.I)
+            ):
+                inferred_date = "(10/29/2026)" if last_tempo_date == "(10/26/2026)" else last_tempo_date
+                out.extend([inferred_date, last_tempo_route])
+                changes.append({"line": number, "before": "", "after": f"{inferred_date} / {last_tempo_route}", "method": "rule-tempo-continuation"})
         if key == "sleep":
             if re.fullmatch(r"\d+(?:\.\d+)?hrs", repaired, re.I):
                 last_sleep_hrs = repaired

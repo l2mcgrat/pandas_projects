@@ -596,6 +596,7 @@ def _update_notes(key: str, data: dict, steps: str) -> str:
         "swimming": "https://docs.google.com/document/d/1wRNnr8kl4ccqGtSn9_G5Y79UFcv3aEn02r_GJ90uY8s/edit",
         "sleep": "https://docs.google.com/document/d/1UMa-zXddL1PCfasksWie27N00IBfWEBUiDq9UDLTJ4w/edit",
         "diet": "https://docs.google.com/document/d/1q0g1iAhzHCSrEL0nxUQfW3FjZw5qJ8uj70WPVH2i5Ug/edit",
+        "smash_series": "https://docs.google.com/document/d/1nD1anwy7vaR_V9K9LuIkL5CmEcPqMO7rog3yTbX_U9g/edit",
     }.get(key, "")
     sample_placeholder = {
         "diet": "10/28/2026\nBreakfast - 3/1/28g Protein Powder, Large Regular Coffee 20/7/1g, 81/3/3g 3 Bananas\nLunch - 84/30/24g Fried Rice (2/3 Tupperware)\nDinner - 37/20/50g Pulled Ham on a Bun, 2/20/60g Chicken Parmesan, 19/4/3g Roasted Potato Wedges\nSnacks - Nothing\nTotal Expenditure - 2800cals\nTotal Consumption - 2425cals - 246/85/169g\nNet Expenditure - 375cal loss",
@@ -604,6 +605,7 @@ def _update_notes(key: str, data: dict, steps: str) -> str:
         "running": "I1 - (10/28/2026) - 4 Intervals\n3:42.0\n3:39.5\n3:36.2\n3:33.8\nAvg: 3:37.9",
         "tempo": "(10/28/2026)\nTempo Run - 4.6km (House to Vape Store & Back)\n21:10.00\n4:36.1 min/km - 3.62m/s",
         "sleep": "10/28/2026\n7.5hrs\nNo dreams recorded",
+        "smash_series": "11/8/2026 - Owen\nSeries 1\nRidley vs. Hero - (2, 110)\nRidley vs. Sephiroth - (1, 134)",
     }.get(key, "")
     return (f'<section class="sports-section athletics-update" id="{key}-update" aria-labelledby="{key}-update-title">'
             f'<p class="sports-kicker">Google Drive Logs Sync &amp; Direct On-Site Editor · No Terminal Required</p>'

@@ -18,7 +18,7 @@ from .atlas import ANCHORS, NODES, ROOT, walk
 from .atlas_tree import atlas_schema_script, atlas_tree_body
 from .atlas_views import (AI_COST_PAPER, AI_COST_STUDY, AI_COST_TAB, ALBERTA_PAPER, ALBERTA_STUDY, ALGORITHMS, ATLAS, CHANGE_LOG, COMPLETION, CONTROL, DASHBOARD, DATABASE_LEAVES, DIET,
                           FEELINGS, GAS_PAPER, GAS_STUDY, GAS_TAB, GEN_TAX_PAPER, GEN_TAX_STUDY, GEN_TAX_TAB, GUIDE, HOSTED, LEETCODE, LEETCODE_LEAVES, MACRO_PAPER, MACRO_STUDY, NBA, PITCH,
-                          PREDICTIONS, QUANTUM, RAP_LEAVES, REMINDERS, REPORT, RULES, RUNNING, SLEEP, SODIUM_PAPER, SODIUM_STUDY, SODIUM_TAB, SWIMMING, TRAFFIC, UFC, UPCOMING, UPDATES, VOCABULARY,
+                          PREDICTIONS, QUANTUM, RAP_LEAVES, REMINDERS, REPORT, RULES, RUNNING, SLEEP, SMASH_1V1, SODIUM_PAPER, SODIUM_STUDY, SODIUM_TAB, SWIMMING, TRAFFIC, UFC, UPCOMING, UPDATES, VOCABULARY,
                           WEIGHTLIFTING, WORKBENCH, branch_body, branch_stage, home_hero, leaf_body, prefix, premade_body, strip)
 from .basketball import export_rows, load_basketball
 from .career import career_body, resume_body
@@ -26,6 +26,7 @@ from .catalog import leetcode_catalog, rap_catalog
 from .catalog_views import leetcode_content, rap_content
 from .health import health_rows, load_health
 from .health_views import diet_body, sleep_body
+from .smash_series import SMASH_SERIES_SOURCE, load_smash_series, smash_series_body, smash_series_rows
 from .studies import load_studies, studies_rows
 from .studies_views import ai_cost_study_body, alberta_study_body, gas_study_body, gen_tax_study_body, macro_study_body, sodium_study_body
 from .workbench import load_workbench, workbench_rows
@@ -484,6 +485,13 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
         write(assets / 'data' / f'health-{key}.json', safe_json(data))
     for name, rows in health_rows(health).items():
         write(assets / 'data' / f'health-{name}.csv', csv_text(rows))
+    smash_series = load_smash_series(root)
+    write(assets / 'data' / 'smash-1v1-series.json', safe_json(smash_series))
+    for name, rows in smash_series_rows(smash_series).items():
+        write(assets / 'data' / f'{name}.csv', csv_text(rows))
+    if (root / SMASH_SERIES_SOURCE).is_file():
+        write(site / 'Gaming-and-Performance-Log/Smash-Bros/1v1-History/Smash_Series_Log.txt',
+              (root / SMASH_SERIES_SOURCE).read_text(encoding='utf-8-sig'))
     workbench = load_workbench(root)
     write(assets / 'data' / 'workbench.json', safe_json(workbench))
     for name, rows in workbench_rows(workbench).items():
@@ -627,6 +635,8 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
                           styles=('assets/sports.css', 'assets/athletics.css', 'assets/health.css'))
     hosted[DIET] = shell('Diet & calorie tracking', diet_body(health['diet'], athletics, _lead(DIET)), 3,
                          styles=('assets/sports.css', 'assets/athletics.css', 'assets/health.css'))
+    hosted[SMASH_1V1] = shell('Smash Bros · 1v1 Series History', smash_series_body(smash_series, _lead(SMASH_1V1)), 3,
+                              styles=('assets/sports.css', 'assets/athletics.css'))
     hosted[MACRO_STUDY] = shell('Economic Growth · The AI Iceberg Index', macro_study_body(studies['macro'], _lead(MACRO_STUDY)), 3,
                                 styles=('assets/sports.css', 'assets/athletics.css', 'assets/studies.css'),
                                 scripts=('assets/studies.js',))

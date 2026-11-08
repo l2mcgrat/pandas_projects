@@ -69,7 +69,7 @@ OUTLINE = (
     )),
     ("Gaming & Performance Log", "Competition, practice and progress, measured.", (
         ("Smash Bros", "Mains, mechanics and match analytics.",
-         ("New Smash Mains", "Next Smash Mains", "Mechanics History", "Player Statistics", "Character Origins", "Highlights")),
+         ("New Smash Mains", "Next Smash Mains", "Mechanics History", "Player Statistics", "Character Origins", "1v1 History")),
         ("Steam", "A library of favourites, genres and achievements.",
          ("Favourites", "Achievements History", "Combat-Platformers", "Strategy", "History", "Shopping Cart")),
         ("Nintendo", "Consoles, classics and what comes next.",

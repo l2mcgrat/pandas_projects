@@ -51,6 +51,7 @@ _ATHLETICS = "Gaming-and-Performance-Log/Athletics"
 RUNNING = f"{_ATHLETICS}/Running/index.html"
 SWIMMING = f"{_ATHLETICS}/Swimming/index.html"
 WEIGHTLIFTING = f"{_ATHLETICS}/Weightlifting/index.html"
+SMASH_1V1 = "Gaming-and-Performance-Log/Smash-Bros/1v1-History/index.html"
 _HEALTH = "Gaming-and-Performance-Log/Health"
 SLEEP = f"{_HEALTH}/Sleep/index.html"
 DIET = f"{_HEALTH}/Diet/index.html"
@@ -72,7 +73,7 @@ DATABASE_LEAVES = (
 # Dynamic Programming renders its selection rule but has no solutions yet, so it is not "Live".
 HOSTED = frozenset(route.removesuffix("/index.html") for route in (
     QUANTUM, ALGORITHMS, REPORT, RULES, DASHBOARD, PITCH, FEELINGS, VOCABULARY, RUNNING, SWIMMING, WEIGHTLIFTING,
-    SLEEP, DIET, MACRO_STUDY, ALBERTA_STUDY, GAS_STUDY, SODIUM_STUDY, AI_COST_STUDY, GEN_TAX_STUDY)) | frozenset(
+    SMASH_1V1, SLEEP, DIET, MACRO_STUDY, ALBERTA_STUDY, GAS_STUDY, SODIUM_STUDY, AI_COST_STUDY, GEN_TAX_STUDY)) | frozenset(
     path for path in LEETCODE_LEAVES + RAP_LEAVES + DATABASE_LEAVES if not path.endswith("Dynamic-Programming"))
 
 
@@ -130,9 +131,12 @@ _SMASH = Feature("Smash/index.html", "Analytics · Smash Bros", "Smash mains dis
 _RANK = Feature("Smash/Rank-Atlas/index.html", "Smash · Rankings", "Rank atlas", "Rank trajectories across rounds.",
                 "Gaming-and-Performance-Log/Smash-Bros/Player-Statistics", "Smash/Rank-Atlas/index.html", date="2026-09-20")
 _SCORE = Feature("Smash/Score-Atlas/index.html", "Smash · Scores", "Score atlas", "Score movement across every recorded round.",
-                 "Gaming-and-Performance-Log/Smash-Bros/Highlights", "Smash/Score-Atlas/index.html", date="2026-09-20")
+                 "Gaming-and-Performance-Log/Smash-Bros/Player-Statistics", "Smash/Score-Atlas/index.html", date="2026-09-20")
 _OPPONENTS = Feature("Smash/Opponents/index.html", "Smash · Opponents", "Opponent profiles", "How characters fared as opponents.",
                      "Gaming-and-Performance-Log/Smash-Bros/Character-Origins", "Smash/Opponents/index.html", date="2026-09-20")
+_SMASH_1V1 = Feature(SMASH_1V1, "Smash · 1v1 Series", "1v1 History (vs. Friends)",
+                     "113 recorded King-of-the-Hill 1v1 matches across 11 Series, scored with Next_Smash_Mains_Discovery bracket notation.",
+                     "Gaming-and-Performance-Log/Smash-Bros/1v1-History", date="2026-11-08")
 _MAP = Feature(MENTAL_MAP, "The connecting thread", "Mental Map", "The notebook behind every field, now in the site's 6 × 6 × 6 outline.",
                "root", date="2026-10-04")
 _GUIDE = Feature(GUIDE, "Guide · PDF", "Adding notes to the Mental Map", "From a Gemini chat log to the right subsubsection, checked and built.",
@@ -238,8 +242,8 @@ FEATURES: dict[str, tuple[Feature, ...]] = {
                                                             date="2026-10-04"),),
     "Sports-and-Entertainment/Sports-Analytics": (_UFC, _NBA),
     PREDICTIONS: (_UFC, _NBA),
-    "Gaming-and-Performance-Log": (_SMASH, _RUN, _LIFT, _SLEEP),
-    "Gaming-and-Performance-Log/Smash-Bros": (_SMASH, _RANK, _SCORE, _OPPONENTS),
+    "Gaming-and-Performance-Log": (_SMASH_1V1, _SMASH, _RUN, _LIFT, _SLEEP),
+    "Gaming-and-Performance-Log/Smash-Bros": (_SMASH_1V1, _SMASH, _RANK, _SCORE, _OPPONENTS),
     "Gaming-and-Performance-Log/Smash-Bros/New-Smash-Mains": (_SMASH,),
     "Gaming-and-Performance-Log/Smash-Bros/Next-Smash-Mains": (_SMASH,),
     "Gaming-and-Performance-Log/Smash-Bros/Player-Statistics": (_RANK, _SCORE),
