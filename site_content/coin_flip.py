@@ -62,18 +62,12 @@ def mario_coin_svg(size: int = 44, extra_class: str = "", uid: str = "1") -> str
 
 
 def mario_coin_floating_badge_html(prefix: str = "../", summary: dict | None = None) -> str:
-    """Clickable dynamic Mario Coin pill rendered on the Gaming & Performance Log hero stage."""
-    flips = summary["totalFlips"] if summary else 8
-    override_pct = summary["overrideRate"] if summary else 50.0
+    """Clickable dynamic Mario Coin icon (just the coin itself, no text description)."""
     return (
-        f'<a class="mario-coin-widget-link atlas-hover" href="{_e(prefix)}Gaming-and-Performance-Log/Coin-Flip/index.html" '
-        f'title="Open the Mario Coin Flip Decision &amp; Override Lab ({flips} flips logged · {override_pct:g}% override rate)">'
-        f'<span class="mario-coin-icon-wrap">{mario_coin_svg(48, "is-spinning", uid="hero-badge")}</span>'
-        '<span class="mario-coin-copy">'
-        '<span class="mario-coin-kicker">🪙 Mario Coin Decision Lab</span>'
-        '<strong>Flip a Coin &amp; Track Overrides ↗</strong>'
-        f'<small>{flips} decisions logged · {override_pct:g}% gut-check override rate</small>'
-        '</span></a>'
+        f'<a class="mario-coin-only-link atlas-hover" href="{_e(prefix)}Gaming-and-Performance-Log/Coin-Flip/index.html" '
+        f'aria-label="Coin Flip Decision Lab" title="Coin Flip Decision Lab">'
+        f'{mario_coin_svg(48, "is-spinning", uid="hero-badge")}'
+        '</a>'
     )
 
 
@@ -290,7 +284,7 @@ def coin_flip_body(data: dict, lead: str = "") -> str:
     )
     art = (
         '<div class="athletics-split-card mario-coin-hero-card" aria-hidden="true">'
-        f'<div style="display:flex;justify-content:center;margin-bottom:6px;">{mario_coin_svg(64, "is-spinning", uid="hero")}</div>'
+        f'<div style="grid-column:1 / -1;display:flex;justify-content:center;margin-bottom:6px;">{mario_coin_svg(64, "is-spinning", uid="hero")}</div>'
         f'<span class="split-Chest"><strong>{s["headsCount"]}H · {s["tailsCount"]}T</strong>{s["headsPct"]}% Heads</span>'
         f'<span class="split-Back"><strong>{s["followedCount"]} Followed</strong>{s["followRate"]}% obeyed</span>'
         f'<span class="split-Shoulders"><strong>{s["overrodeCount"]} Overrode</strong>{s["overrideRate"]}% gut override</span></div>'
@@ -375,7 +369,7 @@ def coin_flip_body(data: dict, lead: str = "") -> str:
         for f in reversed(flips)
     ]
 
-    return f'''<main id="main-content" class="sports-page athletics-page">{lead}
+    return f'''<main id="main-content" class="collection-page sports-page athletics-page">{lead}
       <header class="sports-hero"><div class="sports-hero-copy"><p class="sports-kicker">Gaming &amp; Performance Log · Mario Coin Decision Lab <span>Revealed Preference &amp; Override Telemetry</span></p>
       <h1>Flip the coin.<br>Measure the <em>override.</em></h1><p class="sports-deck">{_e(deck)}</p><div class="toolbar">{actions}</div></div>{art}</header>
       {metrics}

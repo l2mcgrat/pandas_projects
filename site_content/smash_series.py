@@ -550,7 +550,7 @@ def smash_series_body(data: dict, lead: str = "") -> str:
         '</div></article>'
     )
 
-    return f'''<main id="main-content" class="sports-page athletics-page">{lead}
+    return f'''<main id="main-content" class="collection-page sports-page athletics-page">{lead}
       <header class="sports-hero"><div class="sports-hero-copy"><p class="sports-kicker">Smash Bros · 1v1 Series History <span>vs. Owen · King-of-the-Hill</span></p>
       <h1>Winner stays on.<br>Every stock <em>scored.</em></h1><p class="sports-deck">{_e(deck)}</p><div class="toolbar">{actions}</div></div>{art}</header>
       {metrics}

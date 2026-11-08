@@ -247,7 +247,7 @@ FEATURES: dict[str, tuple[Feature, ...]] = {
                                                             date="2026-10-04"),),
     "Sports-and-Entertainment/Sports-Analytics": (_UFC, _NBA),
     PREDICTIONS: (_UFC, _NBA),
-    "Gaming-and-Performance-Log": (_COIN_FLIP, _SMASH_1V1, _SMASH, _RUN, _LIFT, _SLEEP),
+    "Gaming-and-Performance-Log": (_SMASH_1V1, _SMASH, _RUN, _LIFT, _SLEEP),
     "Gaming-and-Performance-Log/Smash-Bros": (_SMASH_1V1, _SMASH, _RANK, _SCORE, _OPPONENTS),
     "Gaming-and-Performance-Log/Smash-Bros/New-Smash-Mains": (_SMASH,),
     "Gaming-and-Performance-Log/Smash-Bros/Next-Smash-Mains": (_SMASH,),
@@ -400,7 +400,7 @@ def branch_stage(node: Node, mental: dict[str, str], available) -> str:
     return f'''{crumbs(node)}<section class="atlas-stage tone-{tone(node)}"><div class="atlas-copy"><p class="eyebrow"><span class="status-dot"></span> {_e(eyebrow)}</p>
       <h1>{_e(node.title)}</h1><p class="lede">{_e(node.tagline)}</p>
       <div class="home-actions"><a class="button primary" href="{_e(mental_href(node, root))}">Open in the Mental Map <span aria-hidden="true">↗</span></a>
-      <a class="text-link" href="{_e(root + ATLAS)}">See the full site atlas →</a></div>{coin_badge}
+      <a class="text-link" href="{_e(root + ATLAS)}">See the full site atlas →</a>{coin_badge}</div>
       <ol class="atlas-children" aria-label="{_e("Inside " + node.title)}">{listing}</ol></div>
       <div class="map-column">{hex_map(node, mental, node.title + " · six paths")}</div></section>{features(node, available)}'''
 
