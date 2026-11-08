@@ -585,10 +585,11 @@ def _progress(entry: dict) -> str:
             f'<svg class="athletics-spark" viewBox="0 0 340 176" role="img" aria-label="{_e(label)}">{"".join(parts)}</svg>{extra}</article>')
 
 
-def _update_notes(key: str, data: dict, steps: str) -> str:
+def _update_notes(key: str, data: dict, steps: str, depth: int = 3) -> str:
     """Owner notes + non-Admin 0-token Google Doc / Logs refresh & on-site quick-add panel."""
     source = data["source"]
     last_date = data.get("summary", {}).get("lastDate", "2026-10-18")
+    up_prefix = "../" * depth
     default_url = {
         "weightlifting": "https://docs.google.com/document/d/1mboHEkA2jzHEbJY0mcuXbP-N_cWfyaN-LiN2z8xueq0/edit",
         "running": "https://docs.google.com/document/d/1RDyIJPISvIbaM4f-EoBlpVi99kGVZ81fRUKOmzYTJXA/edit",
@@ -597,6 +598,7 @@ def _update_notes(key: str, data: dict, steps: str) -> str:
         "sleep": "https://docs.google.com/document/d/1UMa-zXddL1PCfasksWie27N00IBfWEBUiDq9UDLTJ4w/edit",
         "diet": "https://docs.google.com/document/d/1q0g1iAhzHCSrEL0nxUQfW3FjZw5qJ8uj70WPVH2i5Ug/edit",
         "smash_series": "https://docs.google.com/document/d/1nD1anwy7vaR_V9K9LuIkL5CmEcPqMO7rog3yTbX_U9g/edit",
+        "coin_flip": "",
     }.get(key, "")
     sample_placeholder = {
         "diet": "10/28/2026\nBreakfast - 3/1/28g Protein Powder, Large Regular Coffee 20/7/1g, 81/3/3g 3 Bananas\nLunch - 84/30/24g Fried Rice (2/3 Tupperware)\nDinner - 37/20/50g Pulled Ham on a Bun, 2/20/60g Chicken Parmesan, 19/4/3g Roasted Potato Wedges\nSnacks - Nothing\nTotal Expenditure - 2800cals\nTotal Consumption - 2425cals - 246/85/169g\nNet Expenditure - 375cal loss",
@@ -606,6 +608,7 @@ def _update_notes(key: str, data: dict, steps: str) -> str:
         "tempo": "(10/28/2026)\nTempo Run - 4.6km (House to Vape Store & Back)\n21:10.00\n4:36.1 min/km - 3.62m/s",
         "sleep": "10/28/2026\n7.5hrs\nNo dreams recorded",
         "smash_series": "11/8/2026 - Owen\nSeries 1\nRidley vs. Hero - (2, 110)\nRidley vs. Sephiroth - (1, 134)",
+        "coin_flip": "11/8/2026\nSwim 2000m vs. Rest Day | Heads: Swim 2000m, Tails: Rest Day | Landed: Tails | Action: Overrode -> Swim 2000m | Category: Training & Athletics | Note: Wanted to swim as soon as Tails landed",
     }.get(key, "")
     return (f'<section class="sports-section athletics-update" id="{key}-update" aria-labelledby="{key}-update-title">'
             f'<p class="sports-kicker">Google Drive Logs Sync &amp; Direct On-Site Editor · No Terminal Required</p>'
@@ -617,7 +620,7 @@ def _update_notes(key: str, data: dict, steps: str) -> str:
             f'<div class="wb-form-actions">'
             f'<button class="button primary gdoc-refresh-btn" type="button" data-gdoc-refresh-btn="{_e(key)}">↻ Check &amp; Refresh Log Now (0 Tokens)</button>'
             f'<button class="button ghost" type="button" data-gdoc-commit-btn="{_e(key)}">☁️ Commit &amp; Publish Log to GitHub</button>'
-            f'<a class="button ghost" href="../../../Updates/index.html">All Doc Updates Hub ↗</a>'
+            f'<a class="button ghost" href="{up_prefix}Updates/index.html">All Doc Updates Hub ↗</a>'
             f'</div>'
             f'</div>'
             f'<div class="gdoc-sync-controls">'

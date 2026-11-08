@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 from site_content.athletics import (EARLIER_COPIES, SOURCES, athletics_rows, clock, load_athletics, parse_running,
                                     parse_swimming, parse_tempo, parse_weightlifting)
 from site_content.athletics_views import running_body, swimming_body, weightlifting_body
+from site_content.coin_flip import coin_flip_body, load_coin_flip
 from site_content.smash_series import load_smash_series, smash_series_body
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -52,12 +53,12 @@ class ParserTests(unittest.TestCase):
 
     def test_swimming_totals_and_weeks(self):
         swim = self.data["swimming"]
-        self.assertEqual(swim["summary"]["sessions"], 27)
-        self.assertEqual(swim["summary"]["yardSessions"], 20)
+        self.assertEqual(swim["summary"]["sessions"], 28)
+        self.assertEqual(swim["summary"]["yardSessions"], 21)
         first = swim["sessions"][0]  # 1600 yd → 1463 m
         self.assertEqual((first["distance"], first["unit"], first["meters"]), (1600, "y", 1463))
         self.assertEqual(next(s for s in swim["sessions"] if s["date"] == "2026-10-14")["meters"], 2000)  # Oct 14 logged in metres
-        self.assertEqual(swim["sessions"][-1]["meters"], 2000)  # Nov 6 logged as 2000 m
+        self.assertEqual(swim["sessions"][-1]["meters"], 1097)  # Nov 8 logged as 1200 yd
         self.assertEqual(sum(week["meters"] for week in swim["weeks"]), swim["summary"]["meters"])
         # Oct 10 freeform: 650 + 3×450 = 2000, four sets, strokes from the words.
         mixed = next(s for s in swim["sessions"] if s["date"] == "2026-10-10")
@@ -78,8 +79,8 @@ class ParserTests(unittest.TestCase):
         assisted = next(e for e in lift["exercises"] if e["name"] == "Assisted Pullups")
         self.assertEqual(assisted["kind"], "assisted")
         self.assertNotIn("change", assisted)
-        self.assertEqual(lift["summary"]["sessions"], 27)
-        self.assertEqual(lift["summary"]["splits"], {"Chest": 8, "Back": 11, "Shoulders": 8})
+        self.assertEqual(lift["summary"]["sessions"], 28)
+        self.assertEqual(lift["summary"]["splits"], {"Chest": 8, "Back": 12, "Shoulders": 8})
 
     def test_new_set_formats_are_kept_or_excluded_with_reasons(self):
         lift = self.data["weightlifting"]
@@ -145,13 +146,29 @@ class ParserTests(unittest.TestCase):
         self.assertIsNotNone(soup.select_one("#smash-opponents-table"))
         self.assertIsNotNone(soup.select_one("#smash-matches-table"))
 
+    def test_coin_flip_decision_and_override_log(self):
+        cf = load_coin_flip(ROOT)
+        self.assertEqual(cf["summary"]["totalFlips"], 8)
+        self.assertEqual(cf["summary"]["followedCount"], 4)
+        self.assertEqual(cf["summary"]["overrodeCount"], 4)
+        self.assertEqual(cf["summary"]["overrideRate"], 50.0)
+        body = coin_flip_body(cf)
+        soup = BeautifulSoup(body, "html.parser")
+        self.assertIsNotNone(soup.select_one("#mario-coin-app"))
+        self.assertIsNotNone(soup.select_one("#mc-flip-trigger-btn"))
+        self.assertIsNotNone(soup.select_one("#mc-record-follow-btn"))
+        self.assertIsNotNone(soup.select_one("#mc-record-override-btn"))
+        self.assertIsNotNone(soup.select_one("#coin-flip-table"))
+        ids = [tag["id"] for tag in soup.find_all(id=True)]
+        self.assertEqual(len(ids), len(set(ids)))
+
     def test_an_edited_earlier_copy_stops_the_build(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             for path in SOURCES.values():
                 (root / path).parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(ROOT / path, root / path)
-            self.assertEqual(load_athletics(root)["swimming"]["summary"]["sessions"], 27)
+            self.assertEqual(load_athletics(root)["swimming"]["summary"]["sessions"], 28)
             copy = root / EARLIER_COPIES["swimming"]
             copy.parent.mkdir(parents=True)
             copy.write_text((ROOT / SOURCES["swimming"]).read_text(encoding="utf-8") + "\n(10/16/2026) - 400m - 1x400 of Free\n", encoding="utf-8")

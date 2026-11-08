@@ -57,6 +57,7 @@ NEW_PAGES = {
     "Language-and-Programming/Coding-Projects/Website-Changes/Upcoming-Changes/index.html",
     "Sports-and-Entertainment/Sports-Analytics/Predictions-and-Results/UFC-Predictions-vs-Outcomes/index.html",
     "Sports-and-Entertainment/Sports-Analytics/Predictions-and-Results/NBA-Predictions-vs-Outcomes/index.html",
+    "Gaming-and-Performance-Log/Coin-Flip/index.html",
     *(f"Gaming-and-Performance-Log/Athletics/{name}/Overview/index.html" for name in ("Running", "Swimming", "Weightlifting")),
     *(node.url for node in atlas.NODES.values() if node.depth),
 }
@@ -438,7 +439,7 @@ class IntegrationTests(unittest.TestCase):
         cls.paper = BeautifulSoup((cls.site / "Mental-Map/index.html").read_bytes().decode("utf-8"), "html.parser")
 
     def test_every_atlas_page_and_all_local_links_fragments_assets(self):
-        self.assertEqual(len(NEW_PAGES), 5 + 258 + 2 + 23)
+        self.assertEqual(len(NEW_PAGES), 5 + 258 + 2 + 24)
         self.assertEqual(set(self.manifest["pages"]), NEW_PAGES)
         self.assertEqual(self.manifest["atlasNodes"], 259)
         cache = {}

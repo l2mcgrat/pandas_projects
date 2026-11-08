@@ -16,7 +16,7 @@ from .athletics import athletics_rows, load_athletics
 from .athletics_views import running_body, swimming_body, weightlifting_body
 from .atlas import ANCHORS, NODES, ROOT, walk
 from .atlas_tree import atlas_schema_script, atlas_tree_body
-from .atlas_views import (AI_COST_PAPER, AI_COST_STUDY, AI_COST_TAB, ALBERTA_PAPER, ALBERTA_STUDY, ALGORITHMS, ATLAS, CHANGE_LOG, COMPLETION, CONTROL, DASHBOARD, DATABASE_LEAVES, DIET,
+from .atlas_views import (AI_COST_PAPER, AI_COST_STUDY, AI_COST_TAB, ALBERTA_PAPER, ALBERTA_STUDY, ALGORITHMS, ATLAS, CHANGE_LOG, COIN_FLIP, COMPLETION, CONTROL, DASHBOARD, DATABASE_LEAVES, DIET,
                           FEELINGS, GAS_PAPER, GAS_STUDY, GAS_TAB, GEN_TAX_PAPER, GEN_TAX_STUDY, GEN_TAX_TAB, GUIDE, HOSTED, LEETCODE, LEETCODE_LEAVES, MACRO_PAPER, MACRO_STUDY, NBA, PITCH,
                           PREDICTIONS, QUANTUM, RAP_LEAVES, REMINDERS, REPORT, RULES, RUNNING, SLEEP, SMASH_1V1, SODIUM_PAPER, SODIUM_STUDY, SODIUM_TAB, SWIMMING, TRAFFIC, UFC, UPCOMING, UPDATES, VOCABULARY,
                           WEIGHTLIFTING, WORKBENCH, branch_body, branch_stage, home_hero, leaf_body, prefix, premade_body, strip)
@@ -24,6 +24,7 @@ from .basketball import export_rows, load_basketball
 from .career import career_body, resume_body
 from .catalog import leetcode_catalog, rap_catalog
 from .catalog_views import leetcode_content, rap_content
+from .coin_flip import COIN_FLIP_SOURCE, coin_flip_body, coin_flip_rows, load_coin_flip
 from .health import health_rows, load_health
 from .health_views import diet_body, sleep_body
 from .smash_series import SMASH_SERIES_SOURCE, load_smash_series, smash_series_body, smash_series_rows
@@ -492,6 +493,13 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
     if (root / SMASH_SERIES_SOURCE).is_file():
         write(site / 'Gaming-and-Performance-Log/Smash-Bros/1v1-History/Smash_Series_Log.txt',
               (root / SMASH_SERIES_SOURCE).read_text(encoding='utf-8-sig'))
+    coin_flip = load_coin_flip(root)
+    write(assets / 'data' / 'coin-flip.json', safe_json(coin_flip))
+    for name, rows in coin_flip_rows(coin_flip).items():
+        write(assets / 'data' / f'{name}.csv', csv_text(rows))
+    if (root / COIN_FLIP_SOURCE).is_file():
+        write(site / 'Gaming-and-Performance-Log/Coin-Flip/Coin_Flip_Log.txt',
+              (root / COIN_FLIP_SOURCE).read_text(encoding='utf-8-sig'))
     workbench = load_workbench(root)
     write(assets / 'data' / 'workbench.json', safe_json(workbench))
     for name, rows in workbench_rows(workbench).items():
@@ -636,6 +644,8 @@ def publish_portfolio(root: Path, site: Path, music: dict | None = None, code: d
     hosted[DIET] = shell('Diet & calorie tracking', diet_body(health['diet'], athletics, _lead(DIET)), 3,
                          styles=('assets/sports.css', 'assets/athletics.css', 'assets/health.css'))
     hosted[SMASH_1V1] = shell('Smash Bros · 1v1 Series History', smash_series_body(smash_series, _lead(SMASH_1V1)), 3,
+                              styles=('assets/sports.css', 'assets/athletics.css'))
+    hosted[COIN_FLIP] = shell('Mario Coin Decision & Override Lab', coin_flip_body(coin_flip, _lead(COIN_FLIP, 'Coin Flip Decision Lab')), 2,
                               styles=('assets/sports.css', 'assets/athletics.css'))
     hosted[MACRO_STUDY] = shell('Economic Growth · The AI Iceberg Index', macro_study_body(studies['macro'], _lead(MACRO_STUDY)), 3,
                                 styles=('assets/sports.css', 'assets/athletics.css', 'assets/studies.css'),

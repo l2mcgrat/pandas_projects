@@ -7,6 +7,7 @@ from datetime import date as Date
 from html import escape
 
 from .atlas import NODES, ROOT, Node, anchor, lineage, parent
+from .coin_flip import mario_coin_floating_badge_html
 from .icons import icon_svg
 
 TONES = ("science", "business", "career", "sports", "gaming", "language")
@@ -52,6 +53,7 @@ RUNNING = f"{_ATHLETICS}/Running/index.html"
 SWIMMING = f"{_ATHLETICS}/Swimming/index.html"
 WEIGHTLIFTING = f"{_ATHLETICS}/Weightlifting/index.html"
 SMASH_1V1 = "Gaming-and-Performance-Log/Smash-Bros/1v1-History/index.html"
+COIN_FLIP = "Gaming-and-Performance-Log/Coin-Flip/index.html"
 _HEALTH = "Gaming-and-Performance-Log/Health"
 SLEEP = f"{_HEALTH}/Sleep/index.html"
 DIET = f"{_HEALTH}/Diet/index.html"
@@ -137,6 +139,9 @@ _OPPONENTS = Feature("Smash/Opponents/index.html", "Smash · Opponents", "Oppone
 _SMASH_1V1 = Feature(SMASH_1V1, "Smash · 1v1 Series", "1v1 History (vs. Friends)",
                      "113 recorded King-of-the-Hill 1v1 matches across 11 Series, scored with Next_Smash_Mains_Discovery bracket notation.",
                      "Gaming-and-Performance-Log/Smash-Bros/1v1-History", date="2026-11-08")
+_COIN_FLIP = Feature(COIN_FLIP, "Mario Coin · Decision Lab", "Coin Flip & Override Tracker",
+                     "Interactive 3D Mario coin flipper + Google Doc log tracking every decision and gut-check override.",
+                     "Gaming-and-Performance-Log/Nintendo/Mario-Sports", date="2026-11-08")
 _MAP = Feature(MENTAL_MAP, "The connecting thread", "Mental Map", "The notebook behind every field, now in the site's 6 × 6 × 6 outline.",
                "root", date="2026-10-04")
 _GUIDE = Feature(GUIDE, "Guide · PDF", "Adding notes to the Mental Map", "From a Gemini chat log to the right subsubsection, checked and built.",
@@ -242,7 +247,7 @@ FEATURES: dict[str, tuple[Feature, ...]] = {
                                                             date="2026-10-04"),),
     "Sports-and-Entertainment/Sports-Analytics": (_UFC, _NBA),
     PREDICTIONS: (_UFC, _NBA),
-    "Gaming-and-Performance-Log": (_SMASH_1V1, _SMASH, _RUN, _LIFT, _SLEEP),
+    "Gaming-and-Performance-Log": (_COIN_FLIP, _SMASH_1V1, _SMASH, _RUN, _LIFT, _SLEEP),
     "Gaming-and-Performance-Log/Smash-Bros": (_SMASH_1V1, _SMASH, _RANK, _SCORE, _OPPONENTS),
     "Gaming-and-Performance-Log/Smash-Bros/New-Smash-Mains": (_SMASH,),
     "Gaming-and-Performance-Log/Smash-Bros/Next-Smash-Mains": (_SMASH,),
@@ -391,10 +396,11 @@ def branch_stage(node: Node, mental: dict[str, str], available) -> str:
     listing = "".join(
         f'<li><a class="atlas-hover" href="{_e(root + child.url)}">{icon_svg(child.key)}<span><strong>{_e(child.title)}</strong>'
         f'<small>{_e(child.tagline or _status(child))}</small></span></a></li>' for child in node.children)
+    coin_badge = mario_coin_floating_badge_html(root) if node.path == "Gaming-and-Performance-Log" else ""
     return f'''{crumbs(node)}<section class="atlas-stage tone-{tone(node)}"><div class="atlas-copy"><p class="eyebrow"><span class="status-dot"></span> {_e(eyebrow)}</p>
       <h1>{_e(node.title)}</h1><p class="lede">{_e(node.tagline)}</p>
       <div class="home-actions"><a class="button primary" href="{_e(mental_href(node, root))}">Open in the Mental Map <span aria-hidden="true">↗</span></a>
-      <a class="text-link" href="{_e(root + ATLAS)}">See the full site atlas →</a></div>
+      <a class="text-link" href="{_e(root + ATLAS)}">See the full site atlas →</a></div>{coin_badge}
       <ol class="atlas-children" aria-label="{_e("Inside " + node.title)}">{listing}</ol></div>
       <div class="map-column">{hex_map(node, mental, node.title + " · six paths")}</div></section>{features(node, available)}'''
 

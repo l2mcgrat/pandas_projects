@@ -37,6 +37,11 @@ from .smash_series import (
     SMASH_SERIES_SOURCE,
     parse_smash_series,
 )
+from .coin_flip import (
+    COIN_FLIP_COPY,
+    COIN_FLIP_SOURCE,
+    parse_coin_flip,
+)
 
 
 @dataclass(frozen=True)
@@ -92,6 +97,12 @@ SPECS: dict[str, LogSpec] = {
         "Smash Series Log",
         "Header 'Smash Series Log'; date 'M/D/YYYY - Opponent'; 'Series N'; matches 'Character vs. Opponent - (stock_diff, percentage)'.",
         parse_smash_series,
+    ),
+    "coin_flip": LogSpec(
+        "coin_flip", "Coin_Flip_Log.txt", COIN_FLIP_SOURCE, COIN_FLIP_COPY,
+        "Coin Flip Decision Log",
+        "Header 'Coin Flip Decision Log'; date 'M/D/YYYY'; entries 'Question | Heads: OptA, Tails: OptB | Landed: Heads/Tails | Action: Followed/Overrode -> Final | Category: Cat | Note: Note'.",
+        parse_coin_flip,
     ),
 }
 
@@ -357,15 +368,18 @@ def _repair_line(key: str, line: str, prev_nonempty: str) -> str:
     elif key == "diet":
         if m := re.fullmatch(r"(Breakfast|Lunch|Dinner|Snacks)\s*[:\-]\s*(.+)", fixed, re.I):
             return f"{m[1].capitalize()} - {m[2].strip()}"
-        if m := re.fullmatch(r"Total Expenditure\s*[:\-]\s*(\d+)\s*(?:k?cals?)?(?:\s*\((.+)\))?", fixed, re.I):
+        if m := re.fullmatch(r"Total Expenditure(?:\s*\(So Far\))?\s*[:\-]\s*(\d+)\s*(?:k?cals?)?(?:\s*\((.+)\))?", fixed, re.I):
             return f"Total Expenditure - {m[1]}cals" + (f" ({m[2]})" if m[2] else "")
-        if m := re.fullmatch(r"Total Consumption\s*[:\-]\s*(.+)", fixed, re.I):
+        if m := re.fullmatch(r"Total Consumption(?:\s*\(So Far\))?\s*[:\-]\s*(.+)", fixed, re.I):
             body = re.sub(r"(\d+)\s*k?cals?\b", r"\1cals", m[1].strip(), flags=re.I)
+            body = re.sub(r"\s*\(So Far\)\s*$", "", body, flags=re.I)
             return f"Total Consumption - {body}"
-        if m := re.fullmatch(r"Net Expenditure\s*[:\-]\s*([+-]?\d+)\s*(?:k?cals?)?\s*(loss|gain)?", fixed, re.I):
+        if m := re.fullmatch(r"Net Expenditure(?:\s*\(So Far\))?\s*[:\-]\s*([+-]?\d+)\s*(?:k?cals?)?\s*(loss|gain)?(?:\s*\(So Far\))?", fixed, re.I):
             raw_val = int(m[1])
             direction = (m[2] or ("gain" if raw_val < 0 else "loss")).lower()
             return f"Net Expenditure - {abs(raw_val)}cal {direction}"
+        if m := re.fullmatch(r"(Week of \d{1,2}/\d{1,2}/20\d{2}\s*-->\s*\d+\s*cal\s*(?:loss|gain)\s*or\s*~?\d+(?:\.\d+)?\s*lbs?)\s*\(So Far\)", fixed, re.I):
+            return m[1].strip()
     elif key == "smash_series":
         if m := re.fullmatch(r"(\d{1,2}/\d{1,2}/20\d{2})", fixed):
             return f"{m[1]} - Owen"
@@ -373,6 +387,14 @@ def _repair_line(key: str, line: str, prev_nonempty: str) -> str:
             c1 = m[1].strip().rstrip(".")
             c2 = m[2].strip().rstrip(".")
             return f"{c1} vs. {c2} - ({int(m[3])}, {m[4]})"
+    elif key == "coin_flip":
+        if m := re.fullmatch(r"(.+?)\s+vs\.?\s+(.+?)\s*[-|]\s*(Heads|Tails)\s*[-|]\s*(Followed|Overrode|Override)(?:\s*\((.+)\))?", fixed, re.I):
+            o1, o2 = m[1].strip(), m[2].strip()
+            landed = m[3].capitalize()
+            act = "Overrode" if m[4].lower().startswith("over") else "Followed"
+            chosen = (o2 if landed == "Heads" else o1) if act == "Overrode" else (o1 if landed == "Heads" else o2)
+            note_part = f" | Note: {m[5].strip()}" if m[5] else ""
+            return f"{o1} vs. {o2} | Heads: {o1}, Tails: {o2} | Landed: {landed} | Action: {act} -> {chosen} | Category: General & Life{note_part}"
     return fixed
 
 
@@ -394,6 +416,7 @@ def repair_log_text(key: str, text: str) -> tuple[str, list[dict]]:
         "running": r"(?:Running\s+)?Interval\s+Training.*",
         "tempo": r"Tempo[\s_]+Run[\s_]+Log.*",
         "smash_series": r"Smash\s+Series\s+Log.*",
+        "coin_flip": r"Coin\s+Flip(?:\s+Decision)?\s+Log.*",
     }
     if first != spec.header and not (key == "weightlifting" and first.startswith("Weightlifting Log")):
         if key in alt_headers and re.fullmatch(alt_headers[key], first, re.I):
@@ -637,6 +660,49 @@ def sync_logs(
     return report
 
 
+def ensure_github_pages_https() -> dict[str, str]:
+    """Check GitHub Pages TLS certificate status and auto-enable https_enforced once issued."""
+    import subprocess
+    try:
+        proc = subprocess.run(
+            ["git", "credential", "fill"],
+            input="protocol=https\nhost=github.com\n\n",
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        token = next((ln.split("=", 1)[1].strip() for ln in proc.stdout.splitlines() if ln.startswith("password=")), "")
+        if not token:
+            return {"status": "no-token"}
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/vnd.github+json",
+            "User-Agent": "LiamPortfolioLogSync/1.0",
+        }
+        req = urllib_request.Request("https://api.github.com/repos/l2mcgrat/liammspandasprojects/pages", headers=headers)
+        with urllib_request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        if data.get("https_enforced"):
+            return {"status": "https_enforced", "cname": str(data.get("cname") or "")}
+        cert_state = (data.get("https_certificate") or {}).get("state", "none")
+        if cert_state in ("approved", "issued", "uploaded"):
+            put_req = urllib_request.Request(
+                "https://api.github.com/repos/l2mcgrat/liammspandasprojects/pages",
+                data=json.dumps({
+                    "cname": data.get("cname") or "liammspandasprojects.org",
+                    "https_enforced": True,
+                    "source": data.get("source") or {"branch": "main", "path": "/"},
+                }).encode("utf-8"),
+                headers={**headers, "Content-Type": "application/json"},
+                method="PUT",
+            )
+            with urllib_request.urlopen(put_req, timeout=10):
+                return {"status": "enabled_https_enforced", "cert_state": cert_state}
+        return {"status": f"cert_{cert_state}", "description": (data.get("https_certificate") or {}).get("description", "")}
+    except Exception as exc:
+        return {"status": "skipped", "error": str(exc)}
+
+
 def main() -> None:
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
@@ -656,6 +722,8 @@ def main() -> None:
         status = "updated" if info["updated"] else "in-sync"
         repairs = f" ({len(info['repairs'])} line repairs)" if info["repairs"] else ""
         print(f"{key:13s}: {status} from {info['source']}{repairs}")
+    https_info = ensure_github_pages_https()
+    print(f"{'https_tls':13s}: {https_info.get('status')} ({https_info.get('description') or https_info.get('cname') or 'Let\'s Encrypt'})")
 
 
 if __name__ == "__main__":
